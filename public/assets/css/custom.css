@@ -1,0 +1,198 @@
+@font-face {
+    font-family: 'Stella';
+    src: url('../fonts/stella.ttf') format('truetype');
+}
+.css-dniud9a{
+    padding-top: 38px;
+    font-size: 55px;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1;
+    text-align: left;
+    font-family: 'stella';
+}
+.css-fhk2nsa{
+    font-size: 15px;
+    line-height: 1.62;
+    color: rgba(49,53,59,0.96);
+    font-weight: 500;
+}
+.css-dcnk23j{
+    margin-top: 100px;
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.css-fnk2skj{
+    margin: 24px 0px;
+    padding: 0px;
+    border-color: #d6dfeb;
+    background-color: #ffffff;
+    cursor: default;
+    display: block;
+    border-radius: 0px;
+    box-shadow: none;
+    position: relative;
+    min-height: 138px;
+}
+.css-po2jsm{
+    margin-top: 45px;
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-flow: row;
+    -webkit-box-align: baseline;
+    align-items: baseline;
+    min-height: 30px;
+    margin-bottom: 16px;
+}
+.css-hjsa2js{
+    display: flex;
+    flex: 0 1 auto;
+    flex-flow: row;
+    -webkit-box-align: baseline;
+    align-items: baseline;
+    overflow: hidden;
+}
+.css-cjdkja{
+    font-size: 22px;
+    font-weight: 700;
+    text-align: left;
+    color: #212121;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+.css-diop1ms{
+    display: grid;
+    grid-template-columns: repeat(4, calc(25% - 12px));
+    grid-template-rows: repeat(2, 100px);
+    gap: 16px;
+}
+.css-jk1hsk{
+    display: block;
+    position: relative;
+    border: 1px solid #d6dfeb;
+    background-color: #ffffff;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px 0 rgba(141,150,170,0.4);
+    height: 100%;
+    padding: 12px;
+    margin: 0;
+}
+.css-lojd1h{
+    background-repeat: no-repeat;
+    background-size: 99% 100%;
+    display: inline-block;
+    margin: 0px auto;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    left: -3px;
+    height: 100px;
+    width: 100px;
+}
+.css-menu-img{
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px 0px 0px 6px;
+}
+.css-kanan-text{
+    padding-top: 20px;
+    margin-left: 70px;
+    position: relative;
+    width: 100%;
+}
+.css-kanan-text h4{
+    font-size: 17px;
+    font-weight: 600;
+    color: #212121;
+    margin: 0px 0px 0px;
+    line-height: 19px;
+    max-height: 50px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.css-text-p{
+    color: #707070;
+    font-size: 16px;
+    line-height: 130%;
+    width: 75%;
+    margin-top: 20px;
+}
+.css-scnk2n{
+    padding-top: 140px;
+}
+.testimoni{
+    margin: 0 60px;
+    display: block;
+}
+.css-cnk32ns{
+    margin-top: 60px;
+    margin-bottom: 80px;
+    position: relative;
+}
+.css-dfnn2ka{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+.css-tes-header{
+    width: 50%;
+}
+.css-tes-header h3 span:after{
+    background: url('../images/sparkle.svg') no-repeat 100%;
+    bottom: 18px;
+    content: "";
+    margin-left: -20px;
+    top: -31px;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+.css-cnka2he{
+    background-color: #fff;
+    box-shadow: 0 1px 6px 0 rgba(141,150,170,0.4);
+    border-radius: 8px;
+    box-sizing: border-box;
+    height: 330px;
+    margin: 0 20px 30px;
+    padding: 30px 34px;
+    text-align: center;
+}
+.css-cnka2he .css-fjl2js{
+    width: 74px;
+    height: 74px;
+    position: relative;
+    margin: auto;
+}
+.css-cnka2he h5{
+    font-weight: 600;
+    font-size: 15px;
+    color: #212121;
+    margin: 20px 0 10px;
+}
+.css-cnka2he h6{
+    font-weight: 400;
+    font-size: 14px;
+    color: #707070;
+    margin: 0;
+}
+.css-cnka2he p{
+    font-weight: 400;
+    font-size: 14px;
+    color: #707070;
+    line-height: 23.8px;
+    margin-top: 16px;
+}
+.bag-faq{
+    margin: 0 60px;
+    display: block;   
+}
