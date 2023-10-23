@@ -39,9 +39,12 @@ class Auth_Controller extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('no_hp', 'password');
+        // Login dengan Username atau No. HP
+        $credentials = $request->only('no_hp', 'username', 'password');
+        $fieldType = isset($credentials['no_hp']) ? 'no_hp' : (isset($credentials['username']) ? 'username' : null);
 
-        if (!Auth::attempt($credentials)) {
+        // Jika gagal otentikasi, tampilkan pesan error 401
+        if ($fieldType === null || !Auth::attempt([$fieldType => $credentials[$fieldType], 'password' => $credentials['password']])) {
             return response()->json(['message' => 'Invalid login credentials'], 401);
         }
 
@@ -49,8 +52,8 @@ class Auth_Controller extends Controller
         $token = $request->user()->createToken('api_token')->plainTextToken;
 
         $user = User::select('name', 'username', 'no_hp', 'users_type')
-        ->where('no_hp', $request->no_hp)
-        ->first();
+            ->where($fieldType, $credentials[$fieldType])
+            ->first();
 
         return response()->json([
             'user' => $user,
