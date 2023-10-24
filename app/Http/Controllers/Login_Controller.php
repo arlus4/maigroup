@@ -17,7 +17,7 @@ class Login_Controller extends Controller
      */
     public function create(Request $request): View
     {
-        return view('login');
+        return view('pages.login');
     }
 
     /**
@@ -25,8 +25,8 @@ class Login_Controller extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        dd($request->all());
         $request->authenticate();
+        // dd(Auth::user());
 
         $request->session()->regenerate();
 
@@ -58,13 +58,19 @@ class Login_Controller extends Controller
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
+    // {
+    //     Auth::guard('web')->logout();
+
+    //     $request->session()->invalidate();
+
+    //     $request->session()->regenerateToken();
+
+    //     return redirect('/');
+    // }
     {
-        Auth::guard('web')->logout();
-
+        Auth::logout();
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
-        return redirect('/');
+        return redirect('/')->with('success', 'Berhasil Logout');
     }
 }

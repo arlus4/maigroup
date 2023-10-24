@@ -24,17 +24,27 @@
                     <div class="css-vbaj2ns">
                         <h3 class="css-fhk3js">Masuk</h3>
                     </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="css-pogn2ns">
-                        <form class="css-cabj2s" action="#">
+                        <form class="css-cabj2s" action="{{ route('login') }}" method="POST">
+                            @csrf
                             <div class="css-fb2kakd">
                                 <label for="" class="css-label">Username atau No HP</label>
-                                <input type="text" class="form-control">
+                                <input type="text" name="input_type" class="form-control" required>
                             </div>
                             <div class="css-fb2kakd">
                                 <label for="" class="css-label">Password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" name="password" class="form-control" required>
                             </div>
-                            <button type="button" class="css-btn-masuk">
+                            <button type="submit" class="css-btn-masuk">
                                 Masuk
                             </button>
                         </form>

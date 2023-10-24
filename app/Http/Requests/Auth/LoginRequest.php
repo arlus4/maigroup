@@ -29,8 +29,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_hp' => ['required_without:username', 'string', 'exists:users_login,no_hp'],
-            'username' => ['required_without:no_hp', 'string', 'exists:users_login,username'],
+            'input_type' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -43,16 +42,23 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-
-        if (!Auth::attempt($this->only($this->inputType, 'password'), $this->boolean('remember'))) {
+    
+        $inputType = $this->determineInputType();
+    
+        if (!Auth::attempt([$inputType => $this->input('input_type'), 'password' => $this->input('password')], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
+    
             throw ValidationException::withMessages([
-                $this->inputType => trans('auth.failed'),
+                'input_type' => trans('auth.failed'),
             ]);
         }
-
+    
         RateLimiter::clear($this->throttleKey());
+    }
+    
+    protected function determineInputType(): string
+    {
+        return filter_var($this->input('input_type'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
     }
 
     /**
