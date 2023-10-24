@@ -57,7 +57,7 @@ class LoginRequest extends FormRequest
 
     protected function determineInputType(): string
     {
-        return filter_var($this->input('input_type')) ? 'no_hp' : 'username';
+        return is_numeric($this->input('input_type')) ? 'no_hp' : 'username';
     }
 
     /**
