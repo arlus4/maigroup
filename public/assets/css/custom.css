@@ -2,6 +2,10 @@
     font-family: 'Stella';
     src: url('../fonts/stella.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Medium.ttf') format('truetype');
+}
 .css-dniud9a{
     padding-top: 38px;
     font-size: 55px;
@@ -56,11 +60,12 @@
     overflow: hidden;
 }
 .css-cjdkja{
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
+    font-family: sans-serif;
     text-align: left;
     color: #212121;
-    overflow: hidden;
+    /* overflow: hidden; */
     overflow-wrap: break-word;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -102,7 +107,7 @@
     border-radius: 6px 0px 0px 6px;
 }
 .css-kanan-text{
-    padding-top: 20px;
+    padding-top: 6px;
     margin-left: 70px;
     position: relative;
     width: 100%;
@@ -111,7 +116,7 @@
     font-size: 17px;
     font-weight: 600;
     color: #212121;
-    margin: 0px 0px 0px;
+    margin: 0px 0px 6px;
     line-height: 19px;
     max-height: 50px;
     display: -webkit-box;
@@ -119,15 +124,26 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.css-kanan-text p{
+    font-size: 13px;
+    margin: 0;
+    line-height: 22px;
+    display: -webkit-box;
+    width: 180px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 .css-text-p{
     color: #707070;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 130%;
+    font-family: sans-serif;
     width: 75%;
     margin-top: 20px;
 }
 .css-scnk2n{
-    padding-top: 140px;
+    padding-top: 120px;
 }
 .testimoni{
     margin: 0 60px;
@@ -162,9 +178,9 @@
     box-shadow: 0 1px 6px 0 rgba(141,150,170,0.4);
     border-radius: 8px;
     box-sizing: border-box;
-    height: 330px;
+    height: 355px;
     margin: 0 20px 30px;
-    padding: 30px 34px;
+    padding: 30px 20px;
     text-align: center;
 }
 .css-cnka2he .css-fjl2js{
@@ -179,6 +195,104 @@
     color: #212121;
     margin: 20px 0 10px;
 }
+.paketMitra{
+    padding: 130px 0 87px;
+    margin: 0 60px;
+    display: block;
+}
+.d-flex{
+    display: flex;
+}
+.css-bungkus-card{
+    border-radius: 8px;
+    flex-grow: 1;
+    height: 100%;
+    /* max-width: 218px; */
+    max-width: 260px;
+    min-height: 300px;
+    min-width: 260px;
+    position: relative;
+}
+.css-bungkus-card-atas{
+    background: linear-gradient(221.15deg, #e0ecde 1.73%, #c7edca 76.11%);
+    height: 270px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 12px;
+    position: relative;
+}
+.css-bungkus-card-atas-b{
+    background: linear-gradient(221.15deg, #fdeded 1.73%, #fbdfde 76.11%);
+    height: 270px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 12px;
+    position: relative;
+}
+.css-bungkus-card-atas-c{
+    background: linear-gradient(221.15deg, #fde9d0 1.73%, #fdddc8 76.11%);
+    height: 270px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 12px;
+    position: relative;
+}
+.css-bungkus-card-atas-d{
+    background: linear-gradient(221.15deg, #f1f4e9 1.73%, #e6ecd2 76.11%);
+    height: 270px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 12px;
+    position: relative;
+}
+.css-label-atas{
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+}
+.css-bungkus-label{
+    padding: 4px 14px;
+    align-items: center;
+    background: #00bf71;
+    border-radius: 8px;
+    color: #fff;
+    display: inline-flex;
+    gap: 8px;
+    position: relative;
+    z-index: 3;
+}
+.css-text-label{
+    color: #333;
+    font-family: Inter,sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 24px;
+    margin-bottom: 4px;
+    margin-top: 8px;
+    position: relative;
+    z-index: 3;
+}
+.css-text-sub-label{
+    color: #333;
+    margin-top: 10px;
+    line-height: 21px;
+    font-size: 15px;
+    font-family: Inter,sans-serif;
+    font-weight: 700;
+    position: relative;
+    z-index: 3;
+}
+.css-img-paket{
+    bottom: 12px;
+    object-fit: contain;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+}
+.css-margin{
+    margin: 0;
+    padding: 0;
+}
 .css-cnka2he h6{
     font-weight: 400;
     font-size: 14px;
@@ -188,11 +302,156 @@
 .css-cnka2he p{
     font-weight: 400;
     font-size: 14px;
+    font-family: sans-serif;
     color: #707070;
     line-height: 23.8px;
     margin-top: 16px;
 }
-.bag-faq{
-    margin: 0 60px;
-    display: block;   
+.css-dajk2js{
+    max-width: 2440px;
+    width: 100%;
+    -webkit-box-flex: 1;
+    -webkit-flex-basis: 0%;
+    -webkit-flex-grow: 1;
+    -webkit-flex-shrink: 1;
+    flex-basis: 0%;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.faq-list{
+    padding: 0 100px;
+}
+.faq-list ul{
+    padding: 0;
+}
+.faq-list li{
+    padding: 20px;
+}
+.accordion-container {
+    position: relative;
+    width: 100%;
+    border-top: none;
+    outline: 0;
+    cursor: pointer
+}
+
+.faq-list .article-title {
+    display: flex;
+    position: relative;
+    font-family: "Poppins";
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.accordion-content {
+    display: none;
+    padding-left: 42px;
+    /* padding-left: 2.3125em; */
+}
+.accordion-content p{
+    padding: 10px 0 0 0;
+}
+
+#content {
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 48px;
+}
+.content-entry{
+    display: block;
+}
+
+#description p {
+    line-height: 1.5;
+}
+
+#description h2 {
+    text-align: center;
+}
+.fa-angle-down{
+    margin-left: auto;
+    color: #212121;
+}
+.css-text-faq1{
+    color: #444857;
+    margin-right: 20px;
+    font-size: 23px;
+}
+.css-text-faq2{
+    color: #212121;
+    font-weight: 600;
+    font-size: 18px;
+}
+.css-bungkus-card-bawah{
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    box-shadow: 0 1px 6px 0 rgba(141,150,170,0.4);
+    margin-top: -12px;
+    min-height: 200px;
+    padding: 12px;
+    position: relative;
+}
+.css-text-informasi-top{
+    font-size: 12px;
+    line-height: 20px;
+    color: #333;
+    font-weight: 600;
+}
+.css-bungkus-harga{
+    align-items: flex-end;
+    display: flex;
+}
+.css-bungkus-harga .css-harga-paket{
+    color: #212121;
+    font-family: 'Poppins';
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 24px;
+}
+.css-href-beli{
+    background: #4851DE;
+    border: none;
+    border-radius: 96px;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 6px 12px;
+    text-align: center;
+}
+.css-paket-preview{
+    gap: 8px;
+    min-height: 136px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.css-paket-preview>li{
+    display: flex;
+    gap: 6px;
+}
+.css-preview-icon{
+    flex-shrink: 0;
+}
+.css-preview-icon img{
+    margin-top: 5px;
+}
+.css-paket-preview>li>p{
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+    color: #333;
 }
