@@ -12,7 +12,6 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     protected $inputType;
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -42,9 +41,9 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-    
+
         $inputType = $this->determineInputType();
-    
+
         if (!Auth::attempt([$inputType => $this->input('input_type'), 'password' => $this->input('password')], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
     
@@ -52,13 +51,13 @@ class LoginRequest extends FormRequest
                 'input_type' => trans('auth.failed'),
             ]);
         }
-    
+
         RateLimiter::clear($this->throttleKey());
     }
-    
+
     protected function determineInputType(): string
     {
-        return filter_var($this->input('input_type'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        return filter_var($this->input('input_type')) ? 'no_hp' : 'username';
     }
 
     /**
@@ -77,7 +76,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'no_hp' => trans('auth.throttle', [
+            'email' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -89,13 +88,14 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input($this->inputType)) . '|' . $this->ip());
+        return Str::transliterate(Str::lower($this->input('email')) . '|' . $this->ip());
     }
+
 
     // Pengecekan Validasi Form Login Nomor HP / Username
     protected function prepareForValidation()
     {
-        $this->inputType = $this->has('no_hp') ? 'no_hp' : 'username';
+        $this->inputType = filter_var($this->input('input_type'), FILTER_VALIDATE_EMAIL) ? 'no_hp' : 'username';
+        $this->merge([$this->inputType => $this->input('input_type')]);
     }
 }
-
