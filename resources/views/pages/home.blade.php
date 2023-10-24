@@ -6,24 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>MaiTea - Indonesia</title>
 
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-		<link rel="stylesheet" href="{{ asset('assets/css/bootsnav.css') }}" >
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/bootsnav.css" >
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.0/css/all.min.css">
 
     </head>
 	
 	<body>
-        <section class="welcome-hero">
+        <section class="welcome-hero css-header-mobile">
             <div class="top-area">
                 <div class="header-area">
                     <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy"  data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
                         <div class="container">
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                                    <i class="fa fa-bars"></i>
+                                    <i style="color: #fff;" class="fa fa-bars"></i>
                                 </button>
                                 <a class="navbar-brand" href="index.html">
                                     <img src="{{ asset('assets/images/logo_mytea.png') }}" alt="">
@@ -51,14 +51,9 @@
             <div class="container">
                 <div class="welcome-hero-txt">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 css-cnk12sj">
                             <h2 class="css-dniud9a">Terobosan teh termurah dan terbaru yang ada di Indonesia</h2>
                             <div class="row" style="margin-top: 20px;">
-                                <div class="col-md-6">
-                                    <button class="btn" style="width:100%;border-radius: 8px;background-color: #d4edda;border: 1.4px solid #c3e6cb;color: #155724;">
-                                        <span style="font-size: 17px;font-weight: 600;">Pesan Sekarang</span>
-                                    </button>
-                                </div>
                                 <div class="col-md-6">
                                     <button class="btn" style="width:100%;border-radius:8px;background-color:#fff;border: 1.4px solid #d4edda;color: #155724;">
                                         <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
@@ -66,14 +61,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 css-fank2sn">
                             <img src="{{ asset('assets/images/bg_banner_2.png') }}">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container css-opdn2ja">
 				<div class="row">
 					<div class="col-md-12">
                         <div class="model-search-content">
@@ -81,10 +76,7 @@
                                 <div class="col-md-12">
                                     <div class="single-model-search">
                                         <h5 class="css-fhk2nsa">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat eos inventore exercitationem molestiae nihil sapiente a voluptates laborum consequuntur iure incidunt mollitia, ad eligendi, nisi vel assumenda eum. Neque, sit!<br><br>
-                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium fugiat cumque labore excepturi maxime a laborum cupiditate? Nisi unde expedita, est nobis vel, assumenda quas atque itaque ullam reiciendis nulla?Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum aliquid suscipit est dolorem molestias animi. Deleniti aspernatur consectetur odio recusandae obcaecati sequi unde facilis? Quos culpa voluptate temporibus possimus nemo!
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, enim? Et iusto nemo eaque dicta, ex vel tenetur laboriosam, voluptatibus reiciendis suscipit vitae tempore minima consequuntur expedita odio excepturi accusantium!<br><br>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iusto asperiores quam, fugit ex, incidunt possimus fuga voluptas dolorem molestias blanditiis earum nobis atque. Corrupti eveniet odit eos quos adipisci. Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit similique deleniti dolore, sunt fugiat cupiditate, aperiam possimus ea cumque ratione, sed atque et labore dicta! Facilis aliquam sed dicta! Voluptatem.
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat eos inventore exercitationem molestiae nihil sapiente a voluptates laborum consequuntur iure incidunt mollitia, ad eligendi, nisi vel assumenda eum. Neque, sit!
                                         </h5>
                                     </div>
                                 </div>
@@ -95,7 +87,7 @@
             </div>
         </section>
 
-        <section class="service" style="padding-bottom: 0px;">
+        <section class="sec-menu" style="padding-bottom: 0px;">
             <div class="css-dcnk23j">
                 <div class="css-fnk2skj">
                     <div class="css-po2jsm">
@@ -174,7 +166,372 @@
             </div>
         </section>
 
-        <section class="service" style="padding: 0px;">
+        <!-- Awal Bagian Mobile Menu -->
+
+        <div class="css-dahk1nbs">
+            <div class="css-posn1da">
+                <div class="css-coan1sn">
+                    <div class="css-bvjhaqo">
+                        <h4 class="css-ndk2nsa">Varian Menu Terbaru</h4>
+                    </div>
+                    <div class="css-klfh2ja">
+                        <div class="css-cfn1nsk">
+                            <h4 class="css-djk9qna">Yuk buruan Beli</h4>
+                        </div>
+                        <div class="css-dank90a">
+                            <a href="#" class="css-lihat-semua">Lihat Semua</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="css-hjsk2d">
+                    <div class="css-bg-a"></div>
+                    <div class="css-fbkd4js">
+                        <div class="css-dqk2jsa"></div>
+                        <div class="css-ryqan12">
+                            <picture class="css-pict-mobile">
+                                <img src="assets/images/bg_mobile.png">
+                            </picture>
+                        </div>
+                        <div class="css-fdn2kns"> <!-- 1 -->
+                            <div class="css-jfk2nsa">
+                                <div class="css-kljh2hs">
+                                    <div class="css-bnsn8am">
+                                        <div class="css-ghxb2na">
+                                            <a href="#">
+                                                <div class="css-dg2jsp">
+                                                    <span class="css-dnbm12n"></span>
+                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_8.png') }}">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="css-cv2ns0a">
+                                            <a href="#" class="css-dnc2nsp">
+                                                <div class="css-g2hs9nb">Rp 26.500</div>
+                                                <div class="css-g2hs9na">Red Velvet MaiTea LARGE</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="css-fdn2kns"> <!-- 1 -->
+                            <div class="css-jfk2nsa">
+                                <div class="css-kljh2hs">
+                                    <div class="css-bnsn8am">
+                                        <div class="css-ghxb2na">
+                                            <a href="#">
+                                                <div class="css-dg2jsp">
+                                                    <span class="css-dnbm12n"></span>
+                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_1.png') }}">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="css-cv2ns0a">
+                                            <a href="#" class="css-dnc2nsp">
+                                                <div class="css-g2hs9nb">Rp 25.000</div>
+                                                <div class="css-g2hs9na">Leci MaiTea LARGE</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="css-fdn2kns"> <!-- 1 -->
+                            <div class="css-jfk2nsa">
+                                <div class="css-kljh2hs">
+                                    <div class="css-bnsn8am">
+                                        <div class="css-ghxb2na">
+                                            <a href="#">
+                                                <div class="css-dg2jsp">
+                                                    <span class="css-dnbm12n"></span>
+                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_3.png') }}">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="css-cv2ns0a">
+                                            <a href="#" class="css-dnc2nsp">
+                                                <div class="css-g2hs9nb">Rp 17.500</div>
+                                                <div class="css-g2hs9na">Lemon MaiTea LARGE</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="css-fdn2kns"> <!-- 1 -->
+                            <div class="css-jfk2nsa">
+                                <div class="css-kljh2hs">
+                                    <div class="css-bnsn8am">
+                                        <div class="css-ghxb2na">
+                                            <a href="#">
+                                                <div class="css-dg2jsp">
+                                                    <span class="css-dnbm12n"></span>
+                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_2.png') }}">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="css-cv2ns0a">
+                                            <a href="#" class="css-dnc2nsp">
+                                                <div class="css-g2hs9nb">Rp 22.500</div>
+                                                <div class="css-g2hs9na">Taro MaiTea LARGE</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="css-gabung-mitra">
+            <div class="css-gj5js6a">
+                <div class="css-cnr9dm">
+                    <h4 class="css-ndk2nsa">Gabung Jadi Mitra MaiTea</h4>
+                    <p class="css-djk9qna">MaiTea Indonesia kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Indonesia dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
+                </div>
+                <div class="css-kld2jsh">
+                    <img src="{{ asset('assets/images/bg_benefit.png') }}">
+                </div>
+            </div>
+        </div>
+
+        <hr class="css-jarak-mobile">
+
+        <div class="css-paket-mitra">
+            <h4 class="css-ndk2nsa">Varian Paket Populer MaiTea</h4>
+            <div class="css-chj2akm">
+                <div class="css-pages">
+                    <div class="css-bungkus-pages">
+                        <div class="css-bungkus-card card-a">
+                            <div class="css-bungkus-card-atas-a">
+                                <div class="css-bungkus-label">
+                                    <img src="assets/images/bintang.svg">
+                                    <p class="css-label-atas">Populer</p>
+                                </div>
+                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
+                                <picture>
+                                    <img class="css-img-paket" src="assets/images/paket_1.png">
+                                </picture>
+                            </div>
+                            <div class="css-bungkus-card-bawah">
+                                <div class="css-informasi">
+                                    <div class="css-informasi-b">
+                                        <p class="css-text-informasi-top">
+                                            <span>Spesial Paket Super Premium</span>
+                                        </p>
+                                        <div class="css-bungkus-harga">
+                                            <span class="css-harga-paket">Rp 3.700.000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
+                                <ul class="css-paket-preview">
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <img src="assets/images/line.webp">
+                                            </picture>
+                                        </div>
+                                        <p>
+                                            <strong>85%</strong>
+                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="css-bungkus-card card-a">
+                            <div class="css-bungkus-card-atas-b">
+                                <div class="css-bungkus-label">
+                                    <img src="assets/images/bintang.svg">
+                                    <p class="css-label-atas">Populer</p>
+                                </div>
+                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
+                                <picture>
+                                    <img class="css-img-paket" src="assets/images/paket_1.png">
+                                </picture>
+                            </div>
+                            <div class="css-bungkus-card-bawah">
+                                <div class="css-informasi">
+                                    <div class="css-informasi-b">
+                                        <p class="css-text-informasi-top">
+                                            <span>Spesial Paket Super Premium</span>
+                                        </p>
+                                        <div class="css-bungkus-harga">
+                                            <span class="css-harga-paket">Rp 3.700.000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
+                                <ul class="css-paket-preview">
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <img src="assets/images/line.webp">
+                                            </picture>
+                                        </div>
+                                        <p>
+                                            <strong>85%</strong>
+                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="css-bungkus-card card-a">
+                            <div class="css-bungkus-card-atas-c">
+                                <div class="css-bungkus-label">
+                                    <img src="assets/images/bintang.svg">
+                                    <p class="css-label-atas">Populer</p>
+                                </div>
+                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
+                                <picture>
+                                    <img class="css-img-paket" src="assets/images/paket_1.png">
+                                </picture>
+                            </div>
+                            <div class="css-bungkus-card-bawah">
+                                <div class="css-informasi">
+                                    <div class="css-informasi-b">
+                                        <p class="css-text-informasi-top">
+                                            <span>Spesial Paket Super Premium</span>
+                                        </p>
+                                        <div class="css-bungkus-harga">
+                                            <span class="css-harga-paket">Rp 3.700.000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
+                                <ul class="css-paket-preview">
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <img src="assets/images/line.webp">
+                                            </picture>
+                                        </div>
+                                        <p>
+                                            <strong>85%</strong>
+                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="css-bungkus-card card-a">
+                            <div class="css-bungkus-card-atas-d">
+                                <div class="css-bungkus-label">
+                                    <img src="assets/images/bintang.svg">
+                                    <p class="css-label-atas">Populer</p>
+                                </div>
+                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
+                                <picture>
+                                    <img class="css-img-paket" src="assets/images/paket_1.png">
+                                </picture>
+                            </div>
+                            <div class="css-bungkus-card-bawah">
+                                <div class="css-informasi">
+                                    <div class="css-informasi-b">
+                                        <p class="css-text-informasi-top">
+                                            <span>Spesial Paket Super Premium</span>
+                                        </p>
+                                        <div class="css-bungkus-harga">
+                                            <span class="css-harga-paket">Rp 3.700.000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
+                                <ul class="css-paket-preview">
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <img src="assets/images/line.webp">
+                                            </picture>
+                                        </div>
+                                        <p>
+                                            <strong>85%</strong>
+                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
+                                    </li>
+                                    <li>
+                                        <div class="css-preview-icon">
+                                            <picture>
+                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
+                                            </picture>
+                                        </div>
+                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="css-jarak-mobile">
+
+        <div></div>
+
+        <!-- Akhir Bagian Mobile Menu -->
+
+        <section class="service css-cdn2osa" style="padding: 0px;">
             <div class="css-dcnk23j">
                 <div class="row">
                     <div class="col-md-6 css-scnk2n">
@@ -188,7 +545,7 @@
             </div>
         </section>
 
-        <section class="paketMitra" style="padding: 0px;">
+        <section class="paketMitra css-doqn24z" style="padding: 0px;">
             <div class="css-cnk32ns">
                 <div class="css-dfnn2ka">
                     <div class="css-tes-header" style="width: 100%;">
@@ -201,7 +558,7 @@
                     <div class="col-md-3 css-margin">
                         <div class="d-flex">
                             <div class="css-bungkus-card">
-                                <div class="css-bungkus-card-atas">
+                                <div class="css-bungkus-card-atas-a">
                                     <div class="css-bungkus-label">
                                         <img src="{{ asset('assets/images/bintang.svg') }}">
                                         <p class="css-label-atas">Terpopuler</p>
@@ -403,7 +760,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra MaiTea Indonesia mengalami kenaikan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -430,7 +787,7 @@
             </div>
         </section>
 
-        <section class="testimoni" style="padding: 0px;">
+        <section class="testimoni css-dad09am" style="padding: 0px;">
             <div class="css-cnk32ns">
                 <div class="css-dfnn2ka">
                     <div class="css-tes-header" style="width: 100%;">
@@ -548,8 +905,8 @@
             </div>
         </section>
 
-        <script src="{{ asset('assets/js/jquery.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
         
         <script>
            $(function() {

@@ -20,6 +20,7 @@ use App\Http\Controllers\HomeController;
 // });
 
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/login', [HomeController::class, 'login']);
 
 Route::get('/check-connection', [Check_Connection::class, 'checkConnection']);
 Route::get('/check-php', [Check_Connection::class, 'checkPhp']);
