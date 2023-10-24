@@ -163,11 +163,13 @@ nav.navbar.bootsnav ul.nav > li.dropdown span {
 
 /*.navbar-toggle */
 nav.navbar.bootsnav .navbar-toggle {
-    position: relative;
+    position: absolute;
     background-color: transparent;
-    border: 1px solid #4e4ffa;
+    /* border: 1px solid #4e4ffa; */
+    border: none;
     padding: 10px;
     top: 0;
+    right: 214px;
 }
 nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 /*.navbar-toggle */
@@ -291,6 +293,11 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
         5. Service 
 --------------------------------------*/
 .service { 
+    padding: 130px 0 87px;
+    margin: 0 60px;
+    display: block;
+}
+.sec-menu{
     padding: 130px 0 87px;
     margin: 0 60px;
     display: block;
