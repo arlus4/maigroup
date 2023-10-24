@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     protected $inputType;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,8 +29,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_hp' => ['required_without:username', 'string', 'exists:users,no_hp'],
-            'username' => ['required_without:no_hp', 'string', 'exists:users,username'],
+            'no_hp' => ['required_without:username', 'string', 'exists:users_login,no_hp'],
+            'username' => ['required_without:no_hp', 'string', 'exists:users_login,username'],
             'password' => ['required', 'string'],
         ];
     }
@@ -70,7 +71,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'no_hp' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -82,14 +83,13 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')) . '|' . $this->ip());
+        return Str::transliterate(Str::lower($this->input($this->inputType)) . '|' . $this->ip());
     }
-
 
     // Pengecekan Validasi Form Login Nomor HP / Username
     protected function prepareForValidation()
     {
-        $this->inputType = filter_var($this->input('input_type'), FILTER_VALIDATE_EMAIL) ? 'no_hp' : 'username';
-        $this->merge([$this->inputType => $this->input('input_type')]);
+        $this->inputType = $this->has('no_hp') ? 'no_hp' : 'username';
     }
 }
+
