@@ -1,0 +1,132 @@
+.content-header{
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    gap: 16px;
+    padding: 20px 20px 0px 32px;
+}
+.content-title{
+    margin-top: 12px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+.css-lk3jsp{
+    margin: 0;
+    font-weight: 700;
+    font-size: 18px;
+    color: #212121;
+    line-height: 20px;
+}
+button.close{
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+.css-flj2ej{
+    padding-top: 0px;
+    height: 100%;
+    padding: 0px 20px 32px;
+}
+.css-fjkpo0ma{
+    text-align: left;
+    max-height: 500px;
+    padding: 16px;
+    overflow: hidden scroll;
+}
+.css-wj23sk{
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E5E7E9;
+}
+.css-pp2kjsn{
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0px 0px 16px;
+}
+.css-fhxb1ns{
+    display: flex;
+    flex-wrap: nowrap;
+    left: 0px;
+    margin: 0px auto;
+    position: relative;
+    top: 0px;
+    width: 100%;
+}
+.css-akcdj8w{
+    background-color: rgb(204, 229, 255);
+    display: flex;
+    flex: 1 0 100%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: row;
+    color: #212121;
+    padding: 12px;
+    border-radius: 8px;
+}
+.css-gh3knsa{
+    margin-right: 4px;
+    width: 24px;
+}
+.css-vcnak2s{
+    font-size: 0.9rem;
+    line-height: 22px;
+    letter-spacing: 0px;
+    margin: 0px;
+    color: #004085;
+}
+.css-fnak2bsk{
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 3px;
+    padding:0.3125rem 0.4375rem;
+    background-color:#e4e9ef;
+    color: #212121;
+}
+.css-height-30{
+    height: 30px;
+}
+.css-ca2jq0s{
+    background-color: #fff;
+    border: 1px solid #bfc9d9;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 8px;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 12px;
+    height: 40px;
+    line-height: 37px;
+    outline: none;
+    position: relative;
+    padding: 0px 16px;
+    text-indent: initial;
+    width: 190px;
+    color: #525867!important;
+}
+.css-kl2kd9a{
+    background-color: #00BF71;
+    border: none;
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 12px;
+    height: 40px;
+    line-height: 24px;
+    outline: none;
+    position: relative;
+    padding: 0px 16px;
+    text-indent: initial;
+    width: 190px;
+}
