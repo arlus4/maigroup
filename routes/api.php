@@ -29,7 +29,7 @@ Route::post('register', [Auth_Controller::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/sum_bonus_user', [Invoice_Controller::class, 'sumBonusUser']);
-    Route::get('/sum_point/{pembeli_id}/{outlet_id}', [Invoice_Controller::class, 'sumPoint']);
+    Route::post('/sum_point', [Invoice_Controller::class, 'sumPoint']);
 });
 
 // Web
