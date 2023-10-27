@@ -231,7 +231,7 @@
                                     <span class="menu-title">Produk</span>
                                     <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_product') || Request::routeIs('tambahProduk')) ? 'show' : '' }}">
+                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_product') || Request::routeIs('admin.admin_tambah_product')) ? 'show' : '' }}">
                                     <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_product') ? 'active' : '' }}" href="{{ route('admin.admin_product') }}">
                                             <span class="menu-bullet">
@@ -241,7 +241,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('tambahProduk') ? 'active' : '' }}" href="{{ route('tambahProduk') }}">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_product') ? 'active' : '' }}" href="{{ route('admin.admin_tambah_product') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>

@@ -85,7 +85,7 @@ button.close{
     font-size: 12px;
     border-radius: 3px;
     padding:0.3125rem 0.4375rem;
-    background-color:#e4e9ef;
+    background-color:#e2e2e2;
     color: #212121;
 }
 .css-height-30{
@@ -129,4 +129,23 @@ button.close{
     padding: 0px 16px;
     text-indent: initial;
     width: 190px;
+}
+.css-fcjak2js{
+    color: #6D7588;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0px 3px 0px 0px;
+    line-height: 1.1;
+}
+.css-cna2lks9{
+    font-size: 1.42857rem;
+    color: #212121;
+    font-weight: 700;
+    margin: 4px 0px;
+    line-height: 28px;
+    letter-spacing: -0.2px;
+}
+.alert-success{
+    color: #0f5132!important;
+    border: 1px solid #0f5132!important;
 }

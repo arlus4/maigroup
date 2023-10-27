@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Carbon\Carbon;
 
 class Admin_Project_ProductController extends Controller
 {
@@ -46,13 +47,14 @@ class Admin_Project_ProductController extends Controller
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
-                'project_name' => 'required|string|max:255',
-                'slug'          => 'required|string|max:255|unique:kategori_products',
+                'project_name'  => 'required|string|max:255',
+                'slug'          => 'required|string|max:255|unique:ref_project',
             ]);
 
             Ref_Project::create([
                 'project_name' => $request->project_name,
-                'slug'          => $request->slug,
+                'slug'         => $request->slug,
+                'date_created' => Carbon::now('Asia/Jakarta')
             ]);
 
             DB::commit(); // Commit the transaction
@@ -85,7 +87,7 @@ class Admin_Project_ProductController extends Controller
      */
     public function edit(Ref_Project $ref_Project)
     {
-        return response()->json(Ref_Project::findOrFail($ref_Project->id));
+        //
     }
 
     /**
@@ -101,13 +103,13 @@ class Admin_Project_ProductController extends Controller
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
-                'project_name' => 'required|string|max:255',
-                'slug'          => 'required|string|max:255|unique:kategori_products,slug,' . $ref_Project->id,
+                'project_name_edit' => 'required|string|max:255',
+                'slug_edit'          => 'required|string|max:255|unique:ref_project,slug,' . $ref_Project->id,
             ]);
 
-            Ref_Project::findOrFail($ref_Project->id)->update([
-                'project_name' => $request->project_name,
-                'slug'          => $request->slug,
+            Ref_Project::findOrFail($request->idKategoriProduk)->update([
+                'project_name' => $request->project_name_edit,
+                'slug'         => $request->slug_edit,
             ]);
             
             DB::commit(); // Commit the transaction
@@ -127,12 +129,16 @@ class Admin_Project_ProductController extends Controller
      * @param  \App\Models\Ref_Project  $ref_Project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ref_Project $ref_Project)
+    public function destroy(Request $request, Ref_Project $ref_Project)
     {
         try {
             DB::beginTransaction(); // Begin Transaction
 
-            $ref_Project->delete();
+            $request->validate([
+                'id_kategori' => 'required|integer',
+            ]);
+
+            Ref_Project::findOrFail($request->id_kategori)->delete();
 
             DB::commit(); // Commit the transaction
         } catch (\Exception $e) {
@@ -148,6 +154,7 @@ class Admin_Project_ProductController extends Controller
     public function kategoriProdukSlug(Request $request)
     {
         $slug = SlugService::createSlug(Ref_Project::class, 'slug', $request->project_name);
+
         return response()->json(['slug' => $slug]);
     }
 }

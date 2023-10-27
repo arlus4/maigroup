@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Ref_Produk;
+use App\Models\Ref_Project;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,8 +11,10 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class Admin_ProdukController extends Controller
+
+class Admin_ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +23,21 @@ class Admin_ProdukController extends Controller
      */
     public function index()
     {
-        $dataProduk = Ref_Produk::all();
+        $dataProduk     = Ref_Produk::select(
+                'ref_produks.id as id_produk',
+                'ref_produks.project_id',
+                'ref_produks.sku',
+                'ref_produks.nama_produk',
+                'ref_produks.slug',
+                'ref_produks.harga',
+                'ref_produks.deskripsi',
+                'ref_produks.thumbnail',
+
+                'ref_project.id as id_project',
+                'ref_project.project_name',
+            )
+            ->leftJoin('ref_project','ref_project.id','=','ref_produks.project_id')
+            ->get();
 
         return view('master.produk.daftarProduk', compact('dataProduk'));
     }
@@ -32,7 +49,9 @@ class Admin_ProdukController extends Controller
      */
     public function create()
     {
-        //
+        $getKategori  = Ref_Project::select('id','project_name','slug')->get();
+
+        return view('master.produk.tambahProduk', compact('getKategori'));
     }
 
     /**
@@ -47,12 +66,12 @@ class Admin_ProdukController extends Controller
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
-                'category_id' => 'required',
-                'sku' => 'required',
-                'nama_product' => 'required',
-                'slug' => 'required|unique:ref_products',
-                'harga' => 'required',
-                'deskripsi' => 'required'
+                'project_id'    => 'required',
+                'sku'           => 'required',
+                'nama_product'  => 'required',
+                'slug'          => 'required|unique:ref_produks',
+                'harga'         => 'required',
+                'deskripsi'     => 'required'
             ]);
 
             if ($request->hasFile('thumbnail')) {
@@ -75,9 +94,9 @@ class Admin_ProdukController extends Controller
             }
             
             Ref_Produk::create([
-                'project_id'       => $request->project_id,
+                'project_id'        => $request->project_id,
                 'sku'               => $request->sku,
-                'nama_product'      => $request->nama_product,
+                'nama_produk'       => $request->nama_product,
                 'slug'              => $request->slug,
                 'harga'             => $request->harga,
                 'deskripsi'         => $request->deskripsi,
@@ -86,14 +105,15 @@ class Admin_ProdukController extends Controller
             ]);
 
             DB::commit(); // Commit the transaction
+
         } catch (\Exception $e) {
             DB::rollback(); // Rollback the transaction in case of an exception
 
             Log::error($e); // Log the exception for debugging
 
-            return redirect()->back()->with('error', 'Gagal Menambah Produk. Silakan coba lagi.');
+            return redirect()->route('admin.admin_product')->with('error', 'Gagal Menambah Produk. Silakan coba lagi.');
         }
-        return redirect()->back()->with('success', 'Berhasil Menambah Produk');
+        return redirect()->route('admin.admin_product')->with('success', 'Berhasil Menambah Produk');
     }
 
     /**
@@ -191,26 +211,35 @@ class Admin_ProdukController extends Controller
      * @param  \App\Models\Ref_Produk  $ref_Produk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ref_Produk $ref_Produk)
+    public function destroy(Request $request)
     {
         try {
             DB::beginTransaction(); // Begin Transaction
             
-            if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $ref_Produk->thumbnail)) {
-                Storage::disk('public')->delete('storage/produk/thumbnail/' . $ref_Produk->thumbnail);
+            if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $request->data_thumbnail)) {
+                Storage::disk('public')->delete('storage/produk/thumbnail/' . $request->data_thumbnail);
             }
 
-            $ref_Produk->delete();
+            // $ref_Produk->delete();
+            Ref_Produk::findOrFail($request->id_produk)->delete();
 
+            Log::info($request);
             DB::commit(); // Commit the transaction
         } catch (\Exception $e) {
             DB::rollback(); // Rollback the transaction in case of an exception
 
             Log::error($e); // Log the exception for debugging
 
-            return redirect()->back()->with('error', 'Gagal Menghapus Product. Silakan coba lagi.');
+            return redirect()->back()->with('error', 'Gagal Menghapus Produk. Silakan coba lagi.');
             // return redirect()->back()->with('error', 'Gagal Menghapus Product: ' . $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Product Berhasil Dihapus.');
+        return redirect()->back()->with('success', 'Produk Berhasil Dihapus.');
+    }
+
+    public function produkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Ref_Produk::class, 'slug', $request->nama_product);
+
+        return response()->json(['slug' => $slug]);
     }
 }

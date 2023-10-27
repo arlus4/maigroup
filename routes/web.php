@@ -5,7 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Check_Connection;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Admin_Category_ProductController;
+use App\Http\Controllers\Admin\Admin_Project_ProductController;
 use App\Http\Controllers\Admin\Admin_ProductController;
 
 Route::get('/', [HomeController::class, 'home']);
@@ -33,18 +33,21 @@ Route::group(['middleware' => ['admin:4']], function () {
     Route::prefix('admin')->name('admin.')->group(function() {
 
         //Kategori Produk
-        Route::get('/category_product', [Admin_Category_ProductController::class, 'index'])->name('admin_category_product');
-        Route::get('/edit_category_product/{kategori_Product:slug}', [Admin_Category_ProductController::class, 'edit'])->name('admin_edit_category_product');
-        Route::post('/store_category_product', [Admin_Category_ProductController::class, 'store'])->name('admin_store_category_product');
-        Route::post('/update_category_product/{kategori_Product:slug}', [Admin_Category_ProductController::class, 'update'])->name('admin_update_category_product');
-        Route::post('/delete_category_product/{kategori_Product:slug}', [Admin_Category_ProductController::class, 'destroy'])->name('admin_delete_category_product');
-        Route::get('/kategoriProdukSlug', [Admin_Category_ProductController::class, 'kategoriProdukSlug']);        
+        Route::get('/category_product', [Admin_Project_ProductController::class, 'index'])->name('admin_category_product');
+        Route::get('/edit_category_product/{kategori_Product:slug}', [Admin_Project_ProductController::class, 'edit'])->name('admin_edit_category_product');
+        Route::post('/store_category_product', [Admin_Project_ProductController::class, 'store'])->name('admin_store_category_product');
+        Route::post('/update_category_product', [Admin_Project_ProductController::class, 'update'])->name('admin_update_category_product');
+        Route::post('/delete_category_product', [Admin_Project_ProductController::class, 'destroy'])->name('admin_delete_category_product');
+        Route::get('/kategoriProdukSlug', [Admin_Project_ProductController::class, 'kategoriProdukSlug']);        
 
         //Produk
         Route::get('/product', [Admin_ProductController::class, 'index'])->name('admin_product');
+        Route::get('/tambah-product', [Admin_ProductController::class, 'create'])->name('admin_tambah_product');
         Route::post('/store_product', [Admin_ProductController::class, 'store'])->name('admin_store_product');
         Route::post('/update_product/{ref_Product:slug}', [Admin_ProductController::class, 'update'])->name('admin_update_product');
-        Route::post('/delete_product/{ref_Product:slug}', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
+        Route::post('/delete_product', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
+        Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);        
+
     });
 });
 

@@ -10,6 +10,21 @@
             </div>
         </div>
         <div id="kt_app_content_container" class="app-container container-xxl">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle" style="margin-right: 9px;color: #0f5132!important;"></i>
+                    {{ $message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if ($message = Session::get('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-times-circle" style="margin-right: 9px;color: #f1416c!important;"></i>
+                    {{ $message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
@@ -20,12 +35,12 @@
                                     <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
                                 </svg>
                             </span>
-                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari Kategori Produk" />
+                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari Produk" />
                         </div>
                     </div>
                     <div class="card-toolbar">
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <a href="{{ route('tambahProduk') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
+                            <a href="{{ route('admin.admin_tambah_product') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
                                 <span class="svg-icon svg-icon-2">
                                     <i class="fas fa-plus-circle text-white"></i>
                                 </span>
@@ -41,7 +56,7 @@
                                 <th class="min-w-125px text-dark">SKU</th>
                                 <th class="min-w-125px text-dark">Nama Produk</th>
                                 <th class="min-w-125px text-dark">Kategori</th>
-                                <th class="min-w-125px text-dark">Deskripsi</th>
+                                <th class="min-w-125px text-dark">Harga</th>
                                 <th class="min-w-125px text-dark">Thumbnail</th>
                                 <th class="min-w-125px text-dark">Aksi</th>
                             </tr>
@@ -50,11 +65,11 @@
                             @foreach($dataProduk as $produk)
                             <tr>
                                 <td class="align-items-center">{{ $produk->sku }}</td>
-                                <td class="align-items-center">{{ $produk->nama_product }}</td>
+                                <td class="align-items-center">{{ $produk->nama_produk }}</td>
                                 <td class="align-items-center">
-                                    <span class="css-fnak2bsk">Es Teh</span>
+                                    <span class="badge badge-info">{{ $produk->project_name }}</span>
                                 </td>
-                                <td class="align-items-center">{{ $produk->deskripsi }}</td>
+                                <td class="align-items-center">Rp{{ number_format($produk->harga) }}</td>
                                 <td class="align-items-center">
                                     <div class="symbol symbol-circle">
                                         <div class="symbol-label" style="background: transparent;">
@@ -64,53 +79,93 @@
                                 </td>
                                 <td class="d-flex">
                                     <button class="border-0 bg-white p-0" style="margin-right: 4px;">
-                                        <span class="badge badge-warning css-height-30">
-                                            <i class="fas fa-edit text-white"></i>&nbsp;
-                                            Edit
+                                        <span class="badge css-fnak2bsk css-height-30">
+                                            <i class="fas fa-eye" style="color: #212121;"></i>&nbsp;
                                         </span>
                                     </button>
-                                    <button class="border-0 bg-white p-0">
+                                    <button class="border-0 bg-white p-0" style="margin-right: 4px;">
+                                        <span class="badge badge-warning css-height-30">
+                                            <i class="fas fa-edit text-white"></i>&nbsp;
+                                        </span>
+                                    </button>
+                                    <button class="border-0 bg-white p-0" data-bs-toggle="modal" data-bs-id_produk="{{ $produk->id_produk }}" data-bs-thumbnail="{{ $produk->thumbnail }}" data-bs-target="#modalDelete">
                                         <span class="badge badge-danger css-height-30">
                                             <i class="fas fa-trash text-white"></i>&nbsp;
-                                            Hapus
                                         </span>
                                     </button>
                                 </td>
                             </tr>
                             @endforeach
-                            <!-- <tr>
-                                <td class="align-items-center">SKU002-0002-HTM-002</td>
-                                <td class="align-items-center">Chizu Red Velvet</td>
-                                <td class="align-items-center">
-                                    <span class="css-fnak2bsk">Es Teh</span>
-                                </td>
-                                <td class="align-items-center">Ini sebuah Chizu Red Velvet dengan kategori Es Teh</td>
-                                <td class="align-items-center">
-                                    <div class="symbol symbol-circle">
-                                        <div class="symbol-label" style="background: transparent;">
-                                            <img class="w-100" src="{{ asset('assets/images/teh_8.png') }}">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="d-flex">
-                                    <button class="border-0 bg-white p-0" style="margin-right: 4px;">
-                                        <span class="badge badge-warning css-height-30">
-                                            <i class="fas fa-edit text-white"></i>&nbsp;
-                                            Edit
-                                        </span>
-                                    </button>
-                                    <button class="border-0 bg-white p-0">
-                                        <span class="badge badge-danger css-height-30">
-                                            <i class="fas fa-trash text-white"></i>&nbsp;
-                                            Hapus
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr> -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Delete -->
+    <div class="modal fade" id="modalDelete">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 8px;">
+                <div class="content-header">
+                    <div class="content-title">
+                        <h4 class="css-lk3jsp">Hapus Produk</h4>
+                    </div>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="css-flj2ej">
+                    <div class="css-fjkpo0ma">
+                        <div class="css-wj23sk">
+                            <form action="{{ route('admin.admin_delete_product') }}" method="POST">
+                                @csrf
+                                <div class="row g-9 mb-8">
+                                    <!--begin::Col-->
+                                    <input type="hidden" name="id_produk" id="id">
+                                    <input type="hidden" name="data_thumbnail" id="thumbnail">
+                                    <div class="col-md-12 fv-row" >
+                                        <span style="font-size: 15px">
+                                            Apakah Anda yakin untuk menghapus data produk ini?
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="css-ca2jq0s" style="width: 80px;" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="css-kl2kd9a">
+                                        <span class="indicator-label">Ya, saya yakin</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+
+    <!-- Modal Hapus Produk -->
+    <script>
+        var hapus = document.getElementById('modalDelete');
+        hapus.addEventListener('show.bs.modal', function (event) {
+            var button           = event.relatedTarget;
+            var id_produk        = button.getAttribute('data-bs-id_produk');
+            var data_thumbnail   = button.getAttribute('data-bs-thumbnail');
+
+            id.value        = id_produk;
+            thumbnail.value = data_thumbnail;
+        });
+
+        setTimeout(function() {
+            document.querySelector('.alert.alert-success').remove();
+        }, 3000);
+
+        setTimeout(function() {
+            document.querySelector('.alert.alert-danger').remove();
+        }, 3000);
+    </script>
+
 @endsection

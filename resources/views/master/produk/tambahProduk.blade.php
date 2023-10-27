@@ -11,7 +11,8 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
 			<div id="kt_app_content_container" class="app-container container-xxl">
-				<form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="products.html">
+				<form action="{{ route('admin.admin_store_product') }}" method="post" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row">
+					@csrf
 					<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
 						<div class="card card-flush py-4" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
 							<div class="card-header">
@@ -25,7 +26,7 @@
 									<div class="image-input-wrapper w-150px h-150px"></div>
 									<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah Gambar">
 										<i class="fas fa-pencil fs-7"></i>
-										<input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+										<input type="file" name="thumbnail" accept=".png, .jpg, .jpeg" />
 										<input type="hidden" name="avatar_remove" />
 									</label>
 									<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Batal Gambar">
@@ -52,18 +53,24 @@
 										<div class="card-body pt-0">
 											<div class="mb-10 fv-row">
 												<label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Nama Produk</label>
-												<input type="text" name="nama_produk" class="form-control mb-2" placeholder="Contoh : Teh Dandang" value="" />
+												<input type="text" name="nama_product" class="form-control mb-2 nama_product" id="nama_product" placeholder="Contoh : Teh Dandang" value="" />
 												<div class="text-muted fs-7" style="color: #31353B!important;">Nama produk min. 40 karakter dan Nama <strong>tidak bisa diubah</strong> setelah produk terjual, ya.</div>
 											</div>
 											<div class="mb-10 fv-row">
 												<label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Slug Produk</label>
-												<input type="text" name="slug_produk" class="form-control mb-2" style="background-color: #e2e2e2;cursor: not-allowed;" readonly>
+												<input type="text" name="slug" class="form-control mb-2 slug" id="slug" style="background-color: #e2e2e2;cursor: not-allowed;" readonly>
 												<div class="text-muted fs-7" style="color: #31353B!important;">Slug Produk akan otomatis sesuai dengan inputan <strong>Nama Produk.</strong></div>
 											</div>
 											<div class="row">
 												<label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kategori Produk</label>
 												<div class="col-md-6">
-													<select class="form-select mb-2" data-control="select2" data-placeholder="Pilih Kategori" data-allow-clear="true" multiple="multiple">
+													<select class="form-select mb-2" data-control="select2" data-placeholder="Pilih Kategori" data-allow-clear="true" name="project_id">
+														<option></option>
+														@foreach($getKategori as $kategori)
+															<option value="{{ $kategori->id }}">{{ $kategori->project_name }}</option>
+														@endforeach
+													</select>
+													<!-- <select class="form-select mb-2" data-control="select2" data-placeholder="Pilih Kategori" data-allow-clear="true" multiple="multiple">
 														<option></option>
 														<option value="Computers">Computers</option>
 														<option value="Watches">Watches</option>
@@ -75,8 +82,8 @@
 														<option value="Handbags">Handbags</option>
 														<option value="Wines">Wines</option>
 														<option value="Sandals">Sandals</option>
-													</select>
-													<div class="text-muted fs-7 mb-5" style="color: #31353B!important;">Pilih kategori produk dengan benar, ya.</div>
+													</select> -->
+													<div class="text-muted fs-7 mb-5" style="color: #31353B!important;">Pilih kategori produk dengan benar, ya.</div> 
 												</div>
 												<div class="col-md-6">
 													<button type="button" class="css-kl2kd9a" style="width: 200px;" data-bs-toggle="modal" data-bs-target="#addModalKategori">
@@ -87,7 +94,7 @@
 											</div>
 											<div>
 												<label class="form-label mt-5" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Deskripsi Produk</label>
-												<textarea name="deskripsi_produk" class="form-control mb-2" rows="4"></textarea>
+												<textarea name="deskripsi" class="form-control mb-2" rows="4"></textarea>
 												<div class="text-muted fs-7" style="color: #31353B!important;">Pastikan deskripsi produk memuat penjelasan detail terkait produkmu agar pembeli mudah mengerti dan menemukan produkmu.</div>
 											</div>
 										</div>
@@ -107,7 +114,7 @@
 											<label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Harga Produk</label>
 											<div class="input-group">
 												<span class="input-group-text" id="harga">Rp</span>
-												<input type="text" class="form-control" placeholder="Masukkan Harga" aria-describedby="harga">
+												<input type="text" class="form-control" placeholder="Masukkan Harga" name="harga" aria-describedby="harga">
 											</div>
 										</div>
 									</div>
@@ -115,12 +122,8 @@
 							</div>
 						</div>
 						<div class="d-flex justify-content-end">
-							<a href="products.html" id="kt_ecommerce_add_product_cancel" class="css-ca2jq0s">Batalkan</a>
-							<button type="submit" id="kt_ecommerce_add_product_submit" class="css-kl2kd9a">
-								<span class="indicator-label">Simpan</span>
-								<span class="indicator-progress">Tunggu Sebentar... 
-								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-							</button>
+							<a id="kt_ecommerce_add_product_cancel" class="css-ca2jq0s">Batalkan</a>
+							<button type="submit" class="css-kl2kd9a">Simpan</button>
 						</div>
 					</div>
 				</form>
@@ -175,4 +178,20 @@
 			</div>
 		</div>
 	</div>
+@endsection
+
+@section('script')
+
+	<!-- SLUG Tambah Data -->
+    <script type="text/javascript">
+        const nama_product = document.querySelector('#nama_product');
+        const slug         = document.querySelector('#slug');
+
+        nama_product.addEventListener('change', function(){
+            fetch('/admin/produkSlug?nama_product=' + nama_product.value)
+            .then(response => response.json())
+            .then(data => slug.value = data.slug)
+        });
+    </script>
+
 @endsection
