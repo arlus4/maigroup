@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kategori_products', function (Blueprint $table) {
+        Schema::create('ref_produks', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kategori');
+            $table->foreignId('project_id');
+            $table->string('sku');
+            $table->string('nama_produk');
             $table->string('slug')->unique();
+            $table->string('harga');
+            $table->text('deskripsi');
+            $table->string('thumbnail');
+            $table->text('path_thumbnail');
             $table->timestamps();
         });
     }
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kategori_products');
+        Schema::dropIfExists('ref_produks');
     }
 };

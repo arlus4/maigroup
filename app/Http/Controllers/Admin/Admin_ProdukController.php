@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Ref_Product;
+use App\Models\Ref_Produk;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
-class Admin_ProductController extends Controller
+class Admin_ProdukController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        $dataProduk = Ref_Product::all();
+        $dataProduk = Ref_Produk::all();
 
         return view('master.produk.daftarProduk', compact('dataProduk'));
     }
@@ -74,8 +74,8 @@ class Admin_ProductController extends Controller
                 $imagePath = null;
             }
             
-            Ref_Product::create([
-                'category_id'       => $request->category_id,
+            Ref_Produk::create([
+                'project_id'       => $request->project_id,
                 'sku'               => $request->sku,
                 'nama_product'      => $request->nama_product,
                 'slug'              => $request->slug,
@@ -99,10 +99,10 @@ class Admin_ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Ref_Product  $ref_Product
+     * @param  \App\Models\Ref_Produk  $ref_Produk
      * @return \Illuminate\Http\Response
      */
-    public function show(Ref_Product $ref_Product)
+    public function show(Ref_Produk $ref_Produk)
     {
         //
     }
@@ -110,10 +110,10 @@ class Admin_ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ref_Product  $ref_Product
+     * @param  \App\Models\Ref_Produk  $ref_Produk
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ref_Product $ref_Product)
+    public function edit(Ref_Produk $ref_Produk)
     {
         //
     }
@@ -122,10 +122,10 @@ class Admin_ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ref_Product  $ref_Product
+     * @param  \App\Models\Ref_Produk  $ref_Produk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ref_Product $ref_Product): RedirectResponse
+    public function update(Request $request, Ref_Produk $ref_Produk)
     {
         try {
             DB::beginTransaction(); // Begin Transaction
@@ -155,15 +155,15 @@ class Admin_ProductController extends Controller
                 $imagePath = 'storage/produk/thumbnail/' . $imageName;
 
                 // Delete Old Image
-                if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $ref_Product->thumbnail)) {
-                    Storage::disk('public')->delete('storage/produk/thumbnail/' . $ref_Product->thumbnail);
+                if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $ref_Produk->thumbnail)) {
+                    Storage::disk('public')->delete('storage/produk/thumbnail/' . $ref_Produk->thumbnail);
                 }
             } else {
-                $imageName = $ref_Product->thumbnail;
-                $imagePath = $ref_Product->path_thumbnail;
+                $imageName = $ref_Produk->thumbnail;
+                $imagePath = $ref_Produk->path_thumbnail;
             }
             
-            $ref_Product->update([
+            $ref_Produk->update([
                 'category_id' => $request->category_id,
                 'sku' => $request->sku,
                 'nama_product' => $request->nama_product,
@@ -188,19 +188,19 @@ class Admin_ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ref_Product  $ref_Product
+     * @param  \App\Models\Ref_Produk  $ref_Produk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ref_Product $ref_Product)
+    public function destroy(Ref_Produk $ref_Produk)
     {
         try {
             DB::beginTransaction(); // Begin Transaction
             
-            if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $ref_Product->thumbnail)) {
-                Storage::disk('public')->delete('storage/produk/thumbnail/' . $ref_Product->thumbnail);
+            if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $ref_Produk->thumbnail)) {
+                Storage::disk('public')->delete('storage/produk/thumbnail/' . $ref_Produk->thumbnail);
             }
 
-            $ref_Product->delete();
+            $ref_Produk->delete();
 
             DB::commit(); // Commit the transaction
         } catch (\Exception $e) {

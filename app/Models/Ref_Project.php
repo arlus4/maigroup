@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class Ref_Product extends Model
+class Ref_Project extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $table = 'ref_products';
+    protected $table = 'ref_project';
 
     /**
      * The attributes that aren't mass assignable.
@@ -34,7 +34,7 @@ class Ref_Product extends Model
     {
         return [
             'slug' => [
-                'source' => 'nama_product'
+                'source' => 'project_name'
             ]
         ];
     }

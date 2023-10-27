@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Ref_Project;
 use Illuminate\Http\Request;
-use App\Models\Kategori_Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class Admin_Category_ProductController extends Controller
+class Admin_Project_ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class Admin_Category_ProductController extends Controller
      */
     public function index()
     {
-        $dataKategori = Kategori_Product::select('id','nama_kategori','slug')->get();
+        $dataKategori = Ref_Project::select('id','project_name','slug')->get();
 
         return view('master.kategori-produk.index', compact('dataKategori'));
     }
@@ -46,12 +46,12 @@ class Admin_Category_ProductController extends Controller
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
-                'nama_kategori' => 'required|string|max:255',
+                'project_name' => 'required|string|max:255',
                 'slug'          => 'required|string|max:255|unique:kategori_products',
             ]);
 
-            Kategori_Product::create([
-                'nama_kategori' => $request->nama_kategori,
+            Ref_Project::create([
+                'project_name' => $request->project_name,
                 'slug'          => $request->slug,
             ]);
 
@@ -69,10 +69,10 @@ class Admin_Category_ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kategori_Product  $kategori_Product
+     * @param  \App\Models\Ref_Project  $ref_Project
      * @return \Illuminate\Http\Response
      */
-    public function show(Kategori_Product $kategori_Product)
+    public function show(Ref_Project $ref_Project)
     {
         //
     }
@@ -80,34 +80,33 @@ class Admin_Category_ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kategori_Product  $kategori_Product
+     * @param  \App\Models\Ref_Project  $ref_Project
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kategori_Product $kategori_Product)
+    public function edit(Ref_Project $ref_Project)
     {
-        return response()->json(Kategori_Product::findOrFail($kategori_Product->id));
+        return response()->json(Ref_Project::findOrFail($ref_Project->id));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kategori_Product  $kategori_Product
+     * @param  \App\Models\Ref_Project  $ref_Project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kategori_Product $kategori_Product): RedirectResponse
+    public function update(Request $request, Ref_Project $ref_Project)
     {
-        dd($request);
         try {
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
-                'nama_kategori' => 'required|string|max:255',
-                'slug'          => 'required|string|max:255|unique:kategori_products,slug,' . $kategori_Product->id,
+                'project_name' => 'required|string|max:255',
+                'slug'          => 'required|string|max:255|unique:kategori_products,slug,' . $ref_Project->id,
             ]);
 
-            Kategori_Product::findOrFail($kategori_Product->id)->update([
-                'nama_kategori' => $request->nama_kategori,
+            Ref_Project::findOrFail($ref_Project->id)->update([
+                'project_name' => $request->project_name,
                 'slug'          => $request->slug,
             ]);
             
@@ -125,15 +124,15 @@ class Admin_Category_ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kategori_Product  $kategori_Product
+     * @param  \App\Models\Ref_Project  $ref_Project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kategori_Product $kategori_Product): RedirectResponse
+    public function destroy(Ref_Project $ref_Project)
     {
         try {
             DB::beginTransaction(); // Begin Transaction
 
-            $kategori_Product->delete();
+            $ref_Project->delete();
 
             DB::commit(); // Commit the transaction
         } catch (\Exception $e) {
@@ -148,7 +147,7 @@ class Admin_Category_ProductController extends Controller
 
     public function kategoriProdukSlug(Request $request)
     {
-        $slug = SlugService::createSlug(Kategori_Product::class, 'slug', $request->nama_kategori);
+        $slug = SlugService::createSlug(Ref_Project::class, 'slug', $request->project_name);
         return response()->json(['slug' => $slug]);
     }
 }
