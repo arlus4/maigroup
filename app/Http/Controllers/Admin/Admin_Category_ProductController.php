@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Admin_Category_ProductController extends Controller
 {
@@ -18,7 +19,9 @@ class Admin_Category_ProductController extends Controller
      */
     public function index()
     {
-        //
+        $dataKategori = Kategori_Product::select('id','nama_kategori','slug')->get();
+
+        return view('master.kategori-produk.index', compact('dataKategori'));
     }
 
     /**
@@ -44,12 +47,12 @@ class Admin_Category_ProductController extends Controller
 
             $request->validate([
                 'nama_kategori' => 'required|string|max:255',
-                'slug' => 'required|string|max:255|unique:kategori_products',
+                'slug'          => 'required|string|max:255|unique:kategori_products',
             ]);
 
             Kategori_Product::create([
                 'nama_kategori' => $request->nama_kategori,
-                'slug' => $request->slug,
+                'slug'          => $request->slug,
             ]);
 
             DB::commit(); // Commit the transaction
@@ -60,7 +63,7 @@ class Admin_Category_ProductController extends Controller
 
             return redirect()->back()->with('error', 'Gagal Menambah Kategori Produk. Silakan coba lagi.');
         }
-        return redirect()->back()->with('success', 'Berhasil Menambah Kategori Produk');
+        return redirect()->back()->with('success', 'Berhasil Menambah Kategori Produk!');
     }
 
     /**
@@ -82,7 +85,7 @@ class Admin_Category_ProductController extends Controller
      */
     public function edit(Kategori_Product $kategori_Product)
     {
-        //
+        return response()->json(Kategori_Product::findOrFail($kategori_Product->id));
     }
 
     /**
@@ -94,17 +97,18 @@ class Admin_Category_ProductController extends Controller
      */
     public function update(Request $request, Kategori_Product $kategori_Product): RedirectResponse
     {
+        dd($request);
         try {
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
                 'nama_kategori' => 'required|string|max:255',
-                'slug' => 'required|string|max:255|unique:kategori_products,slug,' . $kategori_Product->id,
+                'slug'          => 'required|string|max:255|unique:kategori_products,slug,' . $kategori_Product->id,
             ]);
 
             Kategori_Product::findOrFail($kategori_Product->id)->update([
                 'nama_kategori' => $request->nama_kategori,
-                'slug' => $request->slug,
+                'slug'          => $request->slug,
             ]);
             
             DB::commit(); // Commit the transaction
@@ -138,8 +142,13 @@ class Admin_Category_ProductController extends Controller
             Log::error($e); // Log the exception for debugging
 
             return redirect()->back()->with('error', 'Gagal Menghapus Kategori Produk. Silakan coba lagi.');
-            // return redirect()->back()->with('error', 'Gagal Menghapus Kategori Produk: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Kategori Produk Berhasil Dihapus.');
+    }
+
+    public function kategoriProdukSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Kategori_Product::class, 'slug', $request->nama_kategori);
+        return response()->json(['slug' => $slug]);
     }
 }

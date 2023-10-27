@@ -47,17 +47,18 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
+                            @foreach($dataProduk as $produk)
                             <tr>
-                                <td class="align-items-center">SKU001-0001-HTM-001</td>
-                                <td class="align-items-center">Es Teh Leci MaiTea</td>
+                                <td class="align-items-center">{{ $produk->sku }}</td>
+                                <td class="align-items-center">{{ $produk->nama_product }}</td>
                                 <td class="align-items-center">
                                     <span class="css-fnak2bsk">Es Teh</span>
                                 </td>
-                                <td class="align-items-center">Ini sebuah Teh Leci MaiTea dengan kategori Es Teh</td>
+                                <td class="align-items-center">{{ $produk->deskripsi }}</td>
                                 <td class="align-items-center">
                                     <div class="symbol symbol-circle">
                                         <div class="symbol-label" style="background: transparent;">
-                                            <img class="w-100" src="{{ asset('assets/images/teh_1.png') }}">
+                                            <img class="w-100" src="{{ asset('storage/produk/thumbnail/'.$produk->thumbnail) }}">
                                         </div>
                                     </div>
                                 </td>
@@ -76,7 +77,8 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
+                            @endforeach
+                            <!-- <tr>
                                 <td class="align-items-center">SKU002-0002-HTM-002</td>
                                 <td class="align-items-center">Chizu Red Velvet</td>
                                 <td class="align-items-center">
@@ -104,7 +106,7 @@
                                         </span>
                                     </button>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>

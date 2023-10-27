@@ -8,3 +8,5 @@
 <script src="{{ asset('assets/master/js/custom/utilities/modals/create-app.js') }}"></script>
 <script src="{{ asset('assets/master/js/custom/utilities/modals/new-target.js') }}"></script>
 <script src="{{ asset('assets/master/js/custom/utilities/modals/users-search.js') }}"></script>
+
+@yield('script')

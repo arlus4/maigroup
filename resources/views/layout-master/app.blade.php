@@ -12,6 +12,7 @@
 		<meta property="og:title" content="Metronic | Bootstrap HTML, VueJS, React, Angular, Asp.Net Core, Blazor, Django, Flask & Laravel Admin Dashboard Theme" />
 		<meta property="og:url" content="https://keenthemes.com/metronic" />
 		<meta property="og:site_name" content="Keenthemes | Metronic" />
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
 		<link rel="canonical" href="index.html" />
 		<link rel="shortcut icon" href="{{ asset('assets/images/ic_maitea.png') }}" />
 		<link rel="stylesheet" href="fonts.googleapis.com/css7b91.css?family=Inter:300,400,500,600,700" />

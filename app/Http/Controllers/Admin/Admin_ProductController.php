@@ -20,7 +20,9 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        //
+        $dataProduk = Ref_Product::all();
+
+        return view('master.produk.daftarProduk', compact('dataProduk'));
     }
 
     /**
@@ -73,14 +75,14 @@ class Admin_ProductController extends Controller
             }
             
             Ref_Product::create([
-                'category_id' => $request->category_id,
-                'sku' => $request->sku,
-                'nama_product' => $request->nama_product,
-                'slug' => $request->slug,
-                'harga' => $request->harga,
-                'deskripsi' => $request->deskripsi,
-                'thumbnail' => $imageName,
-                'path_thumbnail' => $imagePath,
+                'category_id'       => $request->category_id,
+                'sku'               => $request->sku,
+                'nama_product'      => $request->nama_product,
+                'slug'              => $request->slug,
+                'harga'             => $request->harga,
+                'deskripsi'         => $request->deskripsi,
+                'thumbnail'         => $imageName,
+                'path_thumbnail'    => $imagePath,
             ]);
 
             DB::commit(); // Commit the transaction
