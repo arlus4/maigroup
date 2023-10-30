@@ -32,11 +32,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/sum_point', [Invoice_Controller::class, 'sumPoint']);
 });
 
-// Web
-Route::post('/admin/store_product', [Admin_ProductController::class, 'store'])->name('admin_store_product');
-Route::post('/admin/update_product/{ref_Product:slug}', [Admin_ProductController::class, 'update'])->name('admin_update_product');
-Route::post('/admin/delete_product/{ref_Product:slug}', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
-
-Route::post('/admin/store_category_product', [Admin_Category_ProductController::class, 'store'])->name('admin_store_category_product');
-Route::post('/admin/update_category_product/{kategori_Product:slug}', [Admin_Category_ProductController::class, 'update'])->name('admin_update_category_product');
-Route::post('/admin/delete_category_product/{kategori_Product:slug}', [Admin_Category_ProductController::class, 'destroy'])->name('admin_delete_category_product');
+Route::post('/buat_invoice_master', [Invoice_Controller::class, 'create_invoice_master_pembeli']);

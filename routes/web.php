@@ -52,6 +52,6 @@ Route::group(['middleware' => ['admin:4']], function () {
 });
 
 
-// Route::get('/dashboard/admin/tambah-produk', function () {
-//     return view('master.produk.tambahProduk');
-// })->middleware(['auth', 'verified'])->name('tambahProduk');
+Route::get('/dashboard/admin/tambah-produk', function () {
+    return view('master.produk.tambahProduk');
+})->middleware(['auth', 'verified'])->name('tambahProduk');
