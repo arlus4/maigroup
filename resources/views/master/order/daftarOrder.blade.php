@@ -5,7 +5,7 @@
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar Produk</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar Order</h1>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 </div>
             @endif
             <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
-                <div class="card-header border-0 pt-6">
+                <!-- <div class="card-header border-0 pt-6">
                     <div class="card-title">
                         <div class="d-flex align-items-center position-relative my-1">
                             <span class="svg-icon svg-icon-1 position-absolute ms-6">
@@ -40,66 +40,29 @@
                     </div>
                     <div class="card-toolbar">
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <a href="{{ route('admin.admin_tambah_product') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
+                            <a href="#" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
                                 <span class="svg-icon svg-icon-2">
                                     <i class="fas fa-plus-circle text-white"></i>
                                 </span>
-                                Tambah Produk
+                                Tambah Order
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="card-body py-4">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableOrder" class="display">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th class="min-w-125px text-dark">Info Produk</th>
-                                <th class="min-w-125px text-dark">Kategori</th>
-                                <th class="min-w-125px text-dark">Harga</th>
-                                <!-- <th class="min-w-125px text-dark">Aksi</th> -->
+                                <th class="min-w-100px text-dark">ID Outlet</th>
+                                <th class="min-w-100px text-dark">No Invoice</th>
+                                <th class="min-w-100px text-dark">QTY</th>
+                                <th class="min-w-100px text-dark">Amount</th>
+                                <th class="min-w-100px text-dark">Kategori</th>
+                                <th class="min-w-100px text-dark">Progress</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
-                            @foreach($dataProduk as $produk)
-                            <tr>
-                                <td class="d-flex align-items-center">
-                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                        <div class="symbol-label">
-                                            <img src="{{ asset('storage/produk/thumbnail/'.$produk->thumbnail) }}" class="w-100" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <span class="text-gray-800 mb-1">{{ $produk->nama_produk }}</span>
-                                        <span>SKU: {{ $produk->sku }}</span>
-                                    </div>
-                                </td>
-                                <td class="align-items-center">
-                                    <span class="badge badge-secondary">{{ $produk->project_name }}</span>
-                                </td>
-                                <td class="align-items-center">Rp{{ number_format($produk->harga) }}</td>
-                                <td class="align-items-center">
-                                    <div class="dropdown">
-                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Atur
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li>
-                                                <a href="edit-product/{{ $produk->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                    Edit
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-id_produk="{{ $produk->id_produk }}" data-bs-thumbnail="{{ $produk->thumbnail }}" data-bs-target="#modalDelete" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-trash me-2"></i>
-                                                    Hapus
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+                            
                         </tbody>
                     </table>
                 </div>
@@ -150,26 +113,10 @@
 @endsection
 
 @section('script')
-
-    <!-- Modal Hapus Produk -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script>
-        var hapus = document.getElementById('modalDelete');
-        hapus.addEventListener('show.bs.modal', function (event) {
-            var button           = event.relatedTarget;
-            var id_produk        = button.getAttribute('data-bs-id_produk');
-            var data_thumbnail   = button.getAttribute('data-bs-thumbnail');
-
-            id.value        = id_produk;
-            thumbnail.value = data_thumbnail;
-        });
-
-        setTimeout(function() {
-            document.querySelector('.alert.alert-success').remove();
-        }, 3000);
-
-        setTimeout(function() {
-            document.querySelector('.alert.alert-danger').remove();
-        }, 3000);
+        $(document).ready( function () {
+            $('#tableOrder').DataTable();
+        } );
     </script>
-
 @endsection

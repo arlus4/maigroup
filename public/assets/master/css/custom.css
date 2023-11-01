@@ -149,3 +149,47 @@ button.close{
     color: #0f5132!important;
     border: 1px solid #0f5132!important;
 }
+.password-toggle {
+    position: relative;
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    pointer-events: auto;
+}
+.toggle-password i {
+    pointer-events: none;
+}
+.css-fcabk9sn{
+    background-color: #ecf0f1;
+    color: #3F4254;
+    align-items: center;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding-top: 0.425rem;
+    padding-right: 0.725rem;
+    padding-bottom: 0.425rem;
+    padding-left: 0.725rem;
+    width: 70%;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.css-fcabk9sa{
+    background-color: #ecf0f1;
+    color: #3F4254;
+    align-items: center;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-right: 0.725rem;
+    padding-bottom: 0.425rem;
+    padding-left: 0.725rem;
+    width: 70%;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.form-check-custom.form-check-solid .form-check-input:checked{
+    background-color: #00BF71!important;
+}

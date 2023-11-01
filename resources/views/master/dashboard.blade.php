@@ -11,9 +11,9 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-                    <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-3 mb-md-5 mb-xl-10">
-                        <div class="card card-flush h-md-50 mb-5 mb-xl-10" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
+                <div class="row g-5 g-xl-10">
+                    <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-3">
+                        <div class="card card-flush h-md-75" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                             <div class="card-header pt-2">
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="css-fcjak2js">Total Kategori Produk</span>
@@ -25,8 +25,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-3 mb-md-5 mb-xl-10">
-                        <div class="card card-flush h-md-50 mb-5 mb-xl-10" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
+                    <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-3">
+                        <div class="card card-flush h-md-75" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                             <div class="card-header pt-2">
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="css-fcjak2js">Total Produk</span>
@@ -38,8 +38,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-3 mb-md-5 mb-xl-10">
-                        <div class="card card-flush h-md-50 mb-5 mb-xl-10" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
+                    <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-3">
+                        <div class="card card-flush h-md-75" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                             <div class="card-body d-flex flex-column justify-content-end pe-0">
                                 
                             </div>

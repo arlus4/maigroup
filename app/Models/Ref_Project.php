@@ -19,7 +19,7 @@ class Ref_Project extends Model
      */
     protected $guarded = ['id'];
 
-    public $timestamps = false; 
+    public $timestamps = false;
 
     public function getRouteKeyName()
     {

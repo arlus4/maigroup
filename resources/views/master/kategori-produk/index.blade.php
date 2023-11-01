@@ -6,7 +6,7 @@
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Data Kategori Produk</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Data Kategori Projek</h1>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
                                     <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
                                 </svg>
                             </span>
-                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari Kategori Produk" />
+                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari Kategori Projek" />
                         </div>
                     </div>
                     <div class="card-toolbar">
@@ -45,7 +45,7 @@
                                 <span class="svg-icon svg-icon-2">
                                     <i class="fas fa-plus-circle text-white"></i>
                                 </span>
-                                Tambah Kategori Produk
+                                Tambah Kategori Projek
                             </button>
                         </div>
                     </div>
@@ -55,7 +55,6 @@
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-125px text-dark">Nama Kategori</th>
-                                <th class="min-w-125px text-dark">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
@@ -63,7 +62,26 @@
                                 <tr>
                                     <td class="align-items-center">{{ $val->project_name }}</td>
                                     <td class="d-flex">
-                                        <button class="border-0 bg-white p-0" style="margin-right: 4px;" data-bs-toggle="modal" data-bs-kategori="{{ $val->id }}" data-bs-nama="{{ $val->project_name }}" data-bs-slug_kategori="{{ $val->slug }}" data-bs-target="#modalEdit">
+                                        <div class="dropdown">
+                                            <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Atur
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-kategori="{{ $val->id }}" data-bs-nama="{{ $val->project_name }}" data-bs-slug_kategori="{{ $val->slug }}" data-bs-target="#modalEdit" style="cursor: pointer">
+                                                        <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                        Edit
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-id_kategori="{{ $val->id }}" data-bs-target="#modalDelete" style="cursor: pointer">
+                                                        <i style="color:#181C32;" class="fas fa-trash me-2"></i>
+                                                        Hapus
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- <button class="border-0 bg-white p-0" style="margin-right: 4px;" data-bs-toggle="modal" data-bs-kategori="{{ $val->id }}" data-bs-nama="{{ $val->project_name }}" data-bs-slug_kategori="{{ $val->slug }}" data-bs-target="#modalEdit">
                                             <span class="badge badge-warning css-height-30">
                                                 <i class="fas fa-edit text-white"></i>&nbsp;
                                                 Edit
@@ -74,7 +92,7 @@
                                                 <i class="fas fa-trash text-white"></i>&nbsp;
                                                 Hapus
                                             </span>
-                                        </button>
+                                        </button> -->
                                     </td>
                                 </tr>
                             @endforeach
@@ -91,7 +109,7 @@
             <div class="modal-content" style="border-radius: 8px;">
             <div class="content-header">
                 <div class="content-title">
-                    <h4 class="css-lk3jsp">Tambah Kategori Produk</h4>
+                    <h4 class="css-lk3jsp">Tambah Kategori Projek</h4>
                 </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
@@ -140,7 +158,7 @@
             <div class="modal-content" style="border-radius: 8px;">
             <div class="content-header">
                 <div class="content-title">
-                    <h4 class="css-lk3jsp">Edit Kategori Produk</h4>
+                    <h4 class="css-lk3jsp">Edit Kategori Projek</h4>
                 </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
@@ -177,7 +195,7 @@
             </div>
             <div class="modal-footer">
                     <button type="button" id="close-button" class="css-ca2jq0s" style="width: 80px;" data-bs-dismiss="modal">Batalkan</button>
-                    <button type="submit" id="ubah-button" class="css-kl2kd9a">Ubah</button>
+                    <button type="submit" id="ubah-button" class="css-kl2kd9a">Simpan Perubahan</button>
                 </form>
             </div>
             </div>
@@ -190,7 +208,7 @@
             <div class="modal-content" style="border-radius: 8px;">
                 <div class="content-header">
                     <div class="content-title">
-                        <h4 class="css-lk3jsp">Hapus Kategori Produk</h4>
+                        <h4 class="css-lk3jsp">Hapus Kategori Projek</h4>
                     </div>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
@@ -206,7 +224,7 @@
                                     <input type="hidden" name="id_kategori" id="id">
                                     <div class="col-md-12 fv-row" >
                                         <span style="font-size: 15px">
-                                            Apakah Anda yakin untuk menghapus data kategori produk ini?
+                                            Apakah Anda yakin untuk menghapus data kategori projek ini?
                                         </span>
                                     </div>
                                 </div>
@@ -273,5 +291,15 @@
             var id_kategori = button.getAttribute('data-bs-id_kategori');
             id.value = id_kategori;
         });
+    </script>
+
+    <script>
+        setTimeout(function() {
+            document.querySelector('.alert.alert-success').remove();
+        }, 3000);
+
+        setTimeout(function() {
+            document.querySelector('.alert.alert-danger').remove();
+        }, 3000);
     </script>
 @endsection

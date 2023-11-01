@@ -23,7 +23,7 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        $dataProduk     = Ref_Produk::select(
+        $dataProduk = Ref_Produk::select(
                 'ref_produks.id as id_produk',
                 'ref_produks.project_id',
                 'ref_produks.sku',
@@ -130,33 +130,52 @@ class Admin_ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ref_Produk  $ref_Produk
+     * @param  \App\Models\Ref_Produk  $ref_Product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ref_Produk $ref_Produk)
+    public function edit(Ref_Produk $ref_Product)
     {
-        //
+        $dataProduk = Ref_Produk::select(
+            'ref_produks.id as id_produk',
+            'ref_produks.project_id',
+            'ref_produks.sku',
+            'ref_produks.nama_produk',
+            'ref_produks.slug',
+            'ref_produks.harga',
+            'ref_produks.deskripsi',
+            'ref_produks.thumbnail',
+
+            'ref_project.id as id_project',
+            'ref_project.project_name',
+        )
+        ->leftJoin('ref_project','ref_project.id','=','ref_produks.project_id')
+        ->where('ref_produks.slug', $ref_Product->slug)
+        ->first();
+
+        $getKategori  = Ref_Project::select('id','project_name','slug')->get();
+
+        return view('master.produk.editProduk', compact('dataProduk','getKategori'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ref_Produk  $ref_Produk
+     * @param  \App\Models\Ref_Produk  $ref_Product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ref_Produk $ref_Produk)
+    public function update(Request $request, Ref_Produk $ref_Product)
     {
         try {
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
-                'category_id' => 'required',
-                'sku' => 'required',
-                'nama_product' => 'required',
-                'slug' => 'required|unique:ref_products',
-                'harga' => 'required',
-                'deskripsi' => 'required'
+                'project_id'    => 'required',
+                'sku'           => 'required',
+                'nama_product'  => 'required',
+                'slug'          => 'required|unique:ref_produks',
+                'harga'         => 'required',
+                'deskripsi'     => 'required'
             ]);
             
             if ($request->hasFile('thumbnail')) {
@@ -175,23 +194,23 @@ class Admin_ProductController extends Controller
                 $imagePath = 'storage/produk/thumbnail/' . $imageName;
 
                 // Delete Old Image
-                if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $ref_Produk->thumbnail)) {
-                    Storage::disk('public')->delete('storage/produk/thumbnail/' . $ref_Produk->thumbnail);
+                if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $ref_Product->thumbnail)) {
+                    Storage::disk('public')->delete('storage/produk/thumbnail/' . $ref_Product->thumbnail);
                 }
             } else {
-                $imageName = $ref_Produk->thumbnail;
-                $imagePath = $ref_Produk->path_thumbnail;
+                $imageName = $ref_Product->thumbnail;
+                $imagePath = $ref_Product->path_thumbnail;
             }
             
-            $ref_Produk->update([
-                'category_id' => $request->category_id,
-                'sku' => $request->sku,
-                'nama_product' => $request->nama_product,
-                'slug' => $request->slug,
-                'harga' => $request->harga,
-                'deskripsi' => $request->deskripsi,
-                'thumbnail' => $imageName,
-                'path_thumbnail' => $imagePath,
+            $ref_Product->update([
+                'project_id'        => $request->project_id,
+                'sku'               => $request->sku,
+                'nama_produk'       => $request->nama_product,
+                'slug'              => $request->slug,
+                'harga'             => $request->harga,
+                'deskripsi'         => $request->deskripsi,
+                'thumbnail'         => $imageName,
+                'path_thumbnail'    => $imagePath,
             ]);
 
             DB::commit(); // Commit the transaction
@@ -200,9 +219,9 @@ class Admin_ProductController extends Controller
 
             Log::error($e); // Log the exception for debugging
 
-            return redirect()->back()->with('error', 'Gagal Mengubah Produk. Silakan coba lagi.');
+            return redirect()->route('admin.admin_product')->with('error', 'Gagal Mengubah Produk. Silakan coba lagi');
         }
-        return redirect()->back()->with('success', 'Berhasil Mengubah Produk');
+        return redirect()->route('admin.admin_product')->with('success', 'Berhasil Mengubah Produk');
     }
 
     /**
@@ -215,25 +234,27 @@ class Admin_ProductController extends Controller
     {
         try {
             DB::beginTransaction(); // Begin Transaction
-            
-            if (Storage::disk('public')->exists('storage/produk/thumbnail/' . $request->data_thumbnail)) {
-                Storage::disk('public')->delete('storage/produk/thumbnail/' . $request->data_thumbnail);
+
+            $filePath = 'storage/produk/thumbnail/' . $request->data_thumbnail;
+
+            Log::info('Path file yang akan dihapus: ' . $filePath);
+
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
             }
 
-            // $ref_Produk->delete();
             Ref_Produk::findOrFail($request->id_produk)->delete();
 
-            Log::info($request);
             DB::commit(); // Commit the transaction
+
+            return redirect()->back()->with('success', 'Produk Berhasil Dihapus.');
         } catch (\Exception $e) {
             DB::rollback(); // Rollback the transaction in case of an exception
 
             Log::error($e); // Log the exception for debugging
 
             return redirect()->back()->with('error', 'Gagal Menghapus Produk. Silakan coba lagi.');
-            // return redirect()->back()->with('error', 'Gagal Menghapus Product: ' . $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Produk Berhasil Dihapus.');
     }
 
     public function produkSlug(Request $request)

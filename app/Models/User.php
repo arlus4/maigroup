@@ -12,13 +12,14 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'users_login';
+    protected $primaryKey = 'id';
+    protected $guarded = [];
 
     /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['id', 'created_at'];
 
     /**
      * The attributes that should be hidden for serialization.

@@ -5,7 +5,7 @@
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar Produk</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar User Penjual</h1>
                 </div>
             </div>
         </div>
@@ -40,11 +40,11 @@
                     </div>
                     <div class="card-toolbar">
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <a href="{{ route('admin.admin_tambah_product') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
+                            <a href="{{ route('admin.admin_tambah_user_penjual') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
                                 <span class="svg-icon svg-icon-2">
                                     <i class="fas fa-plus-circle text-white"></i>
                                 </span>
-                                Tambah Produk
+                                Tambah User Penjual
                             </a>
                         </div>
                     </div>
@@ -53,52 +53,69 @@
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th class="min-w-125px text-dark">Info Produk</th>
-                                <th class="min-w-125px text-dark">Kategori</th>
-                                <th class="min-w-125px text-dark">Harga</th>
-                                <!-- <th class="min-w-125px text-dark">Aksi</th> -->
+                                <th class="min-w-100px text-dark">Info Penjual</th>
+                                <th class="min-w-100px text-dark">Info Outlet</th>
+                                <th class="min-w-100px text-dark">Aktif</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
-                            @foreach($dataProduk as $produk)
-                            <tr>
-                                <td class="d-flex align-items-center">
-                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                        <div class="symbol-label">
-                                            <img src="{{ asset('storage/produk/thumbnail/'.$produk->thumbnail) }}" class="w-100" />
+                            @foreach($getData as $val)
+                                <tr>
+                                    <td class="d-flex align-items-center ps-2">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <div class="symbol-label">
+                                                <img src="{{ $val->avatar ? asset('storage/user_penjual/avatar/'.$val->avatar) : asset('assets/images/avatar.png') }}" class="w-100"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <span class="text-gray-800 mb-1">{{ $produk->nama_produk }}</span>
-                                        <span>SKU: {{ $produk->sku }}</span>
-                                    </div>
-                                </td>
-                                <td class="align-items-center">
-                                    <span class="badge badge-secondary">{{ $produk->project_name }}</span>
-                                </td>
-                                <td class="align-items-center">Rp{{ number_format($produk->harga) }}</td>
-                                <td class="align-items-center">
-                                    <div class="dropdown">
-                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Atur
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li>
-                                                <a href="edit-product/{{ $produk->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                    Edit
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-id_produk="{{ $produk->id_produk }}" data-bs-thumbnail="{{ $produk->thumbnail }}" data-bs-target="#modalDelete" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-trash me-2"></i>
-                                                    Hapus
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
+                                        <div class="d-flex flex-column">
+                                            <span class="text-gray-800 mb-1">{{ $val->name }}</span>
+                                            <span>{{ $val->email }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="align-items-center">
+                                        <div class="d-flex flex-column">
+                                            @if($val->outlet_id == null)
+                                                <span class="text-gray-800 mb-1">Tidak Ada</span>
+                                            @else
+                                                <span class="text-gray-800 mb-1">{{ $val->nama_outlet }}</span>
+                                                <div class="d-flex css-fcabk9sn">
+                                                    <span class="me-4">ID Outlet :</span>
+                                                    <span>{{ $val->outlet_id }}</span>
+                                                </div>
+                                                <div class="d-flex css-fcabk9sa">
+                                                    <span class="me-4">Kuota Point :</span>
+                                                    <span>{{ $val->kuota_point }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td class="align-items-center">
+                                        <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                                            <input type="checkbox" class="form-check-input ubah-toggle" name="notifications" data-user-id="{{ $val->idUserLogin }}" @if($val->is_active == 1) checked="checked" @endif style="cursor: pointer;">
+                                        </div>
+                                    </td>
+                                    <td class="align-items-center">
+                                        <div class="dropdown">
+                                            <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Atur
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <button class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                        <i style="color:#181C32;" class="fas fa-eye me-2"></i>
+                                                        Detail
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button onclick="window.location.href = 'edit-user-penjual/{{ $val->username }}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                        <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                        Edit
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -170,6 +187,31 @@
         setTimeout(function() {
             document.querySelector('.alert.alert-danger').remove();
         }, 3000);
+    </script>
+
+    <!-- Ajax -->
+    <script>
+        $(document).ready(function() {
+            $('.ubah-toggle').change(function() {
+                const userId    = $(this).data('user-id');
+                const isChecked = $(this).prop('checked');
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: 'update-toggle/' + userId,
+                    type: 'POST',
+                    data: { enabled: isChecked },
+                    success: function(response) {
+                        response
+                    },
+                    error: function(error) {
+                        error
+                    }
+                });
+            });
+        });
     </script>
 
 @endsection
