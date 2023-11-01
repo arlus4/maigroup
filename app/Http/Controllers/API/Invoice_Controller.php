@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Invoice_Detail_Pembeli;
 use App\Models\Invoice_Master_Pembeli;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Response;
@@ -18,31 +19,94 @@ class Invoice_Controller extends Controller
         try {
             // Validasi data dari request
             $validatedData = $request->validate([
-                'pembeli_id' => 'required',
-                'qty' => 'required',
-                'amount' => 'required',
-                'outlet_id' => 'required',
-                'rewards' => 'required',
-                'invoice_type' => 'required',
-                'project_id' => 'required'
+                'pembeli_id' => 'required|integer',
+                'qty' => 'required|array',
+                'amount' => 'required|array',
+                'outlet_id' => 'required|string',
+                'rewards' => 'required|integer',
+                'invoice_type' => 'required|string',
+                'project_id' => 'required|array',
+                'sku_id' => 'required|array'
             ]);
-    
+
+            // Hitung total qty dan amount
+            $totalQty = array_sum($validatedData['qty']);
+            $totalAmount = array_sum($validatedData['amount']);
+
             // Generate invoice_no dan date_created
-            $validatedData['invoice_no'] = 'MAI-' . strtoupper(Str::random(10));
-            $validatedData['date_created'] = now();
-    
+            $invoiceData = [
+                'pembeli_id' => $validatedData['pembeli_id'],
+                'qty' => $totalQty,
+                'amount' => $totalAmount,
+                'outlet_id' => $validatedData['outlet_id'],
+                'rewards' => $validatedData['rewards'],
+                'invoice_type' => $validatedData['invoice_type'],
+                'invoice_no' => 'MAI-' . strtoupper(Str::random(10)),
+                'date_created' => now()
+            ];
+
             // Menyimpan data ke database
-            $invoice = Invoice_Master_Pembeli::create($validatedData);
-    
+            $invoice = Invoice_Master_Pembeli::create($invoiceData);
+
+            // Menggunakan data invoice yang baru saja dibuat untuk membuat detail invoice
+            $detailData = [
+                'invoice_no' => $invoice->invoice_no,
+                'sku_id' => $validatedData['sku_id'],
+                'amount' => $validatedData['amount'],
+                'project_id' => $validatedData['project_id'],
+                'qty' => $validatedData['qty']
+            ];
+            $this->create_invoice_detail_pembeli($detailData); // Memanggil fungsi create_invoice_detail
+
             // Mengembalikan respon
             return response()->json(['message' => 'Invoice berhasil dibuat', 'data' => $invoice], 201);
+
+        } catch (\Throwable $th) {
+            // Mengembalikan pesan error saat terjadi kesalahan
+            return response()->json(['message' => 'Terjadi kesalahan: ' . $th->getMessage()], 500);
+        }
+    }
+
+    public function create_invoice_detail_pembeli($detailData)
+    {
+        try {
+            // Mengambil data invoice dari tabel invoice_master_pembeli
+            $invoice = Invoice_Master_Pembeli::where('invoice_no', $detailData['invoice_no'])->first();
+    
+            if (!$invoice) {
+                return response()->json(['message' => 'Invoice tidak ditemukan'], 404);
+            }
+    
+            $dataToInsert = [];
+    
+            foreach ($detailData['sku_id'] as $index => $sku) {
+                for ($i = 0; $i < $detailData['qty'][$index]; $i++) {
+                    $dataToInsert[] = [
+                        'invoice_no' => $invoice->invoice_no,
+                        'pembeli_id' => $invoice->pembeli_id,
+                        'outlet_id' => $invoice->outlet_id,
+                        'sku_id' => $sku,
+                        'qty' => 1,
+                        'amount' => $detailData['amount'][$index],
+                        'project_id' => $detailData['project_id'][$index],
+                        'isbonus' => 0,
+                        'ispoint' => 0,
+                        'date_created' => now()
+                    ];
+                }
+            }
+    
+            // Menyimpan data ke database
+            Invoice_Detail_Pembeli::insert($dataToInsert);
+    
+            // Mengembalikan respon
+            return response()->json(['message' => 'Detail invoice berhasil dibuat'], 201);
     
         } catch (\Exception $e) {
             // Mengembalikan pesan error saat terjadi kesalahan
             return response()->json(['message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
-    
 
     public function sumPoint(Request $request)
     {
