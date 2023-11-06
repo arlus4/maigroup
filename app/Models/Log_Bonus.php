@@ -17,4 +17,6 @@ class Log_Bonus extends Model
      * @var array
      */
     protected $guarded = ['id', 'created_at'];
+
+    public $timestamps = false;
 }

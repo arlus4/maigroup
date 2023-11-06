@@ -4,8 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth_Controller;
 use App\Http\Controllers\API\Invoice_Controller;
-use App\Http\Controllers\Admin\Admin_Category_ProductController;
 use App\Http\Controllers\Admin\Admin_ProductController;
+use App\Http\Controllers\Penjual\Penjual_OrderController;
+use App\Http\Controllers\Admin\Admin_Category_ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/buat_invoice_master', [Invoice_Controller::class, 'create_invoice_master_pembeli']);
+Route::post('/update_claim', [Invoice_Controller::class, 'update_claim']);
+// Route::post('/buat_invoice_master', [Penjual_OrderController::class, 'store']);
