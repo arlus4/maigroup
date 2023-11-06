@@ -112,7 +112,7 @@ button.close{
     color: #525867!important;
 }
 .css-kl2kd9a{
-    background-color: #00BF71;
+    background-color: #039344;
     border: none;
     border-radius: 8px;
     color: rgb(255, 255, 255);
@@ -192,4 +192,185 @@ button.close{
 }
 .form-check-custom.form-check-solid .form-check-input:checked{
     background-color: #00BF71!important;
+}
+.css-dtu37sh{
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    gap: 16px;
+    padding: 20px 20px 0px 32px;
+}
+.css-cfn3ksa{
+    margin-top: 4px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+.css-fhk9sna{
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0px;
+}
+.css-fnm3aj{
+    display: block;
+    color: #212121;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.1px;
+    margin: 0;
+}
+.css-cnm6w2a{
+    height: 100%;
+    overflow-y: auto;
+    padding: 0px 32px 32px;
+}
+.css-bnm3js{
+    text-align: left;
+    max-height: 500px;
+    /* padding: 16px; */
+    overflow: hidden scroll;
+}
+.css-vbdw2js{
+    padding-bottom: 16px;
+    /* border-bottom: 1px solid #E5E7E9; */
+}
+.css-hk23nab{
+    padding-bottom: 15px;
+    border-bottom: 8px solid #F0F3F7;
+    text-align: left;
+}
+.css-sui2nz{
+    border-bottom: thin dashed #E5E7E9;
+    padding: 0px 0px 13px;
+    margin: 0px 0px 12px;
+}
+.css-dhj9nda{
+    display: flex;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0px 0px 8px;
+}
+.css-poh2hs{
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0;
+    color: #525867;
+    margin: 0px;
+}
+.css-n4js9na{
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0;
+    color: #212121;
+    line-height: 18px;
+    margin: 0px;
+}
+.css-kdfh3a{
+    padding: 24px 0px;
+    text-align: left;
+}
+.css-kdfh3a .css-jgdh2a{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0px 0px 13px;
+}
+.css-gh9fjq{
+    color: #212121;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 18px;
+    margin: 0px;
+}
+.css-bn34bal{
+    padding: 0px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    border: 1px solid #D6DFEB;
+    background-color: #FFFFFF;
+    margin: 0px 0px 25px;
+}
+.css-bn34bal .css-pouys8k{
+    padding: 16px;
+    display: flex;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+}
+.css-bn34bal .css-pouys8k .css-hj7sb2a{
+    padding: 0px 16px 0px 0px;
+    width: calc(100% - 152px);
+}
+.css-bn34bal .css-pouys8k .css-hj7sb2a .css-produk-info{
+    display: flex;
+    align-items: flex-start;
+}
+.css-uwad2ha{
+    padding-right: 15px;
+}
+.css-bn34bal .css-pouys8k .css-hj7sb2a .css-produk-info img{
+    border-radius: 6px;
+    margin: 0px 13px 0px 0px;
+}
+.css-nama-prod{
+    font-weight: bold;
+    color: #212121;
+    line-height: 18px;
+    margin: 0px 0px 2px;
+}
+.css-bag-p{
+    font-weight: 500;
+    color: #7E8299;
+    font-size: 14px;
+}
+.css-bn34bal .css-pouys8k .css-harga-prod{
+    width: 152px;
+    padding: 0px 0px 0px 16px;
+    position: relative;
+    display: flex;
+    align-content: space-between;
+    flex-wrap: wrap;
+    border-left: thin dashed #F0F3F7;
+}
+.css-bn34bal .css-pouys8k .css-harga-prod .css-total-amount{
+    width: 100%;
+    text-align: right;
+}
+.css-i9mf6m{
+    margin: 12px 0px 0px;
+}
+.css-i9mf6m .css-iopf2sj{
+    margin: 0px 0px 13px;
+    display: flex;
+    align-items: flex-start;
+}
+.css-i9mf6m .css-iopf2sj > p{
+    width: 125px;
+}
+.css-fgusn1a{
+    font-weight: 500;
+    color: #525867;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0;
+    margin: 0px;
+}
+.css-i9mf6m .css-iopf2sj > span{
+    margin: 0px 14px 0px 0px;
+}
+.css-i9mf6m .css-iopf2sj .css-fgdh0kl{
+    width: calc(100% - 90px);
+}
+.css-dabj72{
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-bottom: 8px solid #e2e2e2;
 }

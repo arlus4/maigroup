@@ -14,7 +14,7 @@
                 </div>
                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                     <a href="index.html" class="d-lg-none">
-                        <img alt="Logo" src="{{ asset('assets/master/media/logos/default-small.svg') }}" class="h-30px" />
+                        <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="h-30px" />
                     </a>
                 </div>
                 <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
@@ -118,7 +118,7 @@
                                     <span class="menu-title">Order</span>
                                     <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_order')) ? 'show' : '' }}">
+                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_order') || Request::routeIs('admin.admin_tambah_order')) ? 'show' : '' }}">
                                     <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_order') ? 'active' : '' }}" href="{{ route('admin.admin_order') }}">
                                             <span class="menu-bullet">
@@ -128,11 +128,11 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="pages/team.html">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="pages/team.html">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Order Baru</span>
+                                            <span class="menu-title">Tambah Order</span>
                                         </a>
                                     </div>
                                 </div>

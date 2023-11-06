@@ -69,6 +69,8 @@ Route::group(['middleware' => ['admin:4']], function () {
 
         //Order
         Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
-
+        Route::get('/order-detail/{invoice}', [Admin_OrderController::class, 'orderDetail'])->name('admin_order_detail');
+        Route::get('/tambah-order', [Admin_OrderController::class, 'create'])->name('admin_tambah_order');
+        Route::get('/get-harga-order/{id}', [Admin_OrderController::class, 'getHargaOrder'])->name('admin_get_harga_order');
     });
 });
