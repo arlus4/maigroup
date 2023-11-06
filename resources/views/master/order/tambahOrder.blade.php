@@ -50,7 +50,7 @@
                                                             <div class="css-dabj72">
                                                                 <div class="form-group mb-4">
                                                                     <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Pilihan Produk</label>
-                                                                    <select class="form-select mb-2" data-kt-repeater="select2" data-placeholder="Pilih Produk" id="project_id" data-allow-clear="true" name="project_id" required>
+                                                                    <select class="form-select mb-2" data-kt-repeater="select2" data-placeholder="Pilih Produk" id="produk_id" data-allow-clear="true" name="project_id" required>
                                                                         <option></option>
                                                                         @foreach($getProduk as $produk)
                                                                             <option value="{{ $produk->id }}">{{ $produk->nama_produk }} - {{ $produk->sku }}</option>
@@ -59,7 +59,7 @@
                                                                 </div>
                                                                 <div class="form-group mb-4">
                                                                     <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Harga Satuan</label>
-                                                                    <input type="text" name="harga-satuan" id="harga-satuan" class="form-control mb-2" style="background-color: #e2e2e2;cursor: not-allowed;" placeholder="Rp 0" readonly>
+                                                                    <input type="text" name="harga_satuan" id="harga-satuan" class="form-control mb-2" style="background-color: #e2e2e2;cursor: not-allowed;" placeholder="Rp 0" readonly>
                                                                 </div>
                                                                 <div class="row mb-4">
                                                                     <div class="col-md-5">
@@ -68,7 +68,7 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Total Harga</label>
-                                                                        <input type="number" name="amount" id="amount" class="form-control mb-2" style="background-color: #e2e2e2;cursor: not-allowed;" placeholder="Rp 0" readonly>
+                                                                        <input type="text" name="amount" id="amount" class="form-control mb-2" style="background-color: #e2e2e2;cursor: not-allowed;" placeholder="Rp 0" readonly>
                                                                     </div>
                                                                     <div class="col-md-1">
                                                                         <a href="javascript:;" data-repeater-delete>
@@ -78,7 +78,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Catatan</label>
-                                                                    <input type="text" name="sku" class="form-control mb-2" placeholder="Contoh : lorem ipsum dolor sit amet sat set get" required/>
+                                                                    <input type="text" name="noted" id="noted" class="form-control mb-2" placeholder="Contoh : Bakso & soto, Jajanan, Minuman"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -137,24 +137,51 @@
             });
 
             $(document).on('click', '[data-repeater-create]', function() {
-                $(this).closest('[data-repeater-list]').find('[data-repeater-item]:last select.form-select').select2();
+                var newItem = $(this).closest('[data-repeater-group]').find('[data-repeater-item]:last');
+
+                newItem.find('#harga-satuan, #amount').val(''); // Reset nilai
+
+                newItem.find('input[id="qty"], input[id="harga-satuan"]').on('input', function() {
+                    hitungTotalAmount(newItem);
+                });
+
+                newItem.find('#project_id').change(function() {
+                    var productId = $(this).val();
+                    $.ajax({
+                        url: 'get-harga-order/' + productId,
+                        type: 'GET',
+                        success: function(response) {
+                            var harga = response.harga.replace(/\D/g, '');
+                            newItem.find('#harga-satuan').val(formatRupiah(parseFloat(harga)));
+                            hitungTotalAmount(newItem);
+                        },
+                        error: function(error) {
+                            console.error('Failed to fetch price:', error);
+                        }
+                    });
+                });
             });
 
             $(document).on('change', 'input[id="qty"], input[id="harga-satuan"]', function() {
-                var qty = $('input[id="qty"]').val();
-                var hargaSatuan = $('input[id="harga-satuan"]').val();
-
-                hargaSatuan = hargaSatuan.replace('Rp ', '');
-
-                if (!isNaN(qty) && !isNaN(hargaSatuan)) {
-                    var totalAmount = parseFloat(hargaSatuan) * parseFloat(qty);
-                    $('#amount').val(totalAmount.toFixed(2));
-                } else {
-                    $('#amount').val('');
-                    console.log('Qty or Harga Satuan is not a valid number');
-                }
+                hitungTotalAmount($(this).closest('[data-repeater-item]'));
             });
         });
+
+        function formatRupiah(angka) {
+            var number_string   = angka.toString();
+            var split           = number_string.split('.');
+            var sisa            = split[0].length % 3;
+            var rupiah          = split[0].substr(0, sisa);
+            var ribuan          = split[0].substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                var separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return 'Rp ' + rupiah;
+        }
 
         function kontrolUbahSelect(element) {
             var productId  = element.val();
@@ -164,19 +191,28 @@
                 url: 'get-harga-order/' + productId,
                 type: 'GET',
                 success: function(response) {
-                    const rupiah = (number) => {
-                        return new Intl.NumberFormat('id-ID', { 
-                            style: 'currency', 
-                            currency: 'IDR' 
-                        }).format(number).replace(/(\.|,)00$/g, '');
-                    }
-
-                    hargaInput.val(rupiah(response.harga));
+                    var harga = response.harga.replace(/\D/g, '');
+                    hargaInput.val(formatRupiah(parseFloat(harga)));
                 },
                 error: function(error) {
                     console.error('Gagal memuat harga:', error);
                 }
             });
+        }
+
+        function hitungTotalAmount(item) {
+            var qty = parseFloat(item.find('input[id="qty"]').val().replace(',', '.'));
+            var hargaSatuanString = item.find('input[id="harga-satuan"]').val();
+            var numbersFromString = hargaSatuanString.match(/\d+/g);
+            var hargaSatuanCleaned = numbersFromString ? numbersFromString.join('') : '';
+            var hargaSatuan = parseFloat(hargaSatuanCleaned);
+
+            if (!isNaN(qty) && !isNaN(hargaSatuan)) {
+                var totalAmount = hargaSatuan * qty;
+                item.find('#amount').val(formatRupiah(totalAmount));
+            } else {
+                item.find('#amount').val('');
+            }
         }
     </script>
 

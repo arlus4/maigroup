@@ -32,7 +32,7 @@ Route::get('/get_data_kelurahan/{kecamatan}', [AlamatController::class, 'get_dat
 Route::get('/get_data_kodepos/{kelurahan}', [AlamatController::class, 'get_data_kodepos']);
 
 
-// Bagian Prefix Admin
+// Bagian Middleware & Prefix Admin
 Route::group(['middleware' => ['admin:4']], function () {
     Route::get('/admin/dashboard', function () {
         return view('master.dashboard');
