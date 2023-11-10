@@ -57,8 +57,9 @@
                                 <th class="min-w-100px text-dark">ID Outlet</th>
                                 <th class="min-w-100px text-dark">No Invoice</th>
                                 <th class="min-w-100px text-dark">Amount</th>
-                                <th class="min-w-100px text-dark">Progress</th>
                                 <th class="min-w-100px text-dark">Ongkos Kirim</th>
+                                <th class="min-w-100px text-dark">Action</th>
+                                <th class="min-w-100px text-dark">Status</th>
                                 <th class="min-w-100px text-dark"></th>
                             </tr>
                         </thead>
@@ -68,50 +69,32 @@
                                     <td class="align-items-center ps-2">{{ $loop->iteration }}</td>
                                     <td class="align-items-center ps-2">{{ $val->outlet_id }}</td>
                                     <td class="align-items-center ps-2">{{ $val->invoice_no }}</td>
-                                    @if ($val->total == null)
-                                        {{-- <td class="align-items-center ps-2">@rupiah($val->amount)</td> --}}
-                                        <td class="align-items-center ps-2">
-                                            <span class="badge badge-light-warning">Please Input Ongkir</span>
-                                        </td>
-                                    @else
-                                        <td class="align-items-center ps-2">@rupiah($val->total)</td>
-                                    @endif
+                                    <td class="align-items-center ps-2">@rupiah($val->total)</td>
+                                    <td class="align-items-center ps-2">@rupiah($val->ongkir)</td>
                                     <td class="align-items-center ps-2">
-                                        @if($val->progress == 0)
-                                            <span class="badge badge-light-success">New Order</span>
-                                        @elseif($val->progress == 1)
-                                            <span class="badge badge-light-warning">Warning Payment</span>
+                                        @if ($val->progress == 2)
+                                            <form action="{{ route('admin.admin.received.payment', $val->invoice_no) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning btn-sm hover-scale">Terima Pembayaran</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('admin.admin.approve.order', $val->invoice_no) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm hover-scale">Deliver Order</button>
+                                            </form>
+                                            
                                         @endif
                                     </td>
-                                    @if ($val->ongkir == null)
-                                        <td class="align-items-center ps-2">
-                                            <button type="button" onclick="modalUpdateOngkir('{{ $val->invoice_no }}')" class="btn btn-primary" style="cursor: pointer">
-                                                Input Ongkir
-                                            </button>
-                                        </td>
-                                    @else
-                                        <td class="align-items-center ps-2">@rupiah($val->ongkir)</td>
-                                    @endif
+                                    <td>
+                                        @if ($val->progress == 2)
+                                            <span class="badge badge-light-success">Ready to Approve</span>
+                                        @else
+                                            <span class="badge badge-light-danger">Ready to Deliver</span>
+                                        @endif
+                                    </td>
                                     <td class="align-items-center">
-                                        <div class="dropdown">
-                                            <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Atur
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li>
-                                                    <a href="/admin/order-detail/{{ $val->invoice_no }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                        <i style="color:#181C32;" class="fas fa-eye me-2"></i>
-                                                        Detail
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <button class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                        <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                        Edit
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <button type="button" onclick="window.location.href='/admin/order-detail/{{ $val->invoice_no }}'" class="btn btn-light-primary">Detail</button>
+                                        <button type="button" onclick="window.location.href='/admin/download-invoice/{{ $val->invoice_no }}'" class="btn btn-light-success">Download Invoice</button>
                                     </td>
                                 </tr>
                             @endforeach

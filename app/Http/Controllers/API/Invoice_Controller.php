@@ -43,7 +43,7 @@ class Invoice_Controller extends Controller
                 'rewards' => $validatedData['rewards'],
                 'invoice_type' => $validatedData['invoice_type'],
                 'invoice_no' => 'MAI-' . strtoupper(Str::random(10)),
-                'date_created' => now()
+                'date_created' => Carbon::now()->timezone('Asia/Jakarta')
             ];
 
             // Menyimpan data ke database
@@ -72,7 +72,7 @@ class Invoice_Controller extends Controller
                         'project_id' => $detailData['project_id'][$index],
                         'isbonus' => 0,
                         'ispoint' => 0,
-                        'date_created' => now()
+                        'date_created' => Carbon::now()->timezone('Asia/Jakarta')
                     ];
                 }
             }
@@ -115,7 +115,7 @@ class Invoice_Controller extends Controller
 
             // Update is_claim menjadi 1 dan date_claim menjadi waktu sekarang
             $logBonus->is_claim = 1;
-            $logBonus->date_claim = Carbon::now();
+            $logBonus->date_claim = Carbon::now()->timezone('Asia/Jakarta');
             $logBonus->save();
 
             DB::commit(); // Commit transaksi jika semua proses berhasil
@@ -156,7 +156,7 @@ class Invoice_Controller extends Controller
     //                     'project_id' => $detailData['project_id'][$index],
     //                     'isbonus' => 0,
     //                     'ispoint' => 0,
-    //                     'date_created' => now()
+    //                     'date_created' => Carbon::now()->timezone('Asia/Jakarta')
     //                 ];
     //             }
     //         }

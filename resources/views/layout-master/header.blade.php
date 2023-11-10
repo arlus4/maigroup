@@ -118,17 +118,25 @@
                                     <span class="menu-title">Order</span>
                                     <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_order') || Request::routeIs('admin.admin_tambah_order')) ? 'show' : '' }}">
+                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_order') || Request::routeIs('admin.admin_order_pending') || Request::routeIs('admin.admin_tambah_order')) ? 'show' : '' }}">
                                     <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_order') ? 'active' : '' }}" href="{{ route('admin.admin_order') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Daftar Order</span>
+                                            <span class="menu-title">Orderan Baru</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="pages/team.html">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_order_pending') ? 'active' : '' }}" href="{{ route('admin.admin_order_pending') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Orderan Pending</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="/admin/tambah-order">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>

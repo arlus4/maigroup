@@ -69,8 +69,15 @@ Route::group(['middleware' => ['admin:4']], function () {
 
         //Order
         Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
+        Route::get('/data_order/{invoice}', [Admin_OrderController::class, 'get_data_order'])->name('admin_get_data_order');
+        Route::post('/store_ongkir', [Admin_OrderController::class, 'storeOngkir']);
         Route::get('/order-detail/{invoice}', [Admin_OrderController::class, 'orderDetail'])->name('admin_order_detail');
         Route::get('/tambah-order', [Admin_OrderController::class, 'create'])->name('admin_tambah_order');
+        Route::post('/store-order', [Admin_OrderController::class, 'store'])->name('admin_store_order');
         Route::get('/get-harga-order/{id}', [Admin_OrderController::class, 'getHargaOrder'])->name('admin_get_harga_order');
+        Route::get('/order_pending', [Admin_OrderController::class, 'orderPending'])->name('admin_order_pending');
+        Route::get('/download-invoice/{invoice}', [Admin_OrderController::class, 'downloadInvoice'])->name('admin.download.invoice');
+        Route::post('/received_payment/{invoice}', [Admin_OrderController::class, 'receivedPayment'])->name('admin.received.payment');
+        Route::post('/approve_order/{invoice}', [Admin_OrderController::class, 'approveOrder'])->name('admin.approve.order');
     });
 });

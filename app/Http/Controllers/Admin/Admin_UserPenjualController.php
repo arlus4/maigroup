@@ -124,7 +124,7 @@ class Admin_UserPenjualController extends Controller
                 'email'        => $request->email,
                 'password'     => Hash::make($request->password),
                 'no_hp'        => $request->no_hp,
-                'outlet_id'    => mt_rand(0, 9999999999)
+                'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT)
             ]);
 
             $storeUserDetail = Users_Detail::create([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Penjual;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,7 +68,7 @@ class Penjual_OrderController extends Controller
                 'rewards' => $validatedData['rewards'],
                 'invoice_type' => $validatedData['invoice_type'],
                 'invoice_no' => 'MAI-' . strtoupper(Str::random(10)),
-                'date_created' => now()
+                'date_created' => Carbon::now()->timezone('Asia/Jakarta')
             ];
 
             // Menyimpan data ke database
@@ -96,7 +97,7 @@ class Penjual_OrderController extends Controller
                         'project_id' => $detailData['project_id'][$index],
                         'isbonus' => 0,
                         'ispoint' => 0,
-                        'date_created' => now()
+                        'date_created' => Carbon::now()->timezone('Asia/Jakarta')
                     ];
                 }
             }
