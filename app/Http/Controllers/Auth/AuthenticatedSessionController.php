@@ -29,7 +29,27 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended($this->redirectTo());
+    }
+
+    protected function redirectTo()
+    {
+        if (Auth::check()) {
+            switch (Auth::user()->users_type) {
+                case 1:
+                    return '/pembeli/dashboard';
+                case 2:
+                    return '/owner/dashboard';
+                case 3:
+                    return '/pegawai/dashboard';
+                case 4:
+                    return '/admin/dashboard';
+                default:
+                    return RouteServiceProvider::HOME;
+            }
+        }
+
+        return RouteServiceProvider::HOME;
     }
 
     /**

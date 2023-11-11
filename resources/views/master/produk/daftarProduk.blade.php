@@ -50,58 +50,60 @@
                     </div>
                 </div>
                 <div class="card-body py-4">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                        <thead>
-                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th class="min-w-125px text-dark">Info Produk</th>
-                                <th class="min-w-125px text-dark">Kategori</th>
-                                <th class="min-w-125px text-dark">Harga</th>
-                                <!-- <th class="min-w-125px text-dark">Aksi</th> -->
-                            </tr>
-                        </thead>
-                        <tbody class="text-gray-600 fw-semibold">
-                            @foreach($dataProduk as $produk)
-                            <tr>
-                                <td class="d-flex align-items-center">
-                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                        <div class="symbol-label">
-                                            <img src="{{ asset('storage/produk/thumbnail/'.$produk->thumbnail) }}" class="w-100" />
+                    <div class="table-responsive">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                            <thead>
+                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                    <th class="min-w-125px text-dark">Info Produk</th>
+                                    <th class="min-w-125px text-dark">Kategori</th>
+                                    <th class="min-w-125px text-dark">Harga</th>
+                                    <!-- <th class="min-w-125px text-dark">Aksi</th> -->
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-semibold">
+                                @foreach($dataProduk as $produk)
+                                <tr>
+                                    <td class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <div class="symbol-label">
+                                                <img src="{{ asset('storage/produk/thumbnail/'.$produk->thumbnail) }}" class="w-100" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <span class="text-gray-800 mb-1">{{ $produk->nama_produk }}</span>
-                                        <span>SKU: {{ $produk->sku }}</span>
-                                    </div>
-                                </td>
-                                <td class="align-items-center">
-                                    <span class="badge badge-secondary">{{ $produk->project_name }}</span>
-                                </td>
-                                <td class="align-items-center">Rp{{ number_format($produk->harga) }}</td>
-                                <td class="align-items-center">
-                                    <div class="dropdown">
-                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Atur
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li>
-                                                <a href="edit-product/{{ $produk->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                    Edit
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-id_produk="{{ $produk->id_produk }}" data-bs-thumbnail="{{ $produk->thumbnail }}" data-bs-target="#modalDelete" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-trash me-2"></i>
-                                                    Hapus
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                        <div class="d-flex flex-column">
+                                            <span class="text-gray-800 mb-1">{{ $produk->nama_produk }}</span>
+                                            <span>SKU: {{ $produk->sku }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="align-items-center">
+                                        <span class="badge badge-secondary">{{ $produk->project_name }}</span>
+                                    </td>
+                                    <td class="align-items-center">Rp{{ number_format($produk->harga) }}</td>
+                                    <td class="align-items-center">
+                                        <div class="dropdown">
+                                            <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Atur
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <a href="edit-product/{{ $produk->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                        <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                        Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-id_produk="{{ $produk->id_produk }}" data-bs-thumbnail="{{ $produk->thumbnail }}" data-bs-target="#modalDelete" style="cursor: pointer">
+                                                        <i style="color:#181C32;" class="fas fa-trash me-2"></i>
+                                                        Hapus
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

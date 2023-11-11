@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Admin_Project_ProductController;
 use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Admin\Admin_OrderController;
+use App\Http\Controllers\Owner\POSController;
 
 Route::get('/', [HomeController::class, 'home']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -33,13 +34,14 @@ Route::get('/get_data_kodepos/{kelurahan}', [AlamatController::class, 'get_data_
 
 
 // Bagian Middleware & Prefix Admin
-Route::group(['middleware' => ['admin:4']], function () {
-    Route::get('/admin/dashboard', function () {
-        return view('master.dashboard');
-    })->name('dashboard');
+Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
 
     // Master Data
     Route::prefix('admin')->name('admin.')->group(function() {
+
+        Route::get('/dashboard', function () {
+            return view('master.dashboard');
+        })->name('dashboard-admin');
 
         //Kategori Produk
         Route::get('/category_product', [Admin_Project_ProductController::class, 'index'])->name('admin_category_product');
@@ -79,5 +81,21 @@ Route::group(['middleware' => ['admin:4']], function () {
         Route::get('/download-invoice/{invoice}', [Admin_OrderController::class, 'downloadInvoice'])->name('admin.download.invoice');
         Route::post('/received_payment/{invoice}', [Admin_OrderController::class, 'receivedPayment'])->name('admin.received.payment');
         Route::post('/approve_order/{invoice}', [Admin_OrderController::class, 'approveOrder'])->name('admin.approve.order');
+    });
+});
+
+Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
+
+    Route::prefix('owner')->name('owner.')->group(function() {
+
+        Route::get('/dashboard', function () {
+            return view('owner.dashboard');
+        })->name('dashboard-owner');
+
+        // POS Sistem
+        Route::get('/pos', [POSController::class, 'index'])->name('owner_pos');
+        Route::get('/get-produk/{produkId}', [POSController::class, 'getProduk'])->name('owner_get_produk');
+        Route::get('/getNomorHP', [POSController::class, 'getNomorHP']);
+        Route::post('/store-order', [POSController::class, 'store']);
     });
 });

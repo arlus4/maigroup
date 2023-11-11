@@ -237,7 +237,6 @@
                 type: "GET",
                 url: "data_order/" + invoice,
                 success: function(data){
-                    console.log(data);
 
                     const dateFormat    = (date) => {
                         var dateObject    = new Date(date);
