@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\Owner;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Ref_Produk;
-use App\Models\Product_Outlet;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Product_Outlet;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Invoice_Detail_Pembeli;
+use App\Models\Invoice_Master_Pembeli;
 
 class POSController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $dataOutlet = Product_Outlet::
             select(
                 'product_outlets.outlet_id',
@@ -35,12 +42,23 @@ class POSController extends Controller
             ->get();
 
         return view('owner.pos', [
-            'title' => 'Menu Order'
-        ], compact('dataOutlet'));
+            'title' => 'Menu Order',
+            'dataOutlet' => $dataOutlet
+        ]);
     }
 
-    public function getProduk($produkId){
-        $produk = Ref_Produk::select('id','nama_produk','harga','path_thumbnail')->where('id', $produkId)->first();
+    public function getProduk($produkId)
+    {
+        $produk = Ref_Produk::select(
+            'id',
+            'project_id',
+            'nama_produk',
+            'sku',
+            'harga',
+            'path_thumbnail'
+            )
+            ->where('id', $produkId)
+            ->first();
 
         return response()->json($produk);
     }
@@ -59,7 +77,84 @@ class POSController extends Controller
         return response()->json($results);
     }   
 
-    public function store(Request $request){
-        dd($request);
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        try {
+            DB::beginTransaction(); // Mulai transaksi database
+            // Validasi data dari request
+            $validatedData = $request->validate([
+                'outlet_id' => 'required|string',
+                'noHp' => 'required|string',
+                'SubTotal' => 'required|numeric',
+                'product_id' => 'required|array',
+                'product_id.*.product_id' => 'required|string',
+                'product_id.*.qty' => 'required|numeric',
+                'product_id.*.amount' => 'required|numeric',
+                'product_id.*.sku' => 'required|string',
+                'product_id.*.projectId' => 'required|string'
+            ]);
+            
+            // Hitung total qty
+            $totalQty = 0;
+            foreach ($validatedData['product_id'] as $product) {
+                $totalQty += $product['qty']; // Menghitung total qty
+            }
+    
+            // Generate invoice_no dan date_created
+            $invoiceData = [
+                'pembeli_id' => '4',
+                'qty' => $totalQty,
+                'amount' => $validatedData['SubTotal'],
+                'outlet_id' => $validatedData['outlet_id'],
+                'rewards' => '0',
+                'invoice_type' => 'I',
+                'invoice_no' => 'MAI-' . strtoupper(Str::random(10)),
+                'date_created' => Carbon::now()->timezone('Asia/Jakarta')
+            ];
+    
+            // Menyimpan data ke database
+            $invoice = Invoice_Master_Pembeli::create($invoiceData);
+    
+            $dataToInsert = [];
+    
+            foreach ($validatedData['product_id'] as $index => $product) {
+                $qty = (int)$product['qty'];
+                for ($i = 0; $i < $qty; $i++) {
+                    $dataToInsert[] = [
+                        'invoice_no' => $invoice->invoice_no,
+                        'pembeli_id' => $invoice->pembeli_id,
+                        'outlet_id' => $invoice->outlet_id,
+                        'sku_id' => $product['sku'],
+                        'qty' => 1,
+                        'amount' => $product['amount'],
+                        'project_id' => $product['projectId'],
+                        'isbonus' => 0,
+                        'ispoint' => 0,
+                        'date_created' => Carbon::now()->timezone('Asia/Jakarta')
+                    ];
+                }
+            }
+    
+            // Menyimpan data ke database
+            Invoice_Detail_Pembeli::insert($dataToInsert);
+    
+            // Memanggil stored procedure untuk Update data
+            DB::unprepared("EXEC maigroup.dbo.sum_point_user '{$invoice->pembeli_id}', '{$invoice->outlet_id}'");
+            DB::unprepared("EXEC maigroup.dbo.sum_bonus_user '{$invoice->pembeli_id}', '{$invoice->outlet_id}'");
+    
+            DB::commit(); // Commit transaksi jika semua proses berhasil
+    
+            // Mengembalikan respon
+            return response()->json(['message' => 'Invoice berhasil dibuat', 'data' => $invoice], 201);
+        } catch (\Throwable $th) {
+            // Jika terjadi kesalahan, tangkap exception dan kembalikan response error
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            Log::error($th); // Log the exception for debugging
+
+            // Mengembalikan pesan error saat terjadi kesalahan
+            return response()->json(['message' => 'Terjadi kesalahan: ' . $th->getMessage()], 500);
+        }
     }
 }

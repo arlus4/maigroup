@@ -114,6 +114,8 @@
                     totalHarga += hargaItem * jumlahItem;
                 });
                 $('#totalHargaSemua').text(rupiah(totalHarga));
+                // Simpan totalHarga ke sebuah variabel global
+                window.totalHargaOrder = totalHarga;
                 return totalHarga;
             }
 
@@ -162,6 +164,8 @@
                             input.val(newValue).change();
                         }else{
                             var namaProduk      = data.nama_produk;
+                            var skuProduk       = data.sku;
+                            var projectIdProduk = data.project_id;
                             var hargaProduk     = data.harga;
                             var gambarProduk    = data.path_thumbnail;
                             var assetImg        = "{{ asset('') }}";
@@ -176,6 +180,8 @@
                                         '<div class="d-flex align-items-center">' +
                                         '<img src="' + imageUrl + '" class="w-50px h-50px rounded-3" data-gambar="' + imageUrl + '" id="gambar-produk">' +
                                         '<span style="font-size: 13px;" class="fw-bold text-gray-800 cursor-pointer me-1" id="nama-produk">' + namaProduk + '</span>' +
+                                        '<input type="hidden" class="product-sku" value="' + data.sku + '">' +
+                                        '<input type="hidden" class="project_id-produk" value="' + data.project_id + '">' +
                                         '</div>' +
                                     '</td>' +
                                     '<td class="p-0 pt-1 pb-1">' +
@@ -387,9 +393,15 @@
             $('.table tbody tr').each(function() {
                 var productId = $(this).find('input.input-number').attr('name');
                 var qty = parseInt($(this).find('input.input-number').val(), 10);
+                var sku = $(this).find('.product-sku').val(); // Mengambil SKU
+                var projectId = $(this).find('.project_id-produk').val(); // Mengambil Project Id
+                var harga_Produk = parseInt($(this).find('.text-end span').attr('data-harga'), 10); // Mengambil Harga Satuan
                 var productData = {
                     product_id: productId,
-                    qty: qty
+                    qty: qty,
+                    sku: sku,
+                    amount: harga_Produk,
+                    projectId: projectId
                 };
                 products.push(productData);
             });
@@ -397,6 +409,7 @@
             var orderData = {
                 outlet_id   : $('#outletId').val(),
                 noHp        : $('#inputNoHp').val(),
+                SubTotal    : window.totalHargaOrder, // menggunakan variabel global
                 product_id  : products
             };
 
