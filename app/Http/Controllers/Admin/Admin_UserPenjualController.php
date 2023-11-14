@@ -4,28 +4,37 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Outlet;
-use App\Models\Users_Detail;
-use App\Models\Ref_Project;
-use App\Models\Ref_Provinsi;
+use App\Models\ref_KodePos;
 use App\Models\ref_KotaKab;
+use App\Models\Ref_Project;
+use Illuminate\Support\Str;
+use App\Models\Ref_Provinsi;
+use App\Models\Users_Detail;
+use Illuminate\Http\Request;
+use App\Models\Alamat_Outlet;
 use App\Models\ref_Kecamatan;
 use App\Models\ref_Kelurahan;
-use App\Models\ref_KodePos;
 use App\Models\ref_KuotaPoint;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Admin_UserPenjualController extends Controller
 {
-    public function index(){
-        $getData = User::select(
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(): View
+    {
+        $getData = User::select
+            (
                 'users_login.id as idUserLogin',
                 'users_login.users_type',
                 'users_login.name',
@@ -65,23 +74,33 @@ class Admin_UserPenjualController extends Controller
             ->where('users_type', 2)
             ->get();
 
-        return view('master.user-penjual.daftarUserPenjual', compact('getData'));
+        return view('master.user-penjual.daftarUserPenjual',[
+            'getData' => $getData
+        ]);
     }
 
-    public function create(Request $request){
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request): View
+    {
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();
         $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
 
-        return view('master.user-penjual.tambahUserPenjual', compact('getKategori','getProvinsi'));
+        return view('master.user-penjual.tambahUserPenjual', [
+            'getKategori' => $getKategori,
+            'getProvinsi' => $getProvinsi
+        ]);
     }
 
-    public function outletSlug(Request $request)
-    {
-        $slug = SlugService::createSlug(Outlet::class, 'slug', $request->nama_outlet);
-
-        return response()->json(['slug' => $slug]);
-    }
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request): RedirectResponse
     {
         try {
@@ -127,7 +146,7 @@ class Admin_UserPenjualController extends Controller
                 'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT)
             ]);
 
-            $storeUserDetail = Users_Detail::create([
+            Users_Detail::create([
                 'user_id'           => $storeUser->id,
                 'avatar'            => $imageName,
                 'path_avatar'       => $imagePath,
@@ -153,6 +172,17 @@ class Admin_UserPenjualController extends Controller
                 'outlet_id'    => $storeUser->outlet_id
             ]);
 
+            Alamat_Outlet::create([
+                'outlet_id'         => $storeOutlet->outlet_id,
+                'kode_propinsi'     => $request->provinsi_outlet,
+                'kode_kotakab'      => $request->kotkab_outlet,
+                'kode_kecamatan'    => $request->kecamatan_outlet,
+                'kode_kelurahan'    => $request->kelurahan_outlet,
+                'kodepos'          => $request->kode_pos_outlet,
+                'alamat_detail'     => $request->alamat_detail_outlet,
+                'map_location'      => $request->map_location_outlet
+            ]);
+
             ref_KuotaPoint::create([
                 'outlet_id'    => $storeUser->outlet_id,
                 'kuota_point'  => 0
@@ -164,17 +194,23 @@ class Admin_UserPenjualController extends Controller
 
             Log::error($e); // Log the exception for debugging
 
-            return redirect()->route('admin.admin_user_penjual')->with('error', 'Gagal Menambah User Penjual. Silakan coba lagi.');
+            return redirect()->route('admin.admin_user_penjual')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
         return redirect()->route('admin.admin_user_penjual')->with('success', 'Berhasil Menambah User Penjual');
     }
 
-    public function edit($username)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($username): View
     {
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();
         $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
 
-        $getData = User::select(
+        $getData = User::select
+            (
                 'users_login.id as idUserLogin',
                 'users_login.users_type',
                 'users_login.name',
@@ -242,7 +278,13 @@ class Admin_UserPenjualController extends Controller
         return view('master.user-penjual.editUserPenjual', compact('getKategori', 'getProvinsi', 'getData', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
     }
 
-    public function update(Request $request)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request): RedirectResponse
     {
         try {
             DB::beginTransaction(); // Begin Transaction
@@ -330,6 +372,20 @@ class Admin_UserPenjualController extends Controller
             return redirect()->route('admin.admin_user_penjual')->with('error', 'Gagal Mengubah User Penjual. Silakan coba lagi');
         }
         return redirect()->route('admin.admin_user_penjual')->with('success', 'Berhasil Mengubah User Penjual');
+    }
+    
+    public function outletSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Outlet::class, 'slug', $request->nama_outlet);
+
+        return response()->json(['slug' => $slug]);
+    }
+
+    public function userSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(User::class, 'username', $request->name);
+
+        return response()->json(['username' => $slug]);
     }
 
     public function updateNotifications(Request $request, User $user)

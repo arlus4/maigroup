@@ -2,15 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Check_Connection;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AlamatController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Admin_Project_ProductController;
+use App\Http\Controllers\Owner\POSController;
+use App\Http\Controllers\Admin\Admin_OrderController;
+use App\Http\Controllers\Admin\Admin_BannerController;
 use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
-use App\Http\Controllers\Admin\Admin_OrderController;
-use App\Http\Controllers\Owner\POSController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Admin\Admin_Project_ProductController;
 
 Route::get('/', [HomeController::class, 'home']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -67,6 +68,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/store-user-penjual', [Admin_UserPenjualController::class, 'store'])->name('admin_store_user_penjual');
         Route::post('/update-user-penjual', [Admin_UserPenjualController::class, 'update'])->name('admin_update_user_penjual');
         Route::post('/update-toggle/{user}', [Admin_UserPenjualController::class, 'updateNotifications'])->name('admin_update_notif_user_penjual');
+        Route::get('/userSlug', [Admin_UserPenjualController::class, 'userSlug']);
         Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
 
         //Order
@@ -81,6 +83,16 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/download-invoice/{invoice}', [Admin_OrderController::class, 'downloadInvoice'])->name('admin.download.invoice');
         Route::post('/received_payment/{invoice}', [Admin_OrderController::class, 'receivedPayment'])->name('admin.received.payment');
         Route::post('/approve_order/{invoice}', [Admin_OrderController::class, 'approveOrder'])->name('admin.approve.order');
+
+        //Banner
+        Route::get('/banner', [Admin_BannerController::class, 'index'])->name('admin_banner');
+        Route::get('/create_banner', [Admin_BannerController::class, 'create'])->name('admin_create_banner');
+        Route::post('/store_banner', [Admin_BannerController::class, 'store'])->name('admin_store_banner');
+        Route::get('/show_banner/{banner}', [Admin_BannerController::class, 'show'])->name('admin_show_banner');
+        Route::get('/get_detail_banner/{banner}', [Admin_BannerController::class, 'get_detail_banner'])->name('admin_detail_banner');
+        Route::get('/edit_banner/{banner}', [Admin_BannerController::class, 'edit'])->name('admin_edit_banner');
+        Route::post('/update_banner/{banner}', [Admin_BannerController::class, 'update'])->name('admin_update_banner');
+        Route::post('/destroy_banner/{banner}', [Admin_BannerController::class, 'destroy'])->name('admin_destroy_banner');
     });
 });
 
