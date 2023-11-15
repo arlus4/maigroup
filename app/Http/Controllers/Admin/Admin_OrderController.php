@@ -97,19 +97,23 @@ class Admin_OrderController extends Controller
     
         try {
             DB::beginTransaction(); // Begin Transaction
-
             // Dapatkan invoice berdasarkan invoice_no
             $invoice = Invoice_Master_Seller::where('invoice_no', $request->invoice_no)->first();
     
             if ($invoice) {
+                // Generate kode unik
+                $today = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d');
+                $kodeUnik = $this->generateUniqueCode($today);
+
                 // Hitung total baru
-                $newTotal = $invoice->amount + $request->ongkir;
+                $newTotal = $invoice->amount + $request->ongkir + $kodeUnik;
     
                 // Update field ongkir dan total
                 $invoice->update([
                     'progress' => '1',
                     'ongkir' => $request->ongkir,
-                    'total' => $newTotal
+                    'total' => $newTotal,
+                    'kode_unik' => $kodeUnik
                 ]);
     
                 DB::commit(); // Commit the transaction
@@ -129,7 +133,18 @@ class Admin_OrderController extends Controller
 
             return back()->with('error', 'Terjadi kesalahan saat mengupdate data: ' . $th->getMessage());
         }
-    }    
+    }
+
+    // class function untuk generate kode unik
+    private function generateUniqueCode($date)
+    {
+        do {
+            $randomCode = rand(11, 99);
+            $exists = Invoice_Master_Seller::where('date_created', $date)->where('kode_unik', $randomCode)->exists();
+        } while ($exists);
+
+        return $randomCode;
+    }
 
     /**
      * Display a listing of the resource.
@@ -148,6 +163,7 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.date_created',
             'invoice_master_seller.ongkir',
             'invoice_master_seller.total',
+            'invoice_master_seller.kode_unik',
             
             'outlets.id as idOutlets',
             'outlets.user_id',
@@ -329,6 +345,7 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.date_created',
             'invoice_master_seller.ongkir',
             'invoice_master_seller.total',
+            'invoice_master_seller.kode_unik',
             
             'outlets.id as idOutlets',
             'outlets.user_id',

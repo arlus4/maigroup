@@ -20,6 +20,7 @@ class ReportInvoiceController extends Controller
                 'invoice_master_seller.progress',
                 'invoice_master_seller.ongkir',
                 'invoice_master_seller.total',
+                'invoice_master_seller.kode_unik',
 
                 'ref_project.project_name'
             )

@@ -136,6 +136,12 @@
                                                     <td class="text-end">@rupiah($data->ongkir)</td>
                                                 </tr>
                                                 <!--end::Shipping-->
+                                                <!--begin::Unique Code-->
+                                                <tr>
+                                                    <td colspan="3" class="text-end">Kode Unik</td>
+                                                    <td class="text-end">@rupiah($data->kode_unik)</td>
+                                                </tr>
+                                                <!--end::Unique Code-->
                                                 <!--begin::Total-->
                                                 <tr>
                                                     <td colspan="3" class="fs-3 text-dark fw-bold text-end">Total</td>
