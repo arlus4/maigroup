@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Admin_ArtikelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlamatController;
@@ -88,11 +89,20 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/banner', [Admin_BannerController::class, 'index'])->name('admin_banner');
         Route::get('/create_banner', [Admin_BannerController::class, 'create'])->name('admin_create_banner');
         Route::post('/store_banner', [Admin_BannerController::class, 'store'])->name('admin_store_banner');
-        Route::get('/show_banner/{banner}', [Admin_BannerController::class, 'show'])->name('admin_show_banner');
         Route::get('/get_detail_banner/{banner}', [Admin_BannerController::class, 'get_detail_banner'])->name('admin_detail_banner');
         Route::get('/edit_banner/{banner}', [Admin_BannerController::class, 'edit'])->name('admin_edit_banner');
         Route::post('/update_banner/{banner}', [Admin_BannerController::class, 'update'])->name('admin_update_banner');
         Route::post('/destroy_banner/{banner}', [Admin_BannerController::class, 'destroy'])->name('admin_destroy_banner');
+
+        //News Artikel
+        Route::get('/artikel', [Admin_ArtikelController::class, 'index'])->name('admin_artikel');
+        Route::get('/artikel/create_artikel', [Admin_ArtikelController::class, 'create'])->name('admin_create_artikel');
+        Route::post('/artikel/store_artikel', [Admin_ArtikelController::class, 'store'])->name('admin_store_artikel');
+        Route::get('/artikel/show_artikel/{artikel}', [Admin_ArtikelController::class, 'show'])->name('admin_show_artikel');
+        Route::get('/artikel/edit_artikel/{artikel}', [Admin_ArtikelController::class, 'edit'])->name('admin_edit_artikel');
+        Route::post('/artikel/update_artikel/{artikel}', [Admin_ArtikelController::class, 'update'])->name('admin_update_artikel');
+        Route::post('/artikel/destroy_artikel/{artikel}', [Admin_ArtikelController::class, 'destroy'])->name('admin_destroy_artikel');
+        Route::post('/artikel/destroy_image_artikel/{artikel_image}', [Admin_ArtikelController::class, 'destroy_image'])->name('admin_destroy_image_artikel');
     });
 });
 
