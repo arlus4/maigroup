@@ -7,4 +7,6 @@
 <script src="{{ asset('assets/owner/js/upgrade-plan.js') }}"></script>
 <script src="{{ asset('assets/owner/js/create-app.js') }}"></script>
 <script src="{{ asset('assets/owner/js/users-search.js') }}"></script>
+<script src="{{ asset('assets/master/js/formrepeater.bundle.js')}}"></script>
+
 @yield('script')

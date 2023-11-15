@@ -11,7 +11,6 @@
 		<meta property="og:locale" content="ID" />
 		<meta property="og:type" content="content" />
 		<meta property="og:title" content="Dashboard Owner| MaiTea" />
-		<!-- <meta property="og:url" content="https://keenthemes.com/metronic" /> -->
 		<meta property="og:site_name" content="Dashboard Owner| MaiTea" />
 		<link rel="shortcut icon" href="{{ asset('assets/images/ic_maitea.png') }}" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -25,8 +24,8 @@
 			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FS8GGP" height="0" width="0" style="display:none;visibility:hidden"></iframe>
 		</noscript>
 
-		@include('owner/layout-owner/header')
+		@include('owner/layout-dashboard/header')
 
-		@include('owner/layout-owner/footer')
+		@include('owner/layout-dashboard/footer')
 	</body>
 </html>

@@ -3,7 +3,7 @@
         padding: 0 15px!important;
     }
     .card .card-body{
-        padding: 0!important;
+        padding: 2rem 1.3rem!important;
     }   
     .css-huops2n{
         padding: 1rem!important;
@@ -26,9 +26,9 @@
     display: inline-block;
     font-family: inherit;
     font-weight: bold;
-    font-size: 17px;
-    height: 45px;
-    line-height: 24px;
+    font-size: 13px;
+    height: 35px;
+    line-height: 15px;
     outline: none;
     position: relative;
     padding: 0px 16px;
@@ -163,4 +163,47 @@
     width: 100%;
     text-align: right;
     margin: 0px 0px 12px;
+}
+.css-buoi9sn{
+    display: flex;
+    flex-direction: row;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 18px;
+    color: #31353B;
+    padding-bottom: 8px;
+    max-width: 280px;
+    word-break: break-word;
+}
+.css-buopn9sn{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+    color: #31353B;
+}
+.css-dabj72{
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-bottom: 8px solid #e2e2e2;
+}
+.css-ca2jq0s{
+    background-color: #fff;
+    border: 1px solid #bfc9d9;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 8px;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 13px;
+    height: 45px;
+    line-height: 44px;
+    outline: none;
+    position: relative;
+    padding: 0px 16px;
+    text-indent: initial;
+    width: 160px;
+    color: #525867!important;
 }

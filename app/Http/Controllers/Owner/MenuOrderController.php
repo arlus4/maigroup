@@ -15,12 +15,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Invoice_Detail_Pembeli;
 use App\Models\Invoice_Master_Pembeli;
 
-class POSController extends Controller
+class MenuOrderController extends Controller
 {
     public function index()
     {
-        $dataOutlet = Product_Outlet::
-            select(
+        $dataOutlet = Product_Outlet::select(
                 'product_outlets.outlet_id',
                 'product_outlets.category_id',
                 'product_outlets.product_id',
@@ -41,7 +40,7 @@ class POSController extends Controller
             ->where('product_outlets.outlet_id', Auth::user()->outlet_id)
             ->get();
 
-        return view('owner.pos', [
+        return view('owner.menuOrder', [
             'title' => 'Menu Order',
             'dataOutlet' => $dataOutlet
         ]);
@@ -65,17 +64,11 @@ class POSController extends Controller
 
     public function getNomorHP(Request $request)
     {
-        // Dapatkan term pencarian dari query string menggunakan input 'term'
         $searchTerm = $request->input('term');
-    
-        // Cari di database untuk nomor HP yang cocok dengan term pencarian
-        // 'like' digunakan untuk pencarian yang fleksibel
         $results = User::where('users_type', 1)->where('no_hp', 'like', '%' . $searchTerm . '%')->distinct('no_hp')->pluck('no_hp');
         
-    
-        // Kirim kembali hasil sebagai response JSON
         return response()->json($results);
-    }   
+    }
 
     public function store(Request $request)
     {

@@ -1,3 +1,51 @@
+@media screen and (max-width: 399px){
+    .css-xcvf6ga .css-xcvf6gb{
+        padding: 2rem 1rem!important;
+    }
+    .css-dn4naop{
+        width: 100%!important;
+        font-size: 12px!important;
+        padding: 5px!important;
+    }
+    .css-dn4naopi{
+        font-size: 12px!important;
+        width: 100%!important;
+        padding: 5px!important;
+    }
+}
+@media screen and (max-width: 350px) {
+    .css-xcvf6ga .css-xcvf6gb{
+        padding: 2rem 1rem!important;
+    }
+    .css-dn4naop{
+        width: 100%!important;
+        font-size: 12px!important;
+        padding: 5px!important;
+    }
+    .css-dn4naopi{
+        font-size: 12px!important;
+        width: 100%!important;
+        padding: 5px!important;
+    }
+}
+@media screen and (min-width: 310px) and (max-width: 340px) {
+
+    .css-xcvf6ga .css-xcvf6gb{
+        padding: 2rem 1rem!important;
+    }
+    .css-dn4naop{
+        width: 100%!important;
+        font-size: 10px!important;
+        padding: 5px!important;
+        line-height: 20px!important;
+    }
+    .css-dn4naopi{
+        font-size: 12px!important;
+        width: 100%!important;
+        padding: 5px!important;
+        line-height: 20px!important;
+    }
+}
 .content-header{
     display: flex;
     -webkit-box-pack: end;
@@ -373,4 +421,142 @@ button.close{
     padding-bottom: 15px;
     padding-top: 15px;
     border-bottom: 8px solid #e2e2e2;
+}
+.css-pp2kjsn{
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0px 0px 16px;
+}
+.css-fhxb1ns{
+    display: flex;
+    flex-wrap: nowrap;
+    left: 0px;
+    margin: 0px auto;
+    position: relative;
+    top: 0px;
+    transition: transform 240ms linear 0s;
+    width: 100%;
+}
+.css-akcdj8w{
+    background-color: rgb(204, 229, 255);
+    border-color: rgb(184, 218, 255);
+    display: flex;
+    flex: 1 0 100%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 12px;
+    border-radius: 8px;
+}
+.css-akcdj8ws{
+    background-color: #ffa6c1;
+    border-color: #dc3545;
+    display: flex;
+    flex: 1 0 100%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 12px;
+    border-radius: 8px;
+}
+.css-vubsk2a{
+    margin-right: 10px!important;
+    width: 24px;
+}
+.css-jdk02ns{
+    font-size: 1rem;
+    line-height: 20px;
+    letter-spacing: 0px;
+    margin: 0px;
+    color: rgb(0, 64, 133)!important;
+}
+.css-dn4naop{
+    background-color: #fff;
+    border: 1.2px solid #039344;
+    border-radius: 8px;
+    color: #039344;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 13px;
+    height: 30px;
+    line-height: 0px;
+    outline: none;
+    position: relative;
+    margin-right: 7px;
+    padding: 7px;
+    text-indent: initial;
+    width: 120px;
+}
+.css-dn4naopi{
+    background-color: #039344;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 13px;
+    height: 40px;
+    line-height: 0px;
+    outline: none;
+    position: relative;
+    padding: 10px;
+    text-indent: initial;
+    width: 190px;
+}
+.css-fjl2jsa{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: rgba(141, 150, 170, 0.4) 0px 1px 4px;
+    pointer-events: all;
+    max-height: 100%;
+    min-width: 500px;
+    opacity: 1;
+    width: 500px;
+    border-radius: 8px;
+    transition: opacity 0.2s ease 0s;
+}
+.css-content-header{
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    gap: 16px;
+    padding: 20px 20px 0px 32px;
+}
+.css-content-title{
+    margin-top: 4px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+.css-josq1jas{
+    text-align: left;
+    border-bottom: 8px solid rgb(240, 243, 247);
+    padding: 14px 5px;
+}
+.css-btn-konf{
+    background: #fff;
+    border: 1px solid #bfc9d9;
+    height: 40px;
+    width: 120px;
+    color: #525867;
+    border-radius: 8px;
+    padding: 0px 16px;
+    font-size: 12px;
+    font-weight:bold;
 }

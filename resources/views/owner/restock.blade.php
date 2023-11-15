@@ -1,43 +1,21 @@
-@extends('layout-master/app')
+@extends('owner/layout-sidebar/app')
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0" style="font-size: 20px!important;">Tambah Order</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0" style="font-size: 20px!important;">Tambah Restock Order</h1>
                 </div>
             </div>
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
 			<div id="kt_app_content_container" class="app-container container-xxl">
-				<form action="{{ route('admin.admin_store_order') }}" method="post" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row">
+				<form action="{{ route('owner.owner_store_restock_order') }}" method="post" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row">
 					@csrf
-					<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
-						<div class="card card-flush py-4" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
-							<div class="card-header">
-								<div class="card-title">
-									<h2 style="font-size: 16px;">Informasi Outlet</h2>
-								</div>
-							</div>
-							<div class="card-body pt-0">
-                                <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Pilihan Outlet</label>
-                                <select class="form-select mb-2" data-control="select2" data-placeholder="Pilih Outlet" data-allow-clear="true" name="outlet_id" required>
-                                    <option></option>
-                                    @foreach($getOutlet as $outlet)
-                                        <option value="{{ $outlet->outlet_id }}">{{ $outlet->nama_outlet }} - {{ $outlet->outlet_id }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="text-muted fs-7 mb-5" style="color: #31353B!important;">Pilih outlet dengan benar, ya.</div> 
-                                <div class="form-group">
-                                    <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Catatan</label>
-                                    <input type="text" name="noted" id="noted" class="form-control mb-2" placeholder="Contoh : Bakso & soto, Jajanan, Minuman"/>
-                                </div>
-							</div>
-						</div>
-					</div>
 					<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
 						<div class="tab-content">
+                            <input type="hidden" name="outlet_id" value="{{ Auth::user()->outlet_id }}">
 							<div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
 								<div class="d-flex flex-column gap-7 gap-lg-10">
 									<div class="card card-flush py-4" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
@@ -47,9 +25,9 @@
 											</div>
 										</div>
 										<div class="card-body pt-0">
-                                            <div id="kt_docs_repeater_advanced">
+                                            <div id="data_restock_order">
                                                 <div class="form-group">
-                                                    <div data-repeater-list="kt_docs_repeater_advanced">
+                                                    <div data-repeater-list="data_restock_order">
                                                         <div data-repeater-item>
                                                             <div class="css-dabj72">
                                                                 <div class="form-group mb-4">
@@ -91,12 +69,12 @@
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                                {{-- <div class="form-group">
-                                                                    <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Catatan</label>
-                                                                    <input type="text" name="noted" id="noted" class="form-control mb-2" placeholder="Contoh : Bakso & soto, Jajanan, Minuman"/>
-                                                                </div> --}}
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Catatan</label>
+                                                        <input type="text" name="noted" id="noted" class="form-control mb-2" placeholder="Contoh : Bakso & soto, Jajanan, Minuman"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-5">
@@ -120,12 +98,13 @@
 			</div>
 		</div>
     </div>
+
 @endsection
 
 @section('script')
     <script>
         $(document).ready(function() {
-            $('#kt_docs_repeater_advanced').repeater({
+            $('#data_restock_order').repeater({
                 initEmpty: false,
 
                 defaultValues: {
@@ -163,13 +142,13 @@
                 newItem.find('#id_produk').change(function() {
                     var productId = $(this).val();
                     $.ajax({
-                        url: 'get-harga-order/' + productId,
+                        url: 'get-harga-order-penjual/' + productId,
                         type: 'GET',
                         success: function(response) {
-                            var harga = response.harga.replace(/\D/g, '');
-                            var skuCode   = response.sku;
-                            var projectName = response.project_name;
-                            var projectId = response.id_project;
+                            var harga        = response.harga.replace(/\D/g, '');
+                            var skuCode      = response.sku;
+                            var projectName  = response.project_name;
+                            var projectId   = response.id_project;
 
                             newItem.find('#harga-satuan').val(formatRupiah(parseFloat(harga)));
                             newItem.find('#sku_code').val(skuCode);
@@ -178,7 +157,7 @@
                             hitungTotalAmount(newItem);
                         },
                         error: function(error) {
-                            console.error('Failed to fetch price:', error);
+                            console.error('Gagal memuat harga:', error);
                         }
                     });
                 });
@@ -188,6 +167,34 @@
                 hitungTotalAmount($(this).closest('[data-repeater-item]'));
             });
         });
+
+        function kontrolUbahSelect(element) {
+            var productId        = element.val();
+            var item             = element.closest('[data-repeater-item]');
+            var hargaInput       = item.find('input[id="harga-satuan"]');
+            var skuInput         = item.find('input[id="sku_code"]');
+            var projectNameInput = item.find('input[id="project_name"]');
+            var projectIdInput   = item.find('input[id="id_project"]');
+
+            $.ajax({
+                url: 'get-harga-order-penjual/' + productId,
+                type: 'GET',
+                success: function(response) {
+                    var harga       = response.harga.replace(/\D/g, '');
+                    var skuCode     = response.sku;
+                    var projectName = response.project_name;
+                    var projectId   = response.id_project;
+
+                    hargaInput.val(formatRupiah(parseFloat(harga)));
+                    skuInput.val(skuCode);
+                    projectNameInput.val(projectName);
+                    projectIdInput.val(projectId);
+                },
+                error: function(error) {
+                    console.error('Gagal memuat harga:', error);
+                }
+            });
+        }
 
         function formatRupiah(angka) {
             var number_string   = angka.toString();
@@ -205,40 +212,12 @@
             return 'Rp ' + rupiah;
         }
 
-        function kontrolUbahSelect(element) {
-            var productId = element.val();
-            var item = element.closest('[data-repeater-item]');
-            var hargaInput = item.find('input[id="harga-satuan"]');
-            var skuInput = item.find('input[id="sku_code"]');
-            var projectNameInput = item.find('input[id="project_name"]');
-            var projectIdInput = item.find('input[id="id_project"]');
-
-            $.ajax({
-                url: 'get-harga-order/' + productId,
-                type: 'GET',
-                success: function(response) {
-                    var harga = response.harga.replace(/\D/g, '');
-                    var skuCode   = response.sku;
-                    var projectName = response.project_name;
-                    var projectId = response.id_project;
-
-                    hargaInput.val(formatRupiah(parseFloat(harga)));
-                    skuInput.val(skuCode);
-                    projectNameInput.val(projectName);
-                    projectIdInput.val(projectId);
-                },
-                error: function(error) {
-                    console.error('Gagal memuat harga:', error);
-                }
-            });
-        }
-
         function hitungTotalAmount(item) {
-            var qty = parseFloat(item.find('input[id="qty"]').val().replace(',', '.'));
-            var hargaSatuanString = item.find('input[id="harga-satuan"]').val();
-            var numbersFromString = hargaSatuanString.match(/\d+/g);
-            var hargaSatuanCleaned = numbersFromString ? numbersFromString.join('') : '';
-            var hargaSatuan = parseFloat(hargaSatuanCleaned);
+            var qty                 = parseFloat(item.find('input[id="qty"]').val().replace(',', '.'));
+            var hargaSatuanString   = item.find('input[id="harga-satuan"]').val();
+            var numbersFromString   = hargaSatuanString.match(/\d+/g);
+            var hargaSatuanCleaned  = numbersFromString ? numbersFromString.join('') : '';
+            var hargaSatuan         = parseFloat(hargaSatuanCleaned);
 
             if (!isNaN(qty) && !isNaN(hargaSatuan)) {
                 var totalAmount = hargaSatuan * qty;
@@ -248,5 +227,4 @@
             }
         }
     </script>
-
 @endsection

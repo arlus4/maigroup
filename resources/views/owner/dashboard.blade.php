@@ -1,4 +1,4 @@
-@extends('owner/layout-owner/app')
+@extends('owner/layout-sidebar/app')
 
 @section('content')
     <div class="col-xxl-4 mb-5 mb-xl-10">

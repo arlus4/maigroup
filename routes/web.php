@@ -6,13 +6,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Check_Connection;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Owner\POSController;
 use App\Http\Controllers\Admin\Admin_OrderController;
 use App\Http\Controllers\Admin\Admin_BannerController;
 use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Project_ProductController;
+use App\Http\Controllers\Owner\POSController;
+use App\Http\Controllers\Owner\MenuOrderController;
+use App\Http\Controllers\Owner\RestockController;
+use App\Http\Controllers\Owner\ReportInvoiceController;
 
 Route::get('/', [HomeController::class, 'home']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -114,10 +117,24 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
             return view('owner.dashboard');
         })->name('dashboard-owner');
 
-        // POS Sistem
-        Route::get('/pos', [POSController::class, 'index'])->name('owner_pos');
-        Route::get('/get-produk/{produkId}', [POSController::class, 'getProduk'])->name('owner_get_produk');
-        Route::get('/getNomorHP', [POSController::class, 'getNomorHP']);
-        Route::post('/store-order', [POSController::class, 'store']);
+        // POS Sistem atau Menu Order
+        Route::get('/menu-order', [MenuOrderController::class, 'index'])->name('owner_menu_order');
+        Route::get('/get-produk/{produkId}', [MenuOrderController::class, 'getProduk'])->name('owner_get_produk');
+        Route::get('/getNomorHP', [MenuOrderController::class, 'getNomorHP']);
+        Route::post('/store-order', [MenuOrderController::class, 'store']);
+
+        // Restock
+        Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');
+        Route::get('/get-harga-order-penjual/{id}', [RestockController::class, 'getHargaOrder'])->name('owner_get_harga_order');
+        Route::post('/store-restock-order', [RestockController::class, 'store'])->name('owner_store_restock_order');
+        Route::get('/konfirmasi-pembayaran-order', [RestockController::class, 'konfPembayaran'])->name('owner_konf_pembayaran_order');
+        Route::get('/cek-data-invoice/{invoice}', [RestockController::class, 'cekDataInvoice'])->name('owner_cek_data_invoice');
+        Route::post('/store-konfirmasi-pembayaran-order', [RestockController::class, 'storeKonfPembayaran'])->name('owner_store_konf_pembayaran_order');
+        Route::get('/status-restock', [RestockController::class, 'statusRestock'])->name('owner_status_restock');
+        Route::get('/detail-order/{invoice}', [RestockController::class, 'detailOrder'])->name('owner_detail_order');
+        Route::get('/change-progress-order/{invoice}', [RestockController::class, 'changeProgressOrder'])->name('owner_change_progress_order');
+
+        // Report Invoice
+        Route::get('/report-invoice', [ReportInvoiceController::class, 'index'])->name('owner_report_invoice');
     });
 });

@@ -111,7 +111,8 @@
                                                                                     <div class="d-flex align-items-center">
                                                                                         <!--begin::Thumbnail-->
                                                                                         <a href="javascript:;" class="symbol symbol-50px">
-                                                                                            <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span>
+                                                                                            <!-- <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span> -->
+                                                                                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents($detail->path_thumbnail)) }}" alt="{{ $detail->nama_produk }}">
                                                                                         </a>
                                                                                         <!--end::Thumbnail-->
                                                                                         <!--begin::Title-->

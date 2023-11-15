@@ -19,14 +19,22 @@
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
 									</div>
-									<div class="menu-item {{ Request::routeIs('owner.owner_pos') ? 'here show' : '' }}">
+									<div class="menu-item {{ Request::routeIs('owner.owner_menu_order') ? 'here show' : '' }}">
 										<span class="menu-link">
-											<a href="{{ route('owner.owner_pos') }}">
+											<a href="{{ route('owner.owner_menu_order') }}">
 												<span class="menu-title">Menu Order</span>
 											</a>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
 									</div>
+									<!-- <div class="menu-item {{ Request::routeIs('owner.owner_restock') ? 'here show' : '' }}">
+										<span class="menu-link">
+											<a href="{{ route('owner.owner_restock') }}">
+												<span class="menu-title">Restock Order</span>
+											</a>
+											<span class="menu-arrow d-lg-none"></span>
+										</span>
+									</div> -->
 								</div>
 							</div>
 							<div class="app-navbar flex-shrink-0">

@@ -1,4 +1,4 @@
-@extends('owner/layout-owner/app')
+@extends('owner/layout-dashboard/app')
 
 @section('content')
     <div class="d-flex flex-column flex-xl-row">
@@ -6,11 +6,11 @@
             <div class="cursor-pointer">
                 <div class="d-flex flex-wrap d-grid gap-5 gap-xxl-9">
                     @foreach($dataOutlet as $outlet)
-                        <div class="card card-flush menu-item flex-row-fluid css-bn92msa pb-5 mw-100" id="{{ $outlet->product_id }}">
+                        <div class="card card-flush menu-item flex-row-fluid css-bn92msa pb-5 w-25" id="{{ $outlet->product_id }}">
                             <div class="text-center p-0">
-                                <img src="{{ asset($outlet->path_thumbnail) }}" class="rounded-3 mb-2 w-150px h-150px w-xxl-200px h-xxl-200px">
+                                <img src="{{ asset($outlet->path_thumbnail) }}" class="rounded-3 mb-2" width="100">
                                 <div class="text-center mt-2">
-                                    <span class="fw-bold text-gray-800 cursor-pointer" style="font-size: 14px;">{{ $outlet->nama_produk }}</span>
+                                    <span class="fw-bold text-gray-800 cursor-pointer" style="font-size: 12px;">{{ $outlet->nama_produk }}</span>
                                 </div>
                             </div>
                         </div>
@@ -43,22 +43,28 @@
                     <div class="alert alert-primary" style="border-radius: 8px;">
                         <span>Silakan masukkan nomor HP pembeli. Pastikan nomor HP Pembeli yang Anda masukkan aktif dan dapat dihubungi</span>
                     </div>
-                    <form>
-                        <div class="form-group">
-                            <input type="hidden" id="outletId" value="{{ Auth::user()->outlet_id }}">
-                            <div class="input-group">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <i class="fas fa-mobile-screen"></i>
-                                </span>
-                                <input type="text" class="form-control css-dhk2xjk" id="inputNoHp" placeholder="Contoh : 082xxxxxx" required>
-                                <ul id="nomorHpList" class="list-group"></ul>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form>
+                                <div class="form-group">
+                                    <input type="hidden" id="outletId" value="{{ Auth::user()->outlet_id }}">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-mobile-screen"></i>
+                                        </span>
+                                        <input type="text" class="form-control css-dhk2xjk" id="inputNoHp" placeholder="Contoh : 082xxxxxx" required>
+                                        <ul id="nomorHpList" class="list-group"></ul>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                    <button type="button" class="css-kl2kd9a mt-5" style="background-color: #e2e2e2;color: #929292;cursor: not-allowed;" id="btnOrder" disabled>
-                        <i class="fas fa-check-circle" id="iconColor" style="color: #929292"></i>&nbsp;
-                        Order Sekarang
-                    </button>
+                        <div class="col-md-6">
+                            <button type="button" class="css-kl2kd9a" style="height: 43px;background-color: #e2e2e2;color: #929292;cursor: not-allowed;" id="btnOrder" disabled>
+                                <i class="fas fa-check-circle" id="iconColor" style="color: #929292"></i>&nbsp;
+                                Order Sekarang
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,6 +103,7 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script>
         $(document).ready(function() {
             function rupiah(number) {
@@ -148,6 +155,13 @@
 
                 return jumlahBaris;
             }
+
+            $(window).keydown(function(event){
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
 
             $('.card.card-flush.menu-item').on('click', function() {
                 var productId = $(this).attr('id');
@@ -283,31 +297,65 @@
                 updateButtonStatus();
             });
 
-            $('#inputNoHp').on('keyup', function() {
-                var query = $(this).val();
-                $('#nomorHpList').html('');
-                if(query.length >= 2) {
+            // $('#inputNoHp').on('keyup', _.throttle(function() {
+            //     var query = $(this).val();
+            //     $('#nomorHpList').html('');
+            //     if(query.length >= 2) {
+            //         $.ajax({
+            //             url: "/owner/getNomorHP",
+            //             type: "GET",
+            //             data: {
+            //                 'term': query
+            //             },
+            //             success: function(data) {
+            //                 if(data.length > 0) {
+            //                     for(var i = 0; i < data.length; i++) {
+            //                         $('#nomorHpList').append('<li class="list-group-item link-class">'+ data[i] +'</li>');
+            //                     }
+            //                 }
+            //             }
+            //         });
+            //     }
+            // }, 300));
+
+            $('#inputNoHp').on('keyup', _.throttle(function() {
+                var query       = $(this).val();
+                var nomorHpList = $('#nomorHpList');
+
+                nomorHpList.empty();
+
+                if (query.length >= 2) {
                     $.ajax({
                         url: "/owner/getNomorHP",
                         type: "GET",
-                        data: {
-                            'term': query
-                        },
+                        data: { 'term': query },
                         success: function(data) {
-                            if(data.length > 0) {
-                                for(var i = 0; i < data.length; i++) {
-                                    $('#nomorHpList').append('<li class="list-group-item link-class">'+ data[i] +'</li>');
+                            let uniqueResults = new Set();
+
+                            data.forEach(function(item) {
+                                if (!uniqueResults.has(item)) {
+                                    uniqueResults.add(item);
+                                    nomorHpList.append($('<li class="list-group-item link-class"></li>').text(item));
                                 }
-                            }
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
                         }
                     });
                 }
-            });
+            }, 300));
         
-            $(document).on('click', 'li', function() {
+            // $(document).on('click', 'li', function() {
+            //     var value = $(this).text();
+            //     $('#inputNoHp').val(value);
+            //     $('#nomorHpList').html('');
+            // });
+
+            $('#nomorHpList').on('click', 'li', function() {
                 var value = $(this).text();
                 $('#inputNoHp').val(value);
-                $('#nomorHpList').html('');
+                $('#nomorHpList').html(''); // Mengosongkan list setelah seleksi
             });
 
             $('#btnOrder').on('click', function() {
@@ -413,6 +461,8 @@
                 product_id  : products
             };
 
+            $('#modalOrder').modal('hide');
+
             $.ajax({
                 type: 'POST',
                 url: 'store-order',
@@ -421,10 +471,18 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    console.log(response);
+                    toastr.success('Success: ' + response.message);
+
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
                 },
                 error: function(xhr, status, error) {
-                    console.error(error);
+                    toastr.error('Error: ' + error);
+
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 3000);
                 }
             });
         }

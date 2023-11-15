@@ -85,7 +85,7 @@
                                     </td>
                                     @if ($val->ongkir == null)
                                         <td class="align-items-center ps-2">
-                                            <button type="button" onclick="modalUpdateOngkir('{{ $val->invoice_no }}')" class="btn btn-primary" style="cursor: pointer">
+                                            <button type="button" onclick="modalUpdateOngkir('{{ $val->invoice_no }}')" class="btn btn-primary btn-sm cursor-pointer">
                                                 Input Ongkir
                                             </button>
                                         </td>
