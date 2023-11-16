@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DataTables;
 use App\Models\User;
 use App\Models\Outlet;
 use App\Models\ref_KodePos;
@@ -33,8 +34,11 @@ class Admin_UserPenjualController extends Controller
      */
     public function index(): View
     {
-        $getData = User::select
-            (
+        return view('master.user-penjual.daftarUserPenjual');
+    }
+
+    public function getDataUserPenjual(){
+        $data = User::select(
                 'users_login.id as idUserLogin',
                 'users_login.users_type',
                 'users_login.name',
@@ -48,6 +52,7 @@ class Admin_UserPenjualController extends Controller
                 'users_details.id as idUserDetail',
                 'users_details.user_id',
                 'users_details.avatar',
+                'users_details.path_avatar',
                 'users_details.nomor_ktp',
                 'users_details.tanggal_lahir',
                 'users_details.jenis_kelamin',
@@ -74,9 +79,11 @@ class Admin_UserPenjualController extends Controller
             ->where('users_type', 2)
             ->get();
 
-        return view('master.user-penjual.daftarUserPenjual',[
-            'getData' => $getData
-        ]);
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
     }
 
     /**
@@ -276,6 +283,55 @@ class Admin_UserPenjualController extends Controller
         $getKodePos      = ref_KodePos::select('kodepos','kode_kelurahan')->where('kode_kelurahan', $getData->kode_kelurahan)->get();
 
         return view('master.user-penjual.editUserPenjual', compact('getKategori', 'getProvinsi', 'getData', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
+    }
+
+    public function show($username){
+        $getData = User::select(
+                'users_login.users_type',
+                'users_login.name',
+                'users_login.email',
+                'users_login.no_hp',
+                'users_login.outlet_id',
+
+                'users_details.avatar',
+                'users_details.nomor_ktp',
+                'users_details.tanggal_lahir',
+                'users_details.jenis_kelamin',
+                'users_details.kelurahan',
+                'users_details.kecamatan',
+                'users_details.kota_kabupaten',
+                'users_details.provinsi',
+                'users_details.kode_pos',
+                'users_details.alamat_detail',
+
+                'outlets.nama_outlet',
+
+                'ref_project.project_name',
+
+                'ref_propinsi.kode_propinsi',
+                'ref_propinsi.nama_propinsi',
+
+                'ref_kotakab.kode_kotakab',
+                'ref_kotakab.nama_kotakab',
+                
+                'ref_kecamatan.kode_kecamatan',
+                'ref_kecamatan.nama_kecamatan',
+
+                'ref_kelurahan.kode_kelurahan',
+                'ref_kelurahan.nama_kelurahan'
+            )
+            ->leftJoin('users_details','users_login.id','=','users_details.user_id')
+            ->leftJoin('outlets','users_login.id','=','outlets.user_id')
+            ->leftJoin('ref_project','outlets.project_id','=','ref_project.id')
+            ->leftjoin('ref_propinsi', 'users_details.provinsi', '=', 'ref_propinsi.kode_propinsi')
+            ->leftJoin('ref_kotakab','users_details.kota_kabupaten', '=', 'ref_kotakab.kode_kotakab')
+            ->leftjoin('ref_kecamatan', 'users_details.kecamatan', '=', 'ref_kecamatan.kode_kecamatan')
+            ->leftjoin('ref_kelurahan', 'users_details.kelurahan', '=', 'ref_kelurahan.kode_kelurahan')
+            ->where('users_login.users_type', 2)
+            ->where('users_login.username', $username)
+            ->first();
+        
+        return response()->json($getData);
     }
 
     /**

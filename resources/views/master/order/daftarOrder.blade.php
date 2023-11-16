@@ -32,20 +32,22 @@
 
             <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                 <div class="card-body border-0 py-4">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableOrder" class="display">
-                        <thead>
-                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th class="min-w-100px text-dark">No</th>
-                                <th class="min-w-100px text-dark">ID Outlet</th>
-                                <th class="min-w-100px text-dark">No Invoice</th>
-                                <th class="min-w-100px text-dark">Amount</th>
-                                <th class="min-w-100px text-dark">Progress</th>
-                                <th class="min-w-100px text-dark">Ongkos Kirim</th>
-                                <th class="min-w-100px text-dark"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-gray-600 fw-semibold"></tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableOrder" class="display">
+                            <thead>
+                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                    <th class="min-w-100px text-dark">No</th>
+                                    <th class="min-w-100px text-dark">ID Outlet</th>
+                                    <th class="min-w-100px text-dark">No Invoice</th>
+                                    <th class="min-w-100px text-dark">Amount</th>
+                                    <th class="min-w-100px text-dark">Progress</th>
+                                    <th class="min-w-100px text-dark">Ongkos Kirim</th>
+                                    <th class="min-w-100px text-dark"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-semibold"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

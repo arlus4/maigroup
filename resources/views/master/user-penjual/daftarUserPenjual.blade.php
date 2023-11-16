@@ -7,6 +7,12 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar User Penjual</h1>
                 </div>
+                <a href="{{ route('admin.admin_tambah_user_penjual') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
+                    <span class="svg-icon svg-icon-2">
+                        <i class="fas fa-plus-circle text-white"></i>
+                    </span>
+                    Tambah User Penjual
+                </a>
             </div>
         </div>
         <div id="kt_app_content_container" class="app-container container-xxl">
@@ -26,140 +32,125 @@
                 </div>
             @endif
             <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
-                <div class="card-header border-0 pt-6">
-                    <div class="card-title">
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                </svg>
-                            </span>
-                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari Produk" />
-                        </div>
-                    </div>
-                    <div class="card-toolbar">
-                        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <a href="{{ route('admin.admin_tambah_user_penjual') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
-                                <span class="svg-icon svg-icon-2">
-                                    <i class="fas fa-plus-circle text-white"></i>
-                                </span>
-                                Tambah User Penjual
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body py-4">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                        <thead>
-                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th class="min-w-100px text-dark">Info Penjual</th>
-                                <th class="min-w-100px text-dark">Info Outlet</th>
-                                <th class="min-w-100px text-dark">Aktif</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-gray-600 fw-semibold">
-                            @foreach($getData as $val)
-                                <tr>
-                                    <td class="d-flex align-items-center ps-2">
-                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                            <div class="symbol-label">
-                                                <img src="{{ $val->avatar ? asset('storage/user_penjual/avatar/'.$val->avatar) : asset('assets/images/avatar.png') }}" class="w-100"/>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <span class="text-gray-800 mb-1">{{ $val->name }}</span>
-                                            <span>{{ $val->email }}</span>
-                                        </div>
-                                    </td>
-                                    <td class="align-items-center">
-                                        <div class="d-flex flex-column">
-                                            @if($val->outlet_id == null)
-                                                <span class="text-gray-800 mb-1">Tidak Ada</span>
-                                            @else
-                                                <span class="text-gray-800 mb-1">{{ $val->nama_outlet }}</span>
-                                                <div class="d-flex css-fcabk9sn">
-                                                    <span class="me-4">ID Outlet :</span>
-                                                    <span>{{ $val->outlet_id }}</span>
-                                                </div>
-                                                <div class="d-flex css-fcabk9sa">
-                                                    <span class="me-4">Kuota Point :</span>
-                                                    <span>{{ $val->kuota_point }}</span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td class="align-items-center">
-                                        <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                            <input type="checkbox" class="form-check-input ubah-toggle" name="notifications" data-user-id="{{ $val->idUserLogin }}" @if($val->is_active == 1) checked="checked" @endif style="cursor: pointer;">
-                                        </div>
-                                    </td>
-                                    <td class="align-items-center">
-                                        <div class="dropdown">
-                                            <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Atur
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li>
-                                                    <button class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                        <i style="color:#181C32;" class="fas fa-eye me-2"></i>
-                                                        Detail
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button onclick="window.location.href = 'edit-user-penjual/{{ $val->username }}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                        <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                        Edit
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                    <div class="table-responsive">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableUserPenjual">
+                            <thead>
+                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                    <th class="min-w-100px text-dark">Info Penjual</th>
+                                    <th class="min-w-100px text-dark">Info Outlet</th>
+                                    <th class="min-w-100px text-dark">Aktif</th>
+                                    <th class="text-dark"></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="text-gray-600 fw-semibold">
+                                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Delete -->
-    <div class="modal fade" id="modalDelete">
-        <div class="modal-dialog">
+    <!-- Modal Detail User Penjual -->
+    <div class="modal fade" id="detailUserPenjual">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 8px;">
-                <div class="content-header">
-                    <div class="content-title">
-                        <h4 class="css-lk3jsp">Hapus Produk</h4>
+                <div class="css-dtu37sh">
+                    <div class="css-cfn3ksa">
+                        <h5 class="css-fnm3aj">Detail Penjual & Outlet</h5>
                     </div>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="btn-close css-fhk9sna" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="css-flj2ej">
-                    <div class="css-fjkpo0ma">
-                        <div class="css-wj23sk">
-                            <form action="{{ route('admin.admin_delete_product') }}" method="POST">
-                                @csrf
-                                <div class="row g-9 mb-8">
-                                    <!--begin::Col-->
-                                    <input type="hidden" name="id_produk" id="id">
-                                    <input type="hidden" name="data_thumbnail" id="thumbnail">
-                                    <div class="col-md-12 fv-row" >
-                                        <span style="font-size: 15px">
-                                            Apakah Anda yakin untuk menghapus data produk ini?
-                                        </span>
+                <div class="css-cnm6w2a">
+                    <div class="css-bnm3js">
+                        <div class="css-vbdw2js">
+                            <div class="css-hk23nab">
+                                <div class="css-sui2nz d-flex">
+                                    <div style="border-left: 4px solid #b1c5cd;">
+                                    </div>
+                                    <h5 class="css-gh9fjq" style="margin-left: 6px;">Informasi User Penjual</h5>
+                                </div>
+                                <div class="css-uwad2ha">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img class="img-fluid rounded" id="imgUser" src="{{ asset('assets/images/avatar.png') }}">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="css-i9mf6m mt-0">
+                                                <div class="css-iopf2sj mb-1">
+                                                    <p class="css-fgusn1a">Nama</p>
+                                                    <span>:</span>
+                                                    <div class="css-fgdh0kl">
+                                                        <p class="css-fgusn1a" id="namaUser"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="css-iopf2sj mb-1">
+                                                    <p class="css-fgusn1a">NIK</p>
+                                                    <span>:</span>
+                                                    <div class="css-fgdh0kl">
+                                                        <p class="css-fgusn1a" id="noNIK"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="css-iopf2sj mb-1">
+                                                    <p class="css-fgusn1a">Tanggal Lahir</p>
+                                                    <span>:</span>
+                                                    <div class="css-fgdh0kl">
+                                                        <p class="css-fgusn1a" id="tglLahir"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="css-iopf2sj mb-1">
+                                                    <p class="css-fgusn1a">Jenis Kelamin</p>
+                                                    <span>:</span>
+                                                    <div class="css-fgdh0kl">
+                                                        <p class="css-fgusn1a" id="jenisKelamin"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="text-center">
-                                    <button type="button" class="css-ca2jq0s" style="width: 80px;" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="css-kl2kd9a">
-                                        <span class="indicator-label">Ya, saya yakin</span>
-                                    </button>
+                            </div>
+                            <div class="css-kdfh3a">
+                                <div class="css-hk23nab" style="padding: 15px 0px;border-bottom:0px;">
+                                    <div class="css-jgdh2a">
+                                        <h4 class="css-gh9fjq">Informasi Outlet</h4>
+                                    </div>
+                                    <div class="css-i9mf6m">
+                                        <div class="css-iopf2sj">
+                                            <p class="css-fgusn1a" style="width: 160px;">Nama Outlet</p>
+                                            <span>:</span>
+                                            <div class="css-fgdh0kl">
+                                                <p class="css-fgusn1a" id="namaOutlet"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-i9mf6m">
+                                        <div class="css-iopf2sj">
+                                            <p class="css-fgusn1a" style="width: 160px;">Kategori Projek Outlet</p>
+                                            <span>:</span>
+                                            <div class="css-fgdh0kl">
+                                                <p class="css-fgusn1a" id="namaKategori"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-i9mf6m">
+                                        <div class="css-iopf2sj">
+                                            <p class="css-fgusn1a" style="width: 160px;">Alamat</p>
+                                            <span>:</span>
+                                            <div class="css-fgdh0kl">
+                                                <p class="css-fgusn1a">
+                                                    <span id="noHpBawah"></span><br>
+                                                    <span id="alamatDetail"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </form>
-                        </div> 
-                    </div> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -167,31 +158,96 @@
 @endsection
 
 @section('script')
-
-    <!-- Modal Hapus Produk -->
-    <script>
-        var hapus = document.getElementById('modalDelete');
-        hapus.addEventListener('show.bs.modal', function (event) {
-            var button           = event.relatedTarget;
-            var id_produk        = button.getAttribute('data-bs-id_produk');
-            var data_thumbnail   = button.getAttribute('data-bs-thumbnail');
-
-            id.value        = id_produk;
-            thumbnail.value = data_thumbnail;
-        });
-
-        setTimeout(function() {
-            document.querySelector('.alert.alert-success').remove();
-        }, 3000);
-
-        setTimeout(function() {
-            document.querySelector('.alert.alert-danger').remove();
-        }, 3000);
-    </script>
-
-    <!-- Ajax -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
+            $('#tableUserPenjual').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: "/admin/get_data_user_penjual",
+                    dataType: "JSON",
+                },
+                language: {
+                    processing: "Loading..."
+                },
+                columns: [
+                    { 
+                        data: 'name',
+                        render: function(data, type, row) {
+                            var imagePath = row.avatar ? row.avatar : '/avatar.png';
+                            return `<div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <div class="symbol-label">
+                                                <img src="{{ asset('storage/user_penjual/avatar/${imagePath}') }}" class="w-100"/>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <span class="text-gray-800 mb-1">${row.name}</span>
+                                            <span>${row.email}</span>
+                                        </div>
+                                    </div>`;
+                        }
+                    },
+                    {
+                        data: 'nama_outlet',
+                        render: function(data, type, row) {
+                            var html = `<div class="d-flex flex-column">`;
+
+                            if (row.outlet_id === null) {
+                                html += `<span class="text-gray-800 mb-1">Tidak Ada</span>`;
+                            } else {
+                                html += `<span class="text-gray-800 mb-1">${row.nama_outlet}</span>
+                                        <div class="d-flex css-fcabk9sn">
+                                            <span class="me-4">ID Outlet :</span>
+                                            <span>${row.outlet_id}</span>
+                                        </div>
+                                        <div class="d-flex css-fcabk9sa">
+                                            <span class="me-4">Kuota Point :</span>
+                                            <span>${row.kuota_point}</span>
+                                        </div>`;
+                            }
+                            html += `</div>`;
+
+                            return html;
+                        }
+                    },
+                    {
+                        data: 'status',
+                        render: function(data, type, row) {
+                            var checked = row.is_active == 1 ? 'checked' : '';
+                            return `<div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                                        <input type="checkbox" class="form-check-input ubah-toggle" name="notifications" data-user-id="${row.idUserLogin}" ${checked} style="cursor: pointer;">
+                                    </div>`;
+                        }
+                    },
+                    {
+                        data: 'atur',
+                        render: function(data, type, row) {
+                            return `<div class="dropdown">
+                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton${row.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Atur
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
+                                            <li>
+                                                <button type="button" class="dropdown-item p-2 ps-5" style="cursor: pointer" onclick="detailUserPenjual('${row.username}')">
+                                                    <i style="color:#181C32;" class="fas fa-eye me-2"></i>
+                                                    Detail
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button onclick="window.location.href = 'edit-user-penjual/${row.username}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                    Edit
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>`;
+                        }
+                    }
+                ]
+            });
+
             $('.ubah-toggle').change(function() {
                 const userId    = $(this).data('user-id');
                 const isChecked = $(this).prop('checked');
@@ -212,6 +268,52 @@
                 });
             });
         });
+
+        function detailUserPenjual(username){
+            $.ajax({
+                url: "detail-user-penjual/" + username,
+                type: "GET",
+                success: function (data){
+                    const formatTglSaja = (date) => {
+                        var dateObject  = new Date(date);
+                        var year        = dateObject.getFullYear();
+                        var day         = dateObject.getDate();
+                        var month       = dateObject.getMonth();
+
+                        var monthsArray = [
+                            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                        ];
+
+                        day                 = day < 10 ? "0" + day : day; 
+                        month               = monthsArray[month];
+                        var formattedDate   = day + ' ' + month + ' ' + year;
+
+                        return formattedDate;
+                    }
+
+                    var defaultImagePath    = '{{ asset("storage/user_penjual/avatar/avatar.png") }}';
+                    var imagePath           = data.avatar ? '{{ asset("storage/user_penjual/avatar") }}/' + data.avatar : defaultImagePath;
+                    
+                    $('#imgUser').attr('src', imagePath);
+                    $('#namaUser').text(data.name);
+                    $('#noNIK').text(data.nomor_ktp || '-');
+                    $('#tglLahir').text(formatTglSaja(data.tanggal_lahir));
+                    $('#jenisKelamin').text(data.jenis_kelamin === "P" ? 'Perempuan' : 'Laki-laki');
+                    $('#namaOutlet').text(data.nama_outlet || '-');
+                    $('#namaKategori').text(data.project_name || '-');
+                    $('#noHpBawah').text(data.no_hp || '-');
+                    
+                    var alamatDetail = data.alamat_detail + ', Kecamatan ' + data.nama_kecamatan + ', ' + data.nama_kotakab + ', ' + data.nama_propinsi + ', ' + data.kode_pos;
+                    $('#alamatDetail').text(alamatDetail);
+
+                    $('#detailUserPenjual').modal('show');
+                },
+                error: function(error){
+
+                }
+            });
+        }
     </script>
 
 @endsection

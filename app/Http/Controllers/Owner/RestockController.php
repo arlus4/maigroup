@@ -301,15 +301,20 @@ class RestockController extends Controller
                     'progress' => '5',
                 ]);
  
-                ref_KuotaPoint::updateOrInsert(
-                    ['outlet_id'   => $invoice->outlet_id],
-                    ['kuota_point' => DB::raw('kuota_point + ' . $invoice->qty)]
-                );
+                // update ref_kuota_point, berdasarkan outlet_id
+                ref_KuotaPoint::where('outlet_id', $invoice->outlet_id)->update(['kuota_point' => DB::raw('kuota_point + ' . $invoice->qty)]);
 
-                // belum beres
-                // Product_Outlet::updateOrInsert(
-                //     []
-                // );
+
+                // update atau insert product_outlet, berdasarkan outlet_id
+                foreach ($dataJoin as $data) {
+                    Product_Outlet::updateOrInsert([
+                        'outlet_id'   => $invoice->outlet_id,
+                        'product_id'  => $data->id,
+                    ],[
+                        'category_id' => $data->project_id,
+                        'jumlah'      => DB::raw('jumlah + ' . $data->qty),
+                    ]);
+                }
 
                 DB::commit();
     
