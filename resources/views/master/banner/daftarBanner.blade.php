@@ -214,7 +214,7 @@
                         modalContent += '<div class="card-xl-stretch mx-md-3">';
                         modalContent += '   <div class="m-0">';
                         modalContent += '       <div class="fs-3 text-dark fw-bold text-hover-primary lh-base mt-2 mb-3">' + banner.banner_code + ' - ' + banner.banner_name + '</div>';
-                        modalContent += '       <span class="fs-5 text-gray-600 fw-bold text-hover-primary mb-3">' + banner.nama_kotakab + '</span>';
+                        modalContent += '       <span class="fs-5 text-gray-600 fw-bold text-hover-primary mb-3">' + (banner.nama_kotakab ? banner.nama_kotakab : 'Nasional') + '</span>';
                         modalContent += '       <div class="fw-semibold fs-5 text-gray-600 mt-3 mb-5">' + banner.description + '</div>';
                         modalContent += '       <div class="fs-3 fw-bold">';
                         modalContent += '           <span class="fs-6 text-gray-600 fw-bold lh-base">' + startDate + ' - ' + endDate + '</span>';
