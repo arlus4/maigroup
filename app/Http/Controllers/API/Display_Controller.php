@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -170,8 +171,8 @@ class Display_Controller extends Controller
     {
         $validator = Validator::make($request->all(), [
             // Memperbolehkan kota_kabupaten bernilai null
-            'kota_kabupaten' => 'sometimes', 
             'types_id' => 'required',
+            'kota_kabupaten' => 'sometimes', 
         ]);
     
         if ($validator->fails()) {
@@ -184,7 +185,10 @@ class Display_Controller extends Controller
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT types_id, redeem_code, image_name, path, gift_name FROM [dbo].[apps.redeem_item](?)", [$types_id, $kota_kabupaten]);
+            $result = DB::select("SELECT 
+                    types_id, redeem_code, image_name, path, gift_name, gift_desc, gift_note, 
+                    kota_id, point, isall, periode_start, periode_end 
+                FROM [dbo].[apps.redeem_item] (?, " . DB::raw("'" . $kota_kabupaten . "'") . ")", [$types_id]);
             
             // Return the result
             return response()->json($result, 201);
