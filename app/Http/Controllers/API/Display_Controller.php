@@ -106,14 +106,16 @@ class Display_Controller extends Controller
     public function banner_promo(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kota_kabupaten' => 'required',
+            // Memperbolehkan kota_kabupaten bernilai null
+            'kota_kabupaten' => 'sometimes', 
         ]);
-    
+        
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-
-        $kota_kabupaten = $request->input('kota_kabupaten');
+        
+        // Menetapkan 'ALL' sebagai nilai default jika kota_kabupaten tidak ada atau null
+        $kota_kabupaten = $request->input('kota_kabupaten', 'ALL');
 
         try {
             // Call the table-valued function
@@ -167,18 +169,22 @@ class Display_Controller extends Controller
     public function redeem_item(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'types_id' => 'required|string|max:255',
+            // Memperbolehkan kota_kabupaten bernilai null
+            'kota_kabupaten' => 'sometimes', 
+            'types_id' => 'required',
         ]);
     
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
 
+        // Menetapkan 'ALL' sebagai nilai default jika kota_kabupaten tidak ada atau null
+        $kota_kabupaten = $request->input('kota_kabupaten', 'ALL');
         $types_id = $request->input('types_id');
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT types_id, redeem_code, image_name, path, gift_name FROM [dbo].[apps.redeem_item](?)", [$types_id]);
+            $result = DB::select("SELECT types_id, redeem_code, image_name, path, gift_name FROM [dbo].[apps.redeem_item](?)", [$types_id, $kota_kabupaten]);
             
             // Return the result
             return response()->json($result, 201);
