@@ -150,7 +150,8 @@ class Admin_UserPenjualController extends Controller
                 'email'        => $request->email,
                 'password'     => Hash::make($request->password),
                 'no_hp'        => $request->no_hp,
-                'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT)
+                'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT),
+                'is_active'    => 1,
             ]);
 
             Users_Detail::create([
@@ -444,11 +445,11 @@ class Admin_UserPenjualController extends Controller
         return response()->json(['username' => $slug]);
     }
 
-    public function updateNotifications(Request $request, User $user)
+    public function updateNotifications(Request $request, $user)
     {
         $isActive = $request->enabled === 'true' ? 1 : 0;
-        $user->update(['is_active' => $isActive]);
+        User::where('id', $user)->update(['is_active' => $isActive]);
 
-        return response()->json(['message' => 'Notification status updated.']);
+        return response()->json(['message' => 'Status Berhasil Diubah.']);
     }
 }

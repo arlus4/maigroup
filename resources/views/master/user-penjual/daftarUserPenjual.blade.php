@@ -248,8 +248,8 @@
                 ]
             });
 
-            $('.ubah-toggle').change(function() {
-                const userId    = $(this).data('user-id');
+            $(document).on('change', '.ubah-toggle', function() {
+                const userId = $(this).data('user-id');
                 const isChecked = $(this).prop('checked');
 
                 $.ajax({
@@ -258,12 +258,17 @@
                     },
                     url: 'update-toggle/' + userId,
                     type: 'POST',
-                    data: { enabled: isChecked },
+                    data: { 
+                        enabled: isChecked 
+                    },
                     success: function(response) {
-                        response
+                        toastr.success(response.message);
+
+                        setTimeout(function() {
+                        }, 2000);
                     },
                     error: function(error) {
-                        error
+                        console.log(error);
                     }
                 });
             });
@@ -299,7 +304,7 @@
                     $('#namaUser').text(data.name);
                     $('#noNIK').text(data.nomor_ktp || '-');
                     $('#tglLahir').text(formatTglSaja(data.tanggal_lahir));
-                    $('#jenisKelamin').text(data.jenis_kelamin === "P" ? 'Perempuan' : 'Laki-laki');
+                    $('#jenisKelamin').text(data.jenis_kelamin === "P" ? 'Pria' : 'Wanita');
                     $('#namaOutlet').text(data.nama_outlet || '-');
                     $('#namaKategori').text(data.project_name || '-');
                     $('#noHpBawah').text(data.no_hp || '-');
