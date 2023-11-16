@@ -309,7 +309,7 @@
                     $('#namaKategori').text(data.project_name || '-');
                     $('#noHpBawah').text(data.no_hp || '-');
                     
-                    var alamatDetail = data.alamat_detail + ', Kecamatan ' + data.nama_kecamatan + ', ' + data.nama_kotakab + ', ' + data.nama_propinsi + ', ' + data.kode_pos;
+                    var alamatDetail = (data.alamat_detail ? data.alamat_detail : 'Alamat Detail Belum Dicantumkan') + ', Kecamatan ' + (data.nama_kecamatan ? data.nama_kecamatan : 'Belum Dicantumkan') + ', Kota ' + (data.nama_kotakab ? data.nama_kotakab : 'Belum Dicantumkan') + ', Provinsi ' + (data.nama_propinsi ? data.nama_propinsi : 'Belum Dicantumkan') + ', Kode Pos' + (data.kode_pos ? data.kode_pos : 'Belum Dicantumkan');
                     $('#alamatDetail').text(alamatDetail);
 
                     $('#detailUserPenjual').modal('show');
