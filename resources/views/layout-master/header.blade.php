@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                    <a href="index.html" class="d-lg-none">
+                    <a href="javascript:;" class="d-lg-none">
                         <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="h-30px" />
                     </a>
                 </div>
@@ -40,11 +40,11 @@
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-5">
-                                    <a href="account/overview.html" class="menu-link px-5">Lihat Profil</a>
+                                    <a href="javascript:;" class="menu-link px-5">Lihat Profil</a>
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-5 my-1">
-                                    <a href="account/settings.html" class="menu-link px-5">Pengaturan Akun</a>
+                                    <a href="javascript:;" class="menu-link px-5">Pengaturan Akun</a>
                                 </div>
                                 <div class="menu-item px-5">
                                     <form method="POST" action="{{ route('logout') }}">
@@ -71,7 +71,7 @@
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
             <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
                 <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-                    <a href="index.html">
+                    <a href="javascript:;">
                         <img alt="Logo" src="{{ asset('assets/images/logo_maitea.png') }}" class="app-sidebar-logo-default" style="height: 55px;" />
                         <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="app-sidebar-logo-minimize" style="height: 38px;"/>
                     </a>
@@ -118,13 +118,13 @@
                                     <span class="menu-title">Order</span>
                                     <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_order') || Request::routeIs('admin.admin_order_pending') || Request::routeIs('admin.admin_tambah_order')) ? 'show' : '' }}">
+                                <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_order') || Request::routeIs('admin.admin_order_pending') || Request::routeIs('admin.admin_tambah_order')) || Request::is('admin/order*') ? 'here show' : '' }}">
                                     <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('admin.admin_order') ? 'active' : '' }}" href="{{ route('admin.admin_order') }}">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_order') || Request::is('admin/order*') ? 'active' : '' }}" href="{{ route('admin.admin_order') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Orderan Baru</span>
+                                            <span class="menu-title">Daftar Order</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">

@@ -76,17 +76,31 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
 
         //Order
-        Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
-        Route::get('/data_order/{invoice}', [Admin_OrderController::class, 'get_data_order'])->name('admin_get_data_order');
+        // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
+        // Route::get('/order/new_order', [Admin_OrderController::class, 'new_order'])->name('admin_new_order');
+        Route::get('/order', [Admin_OrderController::class, 'new_order'])->name('admin_order');
+        Route::get('/order/waiting_payment_order', [Admin_OrderController::class, 'waiting_payment_order'])->name('admin_waiting_payment_order');
+        Route::get('/order/payment_received_order', [Admin_OrderController::class, 'payment_received_order'])->name('admin_payment_received_order');
+        Route::post('/store_payment_received_order/{invoice}', [Admin_OrderController::class, 'store_payment_received_order'])->name('admin_store_payment_received_order');
+        Route::get('/order/approve_order', [Admin_OrderController::class, 'approve_order'])->name('admin_approve_order');
+        Route::post('/store_approve_order/{invoice}', [Admin_OrderController::class, 'store_approve_order'])->name('admin_store_approve_order');
+        Route::get('/order/deliver_order', [Admin_OrderController::class, 'deliver_order'])->name('admin_deliver_order');
+        Route::get('/order/rejected_order', [Admin_OrderController::class, 'rejected_order'])->name('admin_rejected_order');
         Route::post('/store_ongkir', [Admin_OrderController::class, 'storeOngkir']);
         Route::get('/order-detail/{invoice}', [Admin_OrderController::class, 'orderDetail'])->name('admin_order_detail');
         Route::get('/tambah-order', [Admin_OrderController::class, 'create'])->name('admin_tambah_order');
         Route::post('/store-order', [Admin_OrderController::class, 'store'])->name('admin_store_order');
         Route::get('/get-harga-order/{id}', [Admin_OrderController::class, 'getHargaOrder'])->name('admin_get_harga_order');
-        Route::get('/order_pending', [Admin_OrderController::class, 'orderPending'])->name('admin_order_pending');
         Route::get('/download-invoice/{invoice}', [Admin_OrderController::class, 'downloadInvoice'])->name('admin.download.invoice');
-        Route::post('/received_payment/{invoice}', [Admin_OrderController::class, 'receivedPayment'])->name('admin.received.payment');
-        Route::post('/approve_order/{invoice}', [Admin_OrderController::class, 'approveOrder'])->name('admin.approve.order');
+        
+        // Data Order
+        Route::get('/data_order/{invoice}', [Admin_OrderController::class, 'get_data_order'])->name('admin_get_data_order');
+        Route::get('/order/get_data_new_order', [Admin_OrderController::class, 'get_data_new_order']);
+        Route::get('/order/get_data_waiting_payment', [Admin_OrderController::class, 'get_data_waiting_payment']);
+        Route::get('/order/get_data_payment_received', [Admin_OrderController::class, 'get_data_payment_received']);
+        Route::get('/order/get_data_approve', [Admin_OrderController::class, 'get_data_approve']);
+        Route::get('/order/get_data_deliver', [Admin_OrderController::class, 'get_data_deliver']);
+        Route::get('/order/get_data_rejected', [Admin_OrderController::class, 'get_data_rejected']);
 
         //Banner
         Route::get('/banner', [Admin_BannerController::class, 'index'])->name('admin_banner');

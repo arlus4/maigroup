@@ -19,30 +19,30 @@ use Illuminate\Http\RedirectResponse;
 
 class Admin_OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(): View
-    {
-        $data = Invoice_Master_Seller::select(
-                'invoice_master_seller.id as idInvoiceMasterSeller',
-                'invoice_master_seller.outlet_id',
-                'invoice_master_seller.invoice_no',
-                'invoice_master_seller.qty',
-                'invoice_master_seller.amount',
-                'invoice_master_seller.project_id',
-                'invoice_master_seller.progress',
-                'invoice_master_seller.ongkir',
-                'invoice_master_seller.total'
-            )
-            ->whereIn('invoice_master_seller.progress', ['0', '1'])
-            ->orderBy('invoice_master_seller.progress', 'asc')
-            ->get();
+    // /**
+    //  * Display a listing of the resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function index(): View
+    // {
+    //     $data = Invoice_Master_Seller::select(
+    //             'invoice_master_seller.id as idInvoiceMasterSeller',
+    //             'invoice_master_seller.outlet_id',
+    //             'invoice_master_seller.invoice_no',
+    //             'invoice_master_seller.qty',
+    //             'invoice_master_seller.amount',
+    //             'invoice_master_seller.project_id',
+    //             'invoice_master_seller.progress',
+    //             'invoice_master_seller.ongkir',
+    //             'invoice_master_seller.total'
+    //         )
+    //         ->whereIn('invoice_master_seller.progress', ['0', '1'])
+    //         ->orderBy('invoice_master_seller.progress', 'asc')
+    //         ->get();
 
-        return view('master.order.daftarOrder', compact('data'));
-    }
+    //     return view('master.order.daftarOrder', compact('data'));
+    // }
 
     public function get_data_order($invoice)
     {
@@ -79,6 +79,43 @@ class Admin_OrderController extends Controller
         ->first();
 
         return response()->json($data);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function new_order(): View
+    {
+        return view('master.order.daftarOrder', [
+            'title' => "New Order",
+            'url'   => 'get_data_new_order'
+        ]);
+    }
+
+    public function get_data_new_order()
+    {
+        $data = Invoice_Master_Seller::select(
+            'invoice_master_seller.id as idInvoiceMasterSeller',
+            'invoice_master_seller.outlet_id',
+            'invoice_master_seller.invoice_no',
+            'invoice_master_seller.qty',
+            'invoice_master_seller.amount',
+            'invoice_master_seller.project_id',
+            'invoice_master_seller.progress',
+            'invoice_master_seller.ongkir',
+            'invoice_master_seller.total'
+        )
+        ->where('invoice_master_seller.progress', 0)
+        ->orderBy('invoice_master_seller.date_created', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
     }
 
     /**
@@ -151,6 +188,253 @@ class Admin_OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function waiting_payment_order(): View
+    {
+        return view('master.order.daftarOrder', [
+            'title' => "Waiting Payment",
+            'url'   => 'get_data_waiting_payment'
+        ]);
+    }
+
+    public function get_data_waiting_payment()
+    {
+        $data = Invoice_Master_Seller::select(
+            'invoice_master_seller.id as idInvoiceMasterSeller',
+            'invoice_master_seller.outlet_id',
+            'invoice_master_seller.invoice_no',
+            'invoice_master_seller.qty',
+            'invoice_master_seller.amount',
+            'invoice_master_seller.project_id',
+            'invoice_master_seller.progress',
+            'invoice_master_seller.ongkir',
+            'invoice_master_seller.total'
+        )
+        ->where('invoice_master_seller.progress', 1)
+        ->orderBy('invoice_master_seller.date_created', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function payment_received_order(): View
+    {
+        return view('master.order.daftarOrder', [
+            'title' => "Payment Received",
+            'url'   => 'get_data_payment_received'
+        ]);
+    }
+
+    public function get_data_payment_received()
+    {
+        $data = Invoice_Master_Seller::select(
+            'invoice_master_seller.id as idInvoiceMasterSeller',
+            'invoice_master_seller.outlet_id',
+            'invoice_master_seller.invoice_no',
+            'invoice_master_seller.qty',
+            'invoice_master_seller.amount',
+            'invoice_master_seller.project_id',
+            'invoice_master_seller.progress',
+            'invoice_master_seller.ongkir',
+            'invoice_master_seller.total'
+        )
+        ->where('invoice_master_seller.progress', 2)
+        ->orderBy('invoice_master_seller.date_created', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_payment_received_order($invoice)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+            
+            $data = Invoice_Master_Seller::where('invoice_no', $invoice)->first();
+
+            $data->update([
+                'progress' => '3',
+            ]);
+
+            DB::commit(); // Commit the transaction
+
+            return response()->json(['status' => 'success', 'message' => 'Pembayaran Berhasil Diterima']);
+
+        } catch (\Throwable $th) {
+            // Jika terjadi kesalahan, tangkap exception dan kembalikan response error
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            Log::error($th); // Log the exception for debugging
+
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan saat mengupdate data: ' . $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function approve_order(): View
+    {
+        return view('master.order.daftarOrder', [
+            'title' => "Approve Order",
+            'url'   => 'get_data_approve'
+        ]);
+    }
+
+    public function get_data_approve()
+    {
+        $data = Invoice_Master_Seller::select(
+            'invoice_master_seller.id as idInvoiceMasterSeller',
+            'invoice_master_seller.outlet_id',
+            'invoice_master_seller.invoice_no',
+            'invoice_master_seller.qty',
+            'invoice_master_seller.amount',
+            'invoice_master_seller.project_id',
+            'invoice_master_seller.progress',
+            'invoice_master_seller.ongkir',
+            'invoice_master_seller.total'
+        )
+        ->where('invoice_master_seller.progress', 3)
+        ->orderBy('invoice_master_seller.date_created', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_approve_order($invoice)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+            
+            $data = Invoice_Master_Seller::where('invoice_no', $invoice)->first();
+
+            $data->update([
+                'progress' => '4',
+            ]);
+
+            DB::commit(); // Commit the transaction
+
+            return response()->json(['status' => 'success', 'message' => 'Pesanan Berhasil Dikirim']);
+
+        } catch (\Throwable $th) {
+            // Jika terjadi kesalahan, tangkap exception dan kembalikan response error
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            Log::error($th); // Log the exception for debugging
+
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan saat mengupdate data: ' . $th->getMessage()], 500);
+        }
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deliver_order(): View
+    {
+        return view('master.order.daftarOrder', [
+            'title' => "Deliver Order",
+            'url'   => 'get_data_deliver'
+        ]);
+    }
+
+    public function get_data_deliver()
+    {
+        $data = Invoice_Master_Seller::select(
+            'invoice_master_seller.id as idInvoiceMasterSeller',
+            'invoice_master_seller.outlet_id',
+            'invoice_master_seller.invoice_no',
+            'invoice_master_seller.qty',
+            'invoice_master_seller.amount',
+            'invoice_master_seller.project_id',
+            'invoice_master_seller.progress',
+            'invoice_master_seller.ongkir',
+            'invoice_master_seller.total'
+        )
+        ->where('invoice_master_seller.progress', 4)
+        ->orderBy('invoice_master_seller.date_created', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function rejected_order(): View
+    {
+        return view('master.order.daftarOrder', [
+            'title' => "Rejected Order",
+            'url'   => 'get_data_rejected'
+        ]);
+    }
+
+    public function get_data_rejected()
+    {
+        $data = Invoice_Master_Seller::select(
+            'invoice_master_seller.id as idInvoiceMasterSeller',
+            'invoice_master_seller.outlet_id',
+            'invoice_master_seller.invoice_no',
+            'invoice_master_seller.qty',
+            'invoice_master_seller.amount',
+            'invoice_master_seller.project_id',
+            'invoice_master_seller.progress',
+            'invoice_master_seller.ongkir',
+            'invoice_master_seller.total'
+        )
+        ->where('invoice_master_seller.progress', 6)
+        ->orderBy('invoice_master_seller.date_created', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function orderDetail($invoice): View | RedirectResponse
     {
         $data = Invoice_Master_Seller::select
@@ -213,7 +497,7 @@ class Admin_OrderController extends Controller
         }
 
         // return response()->json($data);
-        return view('master.order.invoiceOrder',[
+        return view('master.order.invoiceOrder', [
             'data' => $data,
             'details' => $detail
         ]);
@@ -390,7 +674,7 @@ class Admin_OrderController extends Controller
         ->where('invoice_detail_seller.invoice_no', $invoice)
         ->get();
 
-        return view('master.order.invoice',[
+        return view('master.order.invoice', [
             'data' => $data,
             'details' => $details
         ]);
@@ -403,92 +687,5 @@ class Admin_OrderController extends Controller
     
         // // Download PDF
         // return $pdf->download('invoice-'.$data->invoice_no.'.pdf');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function orderPending(): View
-    {
-        $data = Invoice_Master_Seller::select(
-                'invoice_master_seller.id as idInvoiceMasterSeller',
-                'invoice_master_seller.outlet_id',
-                'invoice_master_seller.invoice_no',
-                'invoice_master_seller.qty',
-                'invoice_master_seller.amount',
-                'invoice_master_seller.project_id',
-                'invoice_master_seller.progress',
-                'invoice_master_seller.ongkir',
-                'invoice_master_seller.total'
-            )
-            ->whereIn('invoice_master_seller.progress', ['2', '3'])
-            ->orderBy('invoice_master_seller.progress', 'asc')
-            ->get();
-
-        return view('master.order.pendingOrder', compact('data'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function receivedPayment($invoice): RedirectResponse
-    {
-        try {
-            DB::beginTransaction(); // Begin Transaction
-            
-            $data = Invoice_Master_Seller::where('invoice_no', $invoice)->first();
-
-            $data->update([
-                'progress' => '3',
-            ]);
-
-            DB::commit(); // Commit the transaction
-
-            return back()->with('success', 'Pembayaran Berhasil di Diterima');
-
-        } catch (\Throwable $th) {
-            // Jika terjadi kesalahan, tangkap exception dan kembalikan response error
-            DB::rollback(); // Rollback the transaction in case of an exception
-
-            Log::error($th); // Log the exception for debugging
-
-            return back()->with('error', 'Terjadi kesalahan saat mengupdate data: ' . $th->getMessage());
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function approveOrder($invoice): RedirectResponse
-    {
-        try {
-            DB::beginTransaction(); // Begin Transaction
-            
-            $data = Invoice_Master_Seller::where('invoice_no', $invoice)->first();
-
-            $data->update([
-                'progress' => '4',
-            ]);
-
-            DB::commit(); // Commit the transaction
-
-            return back()->with('success', 'Invoice Berhasil di Diterima');
-
-        } catch (\Throwable $th) {
-            // Jika terjadi kesalahan, tangkap exception dan kembalikan response error
-            DB::rollback(); // Rollback the transaction in case of an exception
-
-            Log::error($th); // Log the exception for debugging
-
-            return back()->with('error', 'Terjadi kesalahan saat mengupdate data: ' . $th->getMessage());
-        }
     }
 }

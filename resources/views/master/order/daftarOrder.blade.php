@@ -5,7 +5,7 @@
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar Order</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar {{ $title }}</h1>
                 </div>
             </div>
         </div>
@@ -25,31 +25,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+
+            <!--begin::Menu-->
+            @include('layout-master.tab_menuOrder')
+            <!--end::Menu-->
+
             <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
-                <div class="card-header border-0 pt-6">
-                    <div class="card-title">
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                </svg>
-                            </span>
-                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari Produk" />
-                        </div>
-                    </div>
-                    <div class="card-toolbar">
-                        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <a href="{{ route('admin.admin_tambah_order') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
-                                <span class="svg-icon svg-icon-2">
-                                    <i class="fas fa-plus-circle text-white"></i>
-                                </span>
-                                Tambah Order
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body py-4">
+                <div class="card-body border-0 py-4">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableOrder" class="display">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -62,60 +44,7 @@
                                 <th class="min-w-100px text-dark"></th>
                             </tr>
                         </thead>
-                        <tbody class="text-gray-600 fw-semibold">
-                            @foreach($data as $val)
-                                <tr>
-                                    <td class="align-items-center ps-2">{{ $loop->iteration }}</td>
-                                    <td class="align-items-center ps-2">{{ $val->outlet_id }}</td>
-                                    <td class="align-items-center ps-2">{{ $val->invoice_no }}</td>
-                                    @if ($val->total == null)
-                                        {{-- <td class="align-items-center ps-2">@rupiah($val->amount)</td> --}}
-                                        <td class="align-items-center ps-2">
-                                            <span class="badge badge-light-warning">Please Input Ongkir</span>
-                                        </td>
-                                    @else
-                                        <td class="align-items-center ps-2">@rupiah($val->total)</td>
-                                    @endif
-                                    <td class="align-items-center ps-2">
-                                        @if($val->progress == 0)
-                                            <span class="badge badge-light-success">New Order</span>
-                                        @elseif($val->progress == 1)
-                                            <span class="badge badge-light-warning">Warning Payment</span>
-                                        @endif
-                                    </td>
-                                    @if ($val->ongkir == null)
-                                        <td class="align-items-center ps-2">
-                                            <button type="button" onclick="modalUpdateOngkir('{{ $val->invoice_no }}')" class="btn btn-primary btn-sm cursor-pointer">
-                                                Input Ongkir
-                                            </button>
-                                        </td>
-                                    @else
-                                        <td class="align-items-center ps-2">@rupiah($val->ongkir)</td>
-                                    @endif
-                                    <td class="align-items-center">
-                                        <div class="dropdown">
-                                            <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Atur
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li>
-                                                    <a href="/admin/order-detail/{{ $val->invoice_no }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                        <i style="color:#181C32;" class="fas fa-eye me-2"></i>
-                                                        Detail
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <button class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                        <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                        Edit
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+                        <tbody class="text-gray-600 fw-semibold"></tbody>
                     </table>
                 </div>
             </div>
@@ -128,7 +57,7 @@
             <div class="modal-content" style="border-radius: 8px;">
                 <div class="css-dtu37sh">
                     <div class="css-cfn3ksa">
-                        <h5 class="css-fnm3aj">Detail Order</h5>
+                        <h5 class="css-fnm3aj" style="text-align: center;">Detail Order</h5>
                     </div>
                     <button type="button" class="btn-close css-fhk9sna" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -223,15 +152,189 @@
             </div>
         </div>
     </div>
+    
+    <!-- Modal Approve Order -->
+    <div class="modal fade" id="modalApproveOrder">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 8px;">
+                <div class="content-header">
+                    <div class="content-title">
+                        <h4 class="css-lk3jsp" style="text-align: center;">Terima Pembayaran</h4>
+                    </div>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="css-flj2ej">
+                    <div class="css-fjkpo0ma">
+                        <div class="css-wj23sk">
+                            <form action="" method="POST" id="approveOrder">
+                                @csrf
+                                <div class="row g-9 mb-8">
+                                    <!--begin::Col-->
+                                    <input type="hidden" name="id_invoice" id="id_invoice">
+                                    <div class="col-md-12 fv-row" >
+                                        <span style="font-size: 15px">
+                                            Apakah Anda yakin untuk Menerima Pembayaran dengan nomor invoice <span id="nomor_invoice"></span>?
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="css-ca2jq0s" style="width: 80px;" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="css-kl2kd9a">
+                                        <span class="indicator-label">Terima Pembayaran</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Deliver Order -->
+    <div class="modal fade" id="modalDeliverOrder">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 8px;">
+                <div class="content-header">
+                    <div class="content-title">
+                        <h4 class="css-lk3jsp" style="text-align: center;">Kirim Pesanan</h4>
+                    </div>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="css-flj2ej">
+                    <div class="css-fjkpo0ma">
+                        <div class="css-wj23sk">
+                            <form action="" method="POST" id="deliverOrder">
+                                @csrf
+                                <div class="row g-9 mb-8">
+                                    <!--begin::Col-->
+                                    <input type="hidden" name="invoice_number" id="invoice_number">
+                                    <div class="col-md-12 fv-row" >
+                                        <span style="font-size: 15px">
+                                            <strong><p style="text-align: center;">Mohon Periksa Kembali Pesanan yang dibuat</p></strong> 
+                                            Apakah Anda yakin untuk Mengirim Pesanan dengan nomor invoice <span id="invoice_nomor"></span>?
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="css-ca2jq0s" style="width: 80px;" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="css-kl2kd9a">
+                                        <span class="indicator-label">Kirim Pesanan</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready( function () {
-            $('#tableOrder').DataTable();
+            var dataTable = $('#tableOrder').DataTable({
+                "processing": true,
+                "serverSide": false,
+                ajax: {
+                    url: "/admin/order/{{ $url }}",
+                    dataType: "json",
+                },
+                columns: [
+                    { 
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    { data: "outlet_id" },
+                    { data: "invoice_no" },
+                    { data: "total", 
+                        render: function(data, type, full, meta) {
+                            return data ? formatRupiah(data) : '<span class="badge badge-light-warning">Please Input Ongkir</span>';
+                        }
+                    },
+                    {
+                        data: "progress",
+                        render: function(data, type, row) {
+                            var status = '';
+                            switch (row.progress) {
+                                case "0":
+                                    status = '<span class="badge badge-light-success">New Order</span>';
+                                    break;
+                                case "1":
+                                    status = '<span class="badge badge-light-warning">Menunggu Pembayaran</span>';
+                                    break;
+                                case "2":
+                                    status = `<button class="btn btn-success btn-sm" onclick="showApproveModal('${row.invoice_no}')">Terima Pembayaran</button>`;
+                                    break;
+                                case "3":
+                                    status = `<button class="btn btn-success btn-sm" onclick="showDeliverModal('${row.invoice_no}')">Kirim Pesanan</button>`;
+                                    break;
+                                case "4":
+                                    status = '<span class="badge badge-light-warning">Menunggu Pesanan Diterima</span>';
+                                    break;
+                                case "6":
+                                    status = '<span class="badge badge-light-warning">Waiting Payment</span>';
+                                    break;
+                            }
+                            return status;
+                        }
+                    },
+                    {
+                        data: "ongkir",
+                        render: function(data, type, full, meta) {
+                            if (data) {
+                                return formatRupiah(data);
+                            } else {
+                                return `<button type="button" onclick="modalUpdateOngkir('${full.invoice_no}')" class="btn btn-primary btn-sm cursor-pointer">Input Ongkir</button>`;
+                            }
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, full, meta) {
+                            return `
+                                <div class="dropdown">
+                                    <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Atur
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <a href="/admin/order-detail/${full.invoice_no}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                <i style="color:#181C32;" class="fas fa-eye me-2"></i>
+                                                Detail
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                Edit
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            `;
+                        }
+                    }
+                ]
+            });
         });
 
+        function formatRupiah(angka) {
+            var reverse = angka.toString().split('').reverse().join(''),
+                ribuan = reverse.match(/\d{1,3}/g);
+            ribuan = ribuan.join('.').split('').reverse().join('');
+            return 'Rp ' + ribuan;
+        }
+
+        // Show Modal Update Ongkir
         function modalUpdateOngkir(invoice){
             $.ajax({
                 type: "GET",
@@ -294,5 +397,93 @@
                 }
             });
         }
+
+        // Show Modal Approve Payment
+        function showApproveModal(invoiceNo) {
+            $('#id_invoice').val(invoiceNo);
+            $('#nomor_invoice').text(invoiceNo);
+            $('#modalApproveOrder').modal('show');
+        }
+
+        $('#approveOrder').submit(function(e) {
+            e.preventDefault();
+            var invoiceNo = $('#id_invoice').val(); // Dapatkan nomor invoice dari form
+            var actionUrl = "/admin/store_payment_received_order/" + invoiceNo;
+
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Tangani respons sukses
+                    $('#modalApproveOrder').modal('hide');
+
+                    if(response.status === 'success') {
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                },
+                error: function(error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.responseJSON.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+        });
+
+        // Show Modal Deliver Payment
+        function showDeliverModal(invoiceNo) {
+            $('#invoice_number').val(invoiceNo);
+            $('#invoice_nomor').text(invoiceNo);
+            $('#modalDeliverOrder').modal('show');
+        }
+
+        $('#deliverOrder').submit(function(e) {
+            e.preventDefault();
+            var invoiceNo = $('#invoice_number').val(); // Dapatkan nomor invoice dari form
+            var actionUrl = "/admin/store_approve_order/" + invoiceNo;
+
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Tangani respons sukses
+                    $('#modalDeliverOrder').modal('hide');
+
+                    if(response.status === 'success') {
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                },
+                error: function(error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.responseJSON.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+        });
     </script>
 @endsection
