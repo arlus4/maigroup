@@ -478,7 +478,9 @@
                     }, 2000);
                 },
                 error: function(xhr, status, error) {
-                    toastr.error('Error: ' + error);
+                    // Cek apakah respons error memiliki pesan custom dari server
+                    var errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : error;
+                    toastr.error('Error: ' + errorMessage);
 
                     setTimeout(function() {
                         window.location.reload();

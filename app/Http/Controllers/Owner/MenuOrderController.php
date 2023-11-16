@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Invoice_Detail_Pembeli;
 use App\Models\Invoice_Master_Pembeli;
+use App\Models\ref_KuotaPoint;
 
 class MenuOrderController extends Controller
 {
@@ -92,6 +93,17 @@ class MenuOrderController extends Controller
             $totalQty = 0;
             foreach ($validatedData['product_id'] as $product) {
                 $totalQty += $product['qty']; // Menghitung total qty
+            }
+
+            // Cek apakah ada produk yang dibeli dengan jumlah minimal atau tidak
+            $cek_koutaPoint = ref_KuotaPoint::select('kuota_point')->where('outlet_id', $request->outlet_id)->first();
+
+            // Cek apakah setelah transaksi, kuota point menjadi negatif
+            if ($cek_koutaPoint->kuota_point - $totalQty < 0) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Transaksi Gagal Kuota Point Anda Tidak Cukup.'
+                ], 422); // Menggunakan kode status 422 Unprocessable Entity
             }
     
             // Generate invoice_no dan date_created
