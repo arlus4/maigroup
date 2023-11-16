@@ -560,3 +560,41 @@ button.close{
     font-size: 12px;
     font-weight:bold;
 }
+.css-cuod2sp{
+    display: flex;
+    padding: 20px 2.25rem 20px 2.25rem;
+    justify-content: space-between;
+    min-height: 70px;
+}
+.css-cop8db2b{
+    display: flex;
+    flex-direction: column;
+    padding-right: 100px;
+    width: 350px;
+    min-width: 350px;
+}
+.css-hj3ska{
+    display: flex;
+    flex-direction: row;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 18px;
+    color: #31353B;
+    padding-bottom: 8px;
+    max-width: 280px;
+}
+.css-kolp9jd{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.857143rem;
+    line-height: 18px;
+    color: #31353B;
+}
+.css-n9gj4ms{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 40px;
+    position: relative;
+}
