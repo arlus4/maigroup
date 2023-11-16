@@ -76,7 +76,11 @@
                                             </div>
                                         </td>
                                         <td class="align-items-center">
-                                            <span class="badge badge-secondary">{{ $banner->nama_kotakab }}</span>
+                                            @if ($banner->nama_kotakab != null)
+                                                <span class="badge badge-secondary">{{ $banner->nama_kotakab }}</span>
+                                            @else
+                                                <span class="badge badge-dark">National</span>
+                                            @endif
                                         </td>
                                         <td class="align-items-center">
                                             {{ \Carbon\Carbon::parse($banner->start_date)->format('d F Y') }}

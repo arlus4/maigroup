@@ -78,8 +78,6 @@ class Admin_BannerController extends Controller
                 'banner_name'   => 'required',
                 'start_date'    => 'required',
                 'end_date'      => 'required',
-                'provinsi'      => 'required',
-                'kotkab'        => 'required',
                 'description'   => 'required'
             ]);
 
@@ -99,6 +97,14 @@ class Admin_BannerController extends Controller
                 $imagePath = 'storage/banner/image/' . $imageName;
             }
 
+            if ($request->national == null) {
+                $provinsi = $request->provinsi;
+                $kotkab = $request->kotkab;
+            } else {
+                $provinsi = null;
+                $kotkab = null;
+            }
+
             Banner::create([
                 'banner_code'   => $request->banner_code,
                 'banner_name'   => $request->banner_name,
@@ -106,8 +112,8 @@ class Admin_BannerController extends Controller
                 'image_name'    => $imageName,
                 'path'          => $imagePath,
                 'isall'         => '1',
-                'kota_id'       => $request->kotkab,
-                'kode_propinsi' => $request->provinsi,
+                'kota_id'       => $kotkab,
+                'kode_propinsi' => $provinsi,
                 'start_date'    => $request->start_date,
                 'end_date'      => $request->end_date,
                 'created_date'  => Carbon::now()->timezone('Asia/Jakarta')
@@ -219,8 +225,6 @@ class Admin_BannerController extends Controller
                 'banner_name'   => 'required',
                 'start_date'    => 'required',
                 'end_date'      => 'required',
-                'provinsi'      => 'required',
-                'kotkab'        => 'required',
                 'description'   => 'required'
             ]);
 
@@ -248,14 +252,22 @@ class Admin_BannerController extends Controller
                 $imagePath = $banner->path;
             }
 
+            if ($request->national == null) {
+                $provinsi = $request->provinsi;
+                $kotkab = $request->kotkab;
+            } else {
+                $provinsi = null;
+                $kotkab = null;
+            }
+
             $banner->update([
                 'banner_code'   => $request->banner_code,
                 'banner_name'   => $request->banner_name,
                 'description'   => $request->description,
                 'image_name'    => $imageName,
                 'path'          => $imagePath,
-                'kota_id'       => $request->kotkab,
-                'kode_propinsi' => $request->provinsi,
+                'kota_id'       => $kotkab,
+                'kode_propinsi' => $provinsi,
                 'start_date'    => $request->start_date,
                 'end_date'      => $request->end_date
             ]);

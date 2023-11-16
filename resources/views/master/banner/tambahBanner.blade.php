@@ -75,6 +75,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-check form-check-custom form-check-transparent form-check-lg">
+                                                <input class="form-check-input" type="checkbox" value="national" name="national" id="national"/>
+                                                <label class="form-check-label fw-semibold mb-2" for="national" style="color: black"> National </label>
+                                            </div> <br>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
@@ -98,8 +102,9 @@
                                             </div>
                                             <div>
 												<label class="form-label mt-5" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Deskripsi</label>
-												<textarea name="description" class="form-control mb-2" rows="4" required></textarea>
-												<div class="text-muted fs-7" style="color: #31353B!important;">Pastikan deskripsi alamat memuat penjelasan detail yang jelas.</div>
+												{{-- <textarea name="description" class="form-control mb-2" rows="4" required></textarea> --}}
+                                                <textarea name="description" id="description"></textarea>
+												<div class="text-muted fs-7" style="color: #31353B!important;">Pastikan deskripsi memuat penjelasan detail yang jelas.</div>
 											</div>
 										</div>
 									</div>
@@ -118,9 +123,25 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'description' );
+    </script>
     <!-- Ajax -->
     <script>
         $(document).ready(function() {
+            $('#national').change(function() {
+                if ($(this).is(':checked')) {
+                    // Checkbox dicentang, reset, disable kedua select dan hilangkan required
+                    $('#prv_id').val('').prop('disabled', true).removeAttr('required');
+                    $('#kotkab_id').val('').prop('disabled', true).removeAttr('required');
+                } else {
+                    // Checkbox tidak dicentang, enable kedua select dan tambahkan required
+                    $('#prv_id').prop('disabled', false).attr('required', 'required');
+                    $('#kotkab_id').prop('disabled', false).attr('required', 'required');
+                }
+            });
+
             $("#prv_id").change(function() {
                 var provinsi_id = $(this).val();
                 $.ajax({
