@@ -23,10 +23,26 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
 	</head>
 	<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
-		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if ( localStorage.getItem("data-theme") !== null ) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }</script>
-		<noscript>
-			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FS8GGP" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-		</noscript>
+		<script>
+			var defaultThemeMode = "light"; 
+			var themeMode; 
+			if ( document.documentElement ) { 
+				if ( document.documentElement.hasAttribute("data-theme-mode")) { 
+					themeMode = document.documentElement.getAttribute("data-theme-mode"); 
+				} else { 
+					if ( localStorage.getItem("data-theme") !== null ) { 
+						themeMode = localStorage.getItem("data-theme"); 
+					} else { 
+						themeMode = defaultThemeMode; 
+					} 
+				} 
+				if (themeMode === "system") { 
+					themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; 
+				} 
+				document.documentElement.setAttribute("data-theme", themeMode); 
+			}
+		</script>
+		
 		@include('layout-master/header')
 
 		@include('layout-master/footer')

@@ -21,13 +21,27 @@
 		<link href="{{ asset('assets/master/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/master/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/master/css/custom.css') }}" rel="stylesheet" type="text/css" />
-		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '../../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-5FS8GGP');</script>
 	</head>
 	<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
-		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if ( localStorage.getItem("data-theme") !== null ) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }</script>
-		<noscript>
-			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FS8GGP" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-		</noscript>
+		<script>
+			var defaultThemeMode = "light"; 
+			var themeMode; 
+			if ( document.documentElement ) { 
+				if ( document.documentElement.hasAttribute("data-theme-mode")) { 
+					themeMode = document.documentElement.getAttribute("data-theme-mode"); 
+				} else { 
+					if ( localStorage.getItem("data-theme") !== null ) { 
+						themeMode = localStorage.getItem("data-theme"); 
+					} else { 
+						themeMode = defaultThemeMode; 
+					} 
+				} 
+				if (themeMode === "system") { 
+					themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; 
+				} 
+				document.documentElement.setAttribute("data-theme", themeMode); 
+			}
+		</script>
 		@include('owner/layout-sidebar/header')
 
 		@include('owner/layout-sidebar/footer')

@@ -20,10 +20,6 @@
 		<link href="{{ asset('assets/owner/css/custom.css') }}" rel="stylesheet" type="text/css" />
 	</head>
 	<body id="kt_app_body" data-kt-app-layout="dark-header" data-kt-app-header-fixed="true" data-kt-app-toolbar-enabled="true" class="bg-white">
-		<noscript>
-			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FS8GGP" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-		</noscript>
-
 		@include('owner/layout-dashboard/header')
 
 		@include('owner/layout-dashboard/footer')
