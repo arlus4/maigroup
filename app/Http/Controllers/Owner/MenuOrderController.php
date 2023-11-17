@@ -71,15 +71,22 @@ class MenuOrderController extends Controller
         return response()->json($results);
     }
 
+    public function getIdPembeli(Request $request)
+    {
+        $searchTerm = $request->input('term');
+        $results = User::where('users_type', 1)->where('pembeli_id', 'like', '%' . $searchTerm . '%')->distinct('pembeli_id')->pluck('pembeli_id');
+        
+        return response()->json($results);
+    }
+
     public function store(Request $request)
     {
-        // dd($request->all());
         try {
             DB::beginTransaction(); // Mulai transaksi database
+
             // Validasi data dari request
             $validatedData = $request->validate([
                 'outlet_id' => 'required|string',
-                'noHp' => 'required|string',
                 'SubTotal' => 'required|numeric',
                 'product_id' => 'required|array',
                 'product_id.*.product_id' => 'required|string',
@@ -95,20 +102,43 @@ class MenuOrderController extends Controller
                 $totalQty += $product['qty']; // Menghitung total qty
             }
 
-            // Cek apakah ada produk yang dibeli dengan jumlah minimal atau tidak
+            // Cek apakah kouta point tersedia atau tidak
             $cek_koutaPoint = ref_KuotaPoint::select('kuota_point')->where('outlet_id', $request->outlet_id)->first();
-
-            // Cek apakah setelah transaksi, kuota point menjadi negatif
             if ($cek_koutaPoint->kuota_point - $totalQty < 0) {
                 return response()->json([
                     'status' => 'failed',
-                    'message' => 'Transaksi Gagal Kuota Point Anda Tidak Cukup.'
+                    'message' => 'Transaksi Gagal : Stok Anda Tidak Cukup.'
                 ], 422); // Menggunakan kode status 422 Unprocessable Entity
             }
-    
+
+            // Cek apakah pembeli_id atau nomor hp pembeli ada atau tidak
+            $get_user = null;
+            if ($request->pembeli_id != null) { // Pengecekan dengan pembeli_id
+                $get_user = User::where('pembeli_id', $request->pembeli_id)->first();
+                if ($get_user) {
+                    $idPembeli = $get_user->pembeli_id;
+                    $nomor_telfon = $get_user->no_hp;
+                } else {
+                    return response()->json([
+                        'status' => 'failed',
+                        'message' => 'Transaksi Gagal : Pelanggan Belum Terdaftar.'
+                    ], 422); // Menggunakan kode status 422 Unprocessable Entity
+                }
+            } else if ($request->noHp != null) { // Pengecekan dengan nomor hp
+                $get_user = User::where('no_hp', $request->noHp)->first();
+                if ($get_user) {
+                    $idPembeli = $get_user->pembeli_id;
+                    $nomor_telfon = $get_user->no_hp;
+                } else {
+                    $idPembeli = null;
+                    $nomor_telfon = $request->noHp;
+                }
+            }
+
             // Generate invoice_no dan date_created
             $invoiceData = [
-                'pembeli_id' => '4',
+                'pembeli_id' => $idPembeli,
+                'nomor_telfon' => $nomor_telfon,
                 'qty' => $totalQty,
                 'amount' => $validatedData['SubTotal'],
                 'outlet_id' => $validatedData['outlet_id'],
@@ -128,6 +158,7 @@ class MenuOrderController extends Controller
                 for ($i = 0; $i < $qty; $i++) {
                     $dataToInsert[] = [
                         'invoice_no' => $invoice->invoice_no,
+                        'nomor_telfon' => $invoice->nomor_telfon,
                         'pembeli_id' => $invoice->pembeli_id,
                         'outlet_id' => $invoice->outlet_id,
                         'sku_id' => $product['sku'],
@@ -145,8 +176,8 @@ class MenuOrderController extends Controller
             Invoice_Detail_Pembeli::insert($dataToInsert);
     
             // Memanggil stored procedure untuk Update data
-            DB::unprepared("EXEC maigroup.dbo.sum_point_user '{$invoice->pembeli_id}', '{$invoice->outlet_id}'");
-            DB::unprepared("EXEC maigroup.dbo.sum_bonus_user '{$invoice->pembeli_id}', '{$invoice->outlet_id}'");
+            DB::unprepared("EXEC maigroup.dbo.sum_point_user '{$invoice->nomor_telfon}', '{$invoice->outlet_id}'");
+            DB::unprepared("EXEC maigroup.dbo.sum_bonus_user '{$invoice->nomor_telfon}', '{$invoice->outlet_id}'");
     
             DB::commit(); // Commit transaksi jika semua proses berhasil
     

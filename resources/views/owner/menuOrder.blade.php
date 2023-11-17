@@ -47,6 +47,19 @@
                         <div class="col-md-6">
                             <form>
                                 <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control css-dhk2xjk" id="inputIdPembeli" placeholder="Contoh : 1234" required>
+                                        <ul id="idPembeliList" class="list-group"></ul>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form>
+                                <div class="form-group">
                                     <input type="hidden" id="outletId" value="{{ Auth::user()->outlet_id }}">
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">
@@ -58,12 +71,10 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-6">
-                            <button type="button" class="css-kl2kd9a" style="height: 43px;background-color: #e2e2e2;color: #929292;cursor: not-allowed;" id="btnOrder" disabled>
-                                <i class="fas fa-check-circle" id="iconColor" style="color: #929292"></i>&nbsp;
-                                Order Sekarang
-                            </button>
-                        </div>
+                        <button type="button" class="css-kl2kd9a" style="height: 43px;background-color: #e2e2e2;color: #929292;cursor: not-allowed;" id="btnOrder" disabled>
+                            <i class="fas fa-check-circle" id="iconColor" style="color: #929292"></i>&nbsp;
+                            Order Sekarang
+                        </button>
                     </div>
                 </div>
             </div>
@@ -141,7 +152,7 @@
                         'color': '#fff'
                     });
                 } else {
-                    $('#btnOrder').prop('disabled', true)
+                    $('#btnOrder').prop('disabled', false)
                         .css({
                             'background-color': '#e2e2e2', 
                             'color': '#929292',
@@ -318,13 +329,14 @@
             //     }
             // }, 300));
 
+            // Debouncing nomor telfon
             $('#inputNoHp').on('keyup', _.throttle(function() {
                 var query       = $(this).val();
                 var nomorHpList = $('#nomorHpList');
 
                 nomorHpList.empty();
 
-                if (query.length >= 2) {
+                if (query.length >= 3) {
                     $.ajax({
                         url: "/owner/getNomorHP",
                         type: "GET",
@@ -336,6 +348,35 @@
                                 if (!uniqueResults.has(item)) {
                                     uniqueResults.add(item);
                                     nomorHpList.append($('<li class="list-group-item link-class"></li>').text(item));
+                                }
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            }, 300));
+
+            // Debouncing pembeli id
+            $('#inputIdPembeli').on('keyup', _.throttle(function() {
+                var query       = $(this).val();
+                var idPembeliList = $('#idPembeliList');
+
+                idPembeliList.empty();
+
+                if (query.length >= 3) {
+                    $.ajax({
+                        url: "/owner/getIdPembeli",
+                        type: "GET",
+                        data: { 'term': query },
+                        success: function(data) {
+                            let uniqueResults = new Set();
+
+                            data.forEach(function(item) {
+                                if (!uniqueResults.has(item)) {
+                                    uniqueResults.add(item);
+                                    idPembeliList.append($('<li class="list-group-item link-class"></li>').text(item));
                                 }
                             });
                         },
@@ -367,6 +408,7 @@
 
                 $('.card-body .table tbody tr').each(function() {
                     outletId
+                    var idPembeli     = $('#inputIdPembeli').val();
                     var noHP          = $('#inputNoHp').val();
                     var outletId      = $('#outletId').val();
                     var namaProduk    = $(this).find('#nama-produk').text();
@@ -382,6 +424,14 @@
                                 <p class="css-jkopg1h fw-bold" style="color: #212121">
                                     <span>${outletId}</span>
                                 </p>
+                            </div>
+                        </div>
+                        <div class="css-vb3nxk8m">
+                            <p class="css-jkopg1h">ID Pelanggan</p>
+                            <div>
+                                <p class="css-jkopg1h fw-bold" style="color: #212121">
+                                    <span>${idPembeli}</span>
+                                </p> 
                             </div>
                         </div>
                         <div class="css-vb3nxk8m">
@@ -456,6 +506,7 @@
 
             var orderData = {
                 outlet_id   : $('#outletId').val(),
+                pembeli_id  : $('#inputIdPembeli').val(),
                 noHp        : $('#inputNoHp').val(),
                 SubTotal    : window.totalHargaOrder, // menggunakan variabel global
                 product_id  : products
@@ -473,18 +524,18 @@
                 success: function(response) {
                     toastr.success('Success: ' + response.message);
 
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 2000);
+                    // setTimeout(function() {
+                    //     window.location.reload();
+                    // }, 2000);
                 },
                 error: function(xhr, status, error) {
                     // Cek apakah respons error memiliki pesan custom dari server
                     var errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : error;
                     toastr.error('Error: ' + errorMessage);
 
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 3000);
+                    // setTimeout(function() {
+                    //     window.location.reload();
+                    // }, 3000);
                 }
             });
         }

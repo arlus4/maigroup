@@ -137,6 +137,7 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/menu-order', [MenuOrderController::class, 'index'])->name('owner_menu_order');
         Route::get('/get-produk/{produkId}', [MenuOrderController::class, 'getProduk'])->name('owner_get_produk');
         Route::get('/getNomorHP', [MenuOrderController::class, 'getNomorHP']);
+        Route::get('/getIdPembeli', [MenuOrderController::class, 'getIdPembeli']);
         Route::post('/store-order', [MenuOrderController::class, 'store']);
 
         // Restock
