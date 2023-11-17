@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Project_ProductController;
+use App\Http\Controllers\Owner\ClaimBonusController;
 use App\Http\Controllers\Owner\POSController;
 use App\Http\Controllers\Owner\MenuOrderController;
 use App\Http\Controllers\Owner\RestockController;
@@ -36,7 +37,6 @@ Route::get('/get_data_kotakab/{provinsi}', [AlamatController::class, 'get_data_k
 Route::get('/get_data_kecamatan/{kotakab}', [AlamatController::class, 'get_data_kecamatan']);
 Route::get('/get_data_kelurahan/{kecamatan}', [AlamatController::class, 'get_data_kelurahan']);
 Route::get('/get_data_kodepos/{kelurahan}', [AlamatController::class, 'get_data_kodepos']);
-
 
 // Bagian Middleware & Prefix Admin
 Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
@@ -139,6 +139,10 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/getNomorHP', [MenuOrderController::class, 'getNomorHP']);
         Route::get('/getIdPembeli', [MenuOrderController::class, 'getIdPembeli']);
         Route::post('/store-order', [MenuOrderController::class, 'store']);
+
+        // Claim Bonus
+        Route::get('/claim_bonus', [ClaimBonusController::class, 'claim_bonus'])->name('owner_claim_bonus');
+        Route::get('/store_claim_bonus', [ClaimBonusController::class, 'store_claim_bonus'])->name('owner_store_claim_bonus');
 
         // Restock
         Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');

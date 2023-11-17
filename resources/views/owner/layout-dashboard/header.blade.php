@@ -27,14 +27,14 @@
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
 									</div>
-									<!-- <div class="menu-item {{ Request::routeIs('owner.owner_restock') ? 'here show' : '' }}">
+									<div class="menu-item {{ Request::routeIs('owner.owner_claim_bonus') ? 'here show' : '' }}">
 										<span class="menu-link">
-											<a href="{{ route('owner.owner_restock') }}">
-												<span class="menu-title">Restock Order</span>
+											<a href="{{ route('owner.owner_claim_bonus') }}">
+												<span class="menu-title">Claim Bonus</span>
 											</a>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
-									</div> -->
+									</div>
 								</div>
 							</div>
 							<div class="app-navbar flex-shrink-0">
