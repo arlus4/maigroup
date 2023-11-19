@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,8 +12,8 @@ class Display_Controller extends Controller
     public function display_name_user(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required|string|max:255',
-            'no_hp' => 'required',
+            'pembeli_id'    => 'required',
+            'no_hp'         => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -26,7 +25,7 @@ class Display_Controller extends Controller
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT users_type, username, no_hp, email FROM [dbo].[apps.display_name_user](?, ?)", [$pembeli_id, $no_hp]);
+            $result = DB::select("SELECT users_type, username, no_hp, email, pembeli_id FROM [dbo].[apps.display_name_user](?, ?)", [$pembeli_id, $no_hp]);
             
             // Return the result
             return response()->json($result, 201);
@@ -38,7 +37,8 @@ class Display_Controller extends Controller
     public function display_total_cup(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required|string|max:255',
+            'pembeli_id'    => 'required',
+            'no_hp'         => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -46,10 +46,11 @@ class Display_Controller extends Controller
         }
 
         $pembeli_id = $request->input('pembeli_id');
+        $no_hp = $request->input('no_hp');
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT pembeli_id, amount, qty FROM [dbo].[apps.display_total_cup](?)", [$pembeli_id]);
+            $result = DB::select("SELECT pembeli_id, nomor_telfon, amount, qty FROM [dbo].[apps.display_total_cup](?, ?)", [$pembeli_id, $no_hp]);
             
             // Return the result
             return response()->json($result, 201);
@@ -61,7 +62,8 @@ class Display_Controller extends Controller
     public function display_total_point(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required|string|max:255',
+            'pembeli_id'    => 'required',
+            'no_hp'         => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -69,10 +71,11 @@ class Display_Controller extends Controller
         }
 
         $pembeli_id = $request->input('pembeli_id');
+        $no_hp = $request->input('no_hp');
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT pembeli_id, total_point, total_redeem, rewards FROM [dbo].[apps.display_total_point](?)", [$pembeli_id]);
+            $result = DB::select("SELECT pembeli_id, nomor_telfon, reward FROM [dbo].[apps.display_total_point](?, ?)", [$pembeli_id, $no_hp]);
             
             // Return the result
             return response()->json($result, 201);
@@ -84,7 +87,8 @@ class Display_Controller extends Controller
     public function notification(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required|string|max:255',
+            'pembeli_id'    => 'required',
+            'no_hp'         => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -92,10 +96,11 @@ class Display_Controller extends Controller
         }
 
         $pembeli_id = $request->input('pembeli_id');
+        $no_hp = $request->input('no_hp');
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT pembeli_id, header, detail, tanggal FROM [dbo].[apps.notification](?)", [$pembeli_id]);
+            $result = DB::select("SELECT pembeli_id, nomor_telfon, header, detail, tanggal FROM [dbo].[apps.notification](?, ?)", [$pembeli_id, $no_hp]);
             
             // Return the result
             return response()->json($result, 201);
@@ -200,10 +205,11 @@ class Display_Controller extends Controller
     public function redeem_user(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required',
-            'point_redeem' => 'required',
-            'redeem_code' => 'required',
-            'amount' => 'required',
+            'pembeli_id'    => 'required',
+            'no_hp'         => 'required',
+            'point_redeem'  => 'required',
+            'redeem_code'   => 'required',
+            'amount'        => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -212,7 +218,7 @@ class Display_Controller extends Controller
 
         try {
             // Call the stored procedure
-            DB::unprepared("EXEC maigroup.dbo.redeem_user '{$request->pembeli_id}', '{$request->point_redeem}', '{$request->redeem_code}', '{$request->amount}'");
+            DB::unprepared("EXEC maigroup.dbo.redeem_user '{$request->pembeli_id}', '{$request->no_hp}', '{$request->point_redeem}', '{$request->redeem_code}', '{$request->amount}'");
             
             // Return the result
             return response()->json(['message' => 'Prosedur berhasil dijalankan']);
@@ -224,8 +230,9 @@ class Display_Controller extends Controller
     public function display_voucher(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required|string|max:255',
-            'outlet_id' => 'required|string|max:255',
+            'pembeli_id'    => 'required',
+            'no_hp'         => 'required',
+            'outlet_id'     => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -233,11 +240,12 @@ class Display_Controller extends Controller
         }
 
         $pembeli_id = $request->input('pembeli_id');
+        $no_hp = $request->input('no_hp');
         $outlet_id = $request->input('outlet_id');
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT pembeli_id, voucher_code, outlet_id, map_location FROM [dbo].[apps.display_voucher](?, ?)", [$pembeli_id, $outlet_id]);
+            $result = DB::select("SELECT pembeli_id, nomor_telfon, voucher_code, outlet_id, map_location FROM [dbo].[apps.display_voucher](?, ?, ?)", [$pembeli_id, $no_hp, $outlet_id]);
             
             // Return the result
             return response()->json($result, 201);
@@ -249,8 +257,9 @@ class Display_Controller extends Controller
     public function display_voucher_history(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required|string|max:255',
-            'outlet_id' => 'required|string|max:255',
+            'pembeli_id'    => 'required',
+            'no_hp'         => 'required',
+            'outlet_id'     => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -258,11 +267,12 @@ class Display_Controller extends Controller
         }
 
         $pembeli_id = $request->input('pembeli_id');
+        $no_hp = $request->input('no_hp');
         $outlet_id = $request->input('outlet_id');
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT pembeli_id, voucher_code, tanggal_claim, nama_outlet, outlet_id FROM [dbo].[apps.display_voucher_history](?, ?)", [$pembeli_id, $outlet_id]);
+            $result = DB::select("SELECT pembeli_id, nomor_telfon, voucher_code, tanggal_claim, nama_outlet, outlet_id FROM [dbo].[apps.display_voucher_history](?, ?, ?)", [$pembeli_id, $no_hp, $outlet_id]);
             
             // Return the result
             return response()->json($result, 201);
@@ -274,7 +284,7 @@ class Display_Controller extends Controller
     public function riwayat_redeem(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pembeli_id' => 'required|string|max:255',
+            'pembeli_id' => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -285,8 +295,7 @@ class Display_Controller extends Controller
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT pembeli_id, gift_name, redeem_no, tanggal_redeem, Point_Terpakai, status_delivery
-                FROM [dbo].[apps.riwayat_redeem](?)", [$pembeli_id]);
+            $result = DB::select("SELECT pembeli_id, gift_name, redeem_no, tanggal_redeem, Point_Terpakai, status_delivery FROM [dbo].[apps.riwayat_redeem](?)", [$pembeli_id]);
             
             // Return the result
             return response()->json($result, 201);
@@ -394,7 +403,7 @@ class Display_Controller extends Controller
     public function produk_list(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|string|max:255',
+            'project_id' => 'required',
         ]);
     
         if ($validator->fails()) {
