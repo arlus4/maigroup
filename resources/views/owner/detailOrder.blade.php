@@ -213,8 +213,7 @@
                             </div>
                             <!-- end::Actions-->
                             <!-- begin::Action-->
-                            {{-- <button type="button" onclick="window.location.href='{{ route('admin.download.invoice', $data->invoice_no) }}'" class="btn btn-success my-1 me-12">Download</button> --}}
-                            <button type="button" onclick="window.location.href='/admin/download-invoice/{{ $data->invoice_no }}'" class="btn btn-success my-1 me-12">Download</button>
+                            <button type="button" onclick="window.location.href='/owner/download-invoice/{{ $data->invoice_no }}'" class="btn btn-success my-1 me-12">Download</button>
                             <!-- end::Action-->
                         </div>
                         <!-- end::Footer-->

@@ -160,9 +160,12 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
 
         // Report Invoice
         Route::get('/report-invoice', [ReportInvoiceController::class, 'index'])->name('owner_report_invoice');
+        Route::get('/download-invoice/{invoice}', [ReportInvoiceController::class, 'downloadInvoice'])->name('owner_download_invoice');
 
         // Akun Setting
-        Route::get('/pengaturan-akun/{name}', [AkunSettingController::class, 'index'])->name('owner_pengaturan_akun');
-
+        Route::get('/pengaturan-akun/{username}', [AkunSettingController::class, 'index'])->name('owner_pengaturan_akun');
+        Route::get('/pengaturan-akun/edit-profile/{username}', [AkunSettingController::class, 'editProfile'])->name('owner_edit_profile');
+        Route::post('/pengaturan-akun/update-profile/{username}', [AkunSettingController::class, 'updateProfile'])->name('owner_update_profile');
+        Route::post('/pengaturan-akun/update-password/{username}', [AkunSettingController::class, 'updatePassword'])->name('owner_update_password');
     });
 });

@@ -54,10 +54,7 @@
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-5 my-1">
-                                    @php
-                                        $username = str_replace(' ', '-', strtolower(Auth::user()->name));
-                                    @endphp
-                                    <a href="{{ route('owner.owner_pengaturan_akun', ['name' => $username]) }}" class="menu-link px-5">Pengaturan Akun</a>
+                                    <a href="{{ route('owner.owner_pengaturan_akun', ['username' => Auth::user()->username]) }}" class="menu-link px-5">Pengaturan Akun</a>
                                 </div>
 
                                 <div class="menu-item px-5">
