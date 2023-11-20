@@ -598,3 +598,10 @@ button.close{
     padding-top: 40px;
     position: relative;
 }
+.css-jisq1js{
+    display: flex;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0px 0px 8px;
+}

@@ -13,10 +13,12 @@ use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Project_ProductController;
 use App\Http\Controllers\Owner\ClaimBonusController;
+use App\Http\Controllers\Owner\DashboardController;
 use App\Http\Controllers\Owner\POSController;
 use App\Http\Controllers\Owner\MenuOrderController;
 use App\Http\Controllers\Owner\RestockController;
 use App\Http\Controllers\Owner\ReportInvoiceController;
+use App\Http\Controllers\Owner\AkunSettingController;
 
 Route::get('/', [HomeController::class, 'home']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -129,9 +131,9 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
 
     Route::prefix('owner')->name('owner.')->group(function() {
 
-        Route::get('/dashboard', function () {
-            return view('owner.dashboard');
-        })->name('dashboard-owner');
+        // Dashboard Owner
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-owner');
+        Route::get('/get_data_stock_report', [DashboardController::class, 'getDataStockReport']);
 
         // POS Sistem atau Menu Order
         Route::get('/menu-order', [MenuOrderController::class, 'index'])->name('owner_menu_order');
@@ -157,5 +159,9 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
 
         // Report Invoice
         Route::get('/report-invoice', [ReportInvoiceController::class, 'index'])->name('owner_report_invoice');
+
+        // Akun Setting
+        Route::get('/pengaturan-akun/{name}', [AkunSettingController::class, 'index'])->name('owner_pengaturan_akun');
+
     });
 });

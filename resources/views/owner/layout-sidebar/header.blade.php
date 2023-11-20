@@ -53,13 +53,13 @@
                                     </div>
                                 </div>
                                 <div class="separator my-2"></div>
-                                <div class="menu-item px-5">
-                                    <a href="account/overview.html" class="menu-link px-5">Lihat Profil</a>
-                                </div>
-                                <div class="separator my-2"></div>
                                 <div class="menu-item px-5 my-1">
-                                    <a href="account/settings.html" class="menu-link px-5">Pengaturan Akun</a>
+                                    @php
+                                        $username = str_replace(' ', '-', strtolower(Auth::user()->name));
+                                    @endphp
+                                    <a href="{{ route('owner.owner_pengaturan_akun', ['name' => $username]) }}" class="menu-link px-5">Pengaturan Akun</a>
                                 </div>
+
                                 <div class="menu-item px-5">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf

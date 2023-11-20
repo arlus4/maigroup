@@ -172,7 +172,7 @@
             $(document).on('click', '[data-repeater-create]', function() {
                 var newItem = $(this).closest('[data-repeater-group]').find('[data-repeater-item]:last');
                 resetFields(newItem);
-                newItem.find('.select2').select2(); // Inisialisasi Select2
+                newItem.find('.select2').select2();
             });
 
             $(document).on('change', '.produkId, .qtyid', function() {
@@ -187,7 +187,7 @@
 
         function updateProductDetails(item) {
             var productId = item.find('.produkId').val();
-            var qty = item.find('.qtyid').val();
+            var qty       = item.find('.qtyid').val();
 
             $.ajax({
                 url: 'get-harga-order-penjual/' + productId,

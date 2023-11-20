@@ -11,7 +11,8 @@
         scanner.addListener('scan', function (content) {
             console.log(content);
             // Kirim ke server
-            // Contoh: window.location.href = '/scan-qr?code=' + content;
+            // Contoh: 
+            window.location.href =  content;
         });
         Instascan.Camera.getCameras().then(function (cameras) {
             if (cameras.length > 0) {

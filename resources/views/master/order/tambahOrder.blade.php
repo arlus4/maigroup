@@ -43,7 +43,7 @@
 									<div class="card card-flush py-4" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
 										<div class="card-header">
 											<div class="card-title">
-												<h2 style="font-size: 16px;">Pengelolaan Produk</h2>
+												<h2 style="font-size: 16px;">Pengelolaan Varian</h2>
 											</div>
 										</div>
 										<div class="card-body pt-0">
@@ -53,8 +53,8 @@
                                                         <div data-repeater-item>
                                                             <div class="css-dabj72">
                                                                 <div class="form-group mb-4">
-                                                                    <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Pilihan Produk</label>
-                                                                    <select class="form-select mb-2" data-kt-repeater="select2" data-placeholder="Pilih Produk" id="produk_id" data-allow-clear="true" name="id_produk" required>
+                                                                    <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Pilihan Varian</label>
+                                                                    <select class="form-select mb-2" data-kt-repeater="select2" data-placeholder="Pilih Varian" id="produk_id" data-allow-clear="true" name="id_produk" required>
                                                                         <option></option>
                                                                         @foreach($getProduk as $produk)
                                                                             <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
@@ -91,10 +91,6 @@
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                                {{-- <div class="form-group">
-                                                                    <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Catatan</label>
-                                                                    <input type="text" name="noted" id="noted" class="form-control mb-2" placeholder="Contoh : Bakso & soto, Jajanan, Minuman"/>
-                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -127,21 +123,16 @@
         $(document).ready(function() {
             $('#kt_docs_repeater_advanced').repeater({
                 initEmpty: false,
-
                 defaultValues: {
                     'text-input': 'foo'
                 },
-
                 show: function () {
                     $(this).slideDown();
-
                     $(this).find('[data-kt-repeater="select2"]').select2();
                 },
-
                 hide: function (deleteElement) {
                     $(this).slideUp(deleteElement);
                 },
-
                 ready: function(){
                     $('[data-kt-repeater="select2"]').select2();
                 }
@@ -151,43 +142,63 @@
                 kontrolUbahSelect($(this));
             });
 
+            // Event handler untuk pembuatan item repeater baru
             $(document).on('click', '[data-repeater-create]', function() {
                 var newItem = $(this).closest('[data-repeater-group]').find('[data-repeater-item]:last');
-
-                newItem.find('#harga-satuan, #amount, #sku_code, #id_project, #project_name').val(''); // Reset nilai
-
-                newItem.find('input[id="qty"], input[id="harga-satuan"], input[id="#sku_code"], input[id="#id_project"], input[id="#project_name"]').on('input', function() {
-                    hitungTotalAmount(newItem);
-                });
-
-                newItem.find('#id_produk').change(function() {
-                    var productId = $(this).val();
-                    $.ajax({
-                        url: 'get-harga-order/' + productId,
-                        type: 'GET',
-                        success: function(response) {
-                            var harga = response.harga.replace(/\D/g, '');
-                            var skuCode   = response.sku;
-                            var projectName = response.project_name;
-                            var projectId = response.id_project;
-
-                            newItem.find('#harga-satuan').val(formatRupiah(parseFloat(harga)));
-                            newItem.find('#sku_code').val(skuCode);
-                            newItem.find('#id_project').val(projectId);
-                            newItem.find('#project_name').val(projectName);
-                            hitungTotalAmount(newItem);
-                        },
-                        error: function(error) {
-                            console.error('Failed to fetch price:', error);
-                        }
-                    });
-                });
+                resetNewItemFields(newItem);
+                setupNewItemEventHandlers(newItem);
             });
 
+            // Event handler untuk perubahan kuantitas atau harga satuan
             $(document).on('change', 'input[id="qty"], input[id="harga-satuan"]', function() {
                 hitungTotalAmount($(this).closest('[data-repeater-item]'));
             });
         });
+
+        // Fungsi untuk me-reset field pada item repeater baru
+        function resetNewItemFields(newItem) {
+            newItem.find('#harga-satuan, #amount, #sku_code, #id_project, #project_name').val('');
+        }
+
+        // Fungsi untuk mengatur event handler pada item repeater baru
+        function setupNewItemEventHandlers(newItem) {
+            newItem.find('input[id="qty"], input[id="harga-satuan"], input[id="#sku_code"], input[id="#id_project"], input[id="#project_name"]').on('input', function() {
+                hitungTotalAmount(newItem);
+            });
+
+            newItem.find('#id_produk').change(function() {
+                updateNewItemData($(this), newItem);
+            });
+        }
+
+        // Fungsi untuk mengupdate data item repeater baru dari server
+        function updateNewItemData(selectElement, newItem) {
+            var productId = selectElement.val();
+            $.ajax({
+                url: 'get-harga-order/' + productId,
+                type: 'GET',
+                success: function(response) {
+                    applyResponseToNewItem(response, newItem);
+                },
+                error: function(error) {
+                    console.error('Gagal memuat harga:', error);
+                }
+            });
+        }
+
+        // Fungsi untuk menerapkan respons dari server ke item repeater baru
+        function applyResponseToNewItem(response, newItem) {
+            var harga       = response.harga.replace(/\D/g, '');
+            var skuCode     = response.sku;
+            var projectName = response.project_name;
+            var projectId   = response.id_project;
+
+            newItem.find('#harga-satuan').val(formatRupiah(parseFloat(harga)));
+            newItem.find('#sku_code').val(skuCode);
+            newItem.find('#id_project').val(projectId);
+            newItem.find('#project_name').val(projectName);
+            hitungTotalAmount(newItem);
+        }
 
         function formatRupiah(angka) {
             var number_string   = angka.toString();
@@ -206,26 +217,26 @@
         }
 
         function kontrolUbahSelect(element) {
-            var productId = element.val();
-            var item = element.closest('[data-repeater-item]');
-            var hargaInput = item.find('input[id="harga-satuan"]');
-            var skuInput = item.find('input[id="sku_code"]');
-            var projectNameInput = item.find('input[id="project_name"]');
-            var projectIdInput = item.find('input[id="id_project"]');
+            var productId   = element.val();
+            var item        = element.closest('[data-repeater-item]');
+            var qtyInput    = item.find('input[id="qty"]');
 
             $.ajax({
                 url: 'get-harga-order/' + productId,
                 type: 'GET',
                 success: function(response) {
-                    var harga = response.harga.replace(/\D/g, '');
-                    var skuCode   = response.sku;
-                    var projectName = response.project_name;
-                    var projectId = response.id_project;
+                    var harga        = response.harga.replace(/\D/g, '');
+                    var skuCode      = response.sku;
+                    var projectName  = response.project_name;
+                    var projectId    = response.id_project;
 
-                    hargaInput.val(formatRupiah(parseFloat(harga)));
-                    skuInput.val(skuCode);
-                    projectNameInput.val(projectName);
-                    projectIdInput.val(projectId);
+                    item.find('input[id="harga-satuan"]').val(formatRupiah(parseFloat(harga)));
+                    item.find('input[id="sku_code"]').val(skuCode);
+                    item.find('input[id="project_name"]').val(projectName);
+                    item.find('input[id="id_project"]').val(projectId);
+
+                    // Setelah harga diupdate, hitung ulang total amount
+                    hitungTotalAmount(item);
                 },
                 error: function(error) {
                     console.error('Gagal memuat harga:', error);
@@ -234,11 +245,11 @@
         }
 
         function hitungTotalAmount(item) {
-            var qty = parseFloat(item.find('input[id="qty"]').val().replace(',', '.'));
-            var hargaSatuanString = item.find('input[id="harga-satuan"]').val();
-            var numbersFromString = hargaSatuanString.match(/\d+/g);
-            var hargaSatuanCleaned = numbersFromString ? numbersFromString.join('') : '';
-            var hargaSatuan = parseFloat(hargaSatuanCleaned);
+            var qty                 = parseFloat(item.find('input[id="qty"]').val().replace(',', '.'));
+            var hargaSatuanString   = item.find('input[id="harga-satuan"]').val();
+            var numbersFromString   = hargaSatuanString.match(/\d+/g);
+            var hargaSatuanCleaned  = numbersFromString ? numbersFromString.join('') : '';
+            var hargaSatuan         = parseFloat(hargaSatuanCleaned);
 
             if (!isNaN(qty) && !isNaN(hargaSatuan)) {
                 var totalAmount = hargaSatuan * qty;

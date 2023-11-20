@@ -41,41 +41,39 @@
                 </div>
                 <div class="m-0 css-huops2n" style="padding: 1rem 1.25rem!important;">
                     <div class="alert alert-primary" style="border-radius: 8px;">
-                        <span>Silakan masukkan nomor HP pembeli. Pastikan nomor HP Pembeli yang Anda masukkan aktif dan dapat dihubungi</span>
+                        <span>Silakan masukkan <strong>ID Pelanggan</strong> atau <strong>nomor HP pembeli</strong>. Pastikan nomor HP Pembeli yang Anda masukkan <strong>aktif</strong> dan dapat dihubungi</span>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <form>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon1">
-                                            <i class="fas fa-user"></i>
-                                        </span>
-                                        <input type="text" class="form-control css-dhk2xjk" id="inputIdPembeli" placeholder="Contoh : 1234" required>
-                                        <ul id="idPembeliList" class="list-group"></ul>
-                                    </div>
+                        <div class="col-md-6 css-hak92nds">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <input type="text" class="form-control css-dhk2xjk" id="inputIdPembeli" placeholder="Contoh : 1234" required>
+                                    <ul id="idPembeliList" class="list-group"></ul>
                                 </div>
-                            </form>
+                                <label class="form-label fs-9 fw-bold">Masukkan ID Pelanggan</label>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <form>
-                                <div class="form-group">
-                                    <input type="hidden" id="outletId" value="{{ Auth::user()->outlet_id }}">
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon1">
-                                            <i class="fas fa-mobile-screen"></i>
-                                        </span>
-                                        <input type="text" class="form-control css-dhk2xjk" id="inputNoHp" placeholder="Contoh : 082xxxxxx" required>
-                                        <ul id="nomorHpList" class="list-group"></ul>
-                                    </div>
+                        <div class="col-md-6 css-hak92nds">
+                            <div class="form-group">
+                                <input type="hidden" id="outletId" value="{{ Auth::user()->outlet_id }}">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="fas fa-mobile-screen"></i>
+                                    </span>
+                                    <input type="text" class="form-control css-dhk2xjk" id="inputNoHp" placeholder="Contoh : 082xxxxxx" required>
+                                    <ul id="nomorHpList" class="list-group"></ul>
                                 </div>
-                            </form>
+                                <label class="form-label fs-9 fw-bold">Masukkan No HP</label>
+                            </div>
                         </div>
-                        <button type="button" class="css-kl2kd9a" style="height: 43px;background-color: #e2e2e2;color: #929292;cursor: not-allowed;" id="btnOrder" disabled>
-                            <i class="fas fa-check-circle" id="iconColor" style="color: #929292"></i>&nbsp;
-                            Order Sekarang
-                        </button>
                     </div>
+                    <button type="button" class="css-kl2kd9a mt-3" style="height: 43px;background-color: #e2e2e2;color: #929292;cursor: not-allowed;" id="btnOrder" disabled>
+                        <i class="fas fa-check-circle" id="iconColor" style="color: #929292"></i>&nbsp;
+                        Order Sekarang
+                    </button>
                 </div>
             </div>
         </div>
@@ -127,7 +125,7 @@
             function updateTotalHarga() {
                 var totalHarga = 0;
                 $('.table tbody tr').each(function() {
-                    var hargaItem = parseInt($(this).find('.text-end span').attr('data-harga'), 10);
+                    var hargaItem  = parseInt($(this).find('.text-end span').attr('data-harga'), 10);
                     var jumlahItem = parseInt($(this).find('.input-number').val(), 10);
                     totalHarga += hargaItem * jumlahItem;
                 });
@@ -261,7 +259,7 @@
                             $('#totalHargaSemua').text('Rp ' + totalHarga.toLocaleString('id-ID'));
                         }
                         if (newValue == input.attr('min')) {
-                            $(this).attr('disabled', true);
+                            $(this).attr('disabled', false);
                         }
                     } else if (type === 'plus') {
                         if (currentVal < input.attr('max')) {
@@ -272,7 +270,7 @@
                             $('#totalHargaSemua').text('Rp ' + totalHarga.toLocaleString('id-ID'));
                         }
                         if (newValue == input.attr('max')) {
-                            $(this).attr('disabled', true);
+                            $(this).attr('disabled', false);
                         }
                     }
                 } else {
@@ -307,27 +305,6 @@
             $(document).on('click', '.btn-number, .fas.fa-times', function() {
                 updateButtonStatus();
             });
-
-            // $('#inputNoHp').on('keyup', _.throttle(function() {
-            //     var query = $(this).val();
-            //     $('#nomorHpList').html('');
-            //     if(query.length >= 2) {
-            //         $.ajax({
-            //             url: "/owner/getNomorHP",
-            //             type: "GET",
-            //             data: {
-            //                 'term': query
-            //             },
-            //             success: function(data) {
-            //                 if(data.length > 0) {
-            //                     for(var i = 0; i < data.length; i++) {
-            //                         $('#nomorHpList').append('<li class="list-group-item link-class">'+ data[i] +'</li>');
-            //                     }
-            //                 }
-            //             }
-            //         });
-            //     }
-            // }, 300));
 
             // Debouncing nomor telfon
             $('#inputNoHp').on('keyup', _.throttle(function() {
@@ -387,12 +364,6 @@
                 }
             }, 300));
         
-            // $(document).on('click', 'li', function() {
-            //     var value = $(this).text();
-            //     $('#inputNoHp').val(value);
-            //     $('#nomorHpList').html('');
-            // });
-
             $('#nomorHpList').on('click', 'li', function() {
                 var value = $(this).text();
                 $('#inputNoHp').val(value);
@@ -524,9 +495,9 @@
                 success: function(response) {
                     toastr.success('Success: ' + response.message);
 
-                    // setTimeout(function() {
-                    //     window.location.reload();
-                    // }, 2000);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
                 },
                 error: function(xhr, status, error) {
                     // Cek apakah respons error memiliki pesan custom dari server
