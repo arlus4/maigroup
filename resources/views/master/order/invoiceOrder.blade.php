@@ -22,6 +22,21 @@
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-xxl">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle" style="margin-right: 9px;color: #0f5132!important;"></i>
+                    {{ $message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if ($message = Session::get('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-times-circle" style="margin-right: 9px;color: #f1416c!important;"></i>
+                    {{ $message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <!-- begin::Invoice 3-->
             <div class="card">
                 <!-- begin::Body-->
@@ -98,28 +113,52 @@
                                                         <!--begin::Product-->
                                                         <td>
                                                             <div class="d-flex align-items-center">
-                                                                <!--begin::Thumbnail-->
-                                                                <a href="javascript:;" class="symbol symbol-50px">
-                                                                    <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span>
-                                                                </a>
-                                                                <!--end::Thumbnail-->
-                                                                <!--begin::Title-->
-                                                                <div class="ms-5">
-                                                                    <div class="fw-bold">{{ $detail->nama_produk }}</div>
-                                                                    <div class="fs-7 text-muted">{{ $detail->project_name }}</div>
-                                                                </div>
-                                                                <!--end::Title-->
+                                                                @if ($detail->sku_id == "PA1")
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">Paket Startup</div>
+                                                                    </div>
+                                                                @elseif ($detail->sku_id == "PA2")
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">Paket Advanced</div>
+                                                                    </div>
+                                                                @elseif ($detail->sku_id == "PA3")
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">Paket Custom</div>
+                                                                    </div>
+                                                                @else
+                                                                    <a href="javascript:;" class="symbol symbol-50px">
+                                                                        <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span>
+                                                                    </a>
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">{{ $detail->nama_produk }}</div>
+                                                                        <div class="fs-7 text-muted">{{ $detail->project_name }}</div>
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                         </td>
                                                         <!--end::Product-->
                                                         <!--begin::SKU-->
-                                                        <td class="text-end">{{ $detail->sku }}</td>
+                                                        @if ($detail->sku_id == "PA1")
+                                                            <td class="text-end">{{ $detail->sku_id }}</td>
+                                                        @elseif ($detail->sku_id == "PA2")
+                                                            <td class="text-end">{{ $detail->sku_id }}</td>
+                                                        @elseif ($detail->sku_id == "PA3")
+                                                            <td class="text-end">{{ $detail->sku_id }}</td>
+                                                        @else
+                                                            <td class="text-end">{{ $detail->sku }}</td>
+                                                        @endif
                                                         <!--end::SKU-->
                                                         <!--begin::Quantity-->
                                                         <td class="text-end">{{ $detail->qtyDetailSeller }}</td>
                                                         <!--end::Quantity-->
                                                         <!--begin::Total-->
-                                                        <td class="text-end">@rupiah($detail->total_amount)</td>
+                                                        @if ($detail->total_amount == null)
+                                                            <td class="text-end">
+                                                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#inputHarga" data-bs-sku="{{ $detail->sku_id }}">Input Harga</button>
+                                                            </td>
+                                                        @else
+                                                            <td class="text-end">@rupiah($detail->total_amount)</td>
+                                                        @endif
                                                         <!--end::Total-->
                                                     </tr>
                                                 @endforeach
@@ -127,25 +166,53 @@
                                                 <!--begin::Subtotal-->
                                                 <tr>
                                                     <td colspan="3" class="text-end">Subtotal</td>
-                                                    <td class="text-end">@rupiah($data->amount)</td>
+                                                    @php
+                                                        $isConfirmationNeeded = false;
+                                                        foreach ($details as $detail) {
+                                                            if ($detail->total_amount == null) {
+                                                                $isConfirmationNeeded = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    @endphp
+
+                                                    @if ($isConfirmationNeeded)
+                                                        <td class="text-end">Data Belum Lengkap</td>
+                                                    @else
+                                                        <td class="text-end">@rupiah($data->amount)</td>
+                                                    @endif
                                                 </tr>
                                                 <!--end::Subtotal-->
                                                 <!--begin::Shipping-->
                                                 <tr>
                                                     <td colspan="3" class="text-end">Ongkos Kirim</td>
-                                                    <td class="text-end">@rupiah($data->ongkir)</td>
+                                                    @if ($data->ongkir == null)
+                                                        <td class="text-end">
+                                                            <button type="button" onclick="modalUpdateOngkir('{{ $data->invoice_no }}')" class="btn btn-primary btn-sm cursor-pointer">Input Ongkir</button>
+                                                        </td>
+                                                    @else
+                                                        <td class="text-end">@rupiah($data->ongkir)</td>
+                                                    @endif
                                                 </tr>
                                                 <!--end::Shipping-->
                                                 <!--begin::Unique Code-->
                                                 <tr>
                                                     <td colspan="3" class="text-end">Kode Unik</td>
-                                                    <td class="text-end">@rupiah($data->kode_unik)</td>
+                                                    @if ($data->kode_unik == null)
+                                                        <td class="text-end">Data Belum Lengkap</td>
+                                                    @else
+                                                        <td class="text-end">@rupiah($data->kode_unik)</td>
+                                                    @endif
                                                 </tr>
                                                 <!--end::Unique Code-->
                                                 <!--begin::Total-->
                                                 <tr>
                                                     <td colspan="3" class="fs-3 text-dark fw-bold text-end">Total</td>
-                                                    <td class="text-dark fs-3 fw-bolder text-end">@rupiah($data->total)</td>
+                                                    @if ($data->total == null)
+                                                        <td class="text-end">Data Belum Lengkap</td>
+                                                    @else
+                                                        <td class="text-dark fs-3 fw-bolder text-end">@rupiah($data->total)</td>
+                                                    @endif
                                                 </tr>
                                                 <!--end::Total-->
                                             </tbody>
@@ -176,11 +243,228 @@
                 <!-- end::Body-->
             </div>
             <!-- end::Invoice 1-->
+
+            <!-- Modal Input Harga Custom -->
+            <div class="modal fade" tabindex="-1" id="inputHarga">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form action="/admin/update_harga_paket/{{ $data->invoice_no }}" method="POST">
+                            @csrf
+                            <div class="modal-header">
+                                <h3 class="modal-title">Input Harga</h3>
+                                <button type="button" class="btn-close css-fhk9sna" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                
+                            <div class="modal-body">
+                                <input type="hidden" id="id_sku" name="sku_id">
+                                <div class="css-pouys8k">
+                                    <div class="css-hj7sb2a">
+                                        <div class="css-produk-info">
+                                            <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Input Harga Paket</label>
+                                        </div>
+                                    </div>
+                                    <div class="css-harga-prod">
+                                        <div class="css-total-amount">
+                                            <input type="text" name="harga" id="harga" class="form-control mb-6" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Update Ongkir -->
+            <div class="modal fade" id="modalUpdateOngkir">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 8px;">
+                        <div class="css-dtu37sh">
+                            <div class="css-cfn3ksa">
+                                <h5 class="css-fnm3aj" style="text-align: center;">Detail Order</h5>
+                            </div>
+                            <button type="button" class="btn-close css-fhk9sna" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="css-cnm6w2a">
+                            <div class="css-bnm3js">
+                                <div class="css-vbdw2js">
+                                    <form action="/admin/store_ongkir" method="POST">
+                                        @csrf
+                                        <div class="css-hk23nab">
+                                            <div class="css-sui2nz d-flex">
+                                                <div style="border-left: 4px solid #ffc700;">
+                                                </div>
+                                                <h5 class="css-gh9fjq" style="margin-left: 6px;">Pending</h5>
+                                            </div>
+                                            <div class="css-uwad2ha">
+                                                <div class="css-dhj9nda">
+                                                    <h4 class="css-poh2hs">No Invoice</h4>
+                                                    <div>
+                                                        <span class="css-n4js9na" id="id-invoice"></span>
+                                                        <input type="hidden" id="invoice_id" name="invoice_no">
+                                                    </div>
+                                                </div>
+                                                <div class="css-dhj9nda">
+                                                    <p class="css-poh2hs">Sub Total</p>
+                                                    <div>
+                                                        <span class="css-n4js9na" id="total-amount"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="css-dhj9nda">
+                                                    <p class="css-poh2hs">Tanggal Buat</p>
+                                                    <div>
+                                                        <span class="css-n4js9na" id="tanggal-buat"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="css-kdfh3a">
+                                            <div class="css-uwad2ha">
+                                                <div class="css-jgdh2a">
+                                                </div>
+                                                <div class="css-bn34bal">
+                                                    <div class="css-pouys8k">
+                                                        <div class="css-hj7sb2a">
+                                                            <div class="css-produk-info">
+                                                                <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Input Ongkos Kirim</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="css-harga-prod">
+                                                            <div class="css-total-amount">
+                                                                <input type="text" name="ongkir" id="ongkir" class="form-control mb-6" required/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="css-hk23nab" style="padding: 24px 0px;border-top: 8px solid #F0F3F7;border-bottom:0px;">
+                                                <div class="css-jgdh2a">
+                                                    <h4 class="css-gh9fjq">Detail Lainnya</h4>
+                                                </div>
+                                                <div class="css-i9mf6m">
+                                                    <div class="css-iopf2sj">
+                                                        <p class="css-fgusn1a">Nama Outlet</p>
+                                                        <span>:</span>
+                                                        <div class="css-fgdh0kl">
+                                                            <p class="css-fgusn1a" id="nama-outlet"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="css-i9mf6m">
+                                                    <div class="css-iopf2sj">
+                                                        <p class="css-fgusn1a">Alamat</p>
+                                                        <span>:</span>
+                                                        <div class="css-fgdh0kl">
+                                                            <h5 class="css-gh9fjq" style="font-size: 12px;" id="nama-penjual"></h5>
+                                                            <p class="css-fgusn1a">
+                                                                <span id="no-hp"></span><br>
+                                                                <span id="alamat-detail"></span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!--end::Content container-->
     </div>
     <!--end::Content-->
 </div>
 <!--end::Content wrapper-->
+
+@endsection
+
+@section('script')
+<script>
+    // Show Modal Update Ongkir
+    function modalUpdateOngkir(invoice){
+        $.ajax({
+            type: "GET",
+            url: "/admin/data_order/" + invoice,
+            success: function(data){
+
+                const dateFormat    = (date) => {
+                    var dateObject    = new Date(date);
+                    var day           = dateObject.getDate();
+                    var month         = dateObject.getMonth();
+
+                    switch(month) {
+                    case 0: month = "Januari"; break;
+                    case 1: month = "Februari"; break;
+                    case 2: month = "Maret"; break;
+                    case 3: month = "April"; break;
+                    case 4: month = "Mei"; break;
+                    case 5: month = "Juni"; break;
+                    case 6: month = "Juli"; break;
+                    case 7: month = "Agustus"; break;
+                    case 8: month = "September"; break;
+                    case 9: month = "Oktober"; break;
+                    case 10: month = "November"; break;
+                    case 11: month = "Desember"; break;
+                    }
+
+                    var year          = dateObject.getFullYear();
+                    var hour          = dateObject.getHours();
+                    var minute        = dateObject.getMinutes();
+                    day               = day < 10 ? "0" + day : day; 
+                    month             = month < 10 ? "0" + month : month; 
+                    var formattedDate = day + ' ' + month + ' ' + year + ', ' + hour+':'+minute+" WIB";
+
+                    return formattedDate;
+                }
+
+                const rupiah = (number) => {
+                    return new Intl.NumberFormat('id-ID', { 
+                    style: 'currency', 
+                    currency: 'IDR' 
+                    }).format(number).replace(/(\.|,)00$/g, '');
+                }
+
+                $('#modalUpdateOngkir').modal('show');
+                $('#id-invoice').text(data.invoice_no);
+                $('#invoice_id').val(data.invoice_no);
+                $('#tanggal-buat').text(dateFormat(data.date_created));
+                $('#img-produk').text(data.thumbnail);
+                $('#nama-kategori').text(data.project_name);
+                $('#nama-produk').text(data.nama_produk);
+                $('#qtyAmount').text(data.qty + ' x ' + rupiah(data.amount));
+                $('#total-amount').text(rupiah(data.amount));
+                $('#nama-outlet').text(data.nama_outlet);
+                $('#nama-penjual').text(data.name);
+                $('#no-hp').text(data.nomor_telfon);
+                $('#alamat-detail').text(data.alamat_detail + ', Kelurahan ' + data.nama_kelurahan + ', Kecamatan ' + data.nama_kecamatan + ', ' + data.nama_kotakab + ', ' + data.nama_propinsi + ' ' + data.kode_pos + '.');
+            },
+            error: function(data){
+                error
+            }
+        });
+    }
+</script>
+<script>
+    $('#inputHarga').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var skuId = button.data('bs-sku'); // Extract info from data-bs-* attributes
+
+        // Update the modal's content.
+        var modal = $(this);
+        modal.find('.modal-body #id_sku').val(skuId);
+    });
+</script>
 
 @endsection

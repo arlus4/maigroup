@@ -104,24 +104,46 @@
                                                                             <tr>
                                                                                 <!--begin::Product-->
                                                                                 <td>
-                                                                                    <div class="d-flex align-items-center">
-                                                                                        <!--begin::Thumbnail-->
-                                                                                        <a href="javascript:;" class="symbol symbol-50px">
-                                                                                            <!-- <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span> -->
-                                                                                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents($detail->path_thumbnail)) }}" alt="{{ $detail->nama_produk }}">
-                                                                                        </a>
-                                                                                        <!--end::Thumbnail-->
-                                                                                        <!--begin::Title-->
+                                                                                    @if ($detail->sku_id == "PA1")
                                                                                         <div class="ms-5">
-                                                                                            <div class="fw-bold">{{ $detail->nama_produk }}</div>
-                                                                                            <div class="fs-7 text-muted">{{ $detail->project_name }}</div>
+                                                                                            <div class="fw-bold">Paket Startup</div>
                                                                                         </div>
-                                                                                        <!--end::Title-->
-                                                                                    </div>
+                                                                                    @elseif ($detail->sku_id == "PA2")
+                                                                                        <div class="ms-5">
+                                                                                            <div class="fw-bold">Paket Advanced</div>
+                                                                                        </div>
+                                                                                    @elseif ($detail->sku_id == "PA3")
+                                                                                        <div class="ms-5">
+                                                                                            <div class="fw-bold">Paket Custom</div>
+                                                                                        </div>
+                                                                                    @else
+                                                                                        <div class="d-flex align-items-center">
+                                                                                            <!--begin::Thumbnail-->
+                                                                                            <a href="javascript:;" class="symbol symbol-50px">
+                                                                                                <!-- <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span> -->
+                                                                                                <img src="data:image/png;base64,{{ base64_encode(file_get_contents($detail->path_thumbnail)) }}" alt="{{ $detail->nama_produk }}">
+                                                                                            </a>
+                                                                                            <!--end::Thumbnail-->
+                                                                                            <!--begin::Title-->
+                                                                                            <div class="ms-5">
+                                                                                                <div class="fw-bold">{{ $detail->nama_produk }}</div>
+                                                                                                <div class="fs-7 text-muted">{{ $detail->project_name }}</div>
+                                                                                            </div>
+                                                                                            <!--end::Title-->
+                                                                                        </div>
+                                                                                    @endif
                                                                                 </td>
                                                                                 <!--end::Product-->
                                                                                 <!--begin::SKU-->
-                                                                                <td class="text-end">{{ $detail->sku }}</td>
+                                                                                @if ($detail->sku_id == "PA1")
+                                                                                    <td class="text-end">{{ $detail->sku_id }}</td>
+                                                                                @elseif ($detail->sku_id == "PA2")
+                                                                                    <td class="text-end">{{ $detail->sku_id }}</td>
+                                                                                @elseif ($detail->sku_id == "PA3")
+                                                                                    <td class="text-end">{{ $detail->sku_id }}</td>
+                                                                                @else
+                                                                                    <td class="text-end">{{ $detail->sku }}</td>
+                                                                                @endif
                                                                                 <!--end::SKU-->
                                                                                 <!--begin::Quantity-->
                                                                                 <td class="text-end">{{ $detail->qtyDetailSeller }}</td>

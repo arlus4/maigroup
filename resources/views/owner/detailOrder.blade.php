@@ -98,28 +98,50 @@
                                                         <!--begin::Product-->
                                                         <td>
                                                             <div class="d-flex align-items-center">
-                                                                <!--begin::Thumbnail-->
-                                                                <a href="javascript:;" class="symbol symbol-50px">
-                                                                    <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span>
-                                                                </a>
-                                                                <!--end::Thumbnail-->
-                                                                <!--begin::Title-->
-                                                                <div class="ms-5">
-                                                                    <div class="fw-bold">{{ $detail->nama_produk }}</div>
-                                                                    <div class="fs-7 text-muted">{{ $detail->project_name }}</div>
-                                                                </div>
-                                                                <!--end::Title-->
+                                                                @if ($detail->sku_id == "PA1")
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">Paket Startup</div>
+                                                                    </div>
+                                                                @elseif ($detail->sku_id == "PA2")
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">Paket Advanced</div>
+                                                                    </div>
+                                                                @elseif ($detail->sku_id == "PA3")
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">Paket Custom</div>
+                                                                    </div>
+                                                                @else
+                                                                    <a href="javascript:;" class="symbol symbol-50px">
+                                                                        <span class="symbol-label" style="background-image:url(../../../{{ $detail->path_thumbnail }});"></span>
+                                                                    </a>
+                                                                    <div class="ms-5">
+                                                                        <div class="fw-bold">{{ $detail->nama_produk }}</div>
+                                                                        <div class="fs-7 text-muted">{{ $detail->project_name }}</div>
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                         </td>
                                                         <!--end::Product-->
                                                         <!--begin::SKU-->
-                                                        <td class="text-end">{{ $detail->sku }}</td>
+                                                        @if ($detail->sku_id == "PA1")
+                                                            <td class="text-end">{{ $detail->sku_id }}</td>
+                                                        @elseif ($detail->sku_id == "PA2")
+                                                            <td class="text-end">{{ $detail->sku_id }}</td>
+                                                        @elseif ($detail->sku_id == "PA3")
+                                                            <td class="text-end">{{ $detail->sku_id }}</td>
+                                                        @else
+                                                            <td class="text-end">{{ $detail->sku }}</td>
+                                                        @endif
                                                         <!--end::SKU-->
                                                         <!--begin::Quantity-->
                                                         <td class="text-end">{{ $detail->qtyDetailSeller }}</td>
                                                         <!--end::Quantity-->
                                                         <!--begin::Total-->
-                                                        <td class="text-end">@rupiah($detail->total_amount)</td>
+                                                        @if ($detail->total_amount == null)
+                                                            <td class="text-end">Menunggu Konfirmasi Admin</td>
+                                                        @else
+                                                            <td class="text-end">@rupiah($detail->total_amount)</td>
+                                                        @endif
                                                         <!--end::Total-->
                                                     </tr>
                                                 @endforeach
@@ -127,25 +149,51 @@
                                                 <!--begin::Subtotal-->
                                                 <tr>
                                                     <td colspan="3" class="text-end">Subtotal</td>
-                                                    <td class="text-end">@rupiah($data->amount)</td>
+                                                    @php
+                                                        $isConfirmationNeeded = false;
+                                                        foreach ($details as $detail) {
+                                                            if ($detail->total_amount == null) {
+                                                                $isConfirmationNeeded = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    @endphp
+
+                                                    @if ($isConfirmationNeeded)
+                                                        <td class="text-end">Menunggu Konfirmasi Admin</td>
+                                                    @else
+                                                        <td class="text-end">@rupiah($data->amount)</td>
+                                                    @endif
                                                 </tr>
                                                 <!--end::Subtotal-->
                                                 <!--begin::Shipping-->
                                                 <tr>
                                                     <td colspan="3" class="text-end">Ongkos Kirim</td>
-                                                    <td class="text-end">@rupiah($data->ongkir)</td>
+                                                    @if ($data->ongkir == null)
+                                                        <td class="text-end">Menunggu Konfirmasi Admin</td>
+                                                    @else
+                                                        <td class="text-end">@rupiah($data->ongkir)</td>
+                                                    @endif
                                                 </tr>
                                                 <!--end::Shipping-->
                                                 <!--begin::Unique Code-->
                                                 <tr>
                                                     <td colspan="3" class="text-end">Kode Unik</td>
-                                                    <td class="text-end">@rupiah($data->kode_unik)</td>
+                                                    @if ($data->kode_unik == null)
+                                                        <td class="text-end">Menunggu Konfirmasi Admin</td>
+                                                    @else
+                                                        <td class="text-end">@rupiah($data->kode_unik)</td> 
+                                                    @endif
                                                 </tr>
                                                 <!--end::Unique Code-->
                                                 <!--begin::Total-->
                                                 <tr>
                                                     <td colspan="3" class="fs-3 text-dark fw-bold text-end">Total</td>
-                                                    <td class="text-dark fs-3 fw-bolder text-end">@rupiah($data->total)</td>
+                                                    @if ($data->total == null)
+                                                        <td class="text-end">Menunggu Konfirmasi Admin</td>
+                                                    @else
+                                                        <td class="text-dark fs-3 fw-bolder text-end">@rupiah($data->total)</td>
+                                                    @endif
                                                 </tr>
                                                 <!--end::Total-->
                                             </tbody>

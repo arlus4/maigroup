@@ -91,6 +91,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/order/deliver_order', [Admin_OrderController::class, 'deliver_order'])->name('admin_deliver_order');
         Route::get('/order/rejected_order', [Admin_OrderController::class, 'rejected_order'])->name('admin_rejected_order');
         Route::post('/store_ongkir', [Admin_OrderController::class, 'storeOngkir']);
+        Route::post('/update_harga_paket/{invoice}', [Admin_OrderController::class, 'update_harga_paket']);
         Route::get('/order-detail/{invoice}', [Admin_OrderController::class, 'orderDetail'])->name('admin_order_detail');
         Route::get('/tambah-order', [Admin_OrderController::class, 'create'])->name('admin_tambah_order');
         Route::post('/store-order', [Admin_OrderController::class, 'store'])->name('admin_store_order');

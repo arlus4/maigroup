@@ -135,8 +135,8 @@
                                                 <div class="css-fgdh0kl">
                                                     <h5 class="css-gh9fjq" style="font-size: 12px;" id="nama-penjual"></h5>
                                                     <p class="css-fgusn1a">
-                                                        <span id="no-hp">089516769831</span><br>
-                                                        <span id="alamat-detail">Jalan Melati 1, Kecataman Bandung Kulon, Kota Bandung, Jawa Barat, 16610.</span>
+                                                        <span id="no-hp"></span><br>
+                                                        <span id="alamat-detail"></span>
                                                     </p>
                                                 </div>
                                             </div>

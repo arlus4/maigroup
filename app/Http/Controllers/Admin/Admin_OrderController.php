@@ -134,6 +134,17 @@ class Admin_OrderController extends Controller
     
         try {
             DB::beginTransaction(); // Begin Transaction
+
+            // Cek data agar tidak ada total_amount yang null
+            $invoice_detail = Invoice_Detail_Seller::select('total_amount')->where('invoice_no', $request->invoice_no)->get();
+
+            foreach ($invoice_detail as $detail) {
+                if ($detail->total_amount === null) {
+                    // Proses dihentikan jika ditemukan total_amount yang null
+                    return back()->with('error', 'Silahkan Periksa Kembali Harga Produk pada Invoice Detail.');
+                }
+            }
+
             // Dapatkan invoice berdasarkan invoice_no
             $invoice = Invoice_Master_Seller::where('invoice_no', $request->invoice_no)->first();
     
@@ -182,6 +193,39 @@ class Admin_OrderController extends Controller
 
         return $randomCode;
     }
+
+    public function update_harga_paket(Request $request, $invoice)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+    
+            // Validasi request
+            $request->validate([
+                'sku_id' => 'required',
+                'harga' => 'required',
+            ]);
+            
+            $master = Invoice_Master_Seller::where('invoice_no', $invoice)->first();
+            $detail = Invoice_Detail_Seller::where('invoice_no', $invoice)
+                                           ->where('sku_id', $request->sku_id)
+                                           ->first();
+    
+            if (!$master || !$detail) {
+                throw new \Exception("Data tidak ditemukan.");
+            }
+    
+            $master_total = $master->amount + $request->harga;
+            $master->update(['amount' => $master_total]);
+            $detail->update(['total_amount' => $request->harga]);
+    
+            DB::commit(); // Commit the transaction
+            
+            return back()->with('success', 'Data harga berhasil diupdate.');
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+            return back()->with('error', 'Terjadi kesalahan saat mengupdate data: ' . $th->getMessage());
+        }
+    }    
 
     /**
      * Display a listing of the resource.

@@ -20,7 +20,8 @@ use App\Models\Konfirmasi_Pembayaran;
 
 class RestockController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $getOutlet      = Outlet::select('id','nama_outlet','outlet_id')->get();
         $getProduk      = Ref_Produk::select('id','sku','nama_produk','harga')->get();
         $getKategori    = Ref_Project::select('id','project_name')->get();
@@ -60,27 +61,62 @@ class RestockController extends Controller
         }
     }
 
-    public function store(Request $request) {
-        try{
+    public function store(Request $request) 
+    {
+        try {
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
-                'outlet_id'                     => 'required',
-                'data_restock_order.*.sku_id'   => 'required',
-                'data_restock_order.*.qty'      => 'required',
-                'data_restock_order.*.amount'   => 'required'
+                'outlet_id' => 'required',
             ]);
-
-            // Hitung total qty dan amount
-            $totalQty       = collect($request->data_restock_order)->sum('qty');
-            $totalAmount    = collect($request->data_restock_order)->sum(function($item) {
-                return (int) str_replace(['Rp', '.', ','], '', $item['amount']);
-            });
-
+            
             // Get no_invoice
             $date               = date('Ymd');
             $randomNumberPart   = str_pad(mt_rand(0, 99999999), 8, "0", STR_PAD_LEFT); // 8 karakter
             $no_invoice         = 'MAI-' . $date . $randomNumberPart;
+
+            // Menyiapkan data paket berdasarkan plan
+            $planData = [];
+            if ($request->plan == 'startup') {
+                $planData[] = [
+                    'sku_id' => 'PA1', 
+                    'qty' => '25', 
+                    'amount' => '25000',
+                    'id_produk' => '01',
+                    'project_name' => null,
+                    'id_project' => null,
+                    'harga_satuan' => null
+                ];
+            } elseif ($request->plan == 'advanced') {
+                $planData[] = [
+                    'sku_id' => 'PA2', 
+                    'qty' => '50', 
+                    'amount' => '50000',
+                    'id_produk' => '02',
+                    'project_name' => null,
+                    'id_project' => null,
+                    'harga_satuan' => null
+                ];
+            } elseif ($request->plan == 'custom') {
+                $planData[] = [
+                    'sku_id' => 'PA3', 
+                    'qty' => $request->qtyPaket, 
+                    'amount' => null,
+                    'id_produk' => '03',
+                    'project_name' => null,
+                    'id_project' => null,
+                    'harga_satuan' => null
+                ];
+            }
+            
+            // Menggabungkan data plan dengan data_restock_order
+            $allData = array_merge($planData, $request->data_restock_order ?? []);
+            
+            // Hitung total qty dan amount
+            $totalQty = array_sum(array_column($allData, 'qty'));
+            $totalAmount = array_sum(array_map(function ($item) {
+                return (int) str_replace(['Rp', '.', ','], '', $item['amount']);
+            }, $allData));
 
             // Simpan data ke invoice_master
             $master = Invoice_Master_Seller::create([
@@ -94,33 +130,33 @@ class RestockController extends Controller
             ]);
 
             // Loop melalui array data_restock_order dan simpan data ke invoice_detail
-            foreach ($request->data_restock_order as $detail) {
-                $amount = (int) str_replace(['Rp', '.', ','], '', $detail['amount']);
-                $hargaSatuan = (int) str_replace(['Rp', '.', ','], '', $detail['harga_satuan']);
-
-                Invoice_Detail_Seller::create([
-                    'outlet_id'     => $request->outlet_id,
-                    'invoice_no'    => $no_invoice,
-                    'sku_id'        => $detail['sku_id'],
-                    'qty'           => $detail['qty'],
-                    'amount'        => $hargaSatuan,
-                    'discount'      => null, // logika untuk discount jika ada
-                    'total_amount'  => $amount,
-                    'date_created'  => Carbon::now()->timezone('Asia/Jakarta'),
-                    'project_id'    => $detail['id_project'],
-                ]);
+            foreach ($allData as $detail) {
+                if ($detail['sku_id'] && $detail['qty']) {
+                    $amount = isset($detail['amount']) ? (int) str_replace(['Rp', '.', ','], '', $detail['amount']) : null;
+                    $hargaSatuan = (int) str_replace(['Rp', '.', ','], '', $detail['harga_satuan']);
+    
+                    Invoice_Detail_Seller::create([
+                        'outlet_id'     => $request->outlet_id,
+                        'invoice_no'    => $no_invoice,
+                        'sku_id'        => $detail['sku_id'],
+                        'qty'           => $detail['qty'],
+                        'amount'        => $hargaSatuan,
+                        'discount'      => null, // logika untuk discount jika ada
+                        'total_amount'  => $amount,
+                        'date_created'  => Carbon::now()->timezone('Asia/Jakarta'),
+                        'project_id'    => $detail['id_project'],
+                    ]);
+                }
             }
 
             DB::commit(); // Commit the transaction
 
         } catch (\Throwable $th) {
             DB::rollback(); // Rollback the transaction in case of an exception
-
-            Log::error($th); // Log the exception for debugging
-
+            
             return redirect()->route('owner.owner_restock')->with('error', 'Gagal Menambah Restock. Silakan coba lagi: '. $th->getMessage());
         }
-        return redirect()->route('owner.owner_restock')->with('success', 'Berhasil dan Pesanan sudah diterima, admin akan segera menghubungi WhatsApp anda');
+        return redirect()->route('owner.owner_status_restock')->with('success', 'Berhasil dan Pesanan sudah diterima, admin akan segera menghubungi WhatsApp anda');
     }
 
     public function konfPembayaran(){
@@ -209,7 +245,8 @@ class RestockController extends Controller
         return view('owner.statusRestock', compact('getStatus'));
     }
 
-    public function detailOrder($invoice){
+    public function detailOrder($invoice)
+    {
         $data = Invoice_Master_Seller::select
         (
             'invoice_master_seller.id as idInvoiceMasterSeller',
