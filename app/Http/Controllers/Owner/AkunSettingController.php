@@ -174,15 +174,24 @@ class AkunSettingController extends Controller
 
     public function updatePassword(Request $request)
     {
-        $validated = $request->validateWithBag('updatePassword', [
+        $request->validateWithBag('updatePassword', [
             'current_password' => ['required', 'current_password'],
             'password'         => ['required', Password::defaults()],
         ]);
-
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
+    
+        $user = $request->user();
+    
+        // Periksa apakah current_password sesuai dengan password yang ada dalam database
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors([
+                'current_password' => 'The current password is incorrect.',
+            ]);
+        }
+    
+        $user->update([
+            'password' => Hash::make($request->password),
         ]);
-
+    
         // hasil respon ada di signin-methods.js
         return back();
     }

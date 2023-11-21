@@ -50,7 +50,7 @@
                                         <td class="align-items-center ps-2">{{ $loop->iteration }}</td>
                                         <td class="align-items-center ps-2">{{ $status->outlet_id }}</td>
                                         <td class="align-items-center ps-2">{{ $status->nama_outlet }}</td>
-                                        <td class="align-items-center ps-2">{{ $status->invoice_no }}</td>
+                                        <td class="align-items-center ps-2 w-50">{{ $status->invoice_no }}</td>
                                         <td class="align-items-center ps-2">
                                             @if($status->progress == 0)
                                                 <span class="badge" style="background:#809bce;">Order Baru</span>
@@ -68,7 +68,7 @@
                                                 <span class="badge badge-danger">Dibatalkan</span>
                                             @endif
                                         </td>
-                                        <td class="align-items-center w-100">
+                                        <td class="align-items-center w-25">
                                             <a style="color: #525867;" href="detail-order/{{ $status->invoice_no }}"><u>Detail Pembelian</u></a>
                                         </td>
                                         <td class="align-items-center">
@@ -252,10 +252,10 @@
                     .then(function(data) {
                         if (data.status === 'success') {
                             toastr.success(data.message);
-                            // location.reload();
+                            location.reload();
                         } else {
                             toastr.warning(data.message);
-                            // location.reload();
+                            location.reload();
                         }
                     })
                     .catch(function(err) {

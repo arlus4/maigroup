@@ -357,18 +357,27 @@ class RestockController extends Controller
 
                 DB::commit();
     
-                return response()->json(['status' => 'success', 'message' => 'Progress order berhasil diubah.']);
+                return response()->json([
+                    'status'  => 'success', 
+                    'message' => 'Progress order berhasil diubah.'
+                ]);
             } else {
                 DB::rollback();
     
-                return response()->json(['status' => 'error', 'message' => 'Invoice tidak ditemukan'], 404);
+                return response()->json([
+                    'status'  => 'error', 
+                    'message' => 'Invoice tidak ditemukan'
+                ], 404);
             }
         } catch (\Exception $e) {
             DB::rollback();
     
             Log::error($e);
     
-            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return response()->json([
+                'status'  => 'error', 
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
         }
     }
 }

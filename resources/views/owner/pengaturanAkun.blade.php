@@ -102,7 +102,7 @@
 
                         <div class="separator separator-dashed my-6"></div>
                         <div class="d-flex flex-wrap align-items-center mb-10">
-                            <div id="kt_signin_password">
+                            <div id="kt_signin_password" data-password-saat-ini="{{ $dataUser->password }}">
                                 <div class="fs-6 fw-bold mb-1">Password</div>
                                 <div class="fw-semibold text-gray-600">************</div>
                             </div>

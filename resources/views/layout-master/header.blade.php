@@ -38,14 +38,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="separator my-2"></div>
+                                <!-- <div class="separator my-2"></div>
                                 <div class="menu-item px-5">
                                     <a href="javascript:;" class="menu-link px-5">Lihat Profil</a>
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-5 my-1">
                                     <a href="javascript:;" class="menu-link px-5">Pengaturan Akun</a>
-                                </div>
+                                </div> -->
                                 <div class="menu-item px-5">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
