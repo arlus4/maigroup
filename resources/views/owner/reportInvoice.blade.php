@@ -19,7 +19,6 @@
                                     <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-100px text-dark">No</th>
                                         <th class="min-w-100px text-dark">ID Outlet</th>
-                                        <th class="min-w-100px text-dark">Kategori</th>
                                         <th class="min-w-100px text-dark">No Invoice</th>
                                         <th class="min-w-100px text-dark">Status</th>
                                         <th class="min-w-100px text-dark">Detail</th>
@@ -30,9 +29,6 @@
                                         <tr>
                                             <td class="align-items-center ps-2">{{ $loop->iteration }}</td>
                                             <td class="align-items-center ps-2">{{ $invoice->outlet_id }}</td>
-                                            <td class="align-items-center">
-                                                <span class="badge badge-secondary">{{ $invoice->project_name }}</span>
-                                            </td>
                                             <td class="align-items-center ps-2">{{ $invoice->invoice_no }}</td>
                                             <td class="align-items-center ps-2">
                                                 @if($invoice->progress == 0)

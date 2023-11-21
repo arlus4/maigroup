@@ -30,6 +30,7 @@ class Admin_BankController extends Controller
 
     public function storeOrUpdate(Request $request)
     {
+        // dd($request->all());
         try {
             DB::beginTransaction(); // Begin Transaction
 
@@ -57,7 +58,9 @@ class Admin_BankController extends Controller
                 $imagePath = null;
             }
 
-            Ref_Bank::create([
+            Ref_Bank::updateOrCreate([
+                'id'                => $request->idBank,
+            ],[
                 'nama_bank'         => $request->nama_bank,
                 'nomor_rekening'    => $request->nomor_rekening,
                 'icon_bank'         => $imageName,
@@ -68,7 +71,7 @@ class Admin_BankController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Berhasil Menambah Bank!'
+                'message' => 'Berhasil Menambah/Mengubah Bank!'
             ]);
 
         } catch (\Exception $e) {

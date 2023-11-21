@@ -96,15 +96,15 @@
                     <div class="form-group mb-3">
                         <input type="hidden" name="idBank" id="idBank">
                         <label style="color: #31353B!important;font-weight: 600;">Nama Bank</label>
-                        <input type="text" name="nama_bank" class="form-control nama_bank" id="nama_bank" placeholder="Input Nama Bank">
+                        <input type="text" name="nama_bank" class="form-control nama_bank" id="nama_bank" placeholder="Input Nama Bank" required>
                     </div>
                     <div class="form-group mb-3">
                         <label style="color: #31353B!important;font-weight: 600;">No. Rekening</label>
-                        <input type="text" name="nomor_rekening" class="form-control nomor_rekening" id="nomor_rekening" placeholder="Input Nomor Rekening">
+                        <input type="text" name="nomor_rekening" class="form-control nomor_rekening" id="nomor_rekening" placeholder="Input Nomor Rekening" required>
                     </div>
                     <div class="form-group mb-3">
                         <label style="color: #31353B!important;font-weight: 600;">Icon Bank</label>
-                        <input type="file" name="icon_bank" class="form-control icon_bank" id="icon_bank">
+                        <input type="file" name="icon_bank" class="form-control icon_bank" id="icon_bank" accept=".png, .jpg, .jpeg" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -145,6 +145,7 @@
         });
 
         function addData(){
+            $('#idBank').val('');
             $('#modal_add').modal('show');
             $('#modal-title').text('Tambah Bank');
             $('#nama_bank').val('');
@@ -163,7 +164,7 @@
                 },
                 success: function(data) {
                     var linkInfo = "{{ asset('storage/icon_bank') }}"
-                    $('#gambarKategori').val('');
+                    $('#idBank').val(data.id);
                     $('#modal_add').modal('show');
                     $('#modal-title').text('Edit Data Bank');
                     $('#nama_bank').val(data.nama_bank);
