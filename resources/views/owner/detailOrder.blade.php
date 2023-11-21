@@ -213,7 +213,9 @@
                             </div>
                             <!-- end::Actions-->
                             <!-- begin::Action-->
-                            <button type="button" onclick="window.location.href='/owner/download-invoice/{{ $data->invoice_no }}'" class="btn btn-success my-1 me-12">Download</button>
+                            @if ($data->total != null)
+                                <button type="button" onclick="window.location.href='/owner/download-invoice/{{ $data->invoice_no }}'" class="btn btn-success my-1 me-12">Download</button>
+                            @endif
                             <!-- end::Action-->
                         </div>
                         <!-- end::Footer-->

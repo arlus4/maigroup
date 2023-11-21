@@ -256,6 +256,7 @@ class RestockController extends Controller
             'invoice_master_seller.amount',
             'invoice_master_seller.date_created',
             'invoice_master_seller.ongkir',
+            'invoice_master_seller.kode_unik',
             'invoice_master_seller.total',
             
             'outlets.id as idOutlets',
