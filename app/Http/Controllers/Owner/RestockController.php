@@ -240,6 +240,7 @@ class RestockController extends Controller
             )
             ->leftJoin('outlets','invoice_master_seller.outlet_id','=','outlets.outlet_id')
             ->where('invoice_master_seller.outlet_id', Auth::user()->outlet_id)
+            ->whereIn('invoice_master_seller.progress', ['0', '1', '2', '3', '4'])
             ->get();
 
         return view('owner.statusRestock', compact('getStatus'));
