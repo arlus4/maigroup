@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice_Detail_Seller;
 use App\Models\Invoice_Master_Seller;
+use App\Models\Invoice_Pengiriman_Seller;
+use App\Models\Konfirmasi_Pembayaran;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 
@@ -375,8 +377,9 @@ class Admin_OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_approve_order($invoice)
+    public function store_approve_order(Request $request, $invoice)
     {
+        // dd($invoice, $request->all());
         try {
             DB::beginTransaction(); // Begin Transaction
             
@@ -384,6 +387,15 @@ class Admin_OrderController extends Controller
 
             $data->update([
                 'progress' => '4',
+            ]);
+
+            Invoice_Pengiriman_Seller::create([
+                'invoice_no'            => $invoice,
+                'nama_ekspedisi'        => $request->nama_ekspedisi,
+                'no_resi'               => $request->no_resi,
+                'status'                => '1',
+                'tanggal_pengiriman'    => $request->tanggal_pengiriman,
+                'date_created'          => Carbon::now()->timezone('Asia/Jakarta'),
             ]);
 
             DB::commit(); // Commit the transaction
@@ -491,6 +503,7 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.date_created',
             'invoice_master_seller.ongkir',
             'invoice_master_seller.total',
+            'invoice_master_seller.progress',
             'invoice_master_seller.kode_unik',
             
             'outlets.id as idOutlets',
@@ -536,14 +549,49 @@ class Admin_OrderController extends Controller
         ->where('invoice_detail_seller.invoice_no', $invoice)
         ->get();
 
+        $konfirmasi = Konfirmasi_Pembayaran::select(
+            'konfirmasi_pembayarans.outlet_id',
+            'konfirmasi_pembayarans.invoice_no',
+            'konfirmasi_pembayarans.asal_rekening_pembayaran',
+            'konfirmasi_pembayarans.nama_pemilik_rekening_pembayaran',
+            'konfirmasi_pembayarans.jumlah_pembayaran',
+            'konfirmasi_pembayarans.bukti_pembayaran',
+            'konfirmasi_pembayarans.path_bukti_pembayaran',
+            'konfirmasi_pembayarans.date_created',
+
+            'ref_bank.nama_bank',
+            'ref_bank.icon_bank',
+            'ref_bank.path_icon_bank'
+        )
+        ->leftjoin('ref_bank', 'konfirmasi_pembayarans.id_ref_bank_maigroup', '=', 'ref_bank.id')
+        ->where('invoice_no', $invoice)
+        ->first();
+
+        $shipping = Invoice_Pengiriman_Seller::select(
+            'invoice_no',
+            'nama_ekspedisi',
+            'no_resi',
+            'tanggal_pengiriman'
+        )
+        ->where('invoice_no', $invoice)
+        ->first();
+
+        if (!$konfirmasi) {
+            return view('master.order.invoiceOrder', [
+                'data' => $data,
+                'details' => $detail
+            ]);
+        }
+
         if (!$detail) {
             redirect()->back()->with('error', 'Tidak Ada Detail');
         }
 
-        // return response()->json($data);
-        return view('master.order.invoiceOrder', [
+        return view('master.order.summaryInvoice', [
             'data' => $data,
-            'details' => $detail
+            'details' => $detail,
+            'shipping' => $shipping,
+            'konfirmasi' => $konfirmasi,
         ]);
     }
 

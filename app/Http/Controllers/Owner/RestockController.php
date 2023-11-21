@@ -74,38 +74,41 @@ class RestockController extends Controller
             $date               = date('Ymd');
             $randomNumberPart   = str_pad(mt_rand(0, 99999999), 8, "0", STR_PAD_LEFT); // 8 karakter
             $no_invoice         = 'MAI-' . $date . $randomNumberPart;
-
+            
             // Menyiapkan data paket berdasarkan plan
             $planData = [];
             if ($request->plan == 'startup') {
                 $planData[] = [
-                    'sku_id' => 'PA1', 
-                    'qty' => '25', 
-                    'amount' => '25000',
-                    'id_produk' => '01',
-                    'project_name' => null,
-                    'id_project' => null,
-                    'harga_satuan' => null
+                    'sku_id'        => 'PA1', 
+                    'qty'           => '25', 
+                    'amount'        => '25000',
+                    'id_produk'     => '01',
+                    'project_name'  => null,
+                    'id_project'    => null,
+                    'harga_satuan'  => null,
+                    'is_paket'      => '1'
                 ];
             } elseif ($request->plan == 'advanced') {
                 $planData[] = [
-                    'sku_id' => 'PA2', 
-                    'qty' => '50', 
-                    'amount' => '50000',
-                    'id_produk' => '02',
-                    'project_name' => null,
-                    'id_project' => null,
-                    'harga_satuan' => null
+                    'sku_id'        => 'PA2', 
+                    'qty'           => '50', 
+                    'amount'        => '50000',
+                    'id_produk'     => '02',
+                    'project_name'  => null,
+                    'id_project'    => null,
+                    'harga_satuan'  => null,
+                    'is_paket'      => '1'
                 ];
             } elseif ($request->plan == 'custom') {
                 $planData[] = [
-                    'sku_id' => 'PA3', 
-                    'qty' => $request->qtyPaket, 
-                    'amount' => null,
-                    'id_produk' => '03',
-                    'project_name' => null,
-                    'id_project' => null,
-                    'harga_satuan' => null
+                    'sku_id'        => 'PA3', 
+                    'qty'           => $request->qtyPaket, 
+                    'amount'        => null,
+                    'id_produk'     => '03',
+                    'project_name'  => null,
+                    'id_project'    => null,
+                    'harga_satuan'  => null,
+                    'is_paket'      => '1'
                 ];
             }
             
@@ -145,6 +148,7 @@ class RestockController extends Controller
                         'total_amount'  => $amount,
                         'date_created'  => Carbon::now()->timezone('Asia/Jakarta'),
                         'project_id'    => $detail['id_project'],
+                        'is_paket'      => $detail['is_paket'] ?? '0'
                     ]);
                 }
             }
@@ -173,7 +177,8 @@ class RestockController extends Controller
         return response()->json($invoice);
     }
 
-    public function storeKonfPembayaran(Request $request){
+    public function storeKonfPembayaran(Request $request)
+    {
         try {
             DB::beginTransaction(); // Begin Transaction
 
@@ -187,9 +192,9 @@ class RestockController extends Controller
 
             if ($request->hasFile('bukti_pembayaran')) {
                 $request->validate([
-                    'bukti_pembayaran' => 'required|mimes:jpeg,png,jpg,gif',
+                    'bukti_pembayaran' => 'required|mimes:jpeg,png,jpg,pdf',
                 ], [
-                    'bukti_pembayaran.mimes' => 'Format file exception harus berupa JPG, JPEG, atau PNG.',
+                    'bukti_pembayaran.mimes' => 'Format Bukti Pembayaran harus berupa JPG, JPEG, PNG, atau PDF.',
                 ]);
 
                 $imageName = Str::random(10) . '_' . $request->bukti_pembayaran->getClientOriginalName();

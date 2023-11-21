@@ -40,7 +40,7 @@
                                                 @elseif($invoice->progress == 1)
                                                     <span class="badge" style="background:#fcb75d;">Menunggu Pembayaran</span>
                                                 @elseif($invoice->progress == 2)
-                                                    <span class="badge" style="background:#7fd8be;">Pembayaran Diterima</span>
+                                                    <span class="badge" style="background:#7fd8be;">Menunggu Approval</span>
                                                 @elseif($invoice->progress == 3)
                                                     <span class="badge" style="background:#957fef;">Approve</span>
                                                 @elseif($invoice->progress == 4)

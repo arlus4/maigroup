@@ -57,7 +57,7 @@
                                             @elseif($status->progress == 1)
                                                 <span class="badge" style="background:#fcb75d;">Menunggu Pembayaran</span>
                                             @elseif($status->progress == 2)
-                                                <span class="badge" style="background:#7fd8be;">Pembayaran Diterima</span>
+                                                <span class="badge" style="background:#7fd8be;">Menunggu Approval</span>
                                             @elseif($status->progress == 3)
                                                 <span class="badge" style="background:#957fef;">Approve</span>
                                             @elseif($status->progress == 4)

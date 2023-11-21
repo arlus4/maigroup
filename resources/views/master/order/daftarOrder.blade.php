@@ -216,10 +216,22 @@
                                     <!--begin::Col-->
                                     <input type="hidden" name="invoice_number" id="invoice_number">
                                     <div class="col-md-12 fv-row" >
+                                        <strong><p style="text-align: center;">Mohon Periksa Kembali Pesanan yang dibuat</p></strong> 
                                         <span style="font-size: 15px">
-                                            <strong><p style="text-align: center;">Mohon Periksa Kembali Pesanan yang dibuat</p></strong> 
-                                            Apakah Anda yakin untuk Mengirim Pesanan dengan nomor invoice <span id="invoice_nomor"></span>?
+                                            <p style="text-align: center;">Apakah Anda yakin untuk Mengirim Pesanan dengan nomor invoice <span id="invoice_nomor"></span>?</p>
                                         </span>
+                                        <div class="mb-10 fv-row">
+                                            <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Nomor Resi</label>
+                                            <input type="text" name="no_resi" class="form-control mb-2" required>
+                                        </div>
+                                        <div class="mb-10 fv-row">
+                                            <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Nama Ekspedisi</label>
+                                            <input type="text" name="nama_ekspedisi" class="form-control mb-2" required>
+                                        </div>
+                                        <div class="mb-10 fv-row">
+                                            <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Tanggal Pengiriman</label>
+                                            <input type="date" name="tanggal_pengiriman" class="form-control mb-2" id="tanggal_pengiriman" required>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="text-center">

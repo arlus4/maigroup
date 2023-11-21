@@ -142,7 +142,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="mb-2 mt-2">Upload Bukti Pembayaran</label>
-                                                        <input type="file" name="bukti_pembayaran" class="form-control bukti_pembayaran" required>
+                                                        <input type="file" name="bukti_pembayaran" class="form-control bukti_pembayaran" accept=".png, .jpg, .jpeg, .pdf" required>
                                                     </div>
                                                     <div class="mt-4">
                                                         <div class="d-flex justify-content-end">
