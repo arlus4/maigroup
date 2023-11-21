@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Outlet;
 use App\Models\Ref_Produk;
 use App\Models\Ref_Project;
+use App\Models\Ref_Bank;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ref_KuotaPoint;
@@ -164,12 +165,14 @@ class RestockController extends Controller
     }
 
     public function konfPembayaran(){
-        $getInvoice = Invoice_Master_Seller::select('outlet_id','invoice_no','progress')
-            ->where('outlet_id', Auth::user()->outlet_id)
-            ->where('progress', 1)
-            ->get();
+        $getInvoice       = Invoice_Master_Seller::select('outlet_id','invoice_no','progress')
+                            ->where('outlet_id', Auth::user()->outlet_id)
+                            ->where('progress', 1)
+                            ->get();
+        
+        $getBankTujuan    = Ref_Bank::select('id', 'nama_bank', 'path_icon_bank')->get();
 
-        return view('owner.konfPembayaran', compact('getInvoice'));
+        return view('owner.konfPembayaran', compact('getInvoice', 'getBankTujuan'));
     }
 
     public function cekDataInvoice($noInvoice){
@@ -185,6 +188,7 @@ class RestockController extends Controller
             $request->validate([
                 'outlet_id'                         => 'required',
                 'invoice_no'                        => 'required',
+                'bank_maigroup'                     => 'required',
                 'asal_rekening_bank'                => 'required',
                 'nama_pemilik_rekening_pembayaran'  => 'required',
                 'bukti_pembayaran'                  => 'required'
@@ -210,6 +214,7 @@ class RestockController extends Controller
             $master = Konfirmasi_Pembayaran::create([
                 'outlet_id'                         => $request->outlet_id,
                 'invoice_no'                        => $request->invoice_no,
+                'id_ref_bank_maigroup'              => $request->bank_maigroup,
                 'asal_rekening_pembayaran'          => $request->asal_rekening_bank,
                 'nama_pemilik_rekening_pembayaran'  => $request->nama_pemilik_rekening_pembayaran,
                 'jumlah_pembayaran'                 => $request->jumlah_pembayaran,

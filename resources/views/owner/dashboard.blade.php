@@ -9,7 +9,7 @@
     <div class="d-flex flex-column flex-column-fluid">
         <div class="app-toolbar py-3 py-lg-6">
             <div class="app-container container-fluid d-flex flex-stack">
-                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                <div class="page-title d-flex flex-column justify-content-center me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Dasbor</h1>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="page-title d-flex flex-column justify-content-center flex-wrap mt-5">
+                <div class="page-title d-flex flex-column justify-content-center mt-5">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0 mb-5">Report Stock</h1>
                     <div class="card p-3" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                         <div class="card-body p-4">

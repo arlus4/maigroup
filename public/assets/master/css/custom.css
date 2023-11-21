@@ -12,6 +12,12 @@
         width: 100%!important;
         padding: 5px!important;
     }
+    .dataTables_length{
+        text-align: left!important;
+    }
+    .dataTables_filter{
+        text-align: left!important;
+    }
 }
 @media screen and (max-width: 350px) {
     .css-xcvf6ga .css-xcvf6gb{
@@ -26,6 +32,12 @@
         font-size: 12px!important;
         width: 100%!important;
         padding: 5px!important;
+    }
+    .dataTables_length{
+        text-align: left!important;
+    }
+    .dataTables_filter{
+        text-align: left!important;
     }
 }
 @media screen and (min-width: 310px) and (max-width: 340px) {
@@ -44,6 +56,12 @@
         width: 100%!important;
         padding: 5px!important;
         line-height: 20px!important;
+    }
+    .dataTables_length{
+        text-align: left!important;
+    }
+    .dataTables_filter{
+        text-align: left!important;
     }
 }
 .content-header{

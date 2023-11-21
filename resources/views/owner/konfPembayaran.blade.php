@@ -82,13 +82,11 @@
                                                     </div>
                                                     <label class="mb-2 mt-2">Pilih Bank Tujuan</label>
                                                     <div class="form-floating border rounded" style="border: 1px solid #E4E6EF!important;">
-                                                        <select class="form-select form-select-transparent" placeholder="-- Pilih Bank --" id="kt_docs_select2_country">
+                                                        <select class="form-select form-select-transparent" name="bank_maigroup" placeholder="-- Pilih Bank --" id="kt_docs_select2_country">
                                                             <option></option>
-                                                            <option value="bca" data-kt-select2-country="{{ asset('assets/images/logo_bca.png') }}">BCA</option>
-                                                            <option value="bri" data-kt-select2-country="{{ asset('assets/images/logo_bri.png') }}">BRI</option>
-                                                            <option value="bni" data-kt-select2-country="{{ asset('assets/images/logo_bni.png') }}">BNI</option>
-                                                            <option value="mandiri" data-kt-select2-country="{{ asset('assets/images/logo_mandiri.png') }}">Mandiri</option>
-                                                            <option value="cimb_niaga" data-kt-select2-country="{{ asset('assets/images/logo_niaga.png') }}">Cimb Niaga</option>
+                                                            @foreach($getBankTujuan as $val)
+                                                                <option value="{{ $val->id }}" data-kt-select2-country="{{ asset(''.$val->path_icon_bank) }}">{{ $val->nama_bank }}</option>
+                                                            @endforeach
                                                         </select>
                                                         <label for="kt_docs_select2_country">-- PIlih Bank Tujuan --</label>
                                                     </div>
@@ -135,7 +133,7 @@
                                                                     <span class="input-group-text" id="basic-addon1">
                                                                         <i class="fas fa-rupiah-sign"></i>
                                                                     </span>
-                                                                    <input type="text" class="form-control" id="nominalTF" name="jumlah_pembayaran" placeholder="Masukkan nomimal yang akan ditransfer" aria-describedby="basic-addon1" required>
+                                                                    <input type="text" class="form-control" id="nominalTF" name="jumlah_pembayaran" placeholder="Masukkan nomimal yang ditransfer" aria-describedby="basic-addon1" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,9 +144,9 @@
                                                     </div>
                                                     <div class="mt-4">
                                                         <div class="d-flex justify-content-end">
-                                                            <button type="submit" class="css-dn4naopi">
+                                                            <button type="submit" class="css-dn4naopi" style="width: auto">
                                                                 <i class="fas fa-check-circle text-white"></i>
-                                                                Bayar Sekarang
+                                                                Unggah Bukti Pembayaran
                                                             </button>
                                                         </div>
                                                     </div>
@@ -308,8 +306,8 @@
                     return item.text;
                 }
 
-                var span = document.createElement('span');
-                var imgUrl = item.element.getAttribute('data-kt-select2-country');
+                var span     = document.createElement('span');
+                var imgUrl   = item.element.getAttribute('data-kt-select2-country');
                 var template = '';
 
                 template += '<img src="' + imgUrl + '" class="rounded-circle h-20px me-2" alt="image"/>';

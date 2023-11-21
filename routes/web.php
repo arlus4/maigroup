@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Project_ProductController;
+use App\Http\Controllers\Admin\Admin_BankController;
+
 use App\Http\Controllers\Owner\ClaimBonusController;
 use App\Http\Controllers\Owner\DashboardController;
 use App\Http\Controllers\Owner\POSController;
@@ -125,6 +127,12 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/artikel/update_artikel/{artikel}', [Admin_ArtikelController::class, 'update'])->name('admin_update_artikel');
         Route::post('/artikel/destroy_artikel/{artikel}', [Admin_ArtikelController::class, 'destroy'])->name('admin_destroy_artikel');
         Route::post('/artikel/destroy_image_artikel/{artikel_image}', [Admin_ArtikelController::class, 'destroy_image'])->name('admin_destroy_image_artikel');
+
+        //Bank
+        Route::get('/bank', [Admin_BankController::class, 'index'])->name('admin_bank');
+        Route::post('/storeUpdate_bank', [Admin_BankController::class, 'storeOrUpdate'])->name('admin_store_update_bank');
+        Route::get('/edit_bank', [Admin_BankController::class, 'edit'])->name('admin_edit_bank');
+        Route::post('/destroy_bank', [Admin_BankController::class, 'destroy'])->name('admin_destroy_bank');
     });
 });
 

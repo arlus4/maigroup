@@ -136,10 +136,11 @@
             }
 
             function updateButtonStatus() {
-                var jumlahBaris = $('.table tbody tr').length;
-                var inputanNoHp = $('#inputNoHp').val().trim();
+                var jumlahBaris         = $('.table tbody tr').length;
+                var inputanNoHp         = $('#inputNoHp').val().trim();
+                var inputanIdPelanggan  = $('#inputIdPembeli').val().trim();
 
-                if (jumlahBaris > 0 && inputanNoHp !== '') {
+                if (jumlahBaris > 0 && (inputanNoHp !== '' || inputanIdPelanggan !== '')) {
                     $('#btnOrder').prop('disabled', false)
                         .css({
                             'background-color': '#039344',
@@ -301,14 +302,15 @@
             });
 
             $('#inputNoHp').on('input', updateButtonStatus);
+            $('#inputIdPembeli').on('input', updateButtonStatus);
 
             $(document).on('click', '.btn-number, .fas.fa-times', function() {
                 updateButtonStatus();
             });
 
-            // Debouncing nomor telfon
-            $('#inputNoHp').on('keyup', _.throttle(function() {
-                var query       = $(this).val();
+            // Awal Menggunakan debouncing pada input No HP
+            var handleSearchNoHp = _.debounce(function() {
+                var query       = $('#inputNoHp').val();
                 var nomorHpList = $('#nomorHpList');
 
                 nomorHpList.empty();
@@ -329,14 +331,24 @@
                             });
                         },
                         error: function(xhr, status, error) {
-                            console.log(error);
+                            console.log("Error saat pencarian:", error);
                         }
                     });
                 }
-            }, 300));
+            }, 300);
 
-            // Debouncing pembeli id
-            $('#inputIdPembeli').on('keyup', _.throttle(function() {
+            $('#inputNoHp').on('input', handleSearchNoHp);
+
+            $('#nomorHpList').on('click', 'li', function() {
+                var value = $(this).text();
+                $('#inputNoHp').val(value);
+                $('#nomorHpList').html('');
+            });
+            // Akhir Menggunakan debouncing pada input No HP
+
+
+            // Awal Menggunakan debouncing pada input Id Pelanggan
+            var handleSearchIdPelanggan = _.debounce(function() {
                 var query       = $(this).val();
                 var idPembeliList = $('#idPembeliList');
 
@@ -358,17 +370,20 @@
                             });
                         },
                         error: function(xhr, status, error) {
-                            console.log(error);
+                            console.log("Error saat pencarian:", error);
                         }
                     });
                 }
-            }, 300));
+            }, 300);
+
+            $('#inputIdPembeli').on('input', handleSearchIdPelanggan);
         
-            $('#nomorHpList').on('click', 'li', function() {
+            $('#idPembeliList').on('click', 'li', function() {
                 var value = $(this).text();
-                $('#inputNoHp').val(value);
-                $('#nomorHpList').html(''); // Mengosongkan list setelah seleksi
+                $('#inputIdPembeli').val(value);
+                $('#idPembeliList').html('');
             });
+            // Akhir Menggunakan debouncing pada input Id Pelanggan
 
             $('#btnOrder').on('click', function() {
                 var totalHarga          = updateTotalHarga();

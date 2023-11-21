@@ -144,7 +144,7 @@
                </div> 
             </div>
             <div class="modal-footer">
-                    <button type="button" id="close-button" class="css-ca2jq0s" style="width: 80px;" data-bs-dismiss="modal">Batalkan</button>
+                    <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">Batalkan</button>
                     <button type="submit" id="simpan-button" class="css-kl2kd9a">Simpan</button>
                 </form>
             </div>
