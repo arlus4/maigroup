@@ -26,7 +26,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-				<form action="{{ route('owner.owner_store_restock_order') }}" method="post" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row">
+				<form action="{{ route('owner.owner_store_restock_order') }}" method="POST" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row">
 					@csrf
 					<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
 						<div class="tab-content">
@@ -42,10 +42,9 @@
                                         <div class="card-body py-0">
                                             <div class="d-flex flex-column">
 												<div class="mb-13 text-center">
-													<div class="text-gray-400 fw-semibold fs-6">
-                                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non itaque tenetur dolor minus, mollitia a dicta laudantium exercitationem asperiores eos.
-                                                        {{-- <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a> --}}
-                                                        <a href="#" class="link-primary fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a>
+													<div class="text-gray-900 fw-semibold fs-6">
+                                                        Pilih Paket Sesuai Kebutuhan Outlet Anda, untuk detail Paket Silahkan 
+                                                        <a href="#" class="link-primary fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Klik Disini</a>
                                                     </div>
 												</div>
                                                 <div class="row g-10">
@@ -58,25 +57,9 @@
                                                                             <input class="form-check-input" type="radio" name="plan" value="startup"/>
                                                                         </div>
                                                                         <div class="flex-grow-1">
-                                                                            <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Startup</h3>
-                                                                            <div class="fw-semibold fs-7 opacity-50">Lorem, ipsum dolor.</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="ms-5">
-                                                                        <span class="mb-2">Rp.</span>
-                                                                        <span class="fs-2 fw-bold">25.000</span> <br>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-6 mb-5">
-                                                                    <div class="d-flex align-items-center me-2">
-                                                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
-                                                                            <input class="form-check-input" type="radio" name="plan" value="advanced"/>
-                                                                        </div>
-                                                                        <div class="flex-grow-1">
-                                                                            <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Advanced</h3>
-                                                                            <div class="fw-semibold fs-7 opacity-50">Lorem, ipsum dolor.</div>
+                                                                            <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Paket 25</h3>
+                                                                            <div class="fw-semibold fs-7 opacity-50">Paket Jualan 25 Cup</div>
+                                                                            <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a>
                                                                         </div>
                                                                     </div>
                                                                     <div class="ms-5">
@@ -89,11 +72,30 @@
                                                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-6 mb-5">
                                                                     <div class="d-flex align-items-center me-2">
                                                                         <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
+                                                                            <input class="form-check-input" type="radio" name="plan" value="advanced"/>
+                                                                        </div>
+                                                                        <div class="flex-grow-1">
+                                                                            <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Paket 50</h3>
+                                                                            <div class="fw-semibold fs-7 opacity-50">Paket Jualan 50 Cup</div>
+                                                                            <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ms-5">
+                                                                        <span class="mb-2">Rp.</span>
+                                                                        <span class="fs-2 fw-bold">98.000</span> <br>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-6 mb-5">
+                                                                    <div class="d-flex align-items-center me-2">
+                                                                        <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
                                                                             <input class="form-check-input" type="radio" name="plan" value="custom" id="custom" />
                                                                         </div>
                                                                         <div class="flex-grow-1">
-                                                                            <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Custom</h3>
-                                                                            <div class="fw-semibold fs-7 opacity-50">Lorem ipsum dolor sit.</div>
+                                                                            <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Paket Juragan</h3>
+                                                                            <div class="fw-semibold fs-7 opacity-50">Paket Jualan Lebih dari 50 Cup</div>
+                                                                            <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a>
                                                                         </div>
                                                                     </div>
                                                                 </label>
@@ -211,14 +213,15 @@
 						</div>
 						<div class="d-flex justify-content-end">
 							<a id="kt_ecommerce_add_product_cancel" class="css-ca2jq0s">Batalkan</a>
-							<button type="submit" class="css-kl2kd9a">Simpan</button>
+							<button type="submit" class="css-kl2kd9a" id="simpan">Simpan</button>
 						</div>
 					</div>
 				</form>
+
                 <!--begin::Modal - Upgrade plan-->
                 <div class="modal fade" id="kt_modal_upgrade_plan" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
-                    <div class="modal-dialog modal-xl">
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
                         <!--begin::Modal content-->
                         <div class="modal-content rounded">
                             <!--begin::Modal header-->
@@ -241,7 +244,7 @@
                             <div class="modal-body pt-0 pb-15 px-5 px-xl-20">
                                 <!--begin::Heading-->
                                 <div class="mb-8 text-center">
-                                    <h1 class="mb-3">Detail Pengelolaan Paket</h1>
+                                    <h1 class="mb-3">Detail Paket</h1>
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Plans-->
@@ -263,8 +266,8 @@
                                                         <!--end::Radio-->
                                                         <!--begin::Info-->
                                                         <div class="flex-grow-1">
-                                                            <div class="d-flex align-items-center fs-2 fw-bold flex-wrap">Startup</div>
-                                                            <div class="fw-semibold opacity-75">Lorem, ipsum dolor.</div>
+                                                            <div class="d-flex align-items-center fs-2 fw-bold flex-wrap">Paket 25</div>
+                                                            <div class="fw-semibold opacity-75">Paket Jualan 25 Cup</div>
                                                         </div>
                                                         <!--end::Info-->
                                                     </div>
@@ -272,7 +275,7 @@
                                                     <!--begin::Price-->
                                                     <div class="ms-5">
                                                         <span class="mb-2">Rp.</span>
-                                                        <span class="fs-2x fw-bold">25.000</span>
+                                                        <span class="fs-2x fw-bold">50.000</span>
                                                     </div>
                                                     <!--end::Price-->
                                                 </label>
@@ -288,8 +291,8 @@
                                                         <!--end::Radio-->
                                                         <!--begin::Info-->
                                                         <div class="flex-grow-1">
-                                                            <div class="d-flex align-items-center fs-2 fw-bold flex-wrap">Advanced</div>
-                                                            <div class="fw-semibold opacity-75">Lorem, ipsum dolor.</div>
+                                                            <div class="d-flex align-items-center fs-2 fw-bold flex-wrap">Paket 50</div>
+                                                            <div class="fw-semibold opacity-75">Paket Jualan 50 Cup</div>
                                                         </div>
                                                         <!--end::Info-->
                                                     </div>
@@ -297,7 +300,7 @@
                                                     <!--begin::Price-->
                                                     <div class="ms-5">
                                                         <span class="mb-2">Rp.</span>
-                                                        <span class="fs-2x fw-bold">50.000</span>
+                                                        <span class="fs-2x fw-bold">98.000</span>
                                                     </div>
                                                     <!--end::Price-->
                                                 </label>
@@ -313,8 +316,8 @@
                                                         <!--end::Radio-->
                                                         <!--begin::Info-->
                                                         <div class="flex-grow-1">
-                                                            <div class="d-flex align-items-center fs-2 fw-bold flex-wrap">Custom</div>
-                                                            <div class="fw-semibold opacity-75">Lorem, ipsum dolor.</div>
+                                                            <div class="d-flex align-items-center fs-2 fw-bold flex-wrap">Paket Juragan</div>
+                                                            <div class="fw-semibold opacity-75">Paket Jualan Lebih dari 50 Cup</div>
                                                         </div>
                                                         <!--end::Info-->
                                                     </div>
@@ -329,19 +332,15 @@
                                         <div class="col-lg-6">
                                             <!--begin::Tab content-->
                                             <div class="tab-content rounded h-100 bg-light p-10">
-                                                <!--begin::Tab Pane-->
+                                                <!--begin::Paket 25-->
                                                 <div class="tab-pane fade show active" id="kt_upgrade_plan_startup">
-                                                    <!--begin::Heading-->
                                                     <div class="pb-5">
-                                                        <h2 class="fw-bold text-dark">What’s in Startup Plan?</h2>
-                                                        <div class="text-muted fw-semibold">Optimal for 10+ team size and new startup</div>
+                                                        <h2 class="fw-bold text-dark">Paket 25</h2>
+                                                        <div class="text-muted fw-semibold">Paket Jualan 25 Cup Terdiri dari :</div>
                                                     </div>
-                                                    <!--end::Heading-->
-                                                    <!--begin::Body-->
                                                     <div class="pt-1">
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Up to 10 Active Users</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 90gr</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -351,10 +350,8 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Up to 30 Project Integrations</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Gula 1kg</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -364,10 +361,8 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Analytics Module</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Cup 22 oz (25 pcs)</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -377,10 +372,41 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-muted flex-grow-1">Finance Module</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Plastik (25 pcs)</span>
+                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
+                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->
+                                                        </div>
+                                                        <div class="d-flex align-items-center mb-7">
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Sedotan (25 pcs)</span>
+                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
+                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->
+                                                        </div>
+                                                        <div class="d-flex align-items-center mb-7">
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Bonus Cup 22 Oz (2 pcs)</span>
+                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
+                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->
+                                                        </div>
+                                                        <div class="d-flex align-items-center mb-7">
+                                                            <span class="fw-semibold fs-5 text-muted flex-grow-1">Tutup Plastik</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
                                                             <span class="svg-icon svg-icon-1">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -391,38 +417,19 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-muted flex-grow-1">Accounting Module</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                            <span class="svg-icon svg-icon-1">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor" />
-                                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Item-->
                                                     </div>
-                                                    <!--end::Body-->
                                                 </div>
-                                                <!--end::Tab Pane-->
-                                                <!--begin::Tab Pane-->
+                                                <!--end::Paket 25-->
+
+                                                <!--begin::Paket 50-->
                                                 <div class="tab-pane fade" id="kt_upgrade_plan_advanced">
-                                                    <!--begin::Heading-->
                                                     <div class="pb-5">
-                                                        <h2 class="fw-bold text-dark">What’s in Startup Plan?</h2>
-                                                        <div class="text-muted fw-semibold">Optimal for 100+ team size and grown company</div>
+                                                        <h2 class="fw-bold text-dark">Paket 50</h2>
+                                                        <div class="text-muted fw-semibold">Paket Jualan 50 Cup Terdiri dari :</div>
                                                     </div>
-                                                    <!--end::Heading-->
-                                                    <!--begin::Body-->
                                                     <div class="pt-1">
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Up to 10 Active Users</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 180gr</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -432,10 +439,8 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Up to 30 Project Integrations</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Gula 2kg</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -445,10 +450,8 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Analytics Module</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Cup 22 oz (50 pcs)</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -458,10 +461,8 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Finance Module</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Plastik (50 pcs)</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -471,10 +472,8 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Accounting Module</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Sedotan (50 pcs)</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -484,38 +483,40 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-muted flex-grow-1">Network Platform</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                            <span class="svg-icon svg-icon-1">
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Bonus Cup 22 Oz (5 pcs)</span>
+                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
+                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor" />
-                                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor" />
+                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
+                                                        <div class="d-flex align-items-center mb-7">
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Tutup Plastik (5 pcs)</span>
+                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
+                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->
+                                                        </div>
                                                     </div>
-                                                    <!--end::Body-->
                                                 </div>
-                                                <!--end::Tab Pane-->
-                                                <!--begin::Tab Pane-->
+                                                <!--end::Paket 50-->
+
+                                                <!--begin::Paket Juragan-->
                                                 <div class="tab-pane fade" id="kt_upgrade_plan_enterprise">
-                                                    <!--begin::Heading-->
                                                     <div class="pb-5">
-                                                        <h2 class="fw-bold text-dark">What’s in Startup Plan?</h2>
-                                                        <div class="text-muted fw-semibold">Optimal for 1000+ team and enterpise</div>
+                                                        <h2 class="fw-bold text-dark">Paket Juragan</h2>
                                                     </div>
-                                                    <!--end::Heading-->
-                                                    <!--begin::Body-->
                                                     <div class="pt-1">
-                                                        <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Up to 10 Active Users</span>
+                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Sesuai Pesanan</span>
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                             <span class="svg-icon svg-icon-1 svg-icon-success">
                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -525,89 +526,9 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Up to 30 Project Integrations</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Analytics Module</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Finance Module</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Accounting Module</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-7">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Network Platform</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center">
-                                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Unlimited Cloud Space</span>
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-                                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Item-->
                                                     </div>
-                                                    <!--end::Body-->
                                                 </div>
-                                                <!--end::Tab Pane-->
+                                                <!--end::Paket Juragan-->
                                             </div>
                                             <!--end::Tab content-->
                                         </div>
@@ -740,6 +661,7 @@
             }
         }
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Fungsi untuk menampilkan atau menyembunyikan form select
@@ -773,6 +695,28 @@
                 });
                 toggleSelect(false);
             });
+        });
+    </script> 
+    
+    {{-- Validasi Button Submit --}}
+    <script>
+        function checkInputs() {
+            var isPaketFilled = $('.card:first .form-check-input:checked').length > 0;
+            var isVarianFilled = false;
+    
+            $('#data_restock_order .form-select, #data_restock_order .form-control').each(function() {
+                if ($(this).val() && $(this).val() !== "0") {
+                    isVarianFilled = true;
+                    return false; // Keluar dari loop jika sudah menemukan input yang terisi
+                }
+            });
+            $("#simpan").prop('disabled', !(isPaketFilled || isVarianFilled));
+        }
+    
+        $(document).ready(function() {
+            checkInputs();
+            $('.card').on('change', '.form-check-input, .form-select, .form-control', checkInputs);
+            $('#data_restock_order').on('change', '.form-select, .form-control', checkInputs);
         });
     </script>
     

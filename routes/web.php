@@ -22,7 +22,8 @@ use App\Http\Controllers\Owner\RestockController;
 use App\Http\Controllers\Owner\ReportInvoiceController;
 use App\Http\Controllers\Owner\AkunSettingController;
 
-Route::get('/', [HomeController::class, 'home']);
+// Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [AuthenticatedSessionController::class, 'create']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);

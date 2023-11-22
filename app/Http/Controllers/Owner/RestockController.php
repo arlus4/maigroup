@@ -67,6 +67,14 @@ class RestockController extends Controller
         try {
             DB::beginTransaction(); // Begin Transaction
 
+            // Cek jika qtyPaket dan semua qty di data_restock_order adalah null
+            if (is_null($request->qtyPaket) && collect($request->data_restock_order)->every(function ($item) {
+                return is_null($item['qty']);
+            })) {
+                // Jika kondisi terpenuhi, kembalikan response atau redirect
+                return back()->with('error', 'Pesanan Tidak Ditemukan. Mohon Lengkapi Pesanan Anda.');
+            }
+
             $request->validate([
                 'outlet_id' => 'required',
             ]);
@@ -239,11 +247,13 @@ class RestockController extends Controller
         return redirect()->back()->with('success', 'Terima kasih atas konfirmasi pembayaran Anda! Kami akan segera melakukan verifikasi dan proses pengiriman barang, <strong>Cek Status invoice</strong> dan pesanan Anda pada halaman <strong>Daftar Pembelian</strong>.');
     }
 
-    public function statusRestock(){
+    public function statusRestock()
+    {
         $getStatus = Invoice_Master_Seller::select(
                 'invoice_master_seller.outlet_id',
                 'invoice_master_seller.invoice_no',
                 'invoice_master_seller.progress',
+                'invoice_master_seller.date_created',
 
                 'outlets.outlet_id',
                 'outlets.nama_outlet'
@@ -325,7 +335,9 @@ class RestockController extends Controller
         ]);
     }
 
-    public function changeProgressOrder($invoice_no) {
+    public function changeProgressOrder($invoice_no) 
+    {
+        dd($invoice_no);
         try {
             DB::beginTransaction();
     
