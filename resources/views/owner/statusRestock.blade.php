@@ -41,6 +41,7 @@
                                     <th class="min-w-100px text-dark">No Invoice</th>
                                     <th class="min-w-100px text-dark">Status</th>
                                     <th class="min-w-100px text-dark">Detail</th>
+                                    <th class="min-w-100px text-dark">Tanggal Pemesanan</th>
                                     <th class="min-w-100px text-dark"></th>
                                 </tr>
                             </thead>
@@ -69,8 +70,11 @@
                                             @endif
                                         </td>
                                         <td class="align-items-center w-25">
-                                            <a style="color: #525867;" href="detail-order/{{ $status->invoice_no }}"><u>Detail Pembelian</u></a>
+                                            <a style="color: #525867;" href="detail-order/{{ $status->invoice_no }}">
+                                                <u>Detail Pembelian</u>
+                                            </a>
                                         </td>
+                                        <td>{{ \Carbon\Carbon::parse($status->date_created)->format('d F Y') }}</td>
                                         <td class="align-items-center">
                                             @if($status->progress == 4)
                                                 <button class="css-btn-konf" onclick="konfirmasiOrder('{{ $status->invoice_no }}')">
