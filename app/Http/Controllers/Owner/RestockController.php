@@ -88,9 +88,9 @@ class RestockController extends Controller
             $planData = [];
             if ($request->plan == 'startup') {
                 $planData[] = [
-                    'sku_id'        => 'PA1', 
+                    'sku_id'        => 'PAKET25', 
                     'qty'           => '25', 
-                    'amount'        => '25000',
+                    'amount'        => '50000',
                     'id_produk'     => '01',
                     'project_name'  => null,
                     'id_project'    => null,
@@ -99,9 +99,9 @@ class RestockController extends Controller
                 ];
             } elseif ($request->plan == 'advanced') {
                 $planData[] = [
-                    'sku_id'        => 'PA2', 
+                    'sku_id'        => 'PAKET50', 
                     'qty'           => '50', 
-                    'amount'        => '50000',
+                    'amount'        => '98000',
                     'id_produk'     => '02',
                     'project_name'  => null,
                     'id_project'    => null,
@@ -110,7 +110,7 @@ class RestockController extends Controller
                 ];
             } elseif ($request->plan == 'custom') {
                 $planData[] = [
-                    'sku_id'        => 'PA3', 
+                    'sku_id'        => 'PAKETAGAN', 
                     'qty'           => $request->qtyPaket, 
                     'amount'        => null,
                     'id_produk'     => '03',
@@ -337,43 +337,53 @@ class RestockController extends Controller
 
     public function changeProgressOrder($invoice_no) 
     {
-        dd($invoice_no);
         try {
             DB::beginTransaction();
-    
-            $invoice  = Invoice_Master_Seller::where('invoice_no', $invoice_no)->first();
-            $dataJoin = Invoice_Master_Seller::select(
-                    'invoice_master_seller.outlet_id',
-                    'invoice_master_seller.invoice_no',
-
-                    'invoice_detail_seller.sku_id',
-                    'invoice_detail_seller.qty',
-
-                    'ref_produks.id',
-                    'ref_produks.project_id'
-                )
-                ->leftJoin('invoice_detail_seller','invoice_master_seller.invoice_no','=','invoice_detail_seller.invoice_no')
-                ->leftJoin('ref_produks','invoice_detail_seller.sku_id','=','ref_produks.sku')
-                ->where('invoice_detail_seller.invoice_no', $invoice->invoice_no)
-                ->get();
             
+            $invoice  = Invoice_Master_Seller::where('invoice_no', $invoice_no)->first();
+        
+            $invoice->update([
+                'progress' => '5',
+            ]);
+
             if ($invoice) {
-                $invoice->update([
-                    'progress' => '5',
-                ]);
- 
+                // get kouta point
+                $kouta_point = Invoice_Detail_Seller::select('qty')->where('invoice_no', $invoice_no)->where('is_paket', '1')->get();
+                $totalQty = $kouta_point->sum('qty');
+                
+                $kuotaPoint = ref_KuotaPoint::where('outlet_id', $invoice->outlet_id)->first();
+                
                 // update ref_kuota_point, berdasarkan outlet_id
-                ref_KuotaPoint::where('outlet_id', $invoice->outlet_id)->update(['kuota_point' => DB::raw('kuota_point + ' . $invoice->qty)]);
+                if ($kuotaPoint) {
+                    $kuotaPoint->update([
+                        'kuota_point' => DB::raw('kuota_point + ' . $totalQty)
+                    ]);
+                }
 
-
-                // update atau insert product_outlet, berdasarkan outlet_id
-                foreach ($dataJoin as $data) {
+                // get varian product
+                $produk_outlet = Invoice_Detail_Seller::select
+                    (
+                        'invoice_detail_seller.sku_id', 
+                        'invoice_detail_seller.qty', 
+                        
+                        'ref_produks.id as produk_id', 
+                        'ref_produks.project_id'
+                    )
+                    ->leftJoin('ref_produks', 'invoice_detail_seller.sku_id', '=', 'ref_produks.sku')
+                    ->where('invoice_no', $invoice_no)
+                    ->where('is_paket', '0')
+                    ->get();
+                
+                foreach ($produk_outlet as $data) {
+                    $jumlah = $data->qty;
+                
+                    // Update atau insert product_outlet, berdasarkan outlet_id dan product_id
                     Product_Outlet::updateOrInsert([
                         'outlet_id'   => $invoice->outlet_id,
-                        'product_id'  => $data->id,
+                        'product_id'  => $data->produk_id,
                     ],[
                         'category_id' => $data->project_id,
-                        'jumlah'      => DB::raw('jumlah + ' . $data->qty),
+                        'jumlah'      => DB::raw('jumlah + ' . $jumlah),
                     ]);
                 }
 
@@ -393,8 +403,6 @@ class RestockController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollback();
-    
-            Log::error($e);
     
             return response()->json([
                 'status'  => 'error', 
