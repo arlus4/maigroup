@@ -66,7 +66,7 @@ class MenuOrderController extends Controller
     public function getNomorHP(Request $request)
     {
         $searchTerm = $request->input('term');
-        $results = User::where('users_type', 1)->where('no_hp', 'like', '%' . $searchTerm . '%')->distinct('no_hp')->pluck('no_hp');
+        $results = DB::select("SELECT no_hp FROM [dbo].[getNomorHP](?)", [$searchTerm]);
         
         return response()->json($results);
     }
@@ -74,7 +74,7 @@ class MenuOrderController extends Controller
     public function getIdPembeli(Request $request)
     {
         $searchTerm = $request->input('term');
-        $results = User::where('users_type', 1)->where('pembeli_id', 'like', '%' . $searchTerm . '%')->distinct('pembeli_id')->pluck('pembeli_id');
+        $results = DB::select("SELECT pembeli_id FROM [dbo].[getIdPembeli](?)", [$searchTerm]);
         
         return response()->json($results);
     }
