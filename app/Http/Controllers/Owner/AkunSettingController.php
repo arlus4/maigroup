@@ -41,7 +41,7 @@ class AkunSettingController extends Controller
             ->where('users_login.username', Auth::user()->username)
             ->first();
 
-            return view('owner.pengaturanAkun', compact('dataUser'));
+            return view('owner.profile.pengaturanAkun', compact('dataUser'));
         } else {
             // Jika nama pengguna tidak cocok, lempar pesan error menggunakan session
             return redirect()->back()->with('toastr_error', 'Halaman tidak ditemukan, 404!');
@@ -94,7 +94,7 @@ class AkunSettingController extends Controller
         $getKelurahan    = ref_Kelurahan::select('kode_kelurahan','kode_kecamatan','nama_kelurahan')->where('kode_kecamatan', $getData->kode_kecamatan)->get();
         $getKodePos      = ref_KodePos::select('kodepos','kode_kelurahan')->where('kode_kelurahan', $getData->kode_kelurahan)->get();
 
-        return view('owner.editProfile', compact('getData','getProvinsi', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
+        return view('owner.profile.editProfile', compact('getData','getProvinsi', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
     }
 
     public function updateProfile(Request $request, $username){

@@ -2,7 +2,7 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 <head>
-		<title>Dashboard MaiTea</title>
+		<title>Dashboard Owner | MaiTea</title>
 		<link rel="shortcut icon" href="{{ asset('assets/images/ic_maitea.png') }}" />
 		<link rel="stylesheet" href="fonts.googleapis.com/css7b91.css?family=Inter:300,400,500,600,700" />
 		<link href="{{ asset('assets/master/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />

@@ -27,7 +27,7 @@ class RestockController extends Controller
         $getProduk      = Ref_Produk::select('id','sku','nama_produk','harga')->get();
         $getKategori    = Ref_Project::select('id','project_name')->get();
 
-        return view('owner.restock',[
+        return view('owner.restock-order.tambahRestock',[
             'title' => 'Restock Order',
         ], compact('getOutlet','getProduk','getKategori'));
     }
@@ -180,7 +180,7 @@ class RestockController extends Controller
         
         $getBankTujuan    = Ref_Bank::select('id', 'nama_bank', 'path_icon_bank')->get();
 
-        return view('owner.konfPembayaran', compact('getInvoice', 'getBankTujuan'));
+        return view('owner.restock-order.konfPembayaran', compact('getInvoice', 'getBankTujuan'));
     }
 
     public function cekDataInvoice($noInvoice){
@@ -263,10 +263,10 @@ class RestockController extends Controller
             ->whereIn('invoice_master_seller.progress', ['0', '1', '2', '3', '4'])
             ->get();
 
-        return view('owner.statusRestock', compact('getStatus'));
+        return view('owner.restock-order.daftarPembelian', compact('getStatus'));
     }
 
-    public function detailOrder($invoice)
+    public function detailPembelian($invoice)
     {
         $data = Invoice_Master_Seller::select
         (
@@ -329,7 +329,7 @@ class RestockController extends Controller
             redirect()->back()->with('error', 'Tidak Ada Detail');
         }
 
-        return view('owner.detailOrder', [
+        return view('owner.restock-order.detailPembelian', [
             'data'     => $data,
             'details'  => $detail
         ]);

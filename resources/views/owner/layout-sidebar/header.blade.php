@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                    <a href="index.html" class="d-lg-none">
+                    <a href="{{ route('owner.dashboard-owner') }}" class="d-lg-none">
                         <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="h-30px" />
                     </a>
                 </div>
@@ -82,7 +82,7 @@
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
             <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
                 <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-                    <a href="index.html">
+                    <a href="{{ route('owner.dashboard-owner') }}">
                         <img alt="Logo" src="{{ asset('assets/images/logo_maitea.png') }}" class="app-sidebar-logo-default" style="height: 55px;" />
                         <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="app-sidebar-logo-minimize" style="height: 38px;"/>
                     </a>
@@ -141,7 +141,7 @@
                                     <span class="menu-title">Restock Order</span>
                                     <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion {{ Request::routeIs('owner.owner_restock') ? 'show' : '' }} || {{ Request::routeIs('owner.owner_status_restock') ? 'show' : '' }} || {{ Request::routeIs('owner.owner_konf_pembayaran_order') ? 'show' : '' }} || {{ Request::routeIs('owner.owner_detail_order') ? 'show' : '' }}">
+                                <div class="menu-sub menu-sub-accordion {{ Request::routeIs('owner.owner_restock') ? 'show' : '' }} || {{ Request::routeIs('owner.owner_status_restock') ? 'show' : '' }} || {{ Request::routeIs('owner.owner_konf_pembayaran_order') ? 'show' : '' }} || {{ Request::routeIs('owner.owner_detail_pembelian') ? 'show' : '' }}">
                                     <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('owner.owner_restock') ? 'active' : '' }}" href="{{ route('owner.owner_restock') }}">
                                             <span class="menu-bullet">
@@ -151,7 +151,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('owner.owner_status_restock') ? 'active' : '' }} || {{ Request::routeIs('owner.owner_detail_order') ? 'active' : '' }}" href="{{ route('owner.owner_status_restock') }}">
+                                        <a class="menu-link {{ Request::routeIs('owner.owner_status_restock') ? 'active' : '' }} || {{ Request::routeIs('owner.owner_detail_pembelian') ? 'active' : '' }}" href="{{ route('owner.owner_status_restock') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -169,7 +169,7 @@
                                 </div>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ Request::routeIs('owner.owner_report_invoice') ? 'active' : '' }}" href="{{ route('owner.owner_report_invoice') }}">
+                                <a class="menu-link {{ Request::routeIs('owner.owner_report_invoice') ? 'active' : '' }} || {{ Request::routeIs('owner.owner_detail_invoice') ? 'active' : '' }}" href="{{ route('owner.owner_report_invoice') }}">
                                     <span class="menu-icon">
                                         <span class="svg-icon svg-icon-2">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MaiTea - Indonesia</title>
+        <title>MaiTea - Nusantara</title>
 
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/bootsnav.css" >
@@ -20,7 +20,7 @@
             <div class="css-vnm2snk">
                 <img class="css-bg-login" src="{{ asset('assets/images/bg_login.png') }}">
                 <section class="css-ghj2sja css-cnfm2nsa">
-                    <h4 class="css-text-mai">MaiTea Indonesia</h4>
+                    <h4 class="css-text-mai">MaiTea Nusantara</h4>
                     <div class="css-vbaj2ns">
                         <h3 class="css-fhk3js">Masuk</h3>
                     </div>
@@ -49,7 +49,7 @@
                             </button>
                         </form>
                     </div>
-                    <span class="css-syarat-bawah">Dengan masuk atau daftar MaiTea Indonesia, saya menyetujui Syarat & Ketentuan serta Kebijakan Privasi yang berlaku.</span>
+                    <span class="css-syarat-bawah">Dengan masuk atau daftar MaiTea Nusantara, saya menyetujui Syarat & Ketentuan serta Kebijakan Privasi yang berlaku.</span>
                 </section>
             </div>
         </div>

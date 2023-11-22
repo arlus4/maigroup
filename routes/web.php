@@ -154,6 +154,7 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         // Claim Bonus
         Route::get('/claim_bonus', [ClaimBonusController::class, 'claim_bonus'])->name('owner_claim_bonus');
         Route::get('/store_claim_bonus', [ClaimBonusController::class, 'store_claim_bonus'])->name('owner_store_claim_bonus');
+        Route::post('/store_qr_code', [ClaimBonusController::class, 'store_qr_code'])->name('owner_store_qr_code');
 
         // Restock
         Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');
@@ -163,11 +164,12 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/cek-data-invoice/{invoice}', [RestockController::class, 'cekDataInvoice'])->name('owner_cek_data_invoice');
         Route::post('/store-konfirmasi-pembayaran-order', [RestockController::class, 'storeKonfPembayaran'])->name('owner_store_konf_pembayaran_order');
         Route::get('/status-restock', [RestockController::class, 'statusRestock'])->name('owner_status_restock');
-        Route::get('/detail-order/{invoice}', [RestockController::class, 'detailOrder'])->name('owner_detail_order');
+        Route::get('/detail-pembelian/{invoice}', [RestockController::class, 'detailPembelian'])->name('owner_detail_pembelian');
         Route::get('/change-progress-order/{invoice}', [RestockController::class, 'changeProgressOrder'])->name('owner_change_progress_order');
 
         // Report Invoice
         Route::get('/report-invoice', [ReportInvoiceController::class, 'index'])->name('owner_report_invoice');
+        Route::get('/detail-invoice/{invoice}', [ReportInvoiceController::class, 'detailInvoice'])->name('owner_detail_invoice');
         Route::get('/download-invoice/{invoice}', [ReportInvoiceController::class, 'downloadInvoice'])->name('owner_download_invoice');
 
         // Akun Setting
