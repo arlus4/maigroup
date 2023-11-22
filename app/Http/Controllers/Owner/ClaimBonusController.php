@@ -19,4 +19,8 @@ class ClaimBonusController extends Controller
 
         return view('hasil_scan', ['qrCode' => $qrCode]); // Tampilkan hasil atau lakukan aksi lain
     }
+
+    public function store_qr_code(Request $request){
+        dd($request);
+    }
 }

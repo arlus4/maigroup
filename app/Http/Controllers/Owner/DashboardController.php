@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Owner;
 
 use Illuminate\Http\Request;
 use App\Models\Product_Outlet;
+use App\Models\ref_KuotaPoint;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,14 @@ class DashboardController extends Controller
         ->where('outlet_id', Auth::user()->outlet_id)
         ->get();
 
-        return view('owner.dashboard', compact('dataProdukOutlet'));
+        $totalRefKuotaPoint = ref_KuotaPoint::select(
+                'outlet_id',
+                'kuota_point',
+            )
+            ->where('outlet_id', Auth::user()->outlet_id)
+            ->first();
+
+        return view('owner.dashboard', compact('dataProdukOutlet', 'totalRefKuotaPoint'));
     }
 
     public function getDataStockReport(){

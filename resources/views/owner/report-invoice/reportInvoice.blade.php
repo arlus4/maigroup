@@ -48,7 +48,7 @@
                                                 @endif
                                             </td>
                                             <td class="align-items-center">
-                                                <a style="color: #525867;" href="detail-order/{{ $invoice->invoice_no }}"><u>Detail Invoice</u></a>
+                                                <a style="color: #525867;" href="detail-invoice/{{ $invoice->invoice_no }}"><u>Detail Invoice</u></a>
                                             </td>
                                         </tr>
                                     @endforeach

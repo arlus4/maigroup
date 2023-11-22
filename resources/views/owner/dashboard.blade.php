@@ -114,23 +114,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="page-title d-flex flex-column justify-content-center mt-5">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0 mb-5">Report Stock</h1>
-                    <div class="card p-3" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
-                        <div class="card-body p-4">
-                            <div class="table-responsive">
-                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableStockReport">
-                                    <thead>
-                                        <tr class="text-start gs-0">
-                                            <th class="min-w-100px fw-bold text-gray-800">Informasi Varian</th>
-                                            <th class="min-w-100px fw-bold text-gray-800">Kategori</th>
-                                            <th class="min-w-100px fw-bold text-gray-800">Jumlah</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-gray-600 fw-semibold">
-                                        
-                                    </tbody>
-                                </table>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="page-title d-flex flex-column justify-content-center mt-5">
+                            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0 mb-5">Report Stok</h1>
+                            <div class="card p-3" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
+                                <div class="card-body p-4">
+                                    <h3 class="card-title align-items-start flex-column pt-2">
+                                        <span class="card-label fw-bold text-gray-800">MaiTea</span>
+                                    </h3>
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableStockReport">
+                                            <thead>
+                                                <tr class="text-start gs-0">
+                                                    <th class="min-w-100px fw-bold text-gray-800">Paket</th>
+                                                    <th class="min-w-100px fw-bold text-gray-800">Sisa Stok</th>
+                                                </tr>
+                                                <tr class="text-start gs-0">
+                                                    <th class="min-w-100px fw-bold text-gray-800">Varian</th>
+                                                    <th class="min-w-100px fw-bold text-gray-800"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-gray-600 fw-semibold">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -263,8 +273,10 @@
 @section('script')
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script>
+        var totalRefKuotaPoint = @json($totalRefKuotaPoint);
         $(document).ready(function() {
-            $('#tableStockReport').DataTable({
+            // Inisialisasi DataTable
+            var table = $('#tableStockReport').DataTable({
                 processing: true,
                 serverSide: false,
                 ajax: {
@@ -275,26 +287,14 @@
                     processing: "Loading..."
                 },
                 columns: [
-                    { 
+                    {
                         data: 'name',
                         render: function(data, type, row) {
                             return `<div class="d-flex align-items-center">
-                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                            <div class="symbol-label">
-                                                <img src="{{ asset('${row.path_thumbnail}') }}" class="w-100"/>
-                                            </div>
-                                        </div>
                                         <div class="d-flex flex-column">
                                             <span class="text-gray-800 mb-1">${row.nama_produk}</span>
-                                            <span>${row.sku}</span>
                                         </div>
                                     </div>`;
-                        }
-                    },
-                    {
-                        data: 'kategori',
-                        render: function(data, type, row) {
-                            return `<span class="badge badge-secondary">${row.project_name}</span>`;
                         }
                     },
                     {
@@ -303,7 +303,32 @@
                             return `${row.jumlah}`;
                         }
                     }
-                ]
+                ],
+                initComplete: function(settings, json) {
+                    var kuotaPoint = totalRefKuotaPoint.kuota_point;
+
+                    $('#tableStockReport thead tr:first').after(`
+                        <tr>
+                            <td class="d-flex align-items-center">
+                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                    <div class="symbol-label">
+                                        <img src="{{ asset('assets/images/cup.png') }}" width="25"/>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <span class="text-gray-800 mb-1">Reguler</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-items-center">
+                                <div class="align-self-center">
+                                    <span>${kuotaPoint}</span>
+                                </div>
+                            </td>
+                        </tr>
+                    `);
+                }
             });
         });
 

@@ -40,8 +40,13 @@
                                     <th class="min-w-100px text-dark">Nama Outlet</th>
                                     <th class="min-w-100px text-dark">No Invoice</th>
                                     <th class="min-w-100px text-dark">Status</th>
+<<<<<<< HEAD:resources/views/owner/statusRestock.blade.php
                                     <th class="min-w-100px text-dark">Detail</th>
                                     <th class="min-w-100px text-dark">Tanggal Pemesanan</th>
+=======
+                                    <th class="min-w-150px text-dark">Detail</th>
+                                    <th class="min-w-150px text-dark">Tanggal Pemesanan</th>
+>>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245:resources/views/owner/restock-order/daftarPembelian.blade.php
                                     <th class="min-w-100px text-dark"></th>
                                 </tr>
                             </thead>
@@ -70,7 +75,11 @@
                                             @endif
                                         </td>
                                         <td class="align-items-center w-25">
+<<<<<<< HEAD:resources/views/owner/statusRestock.blade.php
                                             <a style="color: #525867;" href="detail-order/{{ $status->invoice_no }}">
+=======
+                                            <a style="color: #525867;" href="detail-pembelian/{{ $status->invoice_no }}">
+>>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245:resources/views/owner/restock-order/daftarPembelian.blade.php
                                                 <u>Detail Pembelian</u>
                                             </a>
                                         </td>

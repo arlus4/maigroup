@@ -59,7 +59,11 @@
                                                                         <div class="flex-grow-1">
                                                                             <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Paket 25</h3>
                                                                             <div class="fw-semibold fs-7 opacity-50">Paket Jualan 25 Cup</div>
+<<<<<<< HEAD:resources/views/owner/restock.blade.php
                                                                             <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a>
+=======
+                                                                            <a class="text-dark fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#modalPaket25">Lihat Detail > </a>
+>>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245:resources/views/owner/restock-order/tambahRestock.blade.php
                                                                         </div>
                                                                     </div>
                                                                     <div class="ms-5">
@@ -77,7 +81,11 @@
                                                                         <div class="flex-grow-1">
                                                                             <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Paket 50</h3>
                                                                             <div class="fw-semibold fs-7 opacity-50">Paket Jualan 50 Cup</div>
+<<<<<<< HEAD:resources/views/owner/restock.blade.php
                                                                             <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a>
+=======
+                                                                            <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#modalPaket50">Lihat Detail ></a>
+>>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245:resources/views/owner/restock-order/tambahRestock.blade.php
                                                                         </div>
                                                                     </div>
                                                                     <div class="ms-5">
@@ -95,7 +103,11 @@
                                                                         <div class="flex-grow-1">
                                                                             <h3 class="d-flex align-items-center fs-6 fw-bold flex-wrap">Paket Juragan</h3>
                                                                             <div class="fw-semibold fs-7 opacity-50">Paket Jualan Lebih dari 50 Cup</div>
+<<<<<<< HEAD:resources/views/owner/restock.blade.php
                                                                             <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Lihat Detail</a>
+=======
+                                                                            <a class="btn btn-flush detail-link fs-8 fw-bold" data-bs-toggle="modal" data-bs-target="#modalPaketJuragan">Lihat Detail ></a>
+>>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245:resources/views/owner/restock-order/tambahRestock.blade.php
                                                                         </div>
                                                                     </div>
                                                                 </label>
@@ -135,7 +147,7 @@
                                                             <div class="css-dabj72">
                                                                 <div class="form-group mb-4">
                                                                     <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Pilihan Varian</label>
-                                                                    <select class="form-select mb-2 produkId" data-kt-repeater="select2" data-placeholder="Pilih Varian" id="produk_id" data-allow-clear="true" name="id_produk">
+                                                                    <select class="form-select mb-2 produkId" data-kt-repeater="select2" data-placeholder="Pilih Varian" id="produk_id" data-allow-clear="true" name="id_produk" required>
                                                                         <option></option>
                                                                         @foreach($getProduk as $produk)
                                                                             <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
@@ -160,7 +172,7 @@
                                                                 <div class="row mb-4">
                                                                     <div class="col-md-5">
                                                                         <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">QTY</label>
-                                                                        <select class="form-select qtyid" data-kt-repeater="select2" id="qty" name="qty" data-placeholder="Pilih QTY">
+                                                                        <select class="form-select qtyid" data-kt-repeater="select2" id="qty" name="qty" data-placeholder="Pilih QTY" required>
                                                                             <option></option>
                                                                             @for ($i = 5; $i <= 100; $i += 5)
                                                                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -185,7 +197,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-5">
-                                                    <a href="javascript:;" data-repeater-create class="css-kl2kd9a" style="color: #fff!important;width: 100px;padding:7px 16px;">
+                                                    <a href="javascript:;" data-repeater-create class="css-kl2kd9a" style="color: #fff!important;width: 110px;padding:7px 16px;height: 38px;">
                                                         <i class="fas fa-plus-circle text-white"></i>&nbsp;
                                                         Tambah
                                                     </a>
@@ -213,12 +225,246 @@
 						</div>
 						<div class="d-flex justify-content-end">
 							<a id="kt_ecommerce_add_product_cancel" class="css-ca2jq0s">Batalkan</a>
+<<<<<<< HEAD:resources/views/owner/restock.blade.php
 							<button type="submit" class="css-kl2kd9a" id="simpan">Simpan</button>
+=======
+							<button type="submit" class="css-kl2kd9a" id="simpan" style="height: 43px;background-color: #e2e2e2;color: #929292;cursor: not-allowed;" disabled>Simpan</button>
+>>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245:resources/views/owner/restock-order/tambahRestock.blade.php
 						</div>
 					</div>
 				</form>
 
+<<<<<<< HEAD:resources/views/owner/restock.blade.php
                 <!--begin::Modal - Upgrade plan-->
+=======
+
+                <!-- Modal Paket 25 -->
+                <div class="modal fade" id="modalPaket25" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded">
+                            <div class="modal-header justify-content-between border-0 pb-0">
+                                <h4 class="card-tittle">Detail Paket 25</h4>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body pt-0 pb-15 px-5 px-xl-10">
+                                <div class="tab-content rounded h-100 bg-light p-10">
+                                    <div class="pb-5">
+                                        <h2 class="fw-bold text-dark">Paket 25</h2>
+                                        <div class="text-muted fw-semibold">Paket Jualan 25 Cup Terdiri dari :</div>
+                                    </div>
+                                    <div class="pt-1">
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 90gr</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Gula 1kg</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Cup 22 oz (25 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Plastik (25 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Sedotan (25 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Bonus Cup 22 Oz (2 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-muted flex-grow-1">Tutup Plastik</span>
+                                            <span class="svg-icon svg-icon-1">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
+                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor"></rect>
+                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor"></rect>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Paket 50 -->
+                <div class="modal fade" id="modalPaket50" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded">
+                            <div class="modal-header justify-content-between border-0 pb-0">
+                                <h4 class="card-tittle">Detail Paket 50</h4>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body pt-0 pb-15 px-5 px-xl-10">
+                                <div class="tab-content rounded h-100 bg-light p-10">
+                                    <div class="pb-5">
+                                        <h2 class="fw-bold text-dark">Paket 50</h2>
+                                        <div class="text-muted fw-semibold">Paket Jualan 50 Cup Terdiri dari :</div>
+                                    </div>
+                                    <div class="pt-1">
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 180gr</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Gula 2kg</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Cup 22 oz (50 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Plastik (50 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Sedotan (50 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Bonus Cup 22 Oz (5 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Tutup Plastik (5 pcs)</span>
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Paket Juragan -->
+                <div class="modal fade" id="modalPaketJuragan" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded">
+                            <div class="modal-header justify-content-between border-0 pb-0">
+                                <h4 class="card-tittle">Detail Paket Juragan</h4>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body pt-0 pb-15 px-5 px-xl-10">
+                                <div class="tab-content rounded h-100 bg-light p-10">
+                                    <div class="pb-5">
+                                        <h2 class="fw-bold text-dark">Paket Juragan</h2>
+                                        <div class="text-muted fw-semibold">Paket Jualan Juragan Cup Terdiri dari :</div>
+                                    </div>
+                                    <div class="pt-1">
+                                        <div class="d-flex align-items-center mb-7">
+                                            <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Sesuai Pesanan</span>
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
+                                            <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+>>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245:resources/views/owner/restock-order/tambahRestock.blade.php
                 <div class="modal fade" id="kt_modal_upgrade_plan" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
                     <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -660,6 +906,55 @@
                 item.find('.amount').val('');
             }
         }
+
+        function validasiToggle() {
+            var enableSimpanBtn = false;
+            $('#data_restock_order [data-repeater-item]').each(function() {
+                var pilihanVarian = $(this).find('.produkId').val();
+                var qty = $(this).find('.qtyid').val();
+                if (pilihanVarian && qty) {
+                    enableSimpanBtn = true;
+                    // Hentikan perulangan jika menemukan item yang terisi
+                    return false;
+                }
+            });
+
+            // Atur properti disabled dari tombol simpan berdasarkan kondisi item
+            $('#simpan').prop('disabled', !enableSimpanBtn);
+            ubahButtonStyle(enableSimpanBtn);
+        }
+
+        function ubahButtonStyle(isEnabled) {
+            if (isEnabled) {
+                $('#simpan').css({
+                    'background-color': '#039344',
+                    'color': '#fff',
+                    'cursor': 'pointer'
+                });
+            } else {
+                $('#simpan').css({
+                    'background-color': '#e2e2e2',
+                    'color': '#929292',
+                    'cursor': 'not-allowed'
+                });
+            }
+        }
+
+        $('#data_restock_order').on('change', '.produkId, .qtyid', validasiToggle);
+
+        $('#data_restock_order').on('click', '[data-repeater-delete]', function() {
+            // Hapus item repeater
+            $(this).closest('[data-repeater-item]').remove();
+            validasiToggle();
+        });
+
+        $(document).on('click', '[data-repeater-create]', function() {
+            setTimeout(validasiToggle, 0);
+        });
+
+        // Validasi awal untuk status tombol simpan
+        validasiToggle();
+
     </script>
 
     <script>

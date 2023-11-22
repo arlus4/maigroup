@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MaiTea - Indonesia</title>
+        <title>MaiTea - Nusantara</title>
 
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/bootsnav.css" >
@@ -52,7 +52,7 @@
                 <div class="welcome-hero-txt">
                     <div class="row">
                         <div class="col-md-6 css-cnk12sj">
-                            <h2 class="css-dniud9a">Terobosan teh termurah dan terbaru yang ada di Indonesia</h2>
+                            <h2 class="css-dniud9a">Terobosan teh termurah dan terbaru yang ada di Nusantara</h2>
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-md-6">
                                     <button class="btn" style="width:100%;border-radius:8px;background-color:#fff;border: 1.4px solid #d4edda;color: #155724;">
@@ -92,7 +92,7 @@
                 <div class="css-fnk2skj">
                     <div class="css-po2jsm">
                         <div class="css-hjsa2js">
-                            <h3 class="css-cjdkja">Menu MaiTea Indonesia</h3>
+                            <h3 class="css-cjdkja">Menu MaiTea Nusantara</h3>
                         </div>
                     </div>
                     <div class="css-diop1ms">
@@ -289,7 +289,7 @@
             <div class="css-gj5js6a">
                 <div class="css-cnr9dm">
                     <h4 class="css-ndk2nsa">Gabung Jadi Mitra MaiTea</h4>
-                    <p class="css-djk9qna">MaiTea Indonesia kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Indonesia dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
+                    <p class="css-djk9qna">MaiTea Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
                 </div>
                 <div class="css-kld2jsh">
                     <img src="{{ asset('assets/images/bg_benefit.png') }}">
@@ -336,7 +336,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -390,7 +390,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -444,7 +444,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -498,7 +498,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.
+                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -536,7 +536,7 @@
                 <div class="row">
                     <div class="col-md-6 css-scnk2n">
                         <h4 class="css-cjdkja">Gabung Jadi Mitra MaiTea</h4>
-                        <p class="css-text-p">MaiTea Indonesia kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Indonesia dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
+                        <p class="css-text-p">MaiTea Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
                     </div>
                     <div class="col-md-6">
                         <img src="{{ asset('assets/images/bg_benefit.png') }}">
@@ -589,7 +589,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -646,7 +646,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -703,7 +703,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Indonesia mengalami kenaikkan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -760,7 +760,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Indonesia mengalami kenaikan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -882,7 +882,7 @@
                         <li class="content-entry">
                             <div class="article-title">
                                 <strong class="css-text-faq1">04</strong>
-                                <span class="css-text-faq2">Apa Syarat & Ketentuan bergabung dengan Maitea Indonesia?</span>
+                                <span class="css-text-faq2">Apa Syarat & Ketentuan bergabung dengan Maitea Nusantara?</span>
                                 <i class="fas fa-angle-down"></i>
                             </div>
                             <div class="accordion-content" style="padding-left: 48px;">
@@ -893,7 +893,7 @@
                         <li class="content-entry">
                             <div class="article-title">
                                 <strong class="css-text-faq1">05</strong>
-                                <span class="css-text-faq2">Apa yang harus dilakukan jika tertarik bergabung dengan MaiTea Indonesia?</span>
+                                <span class="css-text-faq2">Apa yang harus dilakukan jika tertarik bergabung dengan MaiTea Nusantara?</span>
                                 <i class="fas fa-angle-down"></i>
                             </div>
                             <div class="accordion-content" style="padding-left: 48px;">

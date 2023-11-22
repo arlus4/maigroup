@@ -115,6 +115,22 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script>
         $(document).ready(function() {
+
+            $('#inputIdPembeli').on('input', function() {
+                if ($(this).val().trim() !== '') {
+                    $('#inputNoHp').prop('disabled', true).css({'cursor': 'not-allowed'});
+                } else {
+                    $('#inputNoHp').prop('disabled', false).css({'cursor': 'text'});
+                }
+            });
+
+            $('#inputNoHp').on('input', function() {
+                if ($(this).val().trim() !== '') {
+                    $('#inputIdPembeli').prop('disabled', true).css({'cursor': 'not-allowed'});
+                } else {
+                    $('#inputIdPembeli').prop('disabled', false).css({'cursor': 'text'});
+                }
+            });
             function rupiah(number) {
                 return new Intl.NumberFormat('id-ID', {
                     style: 'currency',
@@ -324,9 +340,9 @@
                             let uniqueResults = new Set();
 
                             data.forEach(function(item) {
-                                if (!uniqueResults.has(item)) {
-                                    uniqueResults.add(item);
-                                    nomorHpList.append($('<li class="list-group-item link-class"></li>').text(item));
+                                if (!uniqueResults.has(item.no_hp)) {
+                                    uniqueResults.add(item.no_hp);
+                                    idPembeliList.append($('<li class="list-group-item link-class"></li>').text(item.no_hp));
                                 }
                             });
                         },
@@ -363,9 +379,9 @@
                             let uniqueResults = new Set();
 
                             data.forEach(function(item) {
-                                if (!uniqueResults.has(item)) {
-                                    uniqueResults.add(item);
-                                    idPembeliList.append($('<li class="list-group-item link-class"></li>').text(item));
+                                if (!uniqueResults.has(item.pembeli_id)) {
+                                    uniqueResults.add(item.pembeli_id);
+                                    idPembeliList.append($('<li class="list-group-item link-class"></li>').text(item.pembeli_id));
                                 }
                             });
                         },
