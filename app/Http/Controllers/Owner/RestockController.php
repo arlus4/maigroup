@@ -23,13 +23,13 @@ class RestockController extends Controller
 {
     public function index()
     {
-        $getOutlet      = Outlet::select('id','nama_outlet','outlet_id')->get();
-        $getProduk      = Ref_Produk::select('id','sku','nama_produk','harga')->get();
-        $getKategori    = Ref_Project::select('id','project_name')->get();
+        $getOutlet      = Outlet::select('id', 'nama_outlet', 'outlet_id')->get();
+        $getProduk      = Ref_Produk::select('id', 'sku', 'nama_produk', 'harga')->get();
+        $getKategori    = Ref_Project::select('id', 'project_name')->get();
 
-        return view('owner.restock-order.tambahRestock',[
+        return view('owner.restock-order.tambahRestock', [
             'title' => 'Restock Order',
-        ], compact('getOutlet','getProduk','getKategori'));
+        ], compact('getOutlet', 'getProduk', 'getKategori'));
     }
 
     public function getHargaOrder($id)
@@ -40,9 +40,9 @@ class RestockController extends Controller
             'ref_produks.harga',
             'ref_produks.sku'
         )
-        ->leftJoin('ref_project', 'ref_produks.project_id', '=', 'ref_project.id')
-        ->where('ref_produks.id', $id)
-        ->first();
+            ->leftJoin('ref_project', 'ref_produks.project_id', '=', 'ref_project.id')
+            ->where('ref_produks.id', $id)
+            ->first();
 
         // Periksa apakah produk ditemukan
         if ($produk) {
@@ -62,7 +62,7 @@ class RestockController extends Controller
         }
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         try {
             DB::beginTransaction(); // Begin Transaction
@@ -78,18 +78,18 @@ class RestockController extends Controller
             $request->validate([
                 'outlet_id' => 'required',
             ]);
-            
+
             // Get no_invoice
             $date               = date('Ymd');
             $randomNumberPart   = str_pad(mt_rand(0, 99999999), 8, "0", STR_PAD_LEFT); // 8 karakter
             $no_invoice         = 'MAI-' . $date . $randomNumberPart;
-            
+
             // Menyiapkan data paket berdasarkan plan
             $planData = [];
             if ($request->plan == 'startup') {
                 $planData[] = [
-                    'sku_id'        => 'PAKET25', 
-                    'qty'           => '25', 
+                    'sku_id'        => 'PAKET25',
+                    'qty'           => '25',
                     'amount'        => '50000',
                     'id_produk'     => '01',
                     'project_name'  => null,
@@ -99,8 +99,8 @@ class RestockController extends Controller
                 ];
             } elseif ($request->plan == 'advanced') {
                 $planData[] = [
-                    'sku_id'        => 'PAKET50', 
-                    'qty'           => '50', 
+                    'sku_id'        => 'PAKET50',
+                    'qty'           => '50',
                     'amount'        => '98000',
                     'id_produk'     => '02',
                     'project_name'  => null,
@@ -110,8 +110,8 @@ class RestockController extends Controller
                 ];
             } elseif ($request->plan == 'custom') {
                 $planData[] = [
-                    'sku_id'        => 'PAKETAGAN', 
-                    'qty'           => $request->qtyPaket, 
+                    'sku_id'        => 'PAKETAGAN',
+                    'qty'           => $request->qtyPaket,
                     'amount'        => null,
                     'id_produk'     => '03',
                     'project_name'  => null,
@@ -120,10 +120,10 @@ class RestockController extends Controller
                     'is_paket'      => '1'
                 ];
             }
-            
+
             // Menggabungkan data plan dengan data_restock_order
             $allData = array_merge($planData, $request->data_restock_order ?? []);
-            
+
             // Hitung total qty dan amount
             $totalQty = array_sum(array_column($allData, 'qty'));
             $totalAmount = array_sum(array_map(function ($item) {
@@ -146,7 +146,7 @@ class RestockController extends Controller
                 if ($detail['sku_id'] && $detail['qty']) {
                     $amount = isset($detail['amount']) ? (int) str_replace(['Rp', '.', ','], '', $detail['amount']) : null;
                     $hargaSatuan = (int) str_replace(['Rp', '.', ','], '', $detail['harga_satuan']);
-    
+
                     Invoice_Detail_Seller::create([
                         'outlet_id'     => $request->outlet_id,
                         'invoice_no'    => $no_invoice,
@@ -166,24 +166,26 @@ class RestockController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback(); // Rollback the transaction in case of an exception
-            
-            return redirect()->route('owner.owner_restock')->with('error', 'Gagal Menambah Restock. Silakan coba lagi: '. $th->getMessage());
+
+            return redirect()->route('owner.owner_restock')->with('error', 'Gagal Menambah Restock. Silakan coba lagi: ' . $th->getMessage());
         }
         return redirect()->route('owner.owner_status_restock')->with('success', 'Berhasil dan Pesanan sudah diterima, admin akan segera menghubungi WhatsApp anda');
     }
 
-    public function konfPembayaran(){
-        $getInvoice       = Invoice_Master_Seller::select('outlet_id','invoice_no','progress')
-                            ->where('outlet_id', Auth::user()->outlet_id)
-                            ->where('progress', 1)
-                            ->get();
-        
+    public function konfPembayaran()
+    {
+        $getInvoice       = Invoice_Master_Seller::select('outlet_id', 'invoice_no', 'progress')
+            ->where('outlet_id', Auth::user()->outlet_id)
+            ->where('progress', 1)
+            ->get();
+
         $getBankTujuan    = Ref_Bank::select('id', 'nama_bank', 'path_icon_bank')->get();
 
         return view('owner.restock-order.konfPembayaran', compact('getInvoice', 'getBankTujuan'));
     }
 
-    public function cekDataInvoice($noInvoice){
+    public function cekDataInvoice($noInvoice)
+    {
         $invoice = Invoice_Master_Seller::where('invoice_no', $noInvoice)->firstOrFail(); // Atau query yang sesuai untuk mendapatkan data
         return response()->json($invoice);
     }
@@ -212,7 +214,7 @@ class RestockController extends Controller
                 $imageName = Str::random(10) . '_' . $request->bukti_pembayaran->getClientOriginalName();
 
                 $request->bukti_pembayaran->storeAs('bukti_pembayaran/', $imageName, 'public');
-                
+
                 $imagePath = 'storage/bukti_pembayaran/' . $imageName;
             } else {
                 $imageName = null;
@@ -242,7 +244,7 @@ class RestockController extends Controller
 
             Log::error($th); // Log the exception for debugging
 
-            return redirect()->back()->with('error', 'Gagal melakukan konfirmasi pembayaran. Silakan coba lagi: '. $th->getMessage());
+            return redirect()->back()->with('error', 'Gagal melakukan konfirmasi pembayaran. Silakan coba lagi: ' . $th->getMessage());
         }
         return redirect()->back()->with('success', 'Terima kasih atas konfirmasi pembayaran Anda! Kami akan segera melakukan verifikasi dan proses pengiriman barang, <strong>Cek Status invoice</strong> dan pesanan Anda pada halaman <strong>Daftar Pembelian</strong>.');
     }
@@ -250,15 +252,15 @@ class RestockController extends Controller
     public function statusRestock()
     {
         $getStatus = Invoice_Master_Seller::select(
-                'invoice_master_seller.outlet_id',
-                'invoice_master_seller.invoice_no',
-                'invoice_master_seller.progress',
-                'invoice_master_seller.date_created',
+            'invoice_master_seller.outlet_id',
+            'invoice_master_seller.invoice_no',
+            'invoice_master_seller.progress',
+            'invoice_master_seller.date_created',
 
-                'outlets.outlet_id',
-                'outlets.nama_outlet'
-            )
-            ->leftJoin('outlets','invoice_master_seller.outlet_id','=','outlets.outlet_id')
+            'outlets.outlet_id',
+            'outlets.nama_outlet'
+        )
+            ->leftJoin('outlets', 'invoice_master_seller.outlet_id', '=', 'outlets.outlet_id')
             ->where('invoice_master_seller.outlet_id', Auth::user()->outlet_id)
             ->whereIn('invoice_master_seller.progress', ['0', '1', '2', '3', '4'])
             ->get();
@@ -268,41 +270,40 @@ class RestockController extends Controller
 
     public function detailPembelian($invoice)
     {
-        $data = Invoice_Master_Seller::select
-        (
-            'invoice_master_seller.id as idInvoiceMasterSeller',
-            'invoice_master_seller.outlet_id',
-            'invoice_master_seller.invoice_no',
-            'invoice_master_seller.qty',
-            'invoice_master_seller.amount',
-            'invoice_master_seller.date_created',
-            'invoice_master_seller.ongkir',
-            'invoice_master_seller.kode_unik',
-            'invoice_master_seller.total',
-            
-            'outlets.id as idOutlets',
-            'outlets.user_id',
-            'outlets.nama_outlet',
-            
-            'users_details.nomor_telfon',
-            'users_details.kode_pos',
-            'users_details.alamat_detail',
-            
-            'ref_kelurahan.kode_kelurahan',
-            'ref_kelurahan.nama_kelurahan',
-            'ref_kecamatan.nama_kecamatan',
-            'ref_kotakab.nama_kotakab',
-            'ref_propinsi.nama_propinsi',
-        )
-        ->leftJoin('outlets','invoice_master_seller.outlet_id','=','outlets.outlet_id')
-        ->leftJoin('users_details','outlets.user_id','=','users_details.user_id')
-        ->leftJoin('ref_kelurahan','users_details.kelurahan','=','ref_kelurahan.kode_kelurahan')
-        ->leftJoin('ref_kecamatan','users_details.kecamatan','=','ref_kecamatan.kode_kecamatan')
-        ->leftJoin('ref_kotakab','users_details.kota_kabupaten','=','ref_kotakab.kode_kotakab')
-        ->leftJoin('ref_propinsi','users_details.provinsi','=','ref_propinsi.kode_propinsi')
-        ->where('invoice_master_seller.invoice_no', $invoice)
-        ->where('invoice_master_seller.outlet_id', Auth::user()->outlet_id)
-        ->first();
+        $data = Invoice_Master_Seller::select(
+                'invoice_master_seller.id as idInvoiceMasterSeller',
+                'invoice_master_seller.outlet_id',
+                'invoice_master_seller.invoice_no',
+                'invoice_master_seller.qty',
+                'invoice_master_seller.amount',
+                'invoice_master_seller.date_created',
+                'invoice_master_seller.ongkir',
+                'invoice_master_seller.kode_unik',
+                'invoice_master_seller.total',
+
+                'outlets.id as idOutlets',
+                'outlets.user_id',
+                'outlets.nama_outlet',
+
+                'users_details.nomor_telfon',
+                'users_details.kode_pos',
+                'users_details.alamat_detail',
+
+                'ref_kelurahan.kode_kelurahan',
+                'ref_kelurahan.nama_kelurahan',
+                'ref_kecamatan.nama_kecamatan',
+                'ref_kotakab.nama_kotakab',
+                'ref_propinsi.nama_propinsi',
+            )
+            ->leftJoin('outlets', 'invoice_master_seller.outlet_id', '=', 'outlets.outlet_id')
+            ->leftJoin('users_details', 'outlets.user_id', '=', 'users_details.user_id')
+            ->leftJoin('ref_kelurahan', 'users_details.kelurahan', '=', 'ref_kelurahan.kode_kelurahan')
+            ->leftJoin('ref_kecamatan', 'users_details.kecamatan', '=', 'ref_kecamatan.kode_kecamatan')
+            ->leftJoin('ref_kotakab', 'users_details.kota_kabupaten', '=', 'ref_kotakab.kode_kotakab')
+            ->leftJoin('ref_propinsi', 'users_details.provinsi', '=', 'ref_propinsi.kode_propinsi')
+            ->where('invoice_master_seller.invoice_no', $invoice)
+            ->where('invoice_master_seller.outlet_id', Auth::user()->outlet_id)
+            ->first();
 
         $detail = Invoice_Detail_Seller::select(
             'invoice_detail_seller.invoice_no',
@@ -312,18 +313,18 @@ class RestockController extends Controller
             'invoice_detail_seller.discount',
             'invoice_detail_seller.total_amount',
             'invoice_detail_seller.project_id',
-            
+
             'ref_produks.sku',
             'ref_produks.nama_produk',
             'ref_produks.path_thumbnail',
 
             'ref_project.project_name',
         )
-        ->leftJoin('ref_produks', 'invoice_detail_seller.sku_id', '=', 'ref_produks.sku')
-        ->leftJoin('ref_project', 'invoice_detail_seller.project_id', '=', 'ref_project.id')
-        ->where('invoice_detail_seller.invoice_no', $invoice)
-        ->where('invoice_detail_seller.outlet_id', Auth::user()->outlet_id)
-        ->get();
+            ->leftJoin('ref_produks', 'invoice_detail_seller.sku_id', '=', 'ref_produks.sku')
+            ->leftJoin('ref_project', 'invoice_detail_seller.project_id', '=', 'ref_project.id')
+            ->where('invoice_detail_seller.invoice_no', $invoice)
+            ->where('invoice_detail_seller.outlet_id', Auth::user()->outlet_id)
+            ->get();
 
         if (!$detail) {
             redirect()->back()->with('error', 'Tidak Ada Detail');
@@ -335,17 +336,13 @@ class RestockController extends Controller
         ]);
     }
 
-    public function changeProgressOrder($invoice_no) 
+    public function changeProgressOrder($invoice_no)
     {
-<<<<<<< HEAD
-        dd($invoice_no);
-=======
->>>>>>> 26d8dd96160a94942e4c9278d1d654a083a9e245
         try {
             DB::beginTransaction();
-            
+
             $invoice  = Invoice_Master_Seller::where('invoice_no', $invoice_no)->first();
-        
+
             $invoice->update([
                 'progress' => '5',
             ]);
@@ -354,9 +351,9 @@ class RestockController extends Controller
                 // get kouta point
                 $kouta_point = Invoice_Detail_Seller::select('qty')->where('invoice_no', $invoice_no)->where('is_paket', '1')->get();
                 $totalQty = $kouta_point->sum('qty');
-                
+
                 $kuotaPoint = ref_KuotaPoint::where('outlet_id', $invoice->outlet_id)->first();
-                
+
                 // update ref_kuota_point, berdasarkan outlet_id
                 if ($kuotaPoint) {
                     $kuotaPoint->update([
@@ -365,51 +362,50 @@ class RestockController extends Controller
                 }
 
                 // get varian product
-                $produk_outlet = Invoice_Detail_Seller::select
-                    (
-                        'invoice_detail_seller.sku_id', 
-                        'invoice_detail_seller.qty', 
-                        
-                        'ref_produks.id as produk_id', 
+                $produk_outlet = Invoice_Detail_Seller::select(
+                        'invoice_detail_seller.sku_id',
+                        'invoice_detail_seller.qty',
+
+                        'ref_produks.id as produk_id',
                         'ref_produks.project_id'
                     )
                     ->leftJoin('ref_produks', 'invoice_detail_seller.sku_id', '=', 'ref_produks.sku')
                     ->where('invoice_no', $invoice_no)
                     ->where('is_paket', '0')
                     ->get();
-                
+
                 foreach ($produk_outlet as $data) {
                     $jumlah = $data->qty;
-                
+
                     // Update atau insert product_outlet, berdasarkan outlet_id dan product_id
                     Product_Outlet::updateOrInsert([
                         'outlet_id'   => $invoice->outlet_id,
                         'product_id'  => $data->produk_id,
-                    ],[
+                    ], [
                         'category_id' => $data->project_id,
                         'jumlah'      => DB::raw('jumlah + ' . $jumlah),
                     ]);
                 }
 
                 DB::commit();
-    
+
                 return response()->json([
-                    'status'  => 'success', 
+                    'status'  => 'success',
                     'message' => 'Progress order berhasil diubah.'
                 ]);
             } else {
                 DB::rollback();
-    
+
                 return response()->json([
-                    'status'  => 'error', 
+                    'status'  => 'error',
                     'message' => 'Invoice tidak ditemukan'
                 ], 404);
             }
         } catch (\Exception $e) {
             DB::rollback();
-    
+
             return response()->json([
-                'status'  => 'error', 
+                'status'  => 'error',
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ]);
         }
