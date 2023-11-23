@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8dd2bbbac5159497ecb29ecc02652e1",
+    "content-hash": "82e53e271d4dcae36f4cbc60ed175282",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3678,6 +3678,57 @@
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
             },
             "time": "2021-12-11T13:40:54+00:00"
+        },
+        {
+            "name": "sakiot/laravel-sqlsrv-err-avoid",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SakiTakamachi/laravel-sqlsrv-err-avoid.git",
+                "reference": "fdd9c66430c4237fccf90cb079b31a217376663b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SakiTakamachi/laravel-sqlsrv-err-avoid/zipball/fdd9c66430c4237fccf90cb079b31a217376663b",
+                "reference": "fdd9c66430c4237fccf90cb079b31a217376663b",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=8.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.7",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SqlsrvErrAvoid\\SqlsrvErrAvoidServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SqlsrvErrAvoid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SakiTakamachi",
+                    "email": "saki@sakiot.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/SakiTakamachi/laravel-sqlsrv-err-avoid/issues",
+                "source": "https://github.com/SakiTakamachi/laravel-sqlsrv-err-avoid/tree/1.0.0"
+            },
+            "time": "2023-08-15T10:14:18+00:00"
         },
         {
             "name": "symfony/console",
