@@ -285,6 +285,7 @@ class Display_Controller extends Controller
     {
         $validator = Validator::make($request->all(), [
             'pembeli_id' => 'required',
+            'no_hp' => 'required'
         ]);
     
         if ($validator->fails()) {
@@ -292,10 +293,11 @@ class Display_Controller extends Controller
         }
 
         $pembeli_id = $request->input('pembeli_id');
+        $no_hp = $request->input('no_hp');
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT pembeli_id, gift_name, redeem_no, tanggal_redeem, Point_Terpakai, status_delivery FROM [dbo].[apps.riwayat_redeem](?)", [$pembeli_id]);
+            $result = DB::select("SELECT pembeli_id, gift_name, redeem_no, tanggal_redeem, Point_Terpakai, status_delivery FROM [dbo].[apps.riwayat_redeem](?, ?)", [$pembeli_id, $no_hp]);
             
             // Return the result
             return response()->json($result, 201);
@@ -308,8 +310,7 @@ class Display_Controller extends Controller
     {
         $validator = Validator::make($request->all(), [
             'pembeli_id' => 'required',
-            'year' => 'required',
-            'month' => 'required',
+            'no_hp' => 'required',
         ]);
     
         if ($validator->fails()) {
@@ -317,13 +318,25 @@ class Display_Controller extends Controller
         }
 
         $pembeli_id = $request->input('pembeli_id');
-        $year = $request->input('year');
-        $month = $request->input('month');
+        $no_hp = $request->input('no_hp');
+
+        if ($request->input('year') == null) {
+            $year = 'ALL';
+        } else {
+            $year = $request->input('year');
+        }
+
+        if ($request->input('month') == null) {
+            $month = 'ALL';
+        } else {
+            $month = $request->input('month');
+        }
 
         try {
             // Call the table-valued function
-            $result = DB::select("SELECT Year, Month, project_name, invoice_no, pembeli_id, kode_outlet, nama_outlet, Tanggal, total_cup, total_harga
-                FROM [dbo].[apps.riwayat_transaksi](?, ?, ?)", [$year, $month, $pembeli_id]);
+            $result = DB::select("SELECT Year, Month, project_name, invoice_no, pembeli_id, nomor_telfon, 
+                kode_outlet, nama_outlet, Tanggal, total_cup, total_harga
+                FROM [dbo].[apps.riwayat_transaksi](?, ?, ?, ?)", [$year, $month, $pembeli_id, $no_hp]);
             
             // Return the result
             return response()->json($result, 201);
@@ -338,6 +351,7 @@ class Display_Controller extends Controller
             'pembeli_id' => 'required',
             'year' => 'required',
             'month' => 'required',
+            'no_hp' => 'required',
             'outlet_id' => 'required',
             'invoice_no' => 'required'
         ]);
@@ -349,13 +363,14 @@ class Display_Controller extends Controller
         $pembeli_id = $request->input('pembeli_id');
         $year = $request->input('year');
         $month = $request->input('month');
+        $no_hp = $request->input('no_hp');
         $outlet_id = $request->input('outlet_id');
         $invoice_no = $request->input('invoice_no');
 
         try {
             // Call the table-valued function
             $result = DB::select("SELECT Year, Month, invoice_no, outlet_id, pembeli_id, kode_outlet, nama_produk, total_qty, total_harga
-                FROM [dbo].[apps.riwayat_transaksi_detail](?, ?, ?, ?, ?)", [$year, $month, $pembeli_id, $outlet_id, $invoice_no]);
+                FROM [dbo].[apps.riwayat_transaksi_detail](?, ?, ?, ?, ?, ?)", [$year, $month, $pembeli_id, $no_hp, $outlet_id, $invoice_no]);
             
             // Return the result
             return response()->json($result, 201);
