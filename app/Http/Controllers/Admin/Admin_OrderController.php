@@ -493,92 +493,49 @@ class Admin_OrderController extends Controller
      */
     public function orderDetail($invoice): View | RedirectResponse
     {
-        $data = Invoice_Master_Seller::select
-        (
-            'invoice_master_seller.id as idInvoiceMasterSeller',
-            'invoice_master_seller.outlet_id',
-            'invoice_master_seller.invoice_no',
-            'invoice_master_seller.qty',
-            'invoice_master_seller.amount',
-            'invoice_master_seller.date_created',
-            'invoice_master_seller.ongkir',
-            'invoice_master_seller.total',
-            'invoice_master_seller.progress',
-            'invoice_master_seller.kode_unik',
-            
-            'outlets.id as idOutlets',
-            'outlets.user_id',
-            'outlets.nama_outlet',
-            
-            'users_details.nomor_telfon',
-            'users_details.kode_pos',
-            'users_details.alamat_detail',
-            
-            'ref_kelurahan.kode_kelurahan',
-            'ref_kelurahan.nama_kelurahan',
-            'ref_kecamatan.nama_kecamatan',
-            'ref_kotakab.nama_kotakab',
-            'ref_propinsi.nama_propinsi',
-        )
-        ->leftJoin('outlets','invoice_master_seller.outlet_id','=','outlets.outlet_id')
-        ->leftJoin('users_details','outlets.user_id','=','users_details.user_id')
-        ->leftJoin('ref_kelurahan','users_details.kelurahan','=','ref_kelurahan.kode_kelurahan')
-        ->leftJoin('ref_kecamatan','users_details.kecamatan','=','ref_kecamatan.kode_kecamatan')
-        ->leftJoin('ref_kotakab','users_details.kota_kabupaten','=','ref_kotakab.kode_kotakab')
-        ->leftJoin('ref_propinsi','users_details.provinsi','=','ref_propinsi.kode_propinsi')
-        ->where('invoice_master_seller.invoice_no', $invoice)
-        ->first();
 
-        $detail = Invoice_Detail_Seller::select(
-            'invoice_detail_seller.invoice_no',
-            'invoice_detail_seller.sku_id',
-            'invoice_detail_seller.qty as qtyDetailSeller',
-            'invoice_detail_seller.amount as amountDetailSeller',
-            'invoice_detail_seller.discount',
-            'invoice_detail_seller.total_amount',
-            'invoice_detail_seller.project_id',
-            
-            'ref_produks.sku',
-            'ref_produks.nama_produk',
-            'ref_produks.path_thumbnail',
+        $master = DB::select("SELECT 
+            invoice_no, 
+            nama_outlet, 
+            date_created_invoice, 
+            alamat_detail, 
+            nama_kelurahan, 
+            nama_kecamatan, 
+            nama_kotakab, 
+            nama_provinsi, 
+            kodepos, 
+            amount,
+            ongkir,
+            kode_unik,
+            total,
+            jumlah_pembayaran,
+            no_hp_outlet,
+            no_resi,
+            tanggal_pengiriman,
+            path_bukti_pembayaran,
+            progress,
+            nama_bank,
+            path_icon_bank,
+            outlet_id
 
-            'ref_project.project_name',
-        )
-        ->leftJoin('ref_produks', 'invoice_detail_seller.sku_id', '=', 'ref_produks.sku')
-        ->leftJoin('ref_project', 'invoice_detail_seller.project_id', '=', 'ref_project.id')
-        ->where('invoice_detail_seller.invoice_no', $invoice)
-        ->get();
+            FROM [maigroup].[dbo].[web.invoice_master_seller] ('". $invoice ."')");
+        $masterSeller = $master[0];
+        
+        $detail = DB::select("SELECT 
+            sku_id,
+            path_thumbnail,
+            nama_produk,
+            project_name,
+            qty,
+            total_amount
 
-        $konfirmasi = Konfirmasi_Pembayaran::select(
-            'konfirmasi_pembayarans.outlet_id',
-            'konfirmasi_pembayarans.invoice_no',
-            'konfirmasi_pembayarans.asal_rekening_pembayaran',
-            'konfirmasi_pembayarans.nama_pemilik_rekening_pembayaran',
-            'konfirmasi_pembayarans.jumlah_pembayaran',
-            'konfirmasi_pembayarans.bukti_pembayaran',
-            'konfirmasi_pembayarans.path_bukti_pembayaran',
-            'konfirmasi_pembayarans.date_created',
+            FROM [maigroup].[dbo].[web.invoice_detail_seller] ('" . $invoice . "')");
 
-            'ref_bank.nama_bank',
-            'ref_bank.icon_bank',
-            'ref_bank.path_icon_bank'
-        )
-        ->leftjoin('ref_bank', 'konfirmasi_pembayarans.id_ref_bank_maigroup', '=', 'ref_bank.id')
-        ->where('invoice_no', $invoice)
-        ->first();
+        
 
-        $shipping = Invoice_Pengiriman_Seller::select(
-            'invoice_no',
-            'nama_ekspedisi',
-            'no_resi',
-            'tanggal_pengiriman'
-        )
-        ->where('invoice_no', $invoice)
-        ->first();
-
-        if (!$konfirmasi) {
+        if (!$masterSeller->jumlah_pembayaran) {
             return view('master.order.invoiceOrder', [
-                'data' => $data,
+                'data' => $masterSeller,
                 'details' => $detail
             ]);
         }
@@ -588,10 +545,8 @@ class Admin_OrderController extends Controller
         }
 
         return view('master.order.summaryInvoice', [
-            'data' => $data,
+            'data'    => $masterSeller,
             'details' => $detail,
-            'shipping' => $shipping,
-            'konfirmasi' => $konfirmasi,
         ]);
     }
 

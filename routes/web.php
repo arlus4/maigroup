@@ -145,6 +145,9 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-owner');
         Route::get('/get_data_stock_report', [DashboardController::class, 'getDataStockReport']);
 
+
+        Route::get('/bonus', [BonusController::class, 'owner_bonus']);
+
         // POS Sistem atau Menu Order
         Route::get('/menu-order', [MenuOrderController::class, 'index'])->name('owner_menu_order');
         Route::get('/get-produk/{produkId}', [MenuOrderController::class, 'getProduk'])->name('owner_get_produk');
@@ -156,6 +159,9 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/claim_bonus', [ClaimBonusController::class, 'claim_bonus'])->name('owner_claim_bonus');
         Route::get('/store_claim_bonus', [ClaimBonusController::class, 'store_claim_bonus'])->name('owner_store_claim_bonus');
         Route::post('/store_qr_code', [ClaimBonusController::class, 'store_qr_code'])->name('owner_store_qr_code');
+
+        Route::get('/bonus', [ClaimBonusController::class, 'new_bonus'])->name('owner_bonus');
+        Route::get('/bonus/get_data_pembeli_claim', [ClaimBonusController::class, 'get_data_pembeli_claim'])->name('get_data_pembeli_claim');
 
         // Restock
         Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');
@@ -169,9 +175,16 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/change-progress-order/{invoice}', [RestockController::class, 'changeProgressOrder'])->name('owner_change_progress_order');
 
         // Report Invoice
-        Route::get('/report-invoice', [ReportInvoiceController::class, 'index'])->name('owner_report_invoice');
-        Route::get('/detail-invoice/{invoice}', [ReportInvoiceController::class, 'detailInvoice'])->name('owner_detail_invoice');
+        Route::get('/report-invoice-pembelian', [ReportInvoiceController::class, 'invoicePembelian'])->name('owner_report_invoice_pembelian');
+        Route::get('/detail-invoice-pembelian/{invoice}', [ReportInvoiceController::class, 'detailInvoicePembelian'])->name('owner_detail_invoice_pembelian');
+        Route::get('/get-data-invoice-pembelian', [ReportInvoiceController::class, 'getDataInvoicePembelian'])->name('getDataInvoicePembelian');
+
+        Route::get('/report-invoice-penjualan', [ReportInvoiceController::class, 'invoicePenjualan'])->name('owner_report_invoice_penjualan');
+        Route::get('/detail-invoice-penjualan/{invoice}', [ReportInvoiceController::class, 'detailInvoicePenjualan'])->name('owner_detail_invoice_penjualan');
+        Route::get('/get-data-invoice-penjualan', [ReportInvoiceController::class, 'getDataInvoicePenjualan'])->name('getDataInvoicePenjualan');
+
         Route::get('/download-invoice/{invoice}', [ReportInvoiceController::class, 'downloadInvoice'])->name('owner_download_invoice');
+        
 
         // Akun Setting
         Route::get('/pengaturan-akun/{username}', [AkunSettingController::class, 'index'])->name('owner_pengaturan_akun');

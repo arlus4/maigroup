@@ -77,7 +77,7 @@
                                                         Order Date
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">{{ \Carbon\Carbon::parse($data->date_created)->format('d F Y') }}</td>
+                                                <td class="fw-bold text-end">{{ \Carbon\Carbon::parse($data->date_created_invoice)->format('d F Y') }}</td>
                                             </tr>
                                             <!--end::Date-->
                                             <!--begin::Payment method-->
@@ -96,8 +96,8 @@
                                                         Payment Method
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">{{ $konfirmasi->nama_bank }}
-                                                    <img src="{{ asset($konfirmasi->path_icon_bank) }}" class="w-50px ms-2" /> 
+                                                <td class="fw-bold text-end">{{ $data->nama_bank }}
+                                                    <img src="{{ asset($data->path_icon_bank) }}" class="w-50px ms-2" /> 
                                                 </td>
                                             </tr>
                                             <!--end::Payment method-->
@@ -117,7 +117,7 @@
                                                         Payment Date
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">{{ \Carbon\Carbon::parse($konfirmasi->date_created)->format('d F Y') }}</td>
+                                                <td class="fw-bold text-end">{{ \Carbon\Carbon::parse($data->date_created_invoice)->format('d F Y') }}</td>
                                             </tr>
                                             <!--end::Date-->
                                         </tbody>
@@ -198,7 +198,7 @@
                                                         Phone
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">{{ $data->nomor_telfon }}</td>
+                                                <td class="fw-bold text-end">{{ $data->no_hp_outlet }}</td>
                                             </tr>
                                             <!--end::Date-->
                                         </tbody>
@@ -260,8 +260,8 @@
                                                         <!--end::Svg Icon-->Shipping ID
                                                     </div>
                                                 </td>
-                                                @if ($shipping != null)
-                                                    <td class="fw-bold text-end">#{{ $shipping->no_resi }}</td>
+                                                @if ($data != null)
+                                                    <td class="fw-bold text-end">#{{ $data->no_resi }}</td>
                                                 @else
                                                     <td class="fw-bold text-end">Data Belum Tersedia</td>
                                                 @endif
@@ -281,8 +281,8 @@
                                                         Shipping Date
                                                     </div>
                                                 </td>
-                                                @if ($shipping != null)
-                                                    <td class="fw-bold text-end">{{ \Carbon\Carbon::parse($shipping->tanggal_pengiriman)->format('d F Y') }}</td>
+                                                @if ($data != null)
+                                                    <td class="fw-bold text-end">{{ \Carbon\Carbon::parse($data->tanggal_pengiriman)->format('d F Y') }}</td>
                                                 @else
                                                     <td class="fw-bold text-end">Data Belum Tersedia</td>
                                                 @endif
@@ -309,10 +309,10 @@
                                 <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
                                     <!--begin::Overlay-->
                                     <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
-                                        <a class="d-block overlay" data-fslightbox="lightbox-basic" href="{{ asset($konfirmasi->path_bukti_pembayaran) }}">
+                                        <a class="d-block overlay" data-fslightbox="lightbox-basic" href="{{ asset($data->path_bukti_pembayaran) }}">
                                             <!--begin::Image-->
                                             <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                                style="background-image:url('{{ asset($konfirmasi->path_bukti_pembayaran) }}')">
+                                                style="background-image:url('{{ asset($data->path_bukti_pembayaran) }}')">
                                             </div>
                                             <!--end::Image-->
 
@@ -345,7 +345,7 @@
                                         <!--begin::Card body-->
                                         <div class="card-body pt-0">{{ $data->alamat_detail }}, {{ $data->nama_kelurahan }},
                                             <br />{{ $data->nama_kecamatan }}, {{ $data->nama_kotakab }},
-                                            <br />{{ $data->nama_propinsi }}, {{ $data->kode_pos }}
+                                            <br />{{ $data->nama_provinsi }}, {{ $data->kodepos }}
                                         </div>
                                         <!--end::Card body-->
                                     </div>
@@ -415,11 +415,11 @@
                                                             @elseif ($detail->sku_id == "PA3")
                                                                 <td class="text-end">{{ $detail->sku_id }}</td>
                                                             @else
-                                                                <td class="text-end">{{ $detail->sku }}</td>
+                                                                <td class="text-end">{{ $detail->sku_id }}</td>
                                                             @endif
                                                             <!--end::SKU-->
                                                             <!--begin::Quantity-->
-                                                            <td class="text-end">{{ $detail->qtyDetailSeller }}</td>
+                                                            <td class="text-end">{{ $detail->qty }}</td>
                                                             <!--end::Quantity-->
                                                             <!--begin::Total-->
                                                             @if ($detail->total_amount == null)
