@@ -37,22 +37,17 @@ class ClaimBonusController extends Controller
     }
 
     public function get_data_pembeli_claim(){
-        $data = Log_Bonus::select(
-            'log_bonus.voucher_code',
-            'log_bonus.nomor_telfon',
-            'log_bonus.outlet_id',
-            'log_bonus.is_claim',
-            'log_bonus.is_gift',
-            'log_bonus.date_claim',
-            'log_bonus.date_gift',
-            'log_bonus.date_created',
+        $data = DB::select("SELECT 
+            voucher_code,
+            nomor_telfon,
+            is_claim,
+            is_gift,
+            date_claim,
+            date_gift,
+            name
 
-            'users_login.name',
-            'users_login.email'
-        )
-        ->leftJoin('users_login','log_bonus.nomor_telfon','=','users_login.no_hp')
-        ->where('log_bonus.outlet_id', Auth::user()->outlet_id)
-        ->get();
+            FROM [maigroup].[dbo].[web.log_bonus_pembeli_claim] ('". Auth::user()->outlet_id ."')
+        ");
 
         $datas = [
             'data' => $data

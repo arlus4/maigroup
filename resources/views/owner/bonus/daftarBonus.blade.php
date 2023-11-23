@@ -22,7 +22,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ Request::routeIs('admin.admin_waiting_payment_order') ? 'active' : '' }}" href="{{ route('admin.admin_waiting_payment_order') }}">
+                            <a class="menu-link" href="#">
                                 <span class="menu-icon">
                                     <i class="fas fa-gift"></i>
                                 </span>
@@ -38,9 +38,12 @@
                                 <thead>
                                     <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-100px text-dark">No</th>
-                                        <th class="min-w-100px text-dark">Id Outlet</th>
-                                        <th class="min-w-100px text-dark">Kode Voucher</th>
+                                        <th class="min-w-150px text-dark">Kode Voucher</th>
                                         <th class="min-w-100px text-dark">Info Pembeli</th>
+                                        <th class="min-w-100px text-dark">Status Claim</th>
+                                        <th class="min-w-100px text-dark">Status Gift</th>
+                                        <th class="min-w-150px text-dark">Tanggal Claim</th>
+                                        <th class="min-w-150px text-dark">Tanggal Gift</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-600 fw-semibold">
@@ -78,9 +81,6 @@
                         }
                     },
                     { 
-                        data: "outlet_id" 
-                    },
-                    { 
                         data: "voucher_code" 
                     },
                     {
@@ -92,6 +92,60 @@
                                             <span>${row.nomor_telfon}</span>
                                         </div>
                                     </div>`;
+                        }
+                    },
+                    {
+                        data: 'is_claim',
+                        render: function(data, type, row) {
+                            var status = '';
+                            switch (row.is_claim) {
+                                case "0":
+                                    status = '<span class="badge badge-light-danger">Bonus belum diclaim</span>';
+                                    break;
+                                case "1":
+                                    status = '<span class="badge badge-light-success">Bonus sudah diclaim</span>';
+                                    break;
+                            }
+                            return status;
+                        }
+                    },
+                    {
+                        data: 'is_gift',
+                        render: function(data, type, row) {
+                            var status = '';
+                            switch (row.is_gift) {
+                                case "0":
+                                    status = '<span class="badge badge-light-danger">Bonus belum diterima</span>';
+                                    break;
+                                case "1":
+                                    status = '<span class="badge badge-light-success">Bonus sudah diterima</span>';
+                                    break;
+                            }
+                            return status;
+                        }
+                    },
+                    {
+                        data: 'date_claim',
+                        render: function(data, type, row) {
+                            var status = '';
+                            if (row.date_claim == null) {
+                                status = '<span class="badge badge-light-danger">----</span>';
+                            }else{
+                                status = '<span class="badge badge-light-danger">tes</span>'; 
+                            }
+                            return status;
+                        }
+                    },
+                    {
+                        data: 'date_gift',
+                        render: function(data, type, row) {
+                            var status = '';
+                            if (row.date_gift == null) {
+                                status = '<span class="badge badge-light-danger">----</span>';
+                            }else{
+                                status = '<span class="badge badge-light-danger">tes</span>'; 
+                            }
+                            return status;
                         }
                     }
                 ]
