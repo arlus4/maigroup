@@ -42,6 +42,7 @@
                                     <th class="min-w-100px text-dark">Amount</th>
                                     <th class="min-w-100px text-dark">Progress</th>
                                     <th class="min-w-100px text-dark">Ongkos Kirim</th>
+                                    <th class="min-w-100px text-dark">Tanggal Pemesanan</th>
                                     <th class="min-w-100px text-dark"></th>
                                 </tr>
                             </thead>
@@ -311,6 +312,17 @@
                             }
                         }
                     },
+                    { 
+                        data: "date_created", 
+                        render: function(data, type, row) {
+                            if(type === 'display' || type === 'filter'){
+                                var date = new Date(data);
+                                var options = { day: '2-digit', month: 'long', year: 'numeric' };
+                                return date.toLocaleDateString('id-ID', options); // 'id-ID' untuk format Indonesia
+                            }
+                            return data;
+                        }
+                    },
                     {
                         data: null,
                         render: function(data, type, full, meta) {
@@ -395,16 +407,12 @@
                     $('#modalUpdateOngkir').modal('show');
                     $('#id-invoice').text(data.invoice_no);
                     $('#invoice_id').val(data.invoice_no);
-                    $('#tanggal-buat').text(dateFormat(data.date_created));
-                    $('#img-produk').text(data.thumbnail);
-                    $('#nama-kategori').text(data.project_name);
-                    $('#nama-produk').text(data.nama_produk);
-                    $('#qtyAmount').text(data.qty + ' x ' + rupiah(data.amount));
+                    $('#tanggal-buat').text(dateFormat(data.date_created_invoice));
                     $('#total-amount').text(rupiah(data.amount));
                     $('#nama-outlet').text(data.nama_outlet);
                     $('#nama-penjual').text(data.name);
-                    $('#no-hp').text(data.nomor_telfon);
-                    $('#alamat-detail').text(data.alamat_detail + ', Kelurahan ' + data.nama_kelurahan + ', Kecamatan ' + data.nama_kecamatan + ', ' + data.nama_kotakab + ', ' + data.nama_propinsi + ' ' + data.kode_pos + '.');
+                    $('#no-hp').text(data.no_hp_outlet);
+                    $('#alamat-detail').text(data.alamat_detail + ', Kelurahan ' + data.nama_kelurahan + ', Kecamatan ' + data.nama_kecamatan + ', ' + data.nama_kotakab + ', ' + data.nama_provinsi + ' ' + data.kodepos + '.');
                 },
                 error: function(data){
                     error

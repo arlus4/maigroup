@@ -21,68 +21,6 @@ use Illuminate\Http\RedirectResponse;
 
 class Admin_OrderController extends Controller
 {
-    // /**
-    //  * Display a listing of the resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function index(): View
-    // {
-    //     $data = Invoice_Master_Seller::select(
-    //             'invoice_master_seller.id as idInvoiceMasterSeller',
-    //             'invoice_master_seller.outlet_id',
-    //             'invoice_master_seller.invoice_no',
-    //             'invoice_master_seller.qty',
-    //             'invoice_master_seller.amount',
-    //             'invoice_master_seller.project_id',
-    //             'invoice_master_seller.progress',
-    //             'invoice_master_seller.ongkir',
-    //             'invoice_master_seller.total'
-    //         )
-    //         ->whereIn('invoice_master_seller.progress', ['0', '1'])
-    //         ->orderBy('invoice_master_seller.progress', 'asc')
-    //         ->get();
-
-    //     return view('master.order.daftarOrder', compact('data'));
-    // }
-
-    public function get_data_order($invoice)
-    {
-        $data = Invoice_Master_Seller::select
-        (
-            'invoice_master_seller.id as idInvoiceMasterSeller',
-            'invoice_master_seller.outlet_id',
-            'invoice_master_seller.invoice_no',
-            'invoice_master_seller.qty',
-            'invoice_master_seller.amount',
-            'invoice_master_seller.date_created',
-            
-            'outlets.id as idOutlets',
-            'outlets.user_id',
-            'outlets.nama_outlet',
-            
-            'users_details.nomor_telfon',
-            'users_details.kode_pos',
-            'users_details.alamat_detail',
-            
-            'ref_kelurahan.kode_kelurahan',
-            'ref_kelurahan.nama_kelurahan',
-            'ref_kecamatan.nama_kecamatan',
-            'ref_kotakab.nama_kotakab',
-            'ref_propinsi.nama_propinsi',
-        )
-        ->leftJoin('outlets','invoice_master_seller.outlet_id','=','outlets.outlet_id')
-        ->leftJoin('users_details','outlets.user_id','=','users_details.user_id')
-        ->leftJoin('ref_kelurahan','users_details.kelurahan','=','ref_kelurahan.kode_kelurahan')
-        ->leftJoin('ref_kecamatan','users_details.kecamatan','=','ref_kecamatan.kode_kecamatan')
-        ->leftJoin('ref_kotakab','users_details.kota_kabupaten','=','ref_kotakab.kode_kotakab')
-        ->leftJoin('ref_propinsi','users_details.provinsi','=','ref_propinsi.kode_propinsi')
-        ->where('invoice_master_seller.invoice_no', $invoice)
-        ->first();
-
-        return response()->json($data);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -107,7 +45,8 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.project_id',
             'invoice_master_seller.progress',
             'invoice_master_seller.ongkir',
-            'invoice_master_seller.total'
+            'invoice_master_seller.total',
+            'invoice_master_seller.date_created'
         )
         ->where('invoice_master_seller.progress', 0)
         ->orderBy('invoice_master_seller.date_created', 'asc')
@@ -118,6 +57,17 @@ class Admin_OrderController extends Controller
         ];
 
         return response()->json($datas);
+    }
+
+    public function get_data_order_ongkir($invoice)
+    {
+        $master = DB::select("SELECT 
+                invoice_no, date_created_invoice, amount, nama_outlet, no_hp_outlet, alamat_detail, 
+                nama_kelurahan, nama_kecamatan, nama_kotakab, nama_provinsi, kodepos
+            FROM [maigroup].[dbo].[web.invoice_master_seller] ('". $invoice ."')");
+        $masterSeller = $master[0];
+
+        return response()->json($masterSeller);
     }
 
     /**
@@ -253,7 +203,8 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.project_id',
             'invoice_master_seller.progress',
             'invoice_master_seller.ongkir',
-            'invoice_master_seller.total'
+            'invoice_master_seller.total',
+            'invoice_master_seller.date_created'
         )
         ->where('invoice_master_seller.progress', 1)
         ->orderBy('invoice_master_seller.date_created', 'asc')
@@ -290,7 +241,8 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.project_id',
             'invoice_master_seller.progress',
             'invoice_master_seller.ongkir',
-            'invoice_master_seller.total'
+            'invoice_master_seller.total',
+            'invoice_master_seller.date_created'
         )
         ->where('invoice_master_seller.progress', 2)
         ->orderBy('invoice_master_seller.date_created', 'asc')
@@ -358,7 +310,8 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.project_id',
             'invoice_master_seller.progress',
             'invoice_master_seller.ongkir',
-            'invoice_master_seller.total'
+            'invoice_master_seller.total',
+            'invoice_master_seller.date_created'
         )
         ->where('invoice_master_seller.progress', 3)
         ->orderBy('invoice_master_seller.date_created', 'asc')
@@ -436,7 +389,8 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.project_id',
             'invoice_master_seller.progress',
             'invoice_master_seller.ongkir',
-            'invoice_master_seller.total'
+            'invoice_master_seller.total',
+            'invoice_master_seller.date_created'
         )
         ->where('invoice_master_seller.progress', 4)
         ->orderBy('invoice_master_seller.date_created', 'asc')
@@ -473,7 +427,8 @@ class Admin_OrderController extends Controller
             'invoice_master_seller.project_id',
             'invoice_master_seller.progress',
             'invoice_master_seller.ongkir',
-            'invoice_master_seller.total'
+            'invoice_master_seller.total',
+            'invoice_master_seller.date_created'
         )
         ->where('invoice_master_seller.progress', 6)
         ->orderBy('invoice_master_seller.date_created', 'asc')
@@ -493,45 +448,16 @@ class Admin_OrderController extends Controller
      */
     public function orderDetail($invoice): View | RedirectResponse
     {
-
         $master = DB::select("SELECT 
-            invoice_no, 
-            nama_outlet, 
-            date_created_invoice, 
-            alamat_detail, 
-            nama_kelurahan, 
-            nama_kecamatan, 
-            nama_kotakab, 
-            nama_provinsi, 
-            kodepos, 
-            amount,
-            ongkir,
-            kode_unik,
-            total,
-            jumlah_pembayaran,
-            no_hp_outlet,
-            no_resi,
-            tanggal_pengiriman,
-            path_bukti_pembayaran,
-            progress,
-            nama_bank,
-            path_icon_bank,
-            outlet_id
+                invoice_no, nama_outlet, date_created_invoice, alamat_detail, nama_kelurahan, nama_kecamatan, nama_kotakab, 
+                nama_provinsi, kodepos, amount, ongkir, kode_unik, total, jumlah_pembayaran, no_hp_outlet, no_resi, 
+                tanggal_pengiriman, path_bukti_pembayaran, progress, nama_bank, path_icon_bank, outlet_id
 
             FROM [maigroup].[dbo].[web.invoice_master_seller] ('". $invoice ."')");
         $masterSeller = $master[0];
         
-        $detail = DB::select("SELECT 
-            sku_id,
-            path_thumbnail,
-            nama_produk,
-            project_name,
-            qty,
-            total_amount
-
+        $detail = DB::select("SELECT sku_id, path_thumbnail, nama_produk, project_name, qty, total_amount
             FROM [maigroup].[dbo].[web.invoice_detail_seller] ('" . $invoice . "')");
-
-        
 
         if (!$masterSeller->jumlah_pembayaran) {
             return view('master.order.invoiceOrder', [

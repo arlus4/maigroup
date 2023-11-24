@@ -439,7 +439,7 @@
                 $('#modalUpdateOngkir').modal('show');
                 $('#id-invoice').text(data.invoice_no);
                 $('#invoice_id').val(data.invoice_no);
-                $('#tanggal-buat').text(dateFormat(data.date_created));
+                $('#tanggal-buat').text(dateFormat(data.date_created_invoice));
                 $('#img-produk').text(data.thumbnail);
                 $('#nama-kategori').text(data.project_name);
                 $('#nama-produk').text(data.nama_produk);

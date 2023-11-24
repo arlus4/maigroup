@@ -1,26 +1,27 @@
 <?php
 
-use App\Http\Controllers\Admin\Admin_ArtikelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Check_Connection;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Owner\POSController;
+use App\Http\Controllers\Owner\RestockController;
+use App\Http\Controllers\Owner\DashboardController;
+use App\Http\Controllers\Owner\MenuOrderController;
+use App\Http\Controllers\Admin\Admin_BankController;
+use App\Http\Controllers\Owner\ClaimBonusController;
 use App\Http\Controllers\Admin\Admin_OrderController;
+use App\Http\Controllers\Owner\AkunSettingController;
+
 use App\Http\Controllers\Admin\Admin_BannerController;
+use App\Http\Controllers\Admin\Admin_ReportController;
+use App\Http\Controllers\Admin\Admin_ArtikelController;
 use App\Http\Controllers\Admin\Admin_ProductController;
+use App\Http\Controllers\Owner\ReportInvoiceController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Project_ProductController;
-use App\Http\Controllers\Admin\Admin_BankController;
-
-use App\Http\Controllers\Owner\ClaimBonusController;
-use App\Http\Controllers\Owner\DashboardController;
-use App\Http\Controllers\Owner\POSController;
-use App\Http\Controllers\Owner\MenuOrderController;
-use App\Http\Controllers\Owner\RestockController;
-use App\Http\Controllers\Owner\ReportInvoiceController;
-use App\Http\Controllers\Owner\AkunSettingController;
 
 // Route::get('/', [HomeController::class, 'home']);
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -102,7 +103,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/download-invoice/{invoice}', [Admin_OrderController::class, 'downloadInvoice'])->name('admin.download.invoice');
         
         // Data Order
-        Route::get('/data_order/{invoice}', [Admin_OrderController::class, 'get_data_order'])->name('admin_get_data_order');
+        Route::get('/data_order/{invoice}', [Admin_OrderController::class, 'get_data_order_ongkir'])->name('admin_get_data_order');
         Route::get('/order/get_data_new_order', [Admin_OrderController::class, 'get_data_new_order']);
         Route::get('/order/get_data_waiting_payment', [Admin_OrderController::class, 'get_data_waiting_payment']);
         Route::get('/order/get_data_payment_received', [Admin_OrderController::class, 'get_data_payment_received']);
@@ -134,6 +135,10 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/storeUpdate_bank', [Admin_BankController::class, 'storeOrUpdate'])->name('admin_store_update_bank');
         Route::get('/edit_bank', [Admin_BankController::class, 'edit'])->name('admin_edit_bank');
         Route::post('/destroy_bank', [Admin_BankController::class, 'destroy'])->name('admin_destroy_bank');
+
+        // Report
+        Route::get('/report_invoice', [Admin_ReportController::class, 'report_inovice'])->name('admin_report_invoice');
+        Route::get('/get_data_report_invoice', [Admin_ReportController::class, 'get_data_report_invoice']);
     });
 });
 
