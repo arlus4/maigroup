@@ -103,7 +103,7 @@ class ReportInvoiceController extends Controller
             redirect()->back()->with('error', 'Tidak Ada Detail');
         }
 
-        return view('owner.report-invoice.detailInvoicePembelian', [
+        return view('owner.report-invoice.detailInvoicePenjualan', [
             'data'     => $data,
             'details'  => $detail
         ]);
@@ -134,8 +134,6 @@ class ReportInvoiceController extends Controller
 
             FROM [maigroup].[dbo].[web.invoice_detail_pembeli] ('". $invoice ."')
         ");
-
-        // dd($data, $detail);
 
         if (!$detail) {
             redirect()->back()->with('error', 'Tidak Ada Detail');
