@@ -46,12 +46,11 @@
 										<div class="menu-item px-3">
 											<div class="menu-content d-flex align-items-center px-3">
 												<div class="symbol symbol-50px me-5">
-													<img alt="Logo" src="{{ $global_user->path_avatar ?: asset('assets/images/avatar.png') }}" />
+													<img alt="Logo" src="{{ asset($global_user->path_avatar) ?: asset('assets/images/avatar.png') }}" />
 												</div>
 												<div class="d-flex flex-column">
 													<div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
 												</div>
-												@dd(Auth::user())
 													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
 												</div>
 											</div>
