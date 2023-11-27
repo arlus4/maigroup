@@ -70,7 +70,7 @@
                                                         <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                                                             <div class="flex-root d-flex flex-column">
                                                                 <span class="text-muted">Tanggal</span>
-                                                                <span class="fs-5">{{ \Carbon\Carbon::parse($data->date_created)->format('d F Y') }}</span>
+                                                                <span class="fs-5">{{ \Carbon\Carbon::parse($data->date_created_invoice)->format('d F Y') }}</span>
                                                             </div>
                                                             <div class="flex-root d-flex flex-column">
                                                                 <span class="text-muted">Invoice ID</span>
@@ -80,7 +80,7 @@
                                                                 <span class="text-muted">Alamat Outlet</span>
                                                                 <span class="fs-6">{{ $data->alamat_detail }}, {{ $data->nama_kelurahan }},
                                                                     <br />{{ $data->nama_kecamatan }}, {{ $data->nama_kotakab }},
-                                                                    <br />{{ $data->nama_propinsi }}, {{ $data->kode_pos }}
+                                                                    <br />{{ $data->nama_provinsi }}, {{ $data->kodepos }}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -142,11 +142,11 @@
                                                                                 @elseif ($detail->sku_id == "PA3")
                                                                                     <td class="text-end">{{ $detail->sku_id }}</td>
                                                                                 @else
-                                                                                    <td class="text-end">{{ $detail->sku }}</td>
+                                                                                    <td class="text-end">{{ $detail->sku_id }}</td>
                                                                                 @endif
                                                                                 <!--end::SKU-->
                                                                                 <!--begin::Quantity-->
-                                                                                <td class="text-end">{{ $detail->qtyDetailSeller }}</td>
+                                                                                <td class="text-end">{{ $detail->qty }}</td>
                                                                                 <!--end::Quantity-->
                                                                                 <!--begin::Total-->
                                                                                 <td class="text-end">@rupiah($detail->total_amount)</td>

@@ -170,6 +170,8 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
 
         Route::get('/bonus', [ClaimBonusController::class, 'new_bonus'])->name('owner_bonus');
         Route::get('/bonus/get_data_pembeli_claim', [ClaimBonusController::class, 'get_data_pembeli_claim'])->name('get_data_pembeli_claim');
+        Route::get('/bonus_gift', [ClaimBonusController::class, 'new_bonus_gift'])->name('owner_bonus_gift');
+        Route::get('/bonus/get_data_pembeli_gift', [ClaimBonusController::class, 'get_data_pembeli_gift'])->name('get_data_pembeli_gift');
 
         // Restock
         Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');

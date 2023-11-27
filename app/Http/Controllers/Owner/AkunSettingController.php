@@ -22,7 +22,6 @@ use Illuminate\Validation\Rules\Password;
 class AkunSettingController extends Controller
 {
     public function index($username){
-
         if (Auth::user()->username === $username) {
             // Jika nama pengguna cocok, lanjutkan ke tindakan yang diinginkan
 
@@ -58,6 +57,7 @@ class AkunSettingController extends Controller
             'users_login.email',
 
             'users_details.avatar',
+            'users_details.path_avatar',
             'users_details.nomor_ktp',
             'users_details.tanggal_lahir',
             'users_details.jenis_kelamin',
@@ -99,39 +99,38 @@ class AkunSettingController extends Controller
 
     public function updateProfile(Request $request, $username){
         try {
-            DB::beginTransaction(); // Start a database transaction
-
+            DB::beginTransaction();
+            
+            // Validasi data dasar
             $request->validate([
-                'name'          => 'required',
-                'nomor_ktp'     => 'required',
-                'no_hp'         => 'required',
+                'name' => 'required',
+                'nomor_ktp' => 'required',
+                'no_hp' => 'required',
             ]);
-
+    
+            $imageName = $request->input('avatar_lama'); // Gunakan gambar lama sebagai default
+            $imagePath = 'storage/user_penjual/avatar/' . $imageName;
+    
             if ($request->hasFile('avatar')) {
-                $request->validate([
-                    'avatar' => 'required|mimes:jpeg,png,jpg,gif',
-                ], [
-                    'avatar.mimes' => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
-                ]);
-                
-                // Store the uploaded image in storage/app/storage/avatar directory
+                // Validasi gambar baru tanpa 'required'
+                $request->validate(['avatar' => 'mimes:jpeg,png,jpg,gif']);
+            
+                // Simpan gambar baru
                 $imageName = Str::random(10) . '_' . $request->avatar->getClientOriginalName();
-
                 $request->avatar->storeAs('user_penjual/avatar/', $imageName, 'public');
-                
-                // Generate the public URL of the stored image using storage:link
                 $imagePath = 'storage/user_penjual/avatar/' . $imageName;
-
-                // Delete Old Image
-                $avatarPath = 'storage/user_penjual/avatar/' . $request->avatar;
-                if (Storage::disk('public')->exists($avatarPath)) {
-                    $deleted = Storage::disk('public')->delete($avatarPath);
+            
+                // Hapus gambar lama jika ada dan berbeda dengan gambar baru
+                $oldImagePath = public_path($request->input('avatar_lama'));
+                if ($request->input('avatar_lama') && file_exists($oldImagePath) && $oldImagePath != $imagePath) {
+                    unlink($oldImagePath);
                 }
             } else {
-                $imageName = $request->avatar;
-                $imagePath = $request->path_avatar;
+                // Jika tidak ada gambar yang diupload, gunakan gambar lama
+                $imageName = $request->input('avatar_lama'); // Pastikan nilai ini ada di database
+                $imagePath = $request->input('avatar_lama') ? 'storage/user_penjual/avatar/' . $request->input('avatar_lama') : null;
             }
-
+    
             $user = User::where('id', $request->idUserLogin)->first();
 
             if ($user) {
@@ -159,17 +158,14 @@ class AkunSettingController extends Controller
                     ]
                 );
             }
-
-            DB::commit(); // Commit the transaction
-
+    
+            DB::commit();
+            return redirect()->route('owner.owner_pengaturan_akun', ['username' => Auth::user()->username])->with('toastr_success', 'Berhasil Mengubah Profile');
         } catch (\Throwable $th) {
-            DB::rollback(); // Rollback the transaction in case of an exception
-
-            Log::error($th); // Log the exception for debugging
-
+            DB::rollback();
+            Log::error($th);
             return redirect()->back()->with('error', 'Gagal Mengubah Profile  : ' . $th->getMessage());
         }
-        return redirect()->route('owner.owner_pengaturan_akun', ['username' => Auth::user()->username])->with('toastr_success', 'Berhasil Mengubah Profile');
     }
 
     public function updatePassword(Request $request)
