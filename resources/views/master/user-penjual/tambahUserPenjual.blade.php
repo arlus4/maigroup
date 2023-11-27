@@ -63,6 +63,7 @@
                                                                 <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">No HP</label>
                                                                 <input type="text" name="no_hp" class="form-control mb-2" id="no_hp" placeholder="Contoh : 081xxxxx" required/>
                                                                 <div class="text-muted fs-7" style="color: #31353B!important;">No HP <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                                <div id="noHpUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">No HP Sudah digunakan</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -90,13 +91,15 @@
 												<label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Username</label>
 												<input type="text" name="username" id="slug_user" class="form-control mb-2 username" placeholder="asep123" required>
 												<div class="text-muted fs-7" style="color: #31353B!important;">Username <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                <div id="usernameUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Username Sudah digunakan</div>
 											</div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
                                                         <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Email</label>
-                                                        <input type="email" name="email" class="form-control mb-2 email" placeholder="asep123@gmail.com" required>
+                                                        <input type="email" name="email" id="email" class="form-control mb-2 email" placeholder="asep123@gmail.com" required>
                                                         <div class="text-muted fs-7" style="color: #31353B!important;">Masukkan format Email yang valid dan Email <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                        <div id="emailUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Email Sudah digunakan</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -291,6 +294,75 @@
             fetch('/admin/userSlug?name=' + name.value)
             .then(response => response.json())
             .then(data => slug_user.value = data.username)
+        });
+    </script>
+
+    <!-- Validasi Nomor HP -->
+    <script>
+        $('#no_hp').on('input', function() {
+            var noHp = $(this).val();
+            
+            $.ajax({
+                url: '/admin/validateNoHp',
+                type: 'GET',
+                data: { 'no_hp': noHp },
+                success: function(data) {
+                    if(data.isUsed) {
+                        $('#noHpUsedMsg').show();
+                    } else {
+                        $('#noHpUsedMsg').hide();
+                    }
+                },
+                error: function() {
+                    // Handle error
+                }
+            });
+        });
+    </script>
+
+    <!-- Validasi Username -->
+    <script>
+        $('#slug_user').on('input', function() {
+            var username = $(this).val();
+            
+            $.ajax({
+                url: '/admin/validateUsername',
+                type: 'GET',
+                data: { 'username': username },
+                success: function(data) {
+                    if(data.dipakai) {
+                        $('#usernameUsedMsg').show();
+                    } else {
+                        $('#usernameUsedMsg').hide();
+                    }
+                },
+                error: function() {
+                    // Handle error
+                }
+            });
+        });
+    </script>
+
+    <!-- Validasi Email -->
+    <script>
+        $('#email').on('input', function() {
+            var email = $(this).val();
+            
+            $.ajax({
+                url: '/admin/validateEmail',
+                type: 'GET',
+                data: { 'email': email },
+                success: function(data) {
+                    if(data.used) {
+                        $('#emailUsedMsg').show();
+                    } else {
+                        $('#emailUsedMsg').hide();
+                    }
+                },
+                error: function() {
+                    // Handle error
+                }
+            });
         });
     </script>
 

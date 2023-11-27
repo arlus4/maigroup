@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use DataTables;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Outlet;
 use App\Models\ref_KodePos;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Svg\Tag\Rect;
 
 class Admin_UserPenjualController extends Controller
 {
@@ -91,7 +93,7 @@ class Admin_UserPenjualController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request): View
+    public function create(): View
     {
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();
         $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
@@ -115,14 +117,18 @@ class Admin_UserPenjualController extends Controller
 
             $request->validate([
                 'name'          => 'required',
-                'username'      => 'required',
-                'email'         => 'required',
+                'username'      => 'required|unique:users_login',
+                'email'         => 'required|email|unique:users_login',
                 'password'      => 'required',
-                'no_hp'         => 'required',
+                'no_hp'         => 'required|unique:users_login',
                 'nomor_ktp'     => 'required',
                 'nama_outlet'   => 'required',
                 'slug'          => 'required|unique:outlets',
-            ]);
+            ], [
+                'username.unique' => 'Username Sudah Digunakan',
+                'email.unique'    => 'Email Sudah Digunakan',
+                'no_hp.unique'    => 'Nomor HP Sudah Digunakan',
+            ]);            
 
             if ($request->hasFile('avatar')) {
                 $request->validate([
@@ -152,6 +158,8 @@ class Admin_UserPenjualController extends Controller
                 'no_hp'        => $request->no_hp,
                 'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT),
                 'is_active'    => 1,
+                'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             Users_Detail::create([
@@ -168,6 +176,8 @@ class Admin_UserPenjualController extends Controller
                 'provinsi'          => $request->provinsi,
                 'kode_pos'          => $request->kode_pos,
                 'alamat_detail'     => $request->alamat_detail,
+                'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             $storeOutlet = Outlet::create([
@@ -177,7 +187,9 @@ class Admin_UserPenjualController extends Controller
                 'slug'         => $request->slug,
                 'no_hp'        => $request->no_hp,
                 'is_verified'  => 0,
-                'outlet_id'    => $storeUser->outlet_id
+                'outlet_id'    => $storeUser->outlet_id,
+                'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             Alamat_Outlet::create([
@@ -186,14 +198,17 @@ class Admin_UserPenjualController extends Controller
                 'kode_kotakab'      => $request->kotkab_outlet,
                 'kode_kecamatan'    => $request->kecamatan_outlet,
                 'kode_kelurahan'    => $request->kelurahan_outlet,
-                'kodepos'          => $request->kode_pos_outlet,
+                'kodepos'           => $request->kode_pos_outlet,
                 'alamat_detail'     => $request->alamat_detail_outlet,
-                'map_location'      => $request->map_location_outlet
+                'map_location'      => $request->map_location_outlet,
+                'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             ref_KuotaPoint::create([
                 'outlet_id'    => $storeUser->outlet_id,
-                'kuota_point'  => 0
+                'kuota_point'  => 0,
+                'update_date'  => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             DB::commit(); // Commit the transaction
@@ -451,5 +466,29 @@ class Admin_UserPenjualController extends Controller
         User::where('id', $user)->update(['is_active' => $isActive]);
 
         return response()->json(['message' => 'Status Berhasil Diubah.']);
+    }
+
+    public function validateNoHp(Request $request)
+    {
+        $noHp = $request->no_hp;
+        $isUsed = User::where('no_hp', $noHp)->exists();
+
+        return response()->json(['isUsed' => $isUsed]);
+    }
+
+    public function validateUsername(Request $request)
+    {
+        $username = $request->username;
+        $dipakai = User::where('username', $username)->exists();
+
+        return response()->json(['dipakai' => $dipakai]);
+    }
+
+    public function validateEmail(Request $request)
+    {
+        $email = $request->email;
+        $used = User::where('email', $email)->exists();
+
+        return response()->json(['used' => $used]);
     }
 }
