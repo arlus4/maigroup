@@ -111,7 +111,7 @@
                                                 <select class="form-select mb-2" name="provinsi" id="prv_id" data-control="select2" data-placeholder="Pilih Provinsi" data-allow-clear="true">
                                                     <option></option>
                                                     @foreach($getProvinsi as $provinsi)
-                                                        <option value="{{ $provinsi->kode_propinsi }}" {{ $getData['provinsi'] == $provinsi->kode_propinsi ? 'selected' : '' }}>
+                                                        <option value="{{ $provinsi->kode_propinsi }}" {{ $getData->kode_propinsi == $provinsi->kode_propinsi ? 'selected' : '' }}>
                                                             {{ $provinsi->nama_propinsi }}
                                                         </option>
                                                     @endforeach
@@ -124,7 +124,7 @@
                                                         <select class="form-select mb-2" name="kotkab" id="kotkab_id" data-control="select2" data-placeholder="Pilih Kota / Kabupaten" data-allow-clear="true">
                                                             <option></option>
                                                             @foreach ($getKotaKab as $kotkab)
-                                                                <option value="{{ $kotkab->kode_kotakab }}" {{ $getData['kota_kabupaten'] == $kotkab->kode_kotakab ? 'selected' : '' }}>
+                                                                <option value="{{ $kotkab->kode_kotakab }}" {{ $getData->kode_kotakab == $kotkab->kode_kotakab ? 'selected' : '' }}>
                                                                     {{ $kotkab->nama_kotakab }}
                                                                 </option>
                                                             @endforeach
@@ -137,7 +137,7 @@
                                                         <select class="form-select mb-2" name="kecamatan" id="kecamatan_id" data-control="select2" data-placeholder="Pilih Kecamatan" data-allow-clear="true">
                                                             <option></option>
                                                             @foreach ($getKecamatan as $kecamatan)
-                                                                <option value="{{ $kecamatan->kode_kecamatan }}" {{ $getData['kecamatan'] == $kecamatan->kode_kecamatan ? 'selected' : '' }}>
+                                                                <option value="{{ $kecamatan->kode_kecamatan }}" {{ $getData->kode_kecamatan == $kecamatan->kode_kecamatan ? 'selected' : '' }}>
                                                                     {{ $kecamatan->nama_kecamatan }}
                                                                 </option>
                                                             @endforeach
@@ -152,7 +152,7 @@
                                                         <select class="form-select mb-2" name="kelurahan" id="kelurahan_id" data-control="select2" data-placeholder="Pilih Kelurahan" data-allow-clear="true">
                                                             <option></option>
                                                             @foreach ($getKelurahan as $kelurahan)
-                                                                <option value="{{ $kelurahan->kode_kelurahan }}" {{ $getData['kelurahan'] == $kelurahan->kode_kelurahan ? 'selected' : '' }}>
+                                                                <option value="{{ $kelurahan->kode_kelurahan }}" {{ $getData->kode_kelurahan == $kelurahan->kode_kelurahan ? 'selected' : '' }}>
                                                                     {{ $kelurahan->nama_kelurahan }}
                                                                 </option>
                                                             @endforeach
@@ -165,7 +165,7 @@
                                                         <select class="form-select mb-2" name="kode_pos" id="kodepos_id" data-control="select2" data-placeholder="Pilih Kode Pos" data-allow-clear="true">
                                                             <option></option>
                                                             @foreach ($getKodePos as $kodepos)
-                                                                <option value="{{ $kodepos->kodepos }}" {{ $getData['kode_pos'] == $kodepos->kodepos ? 'selected' : '' }}>
+                                                                <option value="{{ $kodepos->kodepos }}" {{ $getData->kode_pos == $kodepos->kodepos ? 'selected' : '' }}>
                                                                     {{ $kodepos->kodepos }}
                                                                 </option>
                                                             @endforeach

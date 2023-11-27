@@ -201,5 +201,8 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/pengaturan-akun/edit-profile/{username}', [AkunSettingController::class, 'editProfile'])->name('owner_edit_profile');
         Route::post('/pengaturan-akun/update-profile/{username}', [AkunSettingController::class, 'updateProfile'])->name('owner_update_profile');
         Route::post('/pengaturan-akun/update-password/{username}', [AkunSettingController::class, 'updatePassword'])->name('owner_update_password');
+        Route::get('/OwnervalidateNoHp', [AkunSettingController::class, 'OwnervalidateNoHp']);
+        Route::get('/OwnervalidateUsername', [AkunSettingController::class, 'OwnervalidateUsername']);
+        Route::get('/OwnervalidateEmail', [AkunSettingController::class, 'OwnervalidateEmail']);
     });
 });
