@@ -50,7 +50,7 @@
 
             <div class="welcome-hero-txt">
                 <div class="col-md-6 css-cnk12sj">
-                    <h2 class="css-dniud9a">Segar Nikmat <br>Kesetiaan Yang Memikat <br><span style="font-size: 30px;">#1 Ice Tea With Loyalty</span></h2>
+                    <h2 class="css-dniud9a">Segarnya Nikmat <br>Kesetiaan Yang Memikat <br><span style="font-size: 30px;">#1 Ice Tea With Loyalty</span></h2>
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-md-6">
                             <button class="btn" style="width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
