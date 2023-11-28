@@ -55,4 +55,32 @@ class ClaimBonusController extends Controller
 
         return response()->json($datas);
     }
+
+    public function new_bonus_gift()
+    {
+        return view('owner.bonus.daftarBonus', [
+            'title' => "Pembeli Gift",
+            'url'   => 'get_data_pembeli_gift'
+        ]);
+    }
+
+    public function get_data_pembeli_gift(){
+        $data = DB::select("SELECT 
+            voucher_code,
+            nomor_telfon,
+            is_claim,
+            is_gift,
+            date_claim,
+            date_gift,
+            name
+        
+            FROM [maigroup].[dbo].[web.log_bonus_pembeli_gift] ('". Auth::user()->outlet_id ."')
+        ");
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
 }

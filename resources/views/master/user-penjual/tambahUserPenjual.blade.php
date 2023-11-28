@@ -62,7 +62,8 @@
                                                             <div class="mb-10 fv-row">
                                                                 <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">No HP</label>
                                                                 <input type="text" name="no_hp" class="form-control mb-2" id="no_hp" placeholder="Contoh : 081xxxxx" required/>
-                                                                <div class="text-muted fs-7" style="color: #31353B!important;">No HP <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                                <div id="textAlert" class="text-muted fs-7" style="color: #31353B!important;">No HP <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                                <div id="noHpUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">No HP Sudah digunakan</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -89,14 +90,16 @@
 											<div class="mb-10 fv-row">
 												<label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Username</label>
 												<input type="text" name="username" id="slug_user" class="form-control mb-2 username" placeholder="asep123" required>
-												<div class="text-muted fs-7" style="color: #31353B!important;">Username <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+												<div id="textAlertUsername" class="text-muted fs-7" style="color: #31353B!important;">Username <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                <div id="usernameUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Username Sudah digunakan</div>
 											</div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
                                                         <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Email</label>
-                                                        <input type="email" name="email" class="form-control mb-2 email" placeholder="asep123@gmail.com" required>
-                                                        <div class="text-muted fs-7" style="color: #31353B!important;">Masukkan format Email yang valid dan Email <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                        <input type="email" name="email" id="email" class="form-control mb-2 email" placeholder="asep123@gmail.com" required>
+                                                        <div id="textAlertEmail" class="text-muted fs-7" style="color: #31353B!important;">Masukkan format Email yang valid dan Email <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                        <div id="emailUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Email Sudah digunakan</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -269,7 +272,7 @@
 @endsection
 
 @section('script')
-
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 	<!-- slug Outlet -->
     <script type="text/javascript">
         const nama_outlet = document.querySelector('#nama_outlet');
@@ -284,7 +287,7 @@
 
     <!-- slug Username -->
     <script type="text/javascript">
-        const name = document.querySelector('#name');
+        const name      = document.querySelector('#name');
         const slug_user = document.querySelector('#slug_user');
 
         name.addEventListener('change', function(){
@@ -305,6 +308,116 @@
                 // Ganti ikon tipe input
                 $(this).find('i').toggleClass('fa-eye-slash fa-eye');
             });
+
+            $("#no_hp").keydown(function (e) {
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                    (e.keyCode == 65 && e.ctrlKey === true) ||
+                    (e.keyCode >= 35 && e.keyCode <= 39)) {
+                    return;
+                }
+
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+
+            var handleSearchNoHp = _.debounce(function() {
+                var noHP         = $('#no_hp').val();
+                var noHpUsedMsg  = $('#noHpUsedMsg');
+                var textAlert    = $('#textAlert');
+
+                if (noHP.length >= 3) {
+                    $.ajax({
+                        url: "/admin/validateNoHp",
+                        type: "GET",
+                        data: { 'no_hp': noHP },
+                        success: function(data) {
+                            let isUsed = data && data.isUsed;
+
+                            if (isUsed) {
+                                noHpUsedMsg.css('display', 'block');
+                                textAlert.css('display', 'none');
+                            } else {
+                                noHpUsedMsg.css('display', 'none');
+                                textAlert.css('display', 'block');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Error saat pencarian:", error);
+                        }
+                    });
+                } else {
+                    noHpUsedMsg.css('display', 'none');
+                    textAlert.css('display', 'block');
+                }
+            }, 300);
+
+            var handleSearchUsername = _.debounce(function() {
+                var userName           = $('#slug_user').val();
+                var usernameUsedMsg    = $('#usernameUsedMsg');
+                var textAlertUsername  = $('#textAlertUsername');
+
+                if (userName.length >= 3) {
+                    $.ajax({
+                        url: "/admin/validateUsername",
+                        type: "GET",
+                        data: { 'username': userName },
+                        success: function(data) {
+                            let dipakai = data && data.dipakai;
+
+                            if (dipakai) {
+                                usernameUsedMsg.css('display', 'block');
+                                textAlertUsername.css('display', 'none');
+                            } else {
+                                usernameUsedMsg.css('display', 'none');
+                                textAlertUsername.css('display', 'block');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Error saat pencarian:", error);
+                        }
+                    });
+                } else {
+                    usernameUsedMsg.css('display', 'none');
+                    textAlertUsername.css('display', 'block');
+                }
+            }, 300);
+
+            var handleSearchEmail = _.debounce(function() {
+                var email           = $('#email').val();
+                var emailUsedMsg    = $('#emailUsedMsg');
+                var textAlertEmail  = $('#textAlertEmail');
+
+                if (email.length >= 3) {
+                    $.ajax({
+                        url: "/admin/validateEmail",
+                        type: "GET",
+                        data: { 'email': email },
+                        success: function(data) {
+                            let used = data && data.used;
+
+                            if (used) {
+                                emailUsedMsg.css('display', 'block');
+                                textAlertEmail.css('display', 'none');
+                            } else {
+                                emailUsedMsg.css('display', 'none');
+                                textAlertEmail.css('display', 'block');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Error saat pencarian:", error);
+                        }
+                    });
+                } else {
+                    emailUsedMsg.css('display', 'none');
+                    textAlertEmail.css('display', 'block');
+                }
+            }, 300);
+
+            $('#no_hp').on('input', handleSearchNoHp);
+            $('#slug_user').on('input', handleSearchUsername);
+            $('#email').on('input', handleSearchEmail);
+
 
             $("#prv_id").change(function() {
                 var provinsi_id = $(this).val();

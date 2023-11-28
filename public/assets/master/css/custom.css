@@ -623,3 +623,15 @@ button.close{
     justify-content: space-between;
     margin: 0px 0px 8px;
 }
+.menu-active-primary .menu-item .menu-link.active .menu-icon, .menu-active-primary .menu-item .menu-link.active .menu-icon .svg-icon, .menu-active-primary .menu-item .menu-link.active .menu-icon i{
+    color: #fff;
+}
+.menu-active-primary .menu-item .menu-link.active .menu-title{
+    color: #fff;
+}
+.css-hdk82bsa.active{
+    background-color: #039344;
+    border-radius: 10px;
+    height: 40px;
+    padding: 4px 12px;
+}

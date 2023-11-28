@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use DataTables;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Outlet;
 use App\Models\ref_KodePos;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Svg\Tag\Rect;
 
 class Admin_UserPenjualController extends Controller
 {
@@ -37,48 +39,10 @@ class Admin_UserPenjualController extends Controller
         return view('master.user-penjual.daftarUserPenjual');
     }
 
-    public function getDataUserPenjual(){
-        $data = User::select(
-                'users_login.id as idUserLogin',
-                'users_login.users_type',
-                'users_login.name',
-                'users_login.username',
-                'users_login.email',
-                'users_login.password',
-                'users_login.no_hp',
-                'users_login.is_active',
-                'users_login.outlet_id',
-
-                'users_details.id as idUserDetail',
-                'users_details.user_id',
-                'users_details.avatar',
-                'users_details.path_avatar',
-                'users_details.nomor_ktp',
-                'users_details.tanggal_lahir',
-                'users_details.jenis_kelamin',
-                'users_details.kelurahan',
-                'users_details.kecamatan',
-                'users_details.kota_kabupaten',
-                'users_details.provinsi',
-                'users_details.kode_pos',
-                'users_details.alamat_detail',
-
-                'outlets.id as idOutlet',
-                'outlets.user_id',
-                'outlets.nama_outlet',
-                'outlets.slug',
-                'outlets.outlet_id',
-
-                'ref_kuota_point.id as idKuotaPoint',
-                'ref_kuota_point.outlet_id',
-                'ref_kuota_point.kuota_point',
-            )
-            ->leftJoin('users_details','users_details.user_id','=','users_login.id')
-            ->leftJoin('outlets','outlets.user_id','=','users_login.id')
-            ->leftJoin('ref_kuota_point','ref_kuota_point.outlet_id','=','outlets.outlet_id')
-            ->where('users_type', 2)
-            ->get();
-
+    public function getDataUserPenjual()
+    {
+        $data = DB::select("SELECT idUserLogin, name, username, email, no_hp, is_active, avatar, path_avatar, nama_outlet, slug, outlet_id, kuota_point 
+                    FROM [maigroup].[dbo].[web.user_penjual_list] ()");
         $datas = [
             'data' => $data
         ];
@@ -91,7 +55,7 @@ class Admin_UserPenjualController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request): View
+    public function create(): View
     {
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();
         $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
@@ -115,14 +79,18 @@ class Admin_UserPenjualController extends Controller
 
             $request->validate([
                 'name'          => 'required',
-                'username'      => 'required',
-                'email'         => 'required',
+                'username'      => 'required|unique:users_login',
+                'email'         => 'required|email|unique:users_login',
                 'password'      => 'required',
-                'no_hp'         => 'required',
+                'no_hp'         => 'required|unique:users_login',
                 'nomor_ktp'     => 'required',
                 'nama_outlet'   => 'required',
                 'slug'          => 'required|unique:outlets',
-            ]);
+            ], [
+                'username.unique' => 'Username Sudah Digunakan',
+                'email.unique'    => 'Email Sudah Digunakan',
+                'no_hp.unique'    => 'Nomor HP Sudah Digunakan',
+            ]);            
 
             if ($request->hasFile('avatar')) {
                 $request->validate([
@@ -152,6 +120,8 @@ class Admin_UserPenjualController extends Controller
                 'no_hp'        => $request->no_hp,
                 'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT),
                 'is_active'    => 1,
+                'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             Users_Detail::create([
@@ -168,6 +138,8 @@ class Admin_UserPenjualController extends Controller
                 'provinsi'          => $request->provinsi,
                 'kode_pos'          => $request->kode_pos,
                 'alamat_detail'     => $request->alamat_detail,
+                'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             $storeOutlet = Outlet::create([
@@ -177,7 +149,9 @@ class Admin_UserPenjualController extends Controller
                 'slug'         => $request->slug,
                 'no_hp'        => $request->no_hp,
                 'is_verified'  => 0,
-                'outlet_id'    => $storeUser->outlet_id
+                'outlet_id'    => $storeUser->outlet_id,
+                'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             Alamat_Outlet::create([
@@ -186,14 +160,17 @@ class Admin_UserPenjualController extends Controller
                 'kode_kotakab'      => $request->kotkab_outlet,
                 'kode_kecamatan'    => $request->kecamatan_outlet,
                 'kode_kelurahan'    => $request->kelurahan_outlet,
-                'kodepos'          => $request->kode_pos_outlet,
+                'kodepos'           => $request->kode_pos_outlet,
                 'alamat_detail'     => $request->alamat_detail_outlet,
-                'map_location'      => $request->map_location_outlet
+                'map_location'      => $request->map_location_outlet,
+                'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             ref_KuotaPoint::create([
                 'outlet_id'    => $storeUser->outlet_id,
-                'kuota_point'  => 0
+                'kuota_point'  => 0,
+                'update_date'  => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
             DB::commit(); // Commit the transaction
@@ -214,70 +191,14 @@ class Admin_UserPenjualController extends Controller
      */
     public function edit($username): View
     {
+        $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin, 
+                    alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan, 
+                    nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point, project_name
+        FROM [maigroup].[dbo].[web.user_penjual_detail] ('" . $username . "')");
+        $getData = $getDatas[0];
+        
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();
         $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
-
-        $getData = User::select
-            (
-                'users_login.id as idUserLogin',
-                'users_login.users_type',
-                'users_login.name',
-                'users_login.username',
-                'users_login.email',
-                'users_login.password',
-                'users_login.no_hp',
-                'users_login.outlet_id',
-
-                'users_details.id as idUserDetail',
-                'users_details.user_id',
-                'users_details.avatar',
-                'users_details.nomor_ktp',
-                'users_details.tanggal_lahir',
-                'users_details.jenis_kelamin',
-                'users_details.kelurahan',
-                'users_details.kecamatan',
-                'users_details.kota_kabupaten',
-                'users_details.provinsi',
-                'users_details.kode_pos',
-                'users_details.alamat_detail',
-
-                'outlets.id as idOutlet',
-                'outlets.user_id',
-                'outlets.nama_outlet',
-                'outlets.slug',
-                'outlets.outlet_id',
-
-                'ref_kuota_point.id as idKuotaPoint',
-                'ref_kuota_point.outlet_id',
-                'ref_kuota_point.kuota_point',
-
-                'ref_project.id as idProject',
-                'ref_project.project_name',
-
-                'ref_propinsi.kode_propinsi',
-                'ref_propinsi.nama_propinsi',
-
-                'ref_kotakab.kode_kotakab',
-                'ref_kotakab.nama_kotakab',
-                
-                'ref_kecamatan.kode_kecamatan',
-                'ref_kecamatan.nama_kecamatan',
-
-                'ref_kelurahan.kode_kelurahan',
-                'ref_kelurahan.nama_kelurahan'
-            )
-            ->leftJoin('users_details','users_login.id','=','users_details.user_id')
-            ->leftJoin('outlets','users_login.id','=','outlets.user_id')
-            ->leftJoin('ref_kuota_point','outlets.outlet_id','=','ref_kuota_point.outlet_id')
-            ->leftJoin('ref_project','outlets.project_id','=','ref_project.id')
-            ->leftjoin('ref_propinsi', 'users_details.provinsi', '=', 'ref_propinsi.kode_propinsi')
-            ->leftJoin('ref_kotakab','users_details.kota_kabupaten', '=', 'ref_kotakab.kode_kotakab')
-            ->leftjoin('ref_kecamatan', 'users_details.kecamatan', '=', 'ref_kecamatan.kode_kecamatan')
-            ->leftjoin('ref_kelurahan', 'users_details.kelurahan', '=', 'ref_kelurahan.kode_kelurahan')
-            ->where('users_type', 2)
-            ->where('username', $username)
-            ->first();
-
         $getKotaKab      = ref_KotaKab::select('kode_kotakab','kode_propinsi','nama_kotakab')->where('kode_propinsi', $getData->kode_propinsi)->get();
         $getKecamatan    = ref_Kecamatan::select('kode_kecamatan','kode_kotakab','nama_kecamatan')->where('kode_kotakab', $getData->kode_kotakab)->get();
         $getKelurahan    = ref_Kelurahan::select('kode_kelurahan','kode_kecamatan','nama_kelurahan')->where('kode_kecamatan', $getData->kode_kecamatan)->get();
@@ -286,51 +207,13 @@ class Admin_UserPenjualController extends Controller
         return view('master.user-penjual.editUserPenjual', compact('getKategori', 'getProvinsi', 'getData', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
     }
 
-    public function show($username){
-        $getData = User::select(
-                'users_login.users_type',
-                'users_login.name',
-                'users_login.email',
-                'users_login.no_hp',
-                'users_login.outlet_id',
-
-                'users_details.avatar',
-                'users_details.nomor_ktp',
-                'users_details.tanggal_lahir',
-                'users_details.jenis_kelamin',
-                'users_details.kelurahan',
-                'users_details.kecamatan',
-                'users_details.kota_kabupaten',
-                'users_details.provinsi',
-                'users_details.kode_pos',
-                'users_details.alamat_detail',
-
-                'outlets.nama_outlet',
-
-                'ref_project.project_name',
-
-                'ref_propinsi.kode_propinsi',
-                'ref_propinsi.nama_propinsi',
-
-                'ref_kotakab.kode_kotakab',
-                'ref_kotakab.nama_kotakab',
-                
-                'ref_kecamatan.kode_kecamatan',
-                'ref_kecamatan.nama_kecamatan',
-
-                'ref_kelurahan.kode_kelurahan',
-                'ref_kelurahan.nama_kelurahan'
-            )
-            ->leftJoin('users_details','users_login.id','=','users_details.user_id')
-            ->leftJoin('outlets','users_login.id','=','outlets.user_id')
-            ->leftJoin('ref_project','outlets.project_id','=','ref_project.id')
-            ->leftjoin('ref_propinsi', 'users_details.provinsi', '=', 'ref_propinsi.kode_propinsi')
-            ->leftJoin('ref_kotakab','users_details.kota_kabupaten', '=', 'ref_kotakab.kode_kotakab')
-            ->leftjoin('ref_kecamatan', 'users_details.kecamatan', '=', 'ref_kecamatan.kode_kecamatan')
-            ->leftjoin('ref_kelurahan', 'users_details.kelurahan', '=', 'ref_kelurahan.kode_kelurahan')
-            ->where('users_login.users_type', 2)
-            ->where('users_login.username', $username)
-            ->first();
+    public function show($username)
+    {
+        $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin, 
+                alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan, 
+                nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point, project_name
+        FROM [maigroup].[dbo].[web.user_penjual_detail] ('" . $username . "')");
+        $getData = $getDatas[0];
         
         return response()->json($getData);
     }
@@ -451,5 +334,29 @@ class Admin_UserPenjualController extends Controller
         User::where('id', $user)->update(['is_active' => $isActive]);
 
         return response()->json(['message' => 'Status Berhasil Diubah.']);
+    }
+
+    public function validateNoHp(Request $request)
+    {
+        $noHp   = $request->no_hp;
+        $isUsed = User::where('no_hp', $noHp)->exists();
+
+        return response()->json(['isUsed' => $isUsed]);
+    }
+
+    public function validateUsername(Request $request)
+    {
+        $username = $request->username;
+        $dipakai = User::where('username', $username)->exists();
+
+        return response()->json(['dipakai' => $dipakai]);
+    }
+
+    public function validateEmail(Request $request)
+    {
+        $email = $request->email;
+        $used = User::where('email', $email)->exists();
+
+        return response()->json(['used' => $used]);
     }
 }

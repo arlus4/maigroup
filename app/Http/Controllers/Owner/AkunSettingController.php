@@ -47,54 +47,29 @@ class AkunSettingController extends Controller
         }
     }
 
-    public function editProfile($username){
+    public function editProfile($username)
+    {
+        
+        $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin, 
+                                        alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan, 
+                                        nama_kelurahan, kode_kelurahan, kode_pos
+            FROM [maigroup].[dbo].[web.user_penjual_detail] ('" . $username . "')");
+        $getData = $getDatas[0];
+        
         $getProvinsi = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
-        $getData = User::select(
-            'users_login.id as idUserLogin',
-            'users_login.name',
-            'users_login.username',
-            'users_login.no_hp',
-            'users_login.email',
-
-            'users_details.avatar',
-            'users_details.path_avatar',
-            'users_details.nomor_ktp',
-            'users_details.tanggal_lahir',
-            'users_details.jenis_kelamin',
-            'users_details.kelurahan',
-            'users_details.kecamatan',
-            'users_details.kota_kabupaten',
-            'users_details.provinsi',
-            'users_details.kode_pos',
-            'users_details.alamat_detail',
-
-            'ref_propinsi.kode_propinsi',
-            'ref_propinsi.nama_propinsi',
-
-            'ref_kotakab.kode_kotakab',
-            'ref_kotakab.nama_kotakab',
-            
-            'ref_kecamatan.kode_kecamatan',
-            'ref_kecamatan.nama_kecamatan',
-
-            'ref_kelurahan.kode_kelurahan',
-            'ref_kelurahan.nama_kelurahan'
-        )
-        ->leftJoin('users_details','users_login.id','=','users_details.user_id')
-        ->leftjoin('ref_propinsi', 'users_details.provinsi', '=', 'ref_propinsi.kode_propinsi')
-        ->leftJoin('ref_kotakab','users_details.kota_kabupaten', '=', 'ref_kotakab.kode_kotakab')
-        ->leftjoin('ref_kecamatan', 'users_details.kecamatan', '=', 'ref_kecamatan.kode_kecamatan')
-        ->leftjoin('ref_kelurahan', 'users_details.kelurahan', '=', 'ref_kelurahan.kode_kelurahan')
-        ->where('users_login.users_type', 2)
-        ->where('users_login.username', Auth::user()->username)
-        ->first();
-
         $getKotaKab      = ref_KotaKab::select('kode_kotakab','kode_propinsi','nama_kotakab')->where('kode_propinsi', $getData->kode_propinsi)->get();
         $getKecamatan    = ref_Kecamatan::select('kode_kecamatan','kode_kotakab','nama_kecamatan')->where('kode_kotakab', $getData->kode_kotakab)->get();
         $getKelurahan    = ref_Kelurahan::select('kode_kelurahan','kode_kecamatan','nama_kelurahan')->where('kode_kecamatan', $getData->kode_kecamatan)->get();
         $getKodePos      = ref_KodePos::select('kodepos','kode_kelurahan')->where('kode_kelurahan', $getData->kode_kelurahan)->get();
 
-        return view('owner.profile.editProfile', compact('getData','getProvinsi', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
+        return view('owner.profile.editProfile', [
+            'getData' => $getData,
+            'getProvinsi' => $getProvinsi,
+            'getKotaKab' => $getKotaKab,
+            'getKecamatan' => $getKecamatan,
+            'getKelurahan' => $getKelurahan,
+            'getKodePos' => $getKodePos,
+        ]);
     }
 
     public function updateProfile(Request $request, $username){
@@ -190,5 +165,29 @@ class AkunSettingController extends Controller
     
         // hasil respon ada di signin-methods.js
         return back();
+    }
+
+    public function OwnervalidateNoHp(Request $request)
+    {
+        $noHp = $request->no_hp;
+        $isUsed = User::where('no_hp', $noHp)->exists();
+
+        return response()->json(['isUsed' => $isUsed]);
+    }
+
+    public function OwnervalidateUsername(Request $request)
+    {
+        $username = $request->username;
+        $dipakai = User::where('username', $username)->exists();
+
+        return response()->json(['dipakai' => $dipakai]);
+    }
+
+    public function OwnervalidateEmail(Request $request)
+    {
+        $email = $request->email;
+        $used = User::where('email', $email)->exists();
+
+        return response()->json(['used' => $used]);
     }
 }

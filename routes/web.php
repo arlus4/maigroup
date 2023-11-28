@@ -23,8 +23,8 @@ use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Project_ProductController;
 
-// Route::get('/', [HomeController::class, 'home']);
-Route::get('/', [AuthenticatedSessionController::class, 'create']);
+Route::get('/', [HomeController::class, 'home']);
+// Route::get('/', [AuthenticatedSessionController::class, 'create']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
@@ -82,6 +82,9 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/userSlug', [Admin_UserPenjualController::class, 'userSlug']);
         Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
         Route::get('/get_data_user_penjual', [Admin_UserPenjualController::class, 'getDataUserPenjual']);
+        Route::get('/validateNoHp', [Admin_UserPenjualController::class, 'validateNoHp']);
+        Route::get('/validateUsername', [Admin_UserPenjualController::class, 'validateUsername']);
+        Route::get('/validateEmail', [Admin_UserPenjualController::class, 'validateEmail']);
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
@@ -167,6 +170,8 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
 
         Route::get('/bonus', [ClaimBonusController::class, 'new_bonus'])->name('owner_bonus');
         Route::get('/bonus/get_data_pembeli_claim', [ClaimBonusController::class, 'get_data_pembeli_claim'])->name('get_data_pembeli_claim');
+        Route::get('/bonus_gift', [ClaimBonusController::class, 'new_bonus_gift'])->name('owner_bonus_gift');
+        Route::get('/bonus/get_data_pembeli_gift', [ClaimBonusController::class, 'get_data_pembeli_gift'])->name('get_data_pembeli_gift');
 
         // Restock
         Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');
@@ -196,5 +201,8 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/pengaturan-akun/edit-profile/{username}', [AkunSettingController::class, 'editProfile'])->name('owner_edit_profile');
         Route::post('/pengaturan-akun/update-profile/{username}', [AkunSettingController::class, 'updateProfile'])->name('owner_update_profile');
         Route::post('/pengaturan-akun/update-password/{username}', [AkunSettingController::class, 'updatePassword'])->name('owner_update_password');
+        Route::get('/OwnervalidateNoHp', [AkunSettingController::class, 'OwnervalidateNoHp']);
+        Route::get('/OwnervalidateUsername', [AkunSettingController::class, 'OwnervalidateUsername']);
+        Route::get('/OwnervalidateEmail', [AkunSettingController::class, 'OwnervalidateEmail']);
     });
 });

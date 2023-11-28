@@ -134,7 +134,7 @@
                                                         <div class="css-dabj72">
                                                             <div class="form-group mb-4">
                                                                 <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Pilihan Varian</label>
-                                                                <select class="form-select mb-2 produkId" data-kt-repeater="select2" data-placeholder="Pilih Varian" id="produk_id" data-allow-clear="true" name="id_produk" required>
+                                                                <select class="form-select mb-2 produkId" data-kt-repeater="select2" data-placeholder="Pilih Varian" id="produk_id" data-allow-clear="true" name="id_produk">
                                                                     <option></option>
                                                                     @foreach($getProduk as $produk)
                                                                     <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
@@ -159,7 +159,7 @@
                                                             <div class="row mb-4">
                                                                 <div class="col-md-5">
                                                                     <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">QTY</label>
-                                                                    <select class="form-select qtyid" data-kt-repeater="select2" id="qty" name="qty" data-placeholder="Pilih QTY" required>
+                                                                    <select class="form-select qtyid" data-kt-repeater="select2" id="qty" name="qty" data-placeholder="Pilih QTY">
                                                                         <option></option>
                                                                         @for ($i = 5; $i <= 100; $i +=5) <option value="{{ $i }}">{{ $i }}</option>
                                                                             @endfor
@@ -820,6 +820,54 @@
             var item = $(this).closest('[data-repeater-item]');
             hitungTotalAmount(item);
         });
+
+        function validasiToggle() {
+        var enableSimpanBtn = false;
+        $('#data_restock_order [data-repeater-item]').each(function() {
+            var pilihanVarian = $(this).find('.produkId').val();
+            var qty = $(this).find('.qtyid').val();
+            if (pilihanVarian && qty) {
+                enableSimpanBtn = true;
+                // Hentikan perulangan jika menemukan item yang terisi
+                return false;
+            }
+        });
+
+        // Atur properti disabled dari tombol simpan berdasarkan kondisi item
+        $('#simpan').prop('disabled', !enableSimpanBtn);
+        ubahButtonStyle(enableSimpanBtn);
+    }
+
+    function ubahButtonStyle(isEnabled) {
+        if (isEnabled) {
+            $('#simpan').css({
+                'background-color': '#039344',
+                'color': '#fff',
+                'cursor': 'pointer'
+            });
+        } else {
+            $('#simpan').css({
+                'background-color': '#e2e2e2',
+                'color': '#929292',
+                'cursor': 'not-allowed'
+            });
+        }
+    }
+
+    $('#data_restock_order').on('change', '.produkId, .qtyid', validasiToggle);
+
+    $('#data_restock_order').on('click', '[data-repeater-delete]', function() {
+        // Hapus item repeater
+        $(this).closest('[data-repeater-item]').remove();
+        validasiToggle();
+    });
+
+    $(document).on('click', '[data-repeater-create]', function() {
+        setTimeout(validasiToggle, 0);
+    });
+
+    // Validasi awal untuk status tombol simpan
+    validasiToggle();
     });
 
     function resetFields(item) {
@@ -885,88 +933,78 @@
         }
     }
 
-    function validasiToggle() {
-        var enableSimpanBtn = false;
-        $('#data_restock_order [data-repeater-item]').each(function() {
-            var pilihanVarian = $(this).find('.produkId').val();
-            var qty = $(this).find('.qtyid').val();
-            if (pilihanVarian && qty) {
-                enableSimpanBtn = true;
-                // Hentikan perulangan jika menemukan item yang terisi
-                return false;
-            }
-        });
-
-        // Atur properti disabled dari tombol simpan berdasarkan kondisi item
-        $('#simpan').prop('disabled', !enableSimpanBtn);
-        ubahButtonStyle(enableSimpanBtn);
-    }
-
-    function ubahButtonStyle(isEnabled) {
-        if (isEnabled) {
-            $('#simpan').css({
-                'background-color': '#039344',
-                'color': '#fff',
-                'cursor': 'pointer'
-            });
-        } else {
-            $('#simpan').css({
-                'background-color': '#e2e2e2',
-                'color': '#929292',
-                'cursor': 'not-allowed'
-            });
-        }
-    }
-
-    $('#data_restock_order').on('change', '.produkId, .qtyid', validasiToggle);
-
-    $('#data_restock_order').on('click', '[data-repeater-delete]', function() {
-        // Hapus item repeater
-        $(this).closest('[data-repeater-item]').remove();
-        validasiToggle();
-    });
-
-    $(document).on('click', '[data-repeater-create]', function() {
-        setTimeout(validasiToggle, 0);
-    });
-
-    // Validasi awal untuk status tombol simpan
-    validasiToggle();
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Fungsi untuk menampilkan atau menyembunyikan form select
-        function toggleSelect(customSelected) {
-            var selectDiv = document.querySelector('.form-group');
-            var selectElement = document.getElementById('qtyPaket');
-            if (customSelected) {
-                selectDiv.style.display = 'block';
-                selectElement.required = true;
-            } else {
-                selectDiv.style.display = 'none';
-                selectElement.required = false;
-            }
+    function toggleSelect(customSelected) {
+        var selectDiv = document.querySelector('.form-group');
+        var selectElement = document.getElementById('qtyPaket');
+        if (customSelected) {
+            selectDiv.style.display = 'block';
+            selectElement.required = true;
+        } else {
+            selectDiv.style.display = 'none';
+            selectElement.required = false;
         }
+    }
 
-        // Menyembunyikan select pada awal load halaman
-        toggleSelect(false);
+    // Fungsi untuk memeriksa status tombol Simpan
+    function checkSaveButtonStatus() {
+        const isAnyPackageSelected = document.querySelector('input[name="plan"]:checked') !== null;
+        let isAnyVariantSelected = false;
+        
+        // Cek jika setidaknya satu varian dan QTY telah dipilih
+        document.querySelectorAll('.produkId').forEach(function(select) {
+            if (select.value !== "") isAnyVariantSelected = true;
+        });
+        
+        const saveButton = document.getElementById('simpan');
 
-        // Event listener untuk radio buttons
-        var radios = document.querySelectorAll('input[type="radio"][name="plan"]');
+        // Enable atau disable tombol Simpan berdasarkan kondisi
+        if (isAnyPackageSelected && isAnyVariantSelected) {
+            saveButton.disabled = false;
+            saveButton.style.backgroundColor = '#039344'; // Ganti dengan warna yang diinginkan
+            saveButton.style.color = '#fff'; // Ganti dengan warna yang diinginkan
+            saveButton.style.cursor = 'pointer';
+        } else {
+            saveButton.disabled = true;
+            saveButton.style.backgroundColor = '#e2e2e2'; // Ganti dengan warna yang diinginkan
+            saveButton.style.color = '#929292'; // Ganti dengan warna yang diinginkan
+            saveButton.style.cursor = 'not-allowed';
+        }
+    }
+
+    // Menyembunyikan select pada awal load halaman
+    toggleSelect(false);
+
+    // Event listener untuk radio buttons
+    var radios = document.querySelectorAll('input[type="radio"][name="plan"]');
+    radios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            toggleSelect(this.id === 'custom');
+            checkSaveButtonStatus(); // Memeriksa status tombol Simpan setiap kali ada perubahan pada radio buttons
+        });
+    });
+
+    // Event listener untuk select varian dan QTY
+    document.querySelectorAll('.produkId, .qtyid').forEach(function(select) {
+        select.addEventListener('change', checkSaveButtonStatus);
+    });
+
+    // Event listener untuk tombol 'batal'
+    document.getElementById('batal').addEventListener('click', function() {
         radios.forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                toggleSelect(this.id === 'custom');
-            });
+            radio.checked = false;
         });
+        toggleSelect(false);
+        checkSaveButtonStatus(); // Memeriksa status tombol Simpan setelah tombol 'batal' diklik
+    });
 
-        // Event listener untuk tombol 'batal'
-        document.getElementById('batal').addEventListener('click', function() {
-            radios.forEach(function(radio) {
-                radio.checked = false;
-            });
-            toggleSelect(false);
-        });
+    // Panggil fungsi ini saat dokumen dimuat untuk mengatur status awal tombol Simpan
+    checkSaveButtonStatus();
+
     });
 </script>
 

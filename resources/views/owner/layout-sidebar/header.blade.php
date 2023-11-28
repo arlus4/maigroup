@@ -123,7 +123,7 @@
                             </div>
                             <hr style="height: 8px;background-color: #fff;border-radius: 5px;">
                             <div class="menu-item">
-                                <a class="menu-link {{ Request::routeIs('owner.owner_bonus') ? 'active' : '' }}" href="{{ route('owner.owner_bonus') }}">
+                                <a class="menu-link {{ Request::routeIs('owner.owner_bonus') ? 'active' : '' }} || {{ Request::routeIs('owner.owner_bonus_gift') ? 'active' : '' }}" href="{{ route('owner.owner_bonus') }}">
                                     <span class="menu-icon">
                                         <span class="svg-icon svg-icon-2">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

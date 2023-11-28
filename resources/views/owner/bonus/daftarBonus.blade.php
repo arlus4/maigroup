@@ -14,7 +14,7 @@
                 <div class="menu menu-column menu-gray-600 menu-active-primary menu-hover-light-primary menu-here-light-primary menu-show-light-primary fw-semibold mb-3" data-kt-menu="true" id="menu">
                     <div class="menu">
                         <div class="menu-item">
-                            <a class="menu-link {{ Request::routeIs('owner.owner_bonus') ? 'active' : '' }}" href="{{ route('owner.owner_bonus') }}">
+                            <a class="menu-link css-hdk82bsa {{ Request::routeIs('owner.owner_bonus') ? 'active' : '' }}" href="{{ route('owner.owner_bonus') }}">
                                 <span class="menu-icon">
                                     <i class="fas fa-exchange"></i>
                                 </span>
@@ -22,7 +22,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="#">
+                            <a class="menu-link css-hdk82bsa {{ Request::routeIs('owner.owner_bonus_gift') ? 'active' : '' }}" href="{{ route('owner.owner_bonus_gift') }}">
                                 <span class="menu-icon">
                                     <i class="fas fa-gift"></i>
                                 </span>
@@ -63,6 +63,33 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
+            const formatTglSaja  = (date) => {
+                var dateObject    = new Date(date);
+                var year          = dateObject.getFullYear();
+                var day           = dateObject.getDate();
+                var month         = dateObject.getMonth();
+
+                switch(month) {
+                    case 0: month = "Januari"; break;
+                    case 1: month = "Februari"; break;
+                    case 2: month = "Maret"; break;
+                    case 3: month = "April"; break;
+                    case 4: month = "Mei"; break;
+                    case 5: month = "Juni"; break;
+                    case 6: month = "Juli"; break;
+                    case 7: month = "Agustus"; break;
+                    case 8: month = "September"; break;
+                    case 9: month = "Oktober"; break;
+                    case 10: month = "November"; break;
+                    case 11: month = "Desember"; break;
+                }
+
+                day               = day < 10 ? "0" + day : day; 
+                month             = month < 10 ? "0" + month : month; 
+                var formattedDate = day + ' ' + month + ' ' + year;
+
+                return formattedDate;
+            }
             $('#tablePembeliClaim').DataTable({
                 processing: true,
                 serverSide: false,
@@ -130,8 +157,9 @@
                             var status = '';
                             if (row.date_claim == null) {
                                 status = '<span class="badge badge-light-danger">----</span>';
-                            }else{
-                                status = '<span class="badge badge-light-danger">tes</span>'; 
+                            } else {
+                                // Pastikan untuk menggunakan backticks di sini
+                                status = `<span class="text-gray-800">${formatTglSaja(row.date_claim)}</span>`; 
                             }
                             return status;
                         }
@@ -143,7 +171,7 @@
                             if (row.date_gift == null) {
                                 status = '<span class="badge badge-light-danger">----</span>';
                             }else{
-                                status = '<span class="badge badge-light-danger">tes</span>'; 
+                                status = `<span class="text-gray-800">${formatTglSaja(row.date_gift)}</span>`;
                             }
                             return status;
                         }
