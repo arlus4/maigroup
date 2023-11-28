@@ -72,7 +72,8 @@ class AkunSettingController extends Controller
         ]);
     }
 
-    public function updateProfile(Request $request, $username){
+    public function updateProfile(Request $request)
+    {
         try {
             DB::beginTransaction();
             

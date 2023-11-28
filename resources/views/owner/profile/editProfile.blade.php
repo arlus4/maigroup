@@ -63,7 +63,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-5 fv-row">
                                                         <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Username</label>
-                                                        <input type="text" name="username" class="form-control mb-2" placeholder="Contoh : asepsumantri03" value="{{ $getData->username }}" required/>
+                                                        <input type="text" name="username" class="form-control form-control-solid mb-2" placeholder="Contoh : asepsumantri03" value="{{ $getData->username }}" readonly/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -77,7 +77,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-5 fv-row">
                                                         <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Nomor HP</label>
-                                                        <input type="text" name="no_hp" class="form-control mb-2" placeholder="Contoh : 082xxxxx" value="{{ $getData->no_hp }}" required/>
+                                                        <input type="text" name="no_hp" class="form-control form-control-solid mb-2" placeholder="Contoh : 082xxxxx" value="{{ $getData->no_hp }}" readonly/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,8 +92,8 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-5 fv-row">
-                                                        <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Tanggal Lahir</label>
-                                                        <input type="date" name="tanggal_lahir" class="form-control mb-2" value="{{ $getData->tanggal_lahir }}" required/>
+                                                        <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Email</label>
+                                                        <input type="text" name="email" class="form-control form-control-solid mb-2" value="{{ $getData->email }}" readonly/>
                                                     </div>
                                                 </div>
                                             </div>

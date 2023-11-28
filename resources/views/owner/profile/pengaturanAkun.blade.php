@@ -142,7 +142,7 @@
                                 </form>
                             </div>
                             <div id="kt_signin_password_button" class="ms-auto">
-                                <button class="btn text-white" style="padding: 5px 12px;font-size:12px;background: #039344;">
+                                <button class="btn text-white" style="padding: 5px 12px;font-size:12px;background: #d90429;">
                                     <i class="fas fa-key text-white"></i>
                                     Reset Password
                                 </button>
