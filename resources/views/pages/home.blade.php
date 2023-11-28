@@ -16,7 +16,7 @@
     </head>
 	
 	<body>
-        <section class="welcome-hero css-header-mobile">
+        <section class="welcome-hero css-header-mobile" style="margin: 0 60px;">
             <div class="top-area">
                 <div class="header-area">
                     <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy"  data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
