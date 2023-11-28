@@ -102,7 +102,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
                                                         <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Email</label>
-                                                        <input type="email" name="email" class="form-control mb-2 email" placeholder="asep123@gmail.com" value="{{ $getData->email }}">
+                                                        <input type="email" name="email" id="email" class="form-control mb-2 email" placeholder="asep123@gmail.com" value="{{ $getData->email }}">
                                                         <div class="text-muted fs-7" style="color: #31353B!important;">Masukkan format Email yang valid dan Email <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
                                                         <div id="emailUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Email Sudah digunakan</div>
                                                     </div>
@@ -125,7 +125,7 @@
                                                 <select class="form-select mb-2" name="provinsi" id="prv_id" data-control="select2" data-placeholder="Pilih Provinsi" data-allow-clear="true">
 													<option></option>
 													@foreach($getProvinsi as $provinsi)
-                                                        <option value="{{ $provinsi->kode_propinsi }}" {{ $getData['provinsi'] == $provinsi->kode_propinsi ? 'selected' : '' }}>
+                                                        <option value="{{ $provinsi->kode_propinsi }}" {{ $getData->kode_propinsi == $provinsi->kode_propinsi ? 'selected' : '' }}>
                                                             {{ $provinsi->nama_propinsi }}
                                                         </option>
                                                     @endforeach
@@ -136,7 +136,7 @@
 												<select class="form-select mb-2" name="kotkab" id="kotkab_id" data-control="select2" data-placeholder="Pilih Kota / Kabupaten" data-allow-clear="true">
                                                     <option></option>
                                                     @foreach ($getKotaKab as $kotkab)
-                                                        <option value="{{ $kotkab->kode_kotakab }}" {{ $getData['kota_kabupaten'] == $kotkab->kode_kotakab ? 'selected' : '' }}>
+                                                        <option value="{{ $kotkab->kode_kotakab }}" {{ $getData->kode_kotakab == $kotkab->kode_kotakab ? 'selected' : '' }}>
                                                             {{ $kotkab->nama_kotakab }}
                                                         </option>
                                                     @endforeach
@@ -147,7 +147,7 @@
                                                 <select class="form-select mb-2" name="kecamatan" id="kecamatan_id" data-control="select2" data-placeholder="Pilih Kecamatan" data-allow-clear="true">
                                                     <option></option>
                                                     @foreach ($getKecamatan as $kecamatan)
-                                                        <option value="{{ $kecamatan->kode_kecamatan }}" {{ $getData['kecamatan'] == $kecamatan->kode_kecamatan ? 'selected' : '' }}>
+                                                        <option value="{{ $kecamatan->kode_kecamatan }}" {{ $getData->kode_kecamatan == $kecamatan->kode_kecamatan ? 'selected' : '' }}>
                                                             {{ $kecamatan->nama_kecamatan }}
                                                         </option>
                                                     @endforeach
@@ -158,7 +158,7 @@
                                                 <select class="form-select mb-2" name="kelurahan" id="kelurahan_id" data-control="select2" data-placeholder="Pilih Kelurahan" data-allow-clear="true">
                                                     <option></option>
                                                     @foreach ($getKelurahan as $kelurahan)
-                                                        <option value="{{ $kelurahan->kode_kelurahan }}" {{ $getData['kelurahan'] == $kelurahan->kode_kelurahan ? 'selected' : '' }}>
+                                                        <option value="{{ $kelurahan->kode_kelurahan }}" {{ $getData->kode_kelurahan == $kelurahan->kode_kelurahan ? 'selected' : '' }}>
                                                             {{ $kelurahan->nama_kelurahan }}
                                                         </option>
                                                     @endforeach
@@ -169,7 +169,7 @@
                                                 <select class="form-select mb-2" name="kode_pos" id="kodepos_id" data-control="select2" data-placeholder="Pilih Kode Pos" data-allow-clear="true">
                                                     <option></option>
                                                     @foreach ($getKodePos as $kodepos)
-                                                        <option value="{{ $kodepos->kodepos }}" {{ $getData['kode_pos'] == $kodepos->kodepos ? 'selected' : '' }}>
+                                                        <option value="{{ $kodepos->kodepos }}" {{ $getData->kode_pos == $kodepos->kodepos ? 'selected' : '' }}>
                                                             {{ $kodepos->kodepos }}
                                                         </option>
                                                     @endforeach
@@ -203,7 +203,7 @@
                                                 <select class="form-select mb-2" data-control="select2" data-placeholder="Pilih Kategori" data-allow-clear="true" name="project_id" required>
 													<option></option>
 													@foreach($getKategori as $kategori)
-                                                        <option value="{{ $kategori->id }}" {{ $getData['idProject'] == $kategori->id ? 'selected' : '' }}>
+                                                        <option value="{{ $kategori->id }}" {{ $getData->idProject == $kategori->id ? 'selected' : '' }}>
                                                             {{ $kategori->project_name }}
                                                         </option>
                                                     @endforeach
@@ -253,70 +253,91 @@
 
     <!-- Validasi Nomor HP -->
     <script>
+        var originalNoHp = $('#no_hp').val(); // simpan nilai awal no_hp
+
         $('#no_hp').on('input', function() {
-            var noHp = $(this).val();
+            var currentNoHp = $(this).val();
             
-            $.ajax({
-                url: '/admin/validateNoHp',
-                type: 'GET',
-                data: { 'no_hp': noHp },
-                success: function(data) {
-                    if(data.isUsed) {
-                        $('#noHpUsedMsg').show();
-                    } else {
-                        $('#noHpUsedMsg').hide();
+            // Cek apakah no_hp berubah dari nilai aslinya
+            if (currentNoHp !== originalNoHp) {
+                $.ajax({
+                    url: '/admin/validateNoHp',
+                    type: 'GET',
+                    data: { 'no_hp': currentNoHp },
+                    success: function(data) {
+                        if(data.isUsed) {
+                            $('#noHpUsedMsg').show();
+                        } else {
+                            $('#noHpUsedMsg').hide();
+                        }
+                    },
+                    error: function() {
+                        // Handle error
                     }
-                },
-                error: function() {
-                    // Handle error
-                }
-            });
+                });
+            } else {
+                $('#noHpUsedMsg').hide();
+            }
         });
     </script>
 
     <!-- Validasi Username -->
     <script>
+        var originalUsername = $('#slug_user').val(); // simpan nilai awal username
+
         $('#slug_user').on('input', function() {
-            var username = $(this).val();
+            var currentUsername = $(this).val();
             
-            $.ajax({
-                url: '/admin/validateUsername',
-                type: 'GET',
-                data: { 'username': username },
-                success: function(data) {
-                    if(data.dipakai) {
-                        $('#usernameUsedMsg').show();
-                    } else {
-                        $('#usernameUsedMsg').hide();
+            // Cek apakah username berubah dari nilai aslinya
+            if (currentUsername != originalUsername) {
+                $.ajax({
+                    url: '/admin/validateUsername',
+                    type: 'GET',
+                    data: { 'username': currentUsername },
+                    success: function(data) {
+                        if(data.dipakai) {
+                            $('#usernameUsedMsg').show();
+                        } else {
+                            $('#usernameUsedMsg').hide();
+                        }
+                    },
+                    error: function() {
+                        // Handle error
                     }
-                },
-                error: function() {
-                    // Handle error
-                }
-            });
+                });
+            } else {
+                $('#usernameUsedMsg').hide();
+            }
         });
     </script>
 
     <!-- Validasi Email -->
     <script>
+        var originalEmail = $('#email').val(); // simpan nilai awal email
+
+        // Cek apakah email berubah dari nilai aslinya
         $('#email').on('input', function() {
-            var email = $(this).val();
+            var currentEmail = $(this).val();
             
-            $.ajax({
-                url: '/admin/validateEmail',
-                type: 'GET',
-                data: { 'email': email },
-                success: function(data) {
-                    if(data.used) {
-                        $('#emailUsedMsg').show();
-                    } else {
-                        $('#emailUsedMsg').hide();
+            if (currentEmail != originalEmail) {
+                $.ajax({
+                    url: '/admin/validateEmail',
+                    type: 'GET',
+                    data: { 'email': currentEmail },
+                    success: function(data) {
+                        if(data.used) {
+                            $('#emailUsedMsg').show();
+                        } else {
+                            $('#emailUsedMsg').hide();
+                        }
+                    },
+                    error: function() {
+                        // Handle error
                     }
-                },
-                error: function() {
-                    // Handle error
-                }
-            });
+                });
+            } else {
+                $('#emailUsedMsg').hide();
+            }
         });
     </script>
 

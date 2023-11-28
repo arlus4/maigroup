@@ -194,7 +194,7 @@ class Admin_UserPenjualController extends Controller
     {
         $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin, 
                     alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan, 
-                    nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point, project_name
+                    nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point, project_name, idProject
         FROM [maigroup].[dbo].[web.user_penjual_detail] ('" . $username . "')");
         $getData = $getDatas[0];
         
@@ -230,11 +230,13 @@ class Admin_UserPenjualController extends Controller
         try {
             DB::beginTransaction(); // Begin Transaction
 
+            $validasi = User::find($request->idUserLogin);
+
             $request->validate([
                 'name'          => 'required',
-                'username'      => 'required',
-                'email'         => 'required',
-                'no_hp'         => 'required',
+                'username'      => 'required|unique:users_login,username,' . $validasi->id,
+                'email'         => 'required|email|unique:users_login,email,' . $validasi->id,
+                'no_hp'         => 'required|unique:users_login,no_hp,' . $validasi->id,
                 'nomor_ktp'     => 'required',
                 'nama_outlet'   => 'required',
                 'slug'          => 'required',
