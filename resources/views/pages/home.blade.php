@@ -13,22 +13,10 @@
         <link rel="stylesheet" href="assets/css/custom.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.0/css/all.min.css">
-
-        <style>
-            .img-datang {
-                height: auto;
-                margin: 0 60px;
-                position: relative;
-                background:url('assets/images/bg_4.png')no-repeat;
-                background-position: center;
-                background-size: cover;
-                z-index: 1;
-            }
-        </style>
     </head>
 	
 	<body>
-        <section class="img-datang css-header-mobile">
+        <section class="welcome-hero css-header-mobile">
             <div class="top-area">
                 <div class="header-area">
                     <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy"  data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
@@ -72,7 +60,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
 
