@@ -43,7 +43,6 @@ class Admin_UserPenjualController extends Controller
     {
         $data = DB::select("SELECT idUserLogin, name, username, email, no_hp, is_active, avatar, path_avatar, nama_outlet, slug, outlet_id, kuota_point 
                     FROM [maigroup].[dbo].[web.user_penjual_list] ()");
-
         $datas = [
             'data' => $data
         ];
@@ -339,7 +338,7 @@ class Admin_UserPenjualController extends Controller
 
     public function validateNoHp(Request $request)
     {
-        $noHp = $request->no_hp;
+        $noHp   = $request->no_hp;
         $isUsed = User::where('no_hp', $noHp)->exists();
 
         return response()->json(['isUsed' => $isUsed]);
