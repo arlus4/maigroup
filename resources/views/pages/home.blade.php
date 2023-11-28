@@ -17,6 +17,7 @@
         <style>
             .img-datang {
                 height: auto;
+                margin: 0 60px;
                 position: relative;
                 background:url('assets/images/bg_4.png')no-repeat;
                 background-position: center;
@@ -31,7 +32,7 @@
             <div class="top-area">
                 <div class="header-area">
                     <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy"  data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
-                        <div class="container">
+                        <div class="container-fluid">
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                                     <i style="color: #fff;" class="fa fa-bars"></i>
@@ -59,25 +60,23 @@
                 <div class="clearfix"></div>
             </div>
 
-            <div class="container">
-                <div class="welcome-hero-txt">
-                    <div class="row">
-                        <div class="col-md-6 css-cnk12sj">
-                            <h2 class="css-dniud9a">Segarnya Nikmat <br>Kesetiaan Yang Memikat <br><span style="font-size: 30px;">#1 Ice Tea With Loyalty</span></h2>
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="col-md-6">
-                                    <button class="btn" style="width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
-                                        <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
-                                    </button>
-                                </div>
+            <div class="welcome-hero-txt">
+                <div class="row">
+                    <div class="col-md-6 css-cnk12sj">
+                        <h2 class="css-dniud9a">Segarnya Nikmat <br>Kesetiaan Yang Memikat <br><span style="font-size: 30px;">#1 Ice Tea With Loyalty</span></h2>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-md-6">
+                                <button class="btn" style="width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
+                                    <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
+                                </button>
                             </div>
                         </div>
-                        
                     </div>
+                    
                 </div>
             </div>
 
-            <div class="container css-opdn2ja">
+            <div class="css-opdn2ja">
 				<div class="row">
 					<div class="col-md-12">
                         <div class="model-search-content">
