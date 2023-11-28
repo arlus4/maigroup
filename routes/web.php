@@ -23,8 +23,8 @@ use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Project_ProductController;
 
-// Route::get('/', [HomeController::class, 'home']);
-Route::get('/', [AuthenticatedSessionController::class, 'create']);
+Route::get('/', [HomeController::class, 'home']);
+// Route::get('/', [AuthenticatedSessionController::class, 'create']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);

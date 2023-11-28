@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>MaiTea - Nusantara</title>
+        <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/bootsnav.css" >
@@ -12,33 +13,32 @@
         <link rel="stylesheet" href="assets/css/custom.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.0/css/all.min.css">
-
     </head>
 	
 	<body>
-        <section class="welcome-hero css-header-mobile">
+        <section class="welcome-hero css-header-mobile" style="margin: 0 60px;">
             <div class="top-area">
                 <div class="header-area">
                     <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy"  data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
-                        <div class="container">
+                        <div class="container-fluid">
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                                     <i style="color: #fff;" class="fa fa-bars"></i>
                                 </button>
                                 <a class="navbar-brand" href="index.html">
-                                    <img src="{{ asset('assets/images/logo_mytea.png') }}" alt="">
+                                    <img style="padding-left: 22px;" width="180" src="{{ asset('assets/images/maitea_nusantara_landing.png') }}" alt="">
                                 </a>
                             </div>
                             <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
                                 <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                                     <li class=" scroll active">
-                                        <a href="#home">Beranda</a>
+                                        <a class="hoverAtas" href="#home">Beranda</a>
                                     </li>
                                     <li class="scroll">
-                                        <a href="#service">Tentang Kami</a>
+                                        <a class="hoverAtas" href="#service">Tentang Kami</a>
                                     </li>
                                     <li class="scroll">
-                                        <a href="#featured-cars">Kontak Kami</a>
+                                        <a class="hoverAtas" href="#featured-cars">Kontak Kami</a>
                                     </li>
                                 </ul>
                             </div>
@@ -48,27 +48,20 @@
                 <div class="clearfix"></div>
             </div>
 
-            <div class="container">
-                <div class="welcome-hero-txt">
-                    <div class="row">
-                        <div class="col-md-6 css-cnk12sj">
-                            <h2 class="css-dniud9a">Terobosan teh termurah dan terbaru yang ada di Nusantara</h2>
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="col-md-6">
-                                    <button class="btn" style="width:100%;border-radius:8px;background-color:#fff;border: 1.4px solid #d4edda;color: #155724;">
-                                        <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 css-fank2sn">
-                            <img src="{{ asset('assets/images/bg_banner_2.png') }}">
+            <div class="welcome-hero-txt">
+                <div class="col-md-6 css-cnk12sj">
+                    <h2 class="css-dniud9a">Segarnya Nikmat <br>Kesetiaan Yang Memikat <br><span style="font-size: 30px;">#1 Ice Tea With Loyalty</span></h2>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-6">
+                            <button class="btn" style="width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
+                                <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container css-opdn2ja">
+            <div class="css-opdn2ja">
 				<div class="row">
 					<div class="col-md-12">
                         <div class="model-search-content">
@@ -76,7 +69,9 @@
                                 <div class="col-md-12">
                                     <div class="single-model-search">
                                         <h5 class="css-fhk2nsa">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat eos inventore exercitationem molestiae nihil sapiente a voluptates laborum consequuntur iure incidunt mollitia, ad eligendi, nisi vel assumenda eum. Neque, sit!
+                                            "Selamat datang pada sebuah terobosan baru dalam es teh yang menyajikan rasa memukau dan menghargai setiap tegukan dengan 
+                                            program loyalty eksklusif juga manfaat istimewa pada setiap keanggotaan mitra. Rasakan pengalaman es teh yang tak tertandingi 
+                                            dan jadilah bagian dari revolusi teh anak negeri!"
                                         </h5>
                                     </div>
                                 </div>
@@ -92,7 +87,7 @@
                 <div class="css-fnk2skj">
                     <div class="css-po2jsm">
                         <div class="css-hjsa2js">
-                            <h3 class="css-cjdkja">Menu MaiTea Nusantara</h3>
+                            <h3 class="css-cjdkja">Varian MaiTea Nusantara</h3>
                         </div>
                     </div>
                     <div class="css-diop1ms">
