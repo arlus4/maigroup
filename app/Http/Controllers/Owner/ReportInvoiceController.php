@@ -21,19 +21,12 @@ class ReportInvoiceController extends Controller
         return view('owner.report-invoice.reportInvoicePenjualan');
     }
 
-    public function getDataInvoicePembelian(){
+    public function getDataInvoicePembelian()
+    {
         $data = DB::select("SELECT 
-            outlet_id,
-            invoice_no,
-            qty,
-            amount,
-            progress,
-            ongkir,
-            total,
-            kode_unik
-
+                invoice_no, qty, amount, progress, ongkir, total, kode_unik, date_created 
             FROM [maigroup].[dbo].[web.invoice_master_all] ('". Auth::user()->outlet_id ."')
-        ");
+            ORDER BY date_created DESC");
 
         $datas = [
             'data' => $data
@@ -42,18 +35,12 @@ class ReportInvoiceController extends Controller
         return response()->json($datas);
     }
 
-    public function getDataInvoicePenjualan(){
+    public function getDataInvoicePenjualan()
+    {
         $data = DB::select("SELECT 
-            invoice_no,
-            qty,
-            amount,
-            outlet_id,
-            rewards,
-            name,
-            no_hp
-        
-            FROM [maigroup].[dbo].[web.invoice_master_pembeli] ('". Auth::user()->outlet_id ."')
-        ");
+                invoice_no, qty, amount, rewards, name, no_hp, date_created
+            FROM [maigroup].[dbo].[web.invoice_master_pembeli] ('". Auth::user()->outlet_id ."') 
+            ORDER BY date_created DESC");
 
         $datas = [
             'data' => $data

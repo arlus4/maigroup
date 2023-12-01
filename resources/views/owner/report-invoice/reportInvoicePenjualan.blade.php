@@ -17,7 +17,7 @@
                             <table class="table table-bordered align-middle fs-6 gy-5" id="tableInvoicePenjualan" class="display">
                                 <thead>
                                     <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                        <th class="min-w-100px text-dark">Id Outlet</th>
+                                        <th class="min-w-100px text-dark">Tanggal Penjualan</th>
                                         <th class="min-w-100px text-dark">No Invoice</th>
                                         <th class="min-w-125px text-dark">Info Pembeli</th>
                                         <th class="min-w-100px text-dark">QTY</th>
@@ -59,11 +59,14 @@
                 },
                 columns: [
                     { 
-                        data: 'outlet_id',
+                        data: "date_created", 
                         render: function(data, type, row) {
-                            return `<div class="align-items-center ps-2">
-                                        <span class="text-gray-800">${row.outlet_id}</span>
-                                    </div>`;
+                            if(type === 'display' || type === 'filter'){
+                                var date = new Date(data);
+                                var options = { day: '2-digit', month: 'long', year: 'numeric' };
+                                return date.toLocaleDateString('id-ID', options); // 'id-ID' untuk format Indonesia
+                            }
+                            return data;
                         }
                     },
                     { 
@@ -109,7 +112,8 @@
                                     </a>`;
                         }
                     },
-                ]
+                ],
+                order: [[0, 'desc']],
             });
         });
     </script>
