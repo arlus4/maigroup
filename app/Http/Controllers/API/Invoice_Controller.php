@@ -91,98 +91,16 @@ class Invoice_Controller extends Controller
         } catch (\Throwable $th) {
             DB::rollBack(); // Rollback transaksi jika terjadi kesalahan
             // Mengembalikan pesan error saat terjadi kesalahan
-            return response()->json(['message' => 'Terjadi kesalahan: ' . $th->getMessage()], 500);
+            return response()->json(['message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
 
-    public function update_claim(Request $request)
+    public function sumPoint(Request $request)
     {
-        try {
-            DB::beginTransaction(); // Mulai transaksi database
-            
-            // Validasi request
-            $validatedData = $request->validate([
-                'voucher_code' => 'required|exists:log_bonus,voucher_code', // pastikan voucher_code ada di database
-            ]);
-
-            // Cari Log_Bonus berdasarkan voucher_code
-            $logBonus = Log_Bonus::where('voucher_code', $request->voucher_code)->first();
-
-            // Jika logBonus tidak ditemukan, kembalikan response error
-            if (!$logBonus) {
-                return response()->json(['message' => 'Voucher tidak ditemukan'], 404);
-            }
-
-            // Update is_claim menjadi 1 dan date_claim menjadi waktu sekarang
-            $logBonus->is_claim = 1;
-            $logBonus->date_claim = Carbon::now()->timezone('Asia/Jakarta');
-            $logBonus->save();
-
-            DB::commit(); // Commit transaksi jika semua proses berhasil
-
-            // Kembalikan response berhasil
-            return response()->json([
-                'message' => 'Voucher berhasil di-claim',
-                'log_bonus' => $logBonus
-            ], 200);
-        } catch (\Throwable $th) {
-            DB::rollBack(); // Rollback transaksi jika terjadi kesalahan
-            // Mengembalikan pesan error saat terjadi kesalahan
-            return response()->json(['message' => 'Terjadi kesalahan: ' . $th->getMessage()], 500);
-        }
-    }
-
-    // public function create_invoice_detail_pembeli($detailData)
-    // {
-    //     try {
-    //         // Mengambil data invoice dari tabel invoice_master_pembeli
-    //         $invoice = Invoice_Master_Pembeli::where('invoice_no', $detailData['invoice_no'])->first();
-    
-    //         if (!$invoice) {
-    //             return response()->json(['message' => 'Invoice tidak ditemukan'], 404);
-    //         }
-    
-    //         $dataToInsert = [];
-    
-    //         foreach ($detailData['sku_id'] as $index => $sku) {
-    //             for ($i = 0; $i < $detailData['qty'][$index]; $i++) {
-    //                 $dataToInsert[] = [
-    //                     'invoice_no' => $invoice->invoice_no,
-    //                     'pembeli_id' => $invoice->pembeli_id,
-    //                     'outlet_id' => $invoice->outlet_id,
-    //                     'sku_id' => $sku,
-    //                     'qty' => 1,
-    //                     'amount' => $detailData['amount'][$index],
-    //                     'project_id' => $detailData['project_id'][$index],
-    //                     'isbonus' => 0,
-    //                     'ispoint' => 0,
-    //                     'date_created' => Carbon::now()->timezone('Asia/Jakarta')
-    //                 ];
-    //             }
-    //         }
-    
-    //         // Menyimpan data ke database
-    //         Invoice_Detail_Pembeli::insert($dataToInsert);
-
-    //         // Memanggil stored procedure untuk Update data
-    //         // DB::unprepared("EXEC maigroup.dbo.sum_point_user '{$invoice->pembeli_id}', '{$invoice->outlet_id}'");
-    //         // DB::unprepared("EXEC maigroup.dbo.sum_bonus_user '{$invoice->pembeli_id}', '{$invoice->outlet_id}'");
-    
-    //         // Mengembalikan respon
-    //         return response()->json(['message' => 'Detail invoice berhasil dibuat'], 201);
-    
-    //     } catch (\Exception $e) {
-    //         // Mengembalikan pesan error saat terjadi kesalahan
-    //         return response()->json(['message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
-    //     }
-    // }
-
-    // public function sumPoint(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'pembeli_id' => 'required|string|max:255',
-    //         'outlet_id' => 'required|string|max:255',
-    //     ]);
+        $validator = Validator::make($request->all(), [
+            'pembeli_id' => 'required|string|max:255',
+            'outlet_id' => 'required|string|max:255',
+        ]);
     
     //     if ($validator->fails()) {
     //         return response()->json(['error' => $validator->errors()], 400);
