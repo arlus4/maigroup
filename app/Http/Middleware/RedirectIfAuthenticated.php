@@ -17,16 +17,25 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle($request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
-
+    
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = Auth::guard($guard)->user();
+                switch ($user->users_type) {
+                    case 4: // Admin
+                        return redirect()->route('admin.dashboard-admin');
+                    case 2: // Penjual
+                        return redirect()->route('owner.dashboard-owner');
+                    default:
+                        // Logika untuk pengguna lain
+                        break;
+                }
             }
         }
-
+    
         return $next($request);
     }
 }
