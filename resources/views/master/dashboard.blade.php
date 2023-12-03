@@ -17,7 +17,7 @@
                             <div class="card-header pt-2">
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="css-fcjak2js">Total Kategori Produk</span>
-                                    <span class="css-cna2lks9">76 kategori</span>
+                                    <span class="css-cna2lks9">kategori</span>
                                 </h3>
                             </div>
                             <div class="card-body d-flex flex-column justify-content-end pe-0">
