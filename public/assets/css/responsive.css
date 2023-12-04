@@ -154,8 +154,8 @@
         top: 0px;
         margin: 0px!important;
         height: 50vh;
-        border-bottom-left-radius: 40px;
-        border-bottom-right-radius: 40px;
+        /* border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px; */
     }
     .css-cnk12sj {
         text-align: center;
@@ -575,6 +575,7 @@
     .css-header-mobile {
         top: 0px;
         height: 80vh;
+        margin: 0px!important;
     }
     .css-cnk12sj {
         text-align: center;
@@ -880,6 +881,7 @@
     .css-header-mobile {
         top: 0px;
         height: 80vh;
+        margin: 0px!important;
     }
     .css-cnk12sj {
         text-align: center;
@@ -1191,6 +1193,7 @@
     .css-header-mobile {
         top: 0px;
         height: 80vh;
+        margin: 0px!important;
     }
     .css-cnk12sj {
         text-align: center;
@@ -1492,6 +1495,7 @@
     .css-header-mobile {
         top: 0px;
         height: 80vh;
+        margin: 0px!important;
     }
     .css-cnk12sj {
         text-align: center;
