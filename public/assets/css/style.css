@@ -19,12 +19,7 @@ body{
     margin:0 auto;
 	overflow-x:hidden;
 }
-.model-search-content{
-    content: "";
-    width: auto!important;
-    height: 100%;
-    background: url('../images/bg_lorem.png')no-repeat;
-}
+
 a,a:hover,a:active,a:focus {
 	display:inline-block;
 	text-decoration:none;
@@ -186,7 +181,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 .welcome-hero {
     height: auto;
     position: relative;
-    margin: 0 61px;
     background:url('../images/bg_4.png')no-repeat;
     background-position: center;
     background-size: cover;
@@ -240,6 +234,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
     border: 3px solid #edede9;
     padding: 40px;
     /* background: #fff; */
+    background: url('../images/bg-1320.png');
     box-shadow:rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;
     position: absolute;
     bottom: -150px;
