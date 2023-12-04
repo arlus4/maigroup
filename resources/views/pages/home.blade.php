@@ -7,6 +7,7 @@
         <title>MaiTea - Nusantara</title>
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/bootsnav.css" >
         <link rel="stylesheet" href="assets/css/style.css">
@@ -16,66 +17,108 @@
     </head>
 	
 	<body>
-        <section class="welcome-hero css-header-mobile" style="margin: 0 60px;">
-            <div class="top-area">
-                <div class="header-area">
-                    <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy"  data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
-                        <div class="container-fluid">
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                                    <i style="color: #fff;" class="fa fa-bars"></i>
-                                </button>
-                                <a class="navbar-brand" href="index.html">
-                                    <img style="padding-left: 22px;" width="180" src="{{ asset('assets/images/maitea_nusantara_landing.png') }}" alt="">
-                                </a>
-                            </div>
-                            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-                                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-                                    <li class=" scroll active">
-                                        <a class="hoverAtas" href="#home">Beranda</a>
-                                    </li>
-                                    <li class="scroll">
-                                        <a class="hoverAtas" href="#service">Tentang Kami</a>
-                                    </li>
-                                    <li class="scroll">
-                                        <a class="hoverAtas" href="#featured-cars">Kontak Kami</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
+        <!-- Bagian Mobile -->
+        <section class="css-bagian-mobile">
+            <nav class="bgWarna">
+                <div class="d-flex px-4 py-3" style="justify-content: space-between">
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid img-log" src="{{ asset('assets/images/maitea_nusantara_landing.png') }}">
+                    </div>
+                    <button class="btn-bars" type="button" data-toggle="modal" data-target="#modalSidebar">
+                        <i class="fas fa-bars fa-2x" style="font-size: 1.5em;"></i>
+                    </button>
                 </div>
-                <div class="clearfix"></div>
-            </div>
+            </nav>
 
-            <div class="welcome-hero-txt">
-                <div class="col-md-6 css-cnk12sj">
-                    <h2 class="css-dniud9a">Segar Nikmat <br>Kesetiaan Yang Memikat <br><span style="font-size: 30px;">#1 Ice Tea With Loyalty</span></h2>
-                    <div class="row" style="margin-top: 20px;">
-                        <div class="col-md-6">
-                            <button class="btn" style="width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
-                                <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
-                            </button>
+            <div class="css-banner-mobile">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ asset('assets/images/bg_mobile_1.png') }}" class="d-block w-100">
                         </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('assets/images/bg_mobile_2.png') }}" class="d-block w-100">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Bagian Website -->
+        <section class="mobile-hidden">
+            <div class="css-cnf2kjs">
+                <div>
+                    <div class="css-hero-image">
+                        <span style="box-sizing:border-box;display:block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:absolute;top:0;left:0;bottom:0;right:0">
+                            <img src="{{ asset('assets/images/bg_4.png') }}" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover">
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <header class="css-cf32hks">
+                        <div class="css-jd23jsk">
+                            <div class="css-nb3nksa">
+                                <div class="css-lkg3ns">
+                                    <div class="css-bnm2jsd">
+                                        <div class="css-dnmn2sw">
+                                            <a href="/">
+                                                <img src="{{ asset('assets/images/maitea_nusantara_landing.png') }}" style="height: 100%; object-fit:contain;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="css-cop3rjs">
+                                    <a href="#" class="css-cnmt3nsa">
+                                        Beranda
+                                    </a>
+                                    <a href="#" class="css-cnmt3nsa">
+                                        Artikel
+                                    </a>
+                                    <a href="#" class="css-cnmt3nsa">
+                                        Tentang Kami
+                                    </a>
+                                    <a href="#" class="css-cnmt3nsa">
+                                        Kontak Kami
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+                <div class="css-vr3kjak">
+                    <h2 class="css-hj3kdop">
+                        Segarnya Nikmat<br>
+                        Kesetiaan Yang Memikat<br>
+                        <span style="font-size: 30px;font-weight: 500;">#1<sup>St</sup> Ice Tea With Loyalty</span>
+                    </h2>
+                    <div style="margin-top: 16px;">
+                        <button class="btn" style="position:relative;right: 54%;width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
+                            <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
+                        </button>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="css-opdn2ja">
-				<div class="row">
-					<div class="col-md-12">
-                        <div class="model-search-content">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="single-model-search">
-                                        <h5 class="css-fhk2nsa">
-                                            "Selamat datang pada sebuah terobosan baru dalam es teh yang menyajikan rasa memukau dan menghargai setiap tegukan dengan 
-                                            program loyalty eksklusif juga manfaat istimewa pada setiap keanggotaan mitra. Rasakan pengalaman es teh yang tak tertandingi 
-                                            dan jadilah bagian dari revolusi teh anak negeri!"
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
+        <section class="mobile-hidden" style="margin: 0 60px">
+            <div class="model-search-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="single-model-search">
+                            <h5 class="css-fhk2nsa">
+                                "Selamat datang pada sebuah terobosan baru dalam es teh yang menyajikan rasa memukau dan menghargai setiap tegukan dengan 
+                                program loyalty eksklusif juga manfaat istimewa pada setiap keanggotaan mitra. Rasakan pengalaman es teh yang tak tertandingi 
+                                dan jadilah bagian dari revolusi teh anak negeri!"
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -900,6 +943,8 @@
             </div>
         </section>
 
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
         <script src="assets/js/jquery.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         

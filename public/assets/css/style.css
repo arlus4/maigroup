@@ -301,7 +301,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
     display: block;
 }
 .sec-menu{
-    padding: 130px 0 87px;
+    padding: 80px 0 87px;
+    /* padding: 130px 0 87px; */
     margin: 0 60px;
     display: block;
 }
@@ -688,5 +689,92 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 @keyframes example {
     0%   {bottom:0px;}
     100%  {bottom:7px;}
+}
+
+
+.css-cnf2kjs{
+    height: 576px;
+    z-index: 12;
+    position: relative;
+    width: 100%;
+    min-width: max-content;
+}
+.css-hero-image{
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    -o-object-fit: cover;
+    object-fit: cover;
+    pointer-events: none;
+}
+.css-cf32hks{
+    background-color: #fff;
+    padding-top: 21px;
+}
+.css-jd23jsk{
+    box-sizing: content-box;
+    padding-left: 80px;
+    padding-right: 80px;
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+.css-nb3nksa{
+    display: flex;
+    padding-bottom: 21px;
+    justify-content: space-between;
+    min-height: 53px;
+}
+.css-lkg3ns{
+    display: flex;
+}
+.css-bnm2jsd{
+    margin-right: 12px;
+    display: flex;
+}
+.css-dnmn2sw{
+    max-height: 32px;
+    max-width: 128px;
+}
+.css-cop3rjs{
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+.css-cnmt3nsa{
+    white-space: nowrap;
+    margin-left: 35px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #212121;
+}
+.css-vr3kjak{
+    position: relative;
+    top: 25%;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 56px;
+    margin: auto;
+    width: 100%;
+    right: 26%;
+    padding: 0 20px;
+}
+.css-hj3kdop{
+    color: #212121;
+    font-size: 45px;
+    line-height: 1;
+    font-weight: bold;
+    margin: 0;
+    letter-spacing: -2px;
+    font-family: 'Baloo Thambi 2 Variable';
 }
 /*========================Thank you=================
