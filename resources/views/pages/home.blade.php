@@ -50,6 +50,10 @@
                     </button>
                 </div>
             </div>
+
+            <div class="px-4 py-5" style="background: linear-gradient(68deg,rgba(1,168,196,.15) -1.82%,rgba(251,254,127,.2) 106.59%)">
+                <span style="color: #293237">"Selamat Datang Pada Sebuah Terobosan Baru Dalam Es Teh Yang Menyajikan Rasa Memukau Dan Menghargai Setiap Tegukan Dengan Program Loyalty Eksklusif Juga Manfaat Istimewa Pada Setiap Keanggotaan Mitra. Rasakan Pengalaman Es Teh Yang Tak Tertandingi Dan Jadilah Bagian Dari Revolusi Teh Anak Negeri!"</span>
+            </div>
         </section>
 
 
@@ -205,17 +209,11 @@
         </section>
 
         <!-- Awal Bagian Mobile Menu -->
-
         <div class="css-dahk1nbs">
             <div class="css-posn1da">
                 <div class="css-coan1sn">
-                    <div class="css-bvjhaqo">
-                        <h4 class="css-ndk2nsa">Varian Menu Terbaru</h4>
-                    </div>
-                    <div class="css-klfh2ja">
-                        <div class="css-cfn1nsk">
-                            <h4 class="css-djk9qna">Yuk buruan Beli</h4>
-                        </div>
+                    <div class="css-bvjhaqo" style="justify-content: space-between;">
+                        <h4 class="css-ndk2nsa mb-0">Varian MaiTea Nusantara</h4>
                         <div class="css-dank90a">
                             <a href="#" class="css-lihat-semua">Lihat Semua</a>
                         </div>
