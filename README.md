@@ -1,15 +1,8 @@
 <p align="center"><a href="https://order.tokoseru.com/" target="_blank"><img src="https://order.tokoseru.com/assets/images/maitea_nusantara_landing.png" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About MaiTea Group
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+"Selamat Datang Pada Sebuah Terobosan Baru Dalam Es Teh Yang Menyajikan Rasa Memukau Dan Menghargai Setiap Tegukan Dengan Program Loyalty Eksklusif Juga Manfaat Istimewa Pada Setiap Keanggotaan Mitra. Rasakan Pengalaman Es Teh Yang Tak Tertandingi Dan Jadilah Bagian Dari Revolusi Teh Anak Negeri!"
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
