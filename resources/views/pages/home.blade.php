@@ -102,7 +102,7 @@
                     <h2 class="css-hj3kdop">
                         Segarnya Nikmat<br>
                         Kesetiaan Yang Memikat<br>
-                        <span style="font-size: 30px;font-weight: 500;">#1<sup style="font-size: 15px;top: -1em;">St</sup> Tea With Loyalty</span>
+                        <span style="font-size: 30px;font-weight: 500;">#1<sup style="font-size: 15px;top: -1em;margin-right: 4px;">St</sup> Tea With Loyalty</span>
                     </h2>
                     <div style="margin-top: 16px;">
                         <button class="btn" style="position:relative;right: 54%;width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
