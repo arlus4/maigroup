@@ -97,8 +97,9 @@ class AkunSettingController extends Controller
                 $imagePath = 'storage/user_penjual/avatar/' . $imageName;
             
                 // Hapus gambar lama jika ada dan berbeda dengan gambar baru
-                $oldImagePath = public_path($request->input('avatar_lama'));
-                if ($request->input('avatar_lama') && file_exists($oldImagePath) && $oldImagePath != $imagePath) {
+                $oldImageName = basename($request->input('avatar_lama')); // Gunakan basename() untuk mendapatkan nama file saja
+                $oldImagePath = public_path('storage/user_penjual/avatar/' . $oldImageName);
+                if ($oldImageName && file_exists($oldImagePath) && $oldImagePath != $imagePath) {
                     unlink($oldImagePath);
                 }
             } else {
