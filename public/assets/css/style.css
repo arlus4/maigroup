@@ -306,7 +306,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
     display: block;
 }
 .sec-menu{
-    padding: 17px 0 87px;
+    padding: 16px 0 87px!important;
     /* padding: 130px 0 87px; */
     margin: 0 60px;
     display: block;
