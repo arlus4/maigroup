@@ -4,4 +4,4 @@
 
 "Selamat Datang Pada Sebuah Terobosan Baru Dalam Es Teh Yang Menyajikan Rasa Memukau Dan Menghargai Setiap Tegukan Dengan Program Loyalty Eksklusif Juga Manfaat Istimewa Pada Setiap Keanggotaan Mitra. Rasakan Pengalaman Es Teh Yang Tak Tertandingi Dan Jadilah Bagian Dari Revolusi Teh Anak Negeri!"
 
-<img src="https://order.tokoseru.com/assets/images/bg_mobile_1.png"> 
+<img style="border-radius: 8px;" src="https://order.tokoseru.com/assets/images/bg_mobile_1.png"> 
