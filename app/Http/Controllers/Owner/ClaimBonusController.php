@@ -29,9 +29,17 @@ class ClaimBonusController extends Controller
     {
         $outletId = Auth::user()->outlet_id;
         $bonus = Log_Bonus::select(
-            'date_claim', 'date_gift', 'is_claim', 'is_gift', 'nomor_telfon', 'outlet_id', 'voucher_code'
+            'log_bonus.date_claim',
+            'log_bonus.date_gift',
+            'log_bonus.is_claim',
+            'log_bonus.is_gift',
+            'log_bonus.nomor_telfon',
+            'log_bonus.outlet_id',
+            'log_bonus.voucher_code',
+            'users_login.name'
             )
-            ->where('voucher_code', $request->voucher_code)
+            ->leftJoin('users_login', 'log_bonus.pembeli_id', 'users_login.pembeli_id')
+            ->where('log_bonus.voucher_code', $request->voucher_code)
             ->first();
         if ($bonus->outlet_id == $outletId) {
 

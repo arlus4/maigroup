@@ -252,7 +252,7 @@
 					let formData = new FormData(this);
 					$.ajax({
 						type: 'POST',
-						url: "{{ route('owner.owner_store_qr_code') }}",
+						url: "{{ route('owner.owner_konfirmasi_bonus') }}",
 						data: formData,
 						contentType: false,
 						processData: false,
