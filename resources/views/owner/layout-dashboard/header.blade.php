@@ -119,7 +119,33 @@
 			</span>
 		</div>
 
-		<div class="modal fade" tabindex="-1" id="modalOpsi">
+		<div class="modal fade" id="modalOpsi"> 
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title">Claim Bonus</h3>
+						<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+						</div>
+					</div>
+					<div class="modal-body">
+						<form action="#" id="formInputQrCode">
+							@csrf
+							<div class="form-group mt-3">
+								<label>Masukkan Nomor QR Code</label>
+								<input type="text" name="qrcode" id="inputQrCode" class="form-control" placholder="Contoh : 1538010999">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="close-button" class="css-ca2jq0s" style="line-height: 39px;height: 40px;width: 90px;" data-bs-dismiss="modal">Batalkan</button>
+						<button id="simpan-button" class="css-kl2kd9a" style="height: 40px; width: 130px;background-color: #e2e2e2;color: #929292;cursor: not-allowed;">Lanjut</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- <div class="modal fade" tabindex="-1" id="modalOpsi">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -175,60 +201,44 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 
 		<script src="{{ asset('assets/owner/js/plugins.bundle.js') }}"></script>
 		<script src="{{ asset('assets/owner/js/scripts.bundle.js') }}"></script>
 		<script>
-			$(document).ready(function() {
-				$('#formQrCode').hide();
-				updateButtonType();
-    			updateSimpanButtonStatus();
+				$(document).ready(function() {
+					$("#inputQrCode").keydown(function (e) {
+					if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+						(e.keyCode == 65 && e.ctrlKey === true) ||
+						(e.keyCode >= 35 && e.keyCode <= 39)) {
+						return;
+					}
 
-				function updateButtonType() {
-					var gunakanScanSelected = $('#gunakanScan').is(':checked');
-					var inputCodeSelected = $('#inputCode').is(':checked');
+					if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+						e.preventDefault();
+					}
+				});
+
+				$("#inputQrCode").on("input", function() {
+					var isInputEmpty = $(this).val().trim() === "";
 					
-					// Jika "gunakanScan" dipilih, ubah tombol menjadi type="button"
-					if (gunakanScanSelected) {
-						$('#simpan-button').attr('type', 'button').text('Lanjut');
-						$('#formQrCode').hide();
-						$('#inputQrCode').val('');
-					} 
-					// Jika "inputCode" dipilih, ubah tombol menjadi type="submit"
-					else if (inputCodeSelected) {
-						$('#simpan-button').attr('type', 'submit').text('Kirim');
-						$('#formQrCode').show();
-					}
-				}
+					$("#simpan-button").prop("disabled", isInputEmpty);
 
-				function updateSimpanButtonStatus() {
-					var isOptionSelected = $('#gunakanScan').is(':checked') || $('#inputCode').is(':checked');
-					$('#simpan-button').prop('disabled', !isOptionSelected);
-					$('#simpan-button').css({
-						'cursor': isOptionSelected ? 'pointer' : 'not-allowed',
-						'background-color': isOptionSelected ? '#039344' : '#e2e2e2',
-						'color': isOptionSelected ? '#ffffff' : '#929292'
-					});
-				}
+					var buttonStyles = {
+						'cursor': isInputEmpty ? 'not-allowed' : 'pointer',
+						'background-color': isInputEmpty ? '#e2e2e2' : '#039344',
+						'color': isInputEmpty ? '#929292' : '#ffffff'
+					};
 
-				$('input[name="account_type"]').change(function() {
-					updateButtonType();
-					updateSimpanButtonStatus(); 
+					$("#simpan-button").css(buttonStyles);
 				});
 
-				// Event listener untuk tombol "Kirim"
 				$('#simpan-button').click(function() {
-					var type = $(this).attr('type');
-					if (type === 'submit') {
-						$('#formQrCode').submit(); 
-					} else {
-						window.location.href = "{{ route('owner.owner_claim_bonus') }}";
-					}
+					$('#formInputQrCode').submit(); 
 				});
 
-				$('#formQrCode').submit(function(e) {
+				$('#formInputQrCode').submit(function(e) {
 					e.preventDefault();
 					
 					let formData = new FormData(this);
@@ -251,9 +261,79 @@
 					});
 				});
 
-				$('#modalOpsi').on('show.bs.modal', function() {
-					updateButtonType();
-					updateSimpanButtonStatus();
-				});
+
+				// $('#formQrCode').hide();
+				// updateButtonType();
+    			// updateSimpanButtonStatus();
+
+				// function updateButtonType() {
+				// 	var gunakanScanSelected = $('#gunakanScan').is(':checked');
+				// 	var inputCodeSelected = $('#inputCode').is(':checked');
+					
+				// 	// Jika "gunakanScan" dipilih, ubah tombol menjadi type="button"
+				// 	if (gunakanScanSelected) {
+				// 		$('#simpan-button').attr('type', 'button').text('Lanjut');
+				// 		$('#formQrCode').hide();
+				// 		$('#inputQrCode').val('');
+				// 	} 
+				// 	// Jika "inputCode" dipilih, ubah tombol menjadi type="submit"
+				// 	else if (inputCodeSelected) {
+				// 		$('#simpan-button').attr('type', 'submit').text('Kirim');
+				// 		$('#formQrCode').show();
+				// 	}
+				// }
+
+				// function updateSimpanButtonStatus() {
+				// 	var isOptionSelected = $('#gunakanScan').is(':checked') || $('#inputCode').is(':checked');
+				// 	$('#simpan-button').prop('disabled', !isOptionSelected);
+				// 	$('#simpan-button').css({
+				// 		'cursor': isOptionSelected ? 'pointer' : 'not-allowed',
+				// 		'background-color': isOptionSelected ? '#039344' : '#e2e2e2',
+				// 		'color': isOptionSelected ? '#ffffff' : '#929292'
+				// 	});
+				// }
+
+				// $('input[name="account_type"]').change(function() {
+				// 	updateButtonType();
+				// 	updateSimpanButtonStatus(); 
+				// });
+
+				// // Event listener untuk tombol "Kirim"
+				// $('#simpan-button').click(function() {
+				// 	var type = $(this).attr('type');
+				// 	if (type === 'submit') {
+				// 		$('#formQrCode').submit(); 
+				// 	} else {
+				// 		window.location.href = "{{ route('owner.owner_claim_bonus') }}";
+				// 	}
+				// });
+
+				// $('#formQrCode').submit(function(e) {
+				// 	e.preventDefault();
+					
+				// 	let formData = new FormData(this);
+				// 	$.ajax({
+				// 		type: 'POST',
+				// 		url: "{{ route('owner.owner_store_qr_code') }}",
+				// 		data: formData,
+				// 		contentType: false,
+				// 		processData: false,
+				// 		success: function(data) {
+				// 			toastr.success("Berhasil");
+				// 			$('#modalOpsi').modal('hide');
+                //             location.reload();
+				// 		},
+				// 		error: function(data) {
+				// 			toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+				// 			$('#modalOpsi').modal('hide');
+                //             location.reload();
+				// 		}
+				// 	});
+				// });
+
+				// $('#modalOpsi').on('show.bs.modal', function() {
+				// 	updateButtonType();
+				// 	updateSimpanButtonStatus();
+				// });
 			});
 		</script>
