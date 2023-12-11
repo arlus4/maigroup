@@ -24,30 +24,87 @@ class ClaimBonusController extends Controller
         return view('hasil_scan', ['qrCode' => $qrCode]); // Tampilkan hasil atau lakukan aksi lain
     }
 
-    // Controller untuk Input QR Code
-    public function store_qr_code(Request $request){
-        dd($request);
+
+    public function konfirmasi_bonus(Request $request)
+    {
+        $outletId = Auth::user()->outlet_id;
+        $bonus = Log_Bonus::select(
+            'date_claim', 'date_gift', 'is_claim', 'is_gift', 'nomor_telfon', 'outlet_id', 'voucher_code'
+            )
+            ->where('voucher_code', $request->voucher_code)
+            ->first();
+        if ($bonus->outlet_id == $outletId) {
+
+            if ($bonus->is_claim == 0) {
+                $datas = [
+                    'data' => $bonus
+                ];
+                return response()->json($datas, 200);
+            } else {
+                return response()->json(['message' => 'Voucher telah dipakai'], 404);
+            }
+
+        } else {
+            return response()->json(['message' => 'Voucher tidak ditemukan'], 404);
+        }
+        
     }
 
-    public function new_bonus(){
+    public function store_qr_code(Request $request){
+        DB::beginTransaction();
+
+        try {
+            $bonus = Log_Bonus::where('voucher_code', $request->voucher_code)->first();
+
+            if ($bonus) {
+                $voucherCode = $bonus->voucher_code;
+                $pembeliId = $bonus->pembeli_id;
+                $outletId = $bonus->outlet_id;
+
+                $result = DB::select("EXEC maigroup.dbo.isclaim_bonus ?, ?, ?", [
+                    $voucherCode,
+                    $pembeliId,
+                    $outletId
+                ]);
+
+                DB::commit();
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $result
+                ]);
+            } else {
+                DB::rollback();
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Voucher code not found.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function new_bonus()
+    {
         return view('owner.bonus.daftarBonus', [
             'title' => "Bonus Pembeli Claim",
             'url'   => 'get_data_pembeli_claim'
         ]);
     }
 
-    public function get_data_pembeli_claim(){
-        $data = DB::select("SELECT 
-            voucher_code,
-            nomor_telfon,
-            is_claim,
-            is_gift,
-            date_claim,
-            date_gift,
-            name
-
-            FROM [maigroup].[dbo].[web.log_bonus_pembeli_claim] ('". Auth::user()->outlet_id ."')
-        ");
+    public function get_data_pembeli_claim()
+    {
+        $data = DB::select("SELECT
+                    voucher_code, nomor_telfon, is_claim, is_gift, date_claim, date_gift, name
+                FROM [maigroup].[dbo].[web.log_bonus_pembeli_claim] ('". Auth::user()->outlet_id ."')"
+            );
 
         $datas = [
             'data' => $data
@@ -64,18 +121,12 @@ class ClaimBonusController extends Controller
         ]);
     }
 
-    public function get_data_pembeli_gift(){
-        $data = DB::select("SELECT 
-            voucher_code,
-            nomor_telfon,
-            is_claim,
-            is_gift,
-            date_claim,
-            date_gift,
-            name
-        
-            FROM [maigroup].[dbo].[web.log_bonus_pembeli_gift] ('". Auth::user()->outlet_id ."')
-        ");
+    public function get_data_pembeli_gift()
+    {
+        $data = DB::select("SELECT
+                voucher_code, nomor_telfon, is_claim, is_gift, date_claim, date_gift, name
+            FROM [maigroup].[dbo].[web.log_bonus_pembeli_gift] ('". Auth::user()->outlet_id ."')"
+        );
 
         $datas = [
             'data' => $data

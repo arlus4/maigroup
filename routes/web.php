@@ -149,9 +149,6 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-owner');
         Route::get('/get_data_stock_report', [DashboardController::class, 'getDataStockReport']);
 
-
-        Route::get('/bonus', [BonusController::class, 'owner_bonus']);
-
         // POS Sistem atau Menu Order
         Route::get('/menu-order', [MenuOrderController::class, 'index'])->name('owner_menu_order');
         Route::get('/get-produk/{produkId}', [MenuOrderController::class, 'getProduk'])->name('owner_get_produk');
@@ -162,6 +159,7 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         // Claim Bonus
         Route::get('/claim_bonus', [ClaimBonusController::class, 'claim_bonus'])->name('owner_claim_bonus');
         Route::get('/store_claim_bonus', [ClaimBonusController::class, 'store_claim_bonus'])->name('owner_store_claim_bonus');
+        Route::post('/konfirmasi_bonus', [ClaimBonusController::class, 'konfirmasi_bonus'])->name('owner_konfirmasi_bonus');
         Route::post('/store_qr_code', [ClaimBonusController::class, 'store_qr_code'])->name('owner_store_qr_code');
 
         Route::get('/bonus', [ClaimBonusController::class, 'new_bonus'])->name('owner_bonus');

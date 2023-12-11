@@ -132,8 +132,8 @@
 						<form action="#" id="formInputQrCode">
 							@csrf
 							<div class="form-group mt-3">
-								<label>Masukkan Nomor QR Code</label>
-								<input type="text" name="qrcode" id="inputQrCode" class="form-control" placholder="Contoh : 1538010999">
+								<label>Masukkan Kode Voucher</label>
+								<input type="text" name="voucher_code" id="inputQrCode" class="form-control" placholder="Contoh : 1538010999">
 							</div>
 						</form>
 					</div>
@@ -207,15 +207,23 @@
 		<script src="{{ asset('assets/owner/js/plugins.bundle.js') }}"></script>
 		<script src="{{ asset('assets/owner/js/scripts.bundle.js') }}"></script>
 		<script>
-				$(document).ready(function() {
-					$("#inputQrCode").keydown(function (e) {
+			$(document).ready(function() {
+				$("#inputQrCode").on('input', function () {
+					// Ubah teks menjadi huruf kapital
+					var value = $(this).val().toUpperCase();
+					$(this).val(value);
+				}).keydown(function (e) {
+					// Izinkan kontrol khusus seperti backspace, delete, dll.
 					if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
 						(e.keyCode == 65 && e.ctrlKey === true) ||
 						(e.keyCode >= 35 && e.keyCode <= 39)) {
 						return;
 					}
 
-					if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+					// Jika bukan angka atau huruf, mencegah input.
+					if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && 
+						(e.keyCode < 65 || e.keyCode > 90) &&
+						(e.keyCode < 96 || e.keyCode > 105)) {
 						e.preventDefault();
 					}
 				});
@@ -251,12 +259,12 @@
 						success: function(data) {
 							toastr.success("Berhasil");
 							$('#modalOpsi').modal('hide');
-                            location.reload();
+                            // location.reload();
 						},
 						error: function(data) {
 							toastr.error("Terjadi kesalahan. Silakan coba lagi.");
 							$('#modalOpsi').modal('hide');
-                            location.reload();
+                            // location.reload();
 						}
 					});
 				});
