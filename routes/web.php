@@ -159,8 +159,10 @@ Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
         // Claim Bonus
         Route::get('/claim_bonus', [ClaimBonusController::class, 'claim_bonus'])->name('owner_claim_bonus');
         Route::get('/store_claim_bonus', [ClaimBonusController::class, 'store_claim_bonus'])->name('owner_store_claim_bonus');
-        Route::post('/konfirmasi_bonus', [ClaimBonusController::class, 'konfirmasi_bonus'])->name('owner_konfirmasi_bonus');
-        Route::post('/store_qr_code', [ClaimBonusController::class, 'store_qr_code'])->name('owner_store_qr_code');
+        Route::post('/konfirmasi_claim', [ClaimBonusController::class, 'konfirmasi_claim'])->name('owner_konfirmasi_claim');
+        Route::post('/update_claim', [ClaimBonusController::class, 'update_claim'])->name('owner_update_claim');
+        Route::post('/konfirmasi_gift', [ClaimBonusController::class, 'konfirmasi_gift'])->name('owner_konfirmasi_gift');
+        Route::post('/update_gift', [ClaimBonusController::class, 'update_gift'])->name('owner_update_gift');
 
         Route::get('/bonus', [ClaimBonusController::class, 'new_bonus'])->name('owner_bonus');
         Route::get('/bonus/get_data_pembeli_claim', [ClaimBonusController::class, 'get_data_pembeli_claim'])->name('get_data_pembeli_claim');

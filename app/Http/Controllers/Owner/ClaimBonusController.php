@@ -7,7 +7,7 @@ use App\Models\Log_Bonus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Validator;
 
 class ClaimBonusController extends Controller
 {
@@ -25,7 +25,7 @@ class ClaimBonusController extends Controller
     }
 
 
-    public function konfirmasi_bonus(Request $request)
+    public function konfirmasi_claim(Request $request)
     {
         $outletId = Auth::user()->outlet_id;
         $bonus = Log_Bonus::select(
@@ -35,14 +35,15 @@ class ClaimBonusController extends Controller
             'log_bonus.is_gift',
             'log_bonus.nomor_telfon',
             'log_bonus.outlet_id',
+            'log_bonus.pembeli_id',
             'log_bonus.voucher_code',
             'users_login.name'
             )
             ->leftJoin('users_login', 'log_bonus.pembeli_id', 'users_login.pembeli_id')
             ->where('log_bonus.voucher_code', $request->voucher_code)
             ->first();
-        if ($bonus->outlet_id == $outletId) {
 
+        if ($bonus->outlet_id == $outletId) {
             if ($bonus->is_claim == 0) {
                 $datas = [
                     'data' => $bonus
@@ -51,51 +52,100 @@ class ClaimBonusController extends Controller
             } else {
                 return response()->json(['message' => 'Voucher telah dipakai'], 404);
             }
-
         } else {
             return response()->json(['message' => 'Voucher tidak ditemukan'], 404);
         }
-        
     }
 
-    public function store_qr_code(Request $request){
-        DB::beginTransaction();
-
+    public function update_claim(Request $request)
+    {
         try {
-            $bonus = Log_Bonus::where('voucher_code', $request->voucher_code)->first();
+            DB::beginTransaction();
 
-            if ($bonus) {
-                $voucherCode = $bonus->voucher_code;
-                $pembeliId = $bonus->pembeli_id;
-                $outletId = $bonus->outlet_id;
-
-                $result = DB::select("EXEC maigroup.dbo.isclaim_bonus ?, ?, ?", [
-                    $voucherCode,
-                    $pembeliId,
-                    $outletId
-                ]);
-
-                DB::commit();
-
-                return response()->json([
-                    'success' => true,
-                    'data' => $result
-                ]);
-            } else {
-                DB::rollback();
-
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Voucher code not found.'
-                ]);
-            }
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred: ' . $e->getMessage()
+            $validator = Validator::make($request->all(), [
+                'pembeli_id'    => 'required',
+                'voucher_code'  => 'required',
             ]);
+
+            $outletId = Auth::user()->outlet_id;
+        
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+    
+            // Call the stored procedure
+            DB::unprepared("EXEC maigroup.dbo.isclaim_bonus '{$request->voucher_code}', '{$request->pembeli_id}', '{$outletId}'");
+            
+            DB::commit();
+
+            return response()->json(['message' => 'Prosedur berhasil dijalankan']);
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            
+            return response()->json(['error' => 'Terjadi Kesalahan: ' . $th->getMessage()], 500);
+        }
+    }
+
+    public function konfirmasi_gift(Request $request)
+    {
+        $outletId = Auth::user()->outlet_id;
+        $gift = Log_Bonus::select(
+            'log_bonus.date_claim',
+            'log_bonus.date_gift',
+            'log_bonus.is_claim',
+            'log_bonus.is_gift',
+            'log_bonus.nomor_telfon',
+            'log_bonus.outlet_id',
+            'log_bonus.pembeli_id',
+            'log_bonus.voucher_code',
+            'users_login.name'
+            )
+            ->leftJoin('users_login', 'log_bonus.pembeli_id', 'users_login.pembeli_id')
+            ->where('log_bonus.voucher_code', $request->voucher_code)
+            ->first();
+
+        if ($gift->outlet_id == $outletId) {
+            if ($gift->is_gift == 0) {
+                $datas = [
+                    'data' => $gift
+                ];
+                return response()->json($datas, 200);
+            } else {
+                return response()->json(['message' => 'Voucher telah dipakai'], 404);
+            }
+        } else {
+            return response()->json(['message' => 'Voucher tidak ditemukan'], 404);
+        }
+    }
+
+    public function update_gift(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $validator = Validator::make($request->all(), [
+                'pembeli_id'    => 'required',
+                'voucher_code'  => 'required',
+            ]);
+
+            $outletId = Auth::user()->outlet_id;
+        
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+    
+            // Call the stored procedure
+            DB::unprepared("EXEC maigroup.dbo.isgift_bonus '{$request->voucher_code}', '{$request->pembeli_id}', '{$outletId}'");
+            
+            DB::commit();
+
+            return response()->json(['message' => 'Prosedur berhasil dijalankan']);
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            
+            return response()->json(['error' => 'Terjadi Kesalahan: ' . $th->getMessage()], 500);
         }
     }
 

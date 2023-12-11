@@ -38,7 +38,6 @@
                                 <thead>
                                     <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-100px text-dark">No</th>
-                                        <th class="min-w-150px text-dark">Kode Voucher</th>
                                         <th class="min-w-100px text-dark">Info Pembeli</th>
                                         <th class="min-w-100px text-dark">Status Claim</th>
                                         <th class="min-w-100px text-dark">Status Gift</th>
@@ -84,8 +83,8 @@
                     case 11: month = "Desember"; break;
                 }
 
-                day               = day < 10 ? "0" + day : day; 
-                month             = month < 10 ? "0" + month : month; 
+                day               = day < 10 ? "0" + day : day;
+                month             = month < 10 ? "0" + month : month;
                 var formattedDate = day + ' ' + month + ' ' + year;
 
                 return formattedDate;
@@ -101,14 +100,11 @@
                     processing: "Loading..."
                 },
                 columns: [
-                    { 
+                    {
                         data: null,
                         render: function(data, type, row, meta) {
                             return meta.row + 1;
                         }
-                    },
-                    { 
-                        data: "voucher_code" 
                     },
                     {
                         data: 'nomor_telfon',
@@ -159,7 +155,7 @@
                                 status = '<span class="badge badge-light-danger">----</span>';
                             } else {
                                 // Pastikan untuk menggunakan backticks di sini
-                                status = `<span class="text-gray-800">${formatTglSaja(row.date_claim)}</span>`; 
+                                status = `<span class="text-gray-800">${formatTglSaja(row.date_claim)}</span>`;
                             }
                             return status;
                         }
