@@ -5,14 +5,15 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Check_Connection;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Owner\OutletsController;
 use App\Http\Controllers\Owner\RestockController;
 use App\Http\Controllers\Owner\DashboardController;
 use App\Http\Controllers\Owner\MenuOrderController;
 use App\Http\Controllers\Admin\Admin_BankController;
 use App\Http\Controllers\Owner\ClaimBonusController;
 use App\Http\Controllers\Admin\Admin_OrderController;
-use App\Http\Controllers\Owner\AkunSettingController;
 
+use App\Http\Controllers\Owner\AkunSettingController;
 use App\Http\Controllers\Admin\Admin_BannerController;
 use App\Http\Controllers\Admin\Admin_ReportController;
 use App\Http\Controllers\Admin\Admin_ArtikelController;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Owner\ReportInvoiceController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Admin_Project_ProductController;
+use App\Http\Controllers\Admin\Admin_OutletController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -51,12 +52,12 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         })->name('dashboard-admin');
 
         //Kategori Produk
-        Route::get('/category_product', [Admin_Project_ProductController::class, 'index'])->name('admin_category_product');
-        Route::get('/edit_category_product/{kategori_Product:slug}', [Admin_Project_ProductController::class, 'edit'])->name('admin_edit_category_product');
-        Route::post('/store_category_product', [Admin_Project_ProductController::class, 'store'])->name('admin_store_category_product');
-        Route::post('/update_category_product', [Admin_Project_ProductController::class, 'update'])->name('admin_update_category_product');
-        Route::post('/delete_category_product', [Admin_Project_ProductController::class, 'destroy'])->name('admin_delete_category_product');
-        Route::get('/kategoriProdukSlug', [Admin_Project_ProductController::class, 'kategoriProdukSlug']);  
+        Route::get('/category_outlet', [Admin_OutletController::class, 'index'])->name('admin_category_outlet');
+        Route::get('/edit_category_outlet/{kategori_Product:slug}', [Admin_OutletController::class, 'edit'])->name('admin_edit_category_outlet');
+        Route::post('/store_category_outlet', [Admin_OutletController::class, 'store'])->name('admin_store_category_outlet');
+        Route::post('/update_category_outlet', [Admin_OutletController::class, 'update'])->name('admin_update_category_outlet');
+        Route::post('/delete_category_outlet', [Admin_OutletController::class, 'destroy'])->name('admin_delete_category_outlet');
+        Route::get('/kategoriOutletSlug', [Admin_OutletController::class, 'kategoriOutletSlug']);
 
         //Produk
         Route::get('/product', [Admin_ProductController::class, 'index'])->name('admin_product');
@@ -65,7 +66,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/store_product', [Admin_ProductController::class, 'store'])->name('admin_store_product');
         Route::post('/update_product/{ref_Product:slug}', [Admin_ProductController::class, 'update'])->name('admin_update_product');
         Route::post('/delete_product', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
-        Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);        
+        Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);
 
         //User Penjual
         Route::get('/user-penjual', [Admin_UserPenjualController::class, 'index'])->name('admin_user_penjual');
@@ -76,9 +77,9 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/update-user-penjual', [Admin_UserPenjualController::class, 'update'])->name('admin_update_user_penjual');
         Route::post('/update-toggle/{user}', [Admin_UserPenjualController::class, 'updateNotifications'])->name('admin_update_notif_user_penjual');
         Route::get('/userSlug', [Admin_UserPenjualController::class, 'userSlug']);
-        Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
+        // Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
         Route::get('/get_data_user_penjual', [Admin_UserPenjualController::class, 'getDataUserPenjual']);
-        Route::get('/validateNoHp', [Admin_UserPenjualController::class, 'validateNoHp']);
+        // Route::get('/validateNoHp', [Admin_UserPenjualController::class, 'validateNoHp']);
         Route::get('/validateUsername', [Admin_UserPenjualController::class, 'validateUsername']);
         Route::get('/validateEmail', [Admin_UserPenjualController::class, 'validateEmail']);
 
@@ -144,6 +145,17 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
 Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
 
     Route::prefix('owner')->name('owner.')->group(function() {
+
+        // Outlet
+        Route::get('/listOutlet', [OutletsController::class, 'index']);
+        Route::get('/get_data_listOutlet', [OutletsController::class, 'get_data_listOutlet']);
+        Route::get('/detail_user_outlet/{outlet}', [OutletsController::class, 'show']);
+        Route::get('/createOutlet', [OutletsController::class, 'create']);
+        Route::post('/storeOutlet', [OutletsController::class, 'store']);
+        Route::get('/editOutlet/{outlet}', [OutletsController::class, 'edit']);
+        Route::post('/updateOutlet/{outlet}', [OutletsController::class, 'update']);
+        Route::get('/outletSlug', [OutletsController::class, 'outletSlug']);
+        Route::get('/validateNoHp', [OutletsController::class, 'validateNoHp']);
 
         // Dashboard Owner
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-owner');

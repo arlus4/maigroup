@@ -153,7 +153,7 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ Request::routeIs('admin.admin_category_product') ? 'active' : '' }}" href="{{ route('admin.admin_category_product') }}">
+                                <a class="menu-link {{ Request::routeIs('admin.admin_category_outlet') ? 'active' : '' }}" href="{{ route('admin.admin_category_outlet') }}">
                                     <span class="menu-icon">
                                         <span class="svg-icon svg-icon-2">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +168,7 @@
                                             </svg>
                                         </span>
                                     </span>
-                                    <span class="menu-title">Kategori Projek</span>
+                                    <span class="menu-title">Kategori Outlet</span>
                                 </a>
                             </div>
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">

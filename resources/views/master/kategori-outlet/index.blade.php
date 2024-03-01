@@ -6,7 +6,7 @@
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Data Kategori Projek</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Data {{ $title }}</h1>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
                                     <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
                                 </svg>
                             </span>
-                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari Kategori Projek" />
+                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari {{ $title }}" />
                         </div>
                     </div>
                     <div class="card-toolbar">
@@ -45,7 +45,7 @@
                                 <span class="svg-icon svg-icon-2">
                                     <i class="fas fa-plus-circle text-white"></i>
                                 </span>
-                                Tambah Kategori Projek
+                                Tambah {{ $title }}
                             </button>
                         </div>
                     </div>
@@ -54,13 +54,15 @@
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_kategori_produk">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-10px text-dark">No</th>
                                 <th class="min-w-125px text-dark">Nama Kategori</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
                             @foreach($dataKategori as $val)
                                 <tr>
-                                    <td class="align-items-center">{{ $val->project_name }}</td>
+                                    <td class="align-items-center">{{ $loop->iteration }}</td>
+                                    <td class="align-items-center">{{ $val->nama_category }}</td>
                                     <td class="d-flex">
                                         <div class="dropdown">
                                             <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,7 +70,7 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-kategori="{{ $val->id }}" data-bs-nama="{{ $val->project_name }}" data-bs-slug_kategori="{{ $val->slug }}" data-bs-target="#modalEdit" style="cursor: pointer">
+                                                    <button class="dropdown-item p-2 ps-5" data-bs-toggle="modal" data-bs-kategori="{{ $val->id }}" data-bs-nama="{{ $val->nama_category }}" data-bs-slug_kategori="{{ $val->slug }}" data-bs-target="#modalEdit" style="cursor: pointer">
                                                         <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
                                                         Edit
                                                     </button>
@@ -81,7 +83,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <!-- <button class="border-0 bg-white p-0" style="margin-right: 4px;" data-bs-toggle="modal" data-bs-kategori="{{ $val->id }}" data-bs-nama="{{ $val->project_name }}" data-bs-slug_kategori="{{ $val->slug }}" data-bs-target="#modalEdit">
+                                        <!-- <button class="border-0 bg-white p-0" style="margin-right: 4px;" data-bs-toggle="modal" data-bs-kategori="{{ $val->id }}" data-bs-nama="{{ $val->nama_category }}" data-bs-slug_kategori="{{ $val->slug }}" data-bs-target="#modalEdit">
                                             <span class="badge badge-warning css-height-30">
                                                 <i class="fas fa-edit text-white"></i>&nbsp;
                                                 Edit
@@ -109,7 +111,7 @@
             <div class="modal-content" style="border-radius: 8px;">
             <div class="content-header">
                 <div class="content-title">
-                    <h4 class="css-lk3jsp">Tambah Kategori Projek</h4>
+                    <h4 class="css-lk3jsp">Tambah {{ $title }}</h4>
                 </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
@@ -130,11 +132,11 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('admin.admin_store_category_product') }}" method="post">
+                    <form action="{{ route('admin.admin_store_category_outlet') }}" method="post">
                         @csrf
                         <div class="form-group mb-3">
                             <label class="required fw-semibold fs-6 mb-1">Nama Kategori</label>
-                            <input type="text" class="form-control project_name" name="project_name" id="project_name" required>
+                            <input type="text" class="form-control nama_category" name="nama_category" id="nama_category" required>
                         </div>
                         <div class="form-group">
                             <label class="fw-semibold fs-6 mb-1">Slug Kategori</label>
@@ -158,7 +160,7 @@
             <div class="modal-content" style="border-radius: 8px;">
             <div class="content-header">
                 <div class="content-title">
-                    <h4 class="css-lk3jsp">Edit Kategori Projek</h4>
+                    <h4 class="css-lk3jsp">Edit {{ $title }}</h4>
                 </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
@@ -179,12 +181,12 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('admin.admin_update_category_product') }}" method="post">
+                    <form action="{{ route('admin.admin_update_category_outlet') }}" method="post">
                         @csrf
                         <div class="form-group mb-3">
-                            <input type="hidden" name="idKategoriProduk" id="idKategoriProduk" readonly>
+                            <input type="hidden" name="idKategoriOutlet" id="idKategoriOutlet" readonly>
                             <label class="required fw-semibold fs-6 mb-1">Nama Kategori</label>
-                            <input type="text" class="form-control project_name_edit" name="project_name_edit" id="project_name_edit" required>
+                            <input type="text" class="form-control nama_category_edit" name="nama_category_edit" id="nama_category_edit" required>
                         </div>
                         <div class="form-group">
                             <label class="fw-semibold fs-6 mb-1">Slug Kategori</label>
@@ -208,7 +210,7 @@
             <div class="modal-content" style="border-radius: 8px;">
                 <div class="content-header">
                     <div class="content-title">
-                        <h4 class="css-lk3jsp">Hapus Kategori Projek</h4>
+                        <h4 class="css-lk3jsp">Hapus {{ $title }}</h4>
                     </div>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
@@ -217,14 +219,14 @@
                 <div class="css-flj2ej">
                     <div class="css-fjkpo0ma">
                         <div class="css-wj23sk">
-                            <form action="{{ route('admin.admin_delete_category_product') }}" method="POST">
+                            <form action="{{ route('admin.admin_delete_category_outlet') }}" method="POST">
                                 @csrf
                                 <div class="row g-9 mb-8">
                                     <!--begin::Col-->
                                     <input type="hidden" name="id_kategori" id="id">
                                     <div class="col-md-12 fv-row" >
                                         <span style="font-size: 15px">
-                                            Apakah Anda yakin untuk menghapus data kategori projek ini?
+                                            Apakah Anda yakin untuk menghapus data kategori outlet ini?
                                         </span>
                                     </div>
                                 </div>
@@ -235,8 +237,8 @@
                                     </button>
                                 </div>
                             </form>
-                        </div> 
-                    </div> 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,11 +248,11 @@
 @section('script')
     <!-- SLUG Tambah Data -->
     <script type="text/javascript">
-        const project_name = document.querySelector('#project_name');
+        const nama_category = document.querySelector('#nama_category');
         const slug         = document.querySelector('#slug');
 
-        project_name.addEventListener('change', function(){
-            fetch('/admin/kategoriProdukSlug?project_name=' + project_name.value)
+        nama_category.addEventListener('change', function(){
+            fetch('/admin/kategoriOutletSlug?nama_category=' + nama_category.value)
             .then(response => response.json())
             .then(data => slug.value = data.slug)
         });
@@ -258,11 +260,11 @@
 
     <!-- slug edit -->
     <script type="text/javascript">
-        const project_name_edit = document.querySelector('#project_name_edit');
+        const nama_category_edit = document.querySelector('#nama_category_edit');
         const slug_edit         = document.querySelector('#slug_edit');
 
-        project_name_edit.addEventListener('change', function(){
-            fetch('/admin/kategoriProdukSlug?project_name=' + project_name_edit.value)
+        nama_category_edit.addEventListener('change', function(){
+            fetch('/admin/kategoriOutletSlug?nama_category=' + nama_category_edit.value)
             .then(response => response.json())
             .then(data => slug_edit.value = data.slug)
         });
@@ -274,11 +276,11 @@
         edit.addEventListener('show.bs.modal', function (event) {
             var button          = event.relatedTarget;
             var kategori        = button.getAttribute('data-bs-kategori');
-            var project_name    = button.getAttribute('data-bs-nama');
+            var nama_category    = button.getAttribute('data-bs-nama');
             var slug_kategori   = button.getAttribute('data-bs-slug_kategori');
 
-            document.getElementById('idKategoriProduk').value = kategori;
-            document.getElementById('project_name_edit').value = project_name;
+            document.getElementById('idKategoriOutlet').value = kategori;
+            document.getElementById('nama_category_edit').value = nama_category;
             document.getElementById('slug_edit').value = slug_kategori;
         });
     </script>

@@ -143,5 +143,5 @@ class Invoice_Controller extends Controller
     //         // Return an error if the query fails
     //         return response()->json(['error' => 'Query Error: ' . $e->getMessage()], 500);
     //     }
-    // }        
+    }        
 }

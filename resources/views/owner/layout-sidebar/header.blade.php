@@ -118,7 +118,7 @@
                                             </svg>
                                         </span>
                                     </span>
-                                    <span class="menu-title">Dasbor</span>
+                                    <span class="menu-title">Beranda</span>
                                 </a>
                             </div>
                             <hr style="height: 8px;background-color: #fff;border-radius: 5px;">
@@ -136,7 +136,7 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ Request::routeIs('owner.owner_menu_order') ? 'active' : '' }}" href="{{ route('owner.owner_menu_order') }}">
+                                <a class="menu-link {{ Request::routeIs('owner.owner_menu_order') ? 'active' : '' }}" href="/owner/listOutlet">
                                     <span class="menu-icon">
                                         <span class="svg-icon svg-icon-2">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -145,7 +145,7 @@
                                             </svg>
                                         </span>
                                     </span>
-                                    <span class="menu-title">Menu Order</span>
+                                    <span class="menu-title">Manajemen Outlet</span>
                                 </a>
                             </div>
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
