@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Brand_Category;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -56,11 +58,11 @@ class Admin_UserOwnerController extends Controller
      */
     public function create(): View
     {
-        $getKategori  = Ref_Project::select('id','project_name','slug')->get();
+        $getBrands    = Brand_Category::all();
         $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
 
         return view('master.user-owner.tambahUserOwner', [
-            'getKategori' => $getKategori,
+            'getBrands' => $getBrands,
             'getProvinsi' => $getProvinsi
         ]);
     }
@@ -73,114 +75,115 @@ class Admin_UserOwnerController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        try {
-            DB::beginTransaction(); // Begin Transaction
+        dd($request->all());
+        // try {
+        //     DB::beginTransaction(); // Begin Transaction
 
-            $request->validate([
-                'name'          => 'required',
-                'username'      => 'required|unique:users_login',
-                'email'         => 'required|email|unique:users_login',
-                'password'      => 'required',
-                'no_hp'         => 'required|unique:users_login',
-                'nomor_ktp'     => 'required',
-                'nama_outlet'   => 'required',
-                'slug'          => 'required|unique:outlets',
-            ], [
-                'username.unique' => 'Username Sudah Digunakan',
-                'email.unique'    => 'Email Sudah Digunakan',
-                'no_hp.unique'    => 'Nomor HP Sudah Digunakan',
-            ]);
+        //     $request->validate([
+        //         'name'          => 'required',
+        //         'username'      => 'required|unique:users_login',
+        //         'email'         => 'required|email|unique:users_login',
+        //         'password'      => 'required',
+        //         'no_hp'         => 'required|unique:users_login',
+        //         'nomor_ktp'     => 'required',
+        //         'nama_outlet'   => 'required',
+        //         'slug'          => 'required|unique:outlets',
+        //     ], [
+        //         'username.unique' => 'Username Sudah Digunakan',
+        //         'email.unique'    => 'Email Sudah Digunakan',
+        //         'no_hp.unique'    => 'Nomor HP Sudah Digunakan',
+        //     ]);
 
-            if ($request->hasFile('avatar')) {
-                $request->validate([
-                    'avatar'        => 'required|mimes:jpeg,png,jpg,gif',
-                ], [
-                    'avatar.mimes'  => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
-                ]);
+        //     if ($request->hasFile('avatar')) {
+        //         $request->validate([
+        //             'avatar'        => 'required|mimes:jpeg,png,jpg,gif',
+        //         ], [
+        //             'avatar.mimes'  => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
+        //         ]);
 
-                // Store the uploaded image in storage/app/storage/avatar directory
-                $imageName = Str::random(10) . '_' . $request->avatar->getClientOriginalName();
+        //         // Store the uploaded image in storage/app/storage/avatar directory
+        //         $imageName = Str::random(10) . '_' . $request->avatar->getClientOriginalName();
 
-                $request->avatar->storeAs('user_owner/avatar/', $imageName, 'public');
+        //         $request->avatar->storeAs('user_owner/avatar/', $imageName, 'public');
                 
-                // Generate the public URL of the stored image using storage:link
-                $imagePath = 'storage/user_owner/avatar/' . $imageName;
-            } else {
-                $imageName = null;
-                $imagePath = null;
-            }
+        //         // Generate the public URL of the stored image using storage:link
+        //         $imagePath = 'storage/user_owner/avatar/' . $imageName;
+        //     } else {
+        //         $imageName = null;
+        //         $imagePath = null;
+        //     }
 
-            $storeUser = User::create([
-                'users_type'   => 2,
-                'name'         => $request->name,
-                'username'     => $request->username,
-                'email'        => $request->email,
-                'password'     => Hash::make($request->password),
-                'no_hp'        => $request->no_hp,
-                'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT),
-                'is_active'    => 1,
-                'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
-                'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
-            ]);
+        //     $storeUser = User::create([
+        //         'users_type'   => 2,
+        //         'name'         => $request->name,
+        //         'username'     => $request->username,
+        //         'email'        => $request->email,
+        //         'password'     => Hash::make($request->password),
+        //         'no_hp'        => $request->no_hp,
+        //         'outlet_id'    => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT),
+        //         'is_active'    => 1,
+        //         'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
+        //         'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
+        //     ]);
 
-            Users_Detail::create([
-                'user_id'           => $storeUser->id,
-                'avatar'            => $imageName,
-                'path_avatar'       => $imagePath,
-                'nomor_telfon'      => $request->no_hp,
-                'nomor_ktp'         => $request->nomor_ktp,
-                'tanggal_lahir'     => $request->tanggal_lahir,
-                'jenis_kelamin'     => $request->jenis_kelamin,
-                'kelurahan'         => $request->kelurahan,
-                'kecamatan'         => $request->kecamatan,
-                'kota_kabupaten'    => $request->kotkab,
-                'provinsi'          => $request->provinsi,
-                'kode_pos'          => $request->kode_pos,
-                'alamat_detail'     => $request->alamat_detail,
-                'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
-                'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
-            ]);
+        //     Users_Detail::create([
+        //         'user_id'           => $storeUser->id,
+        //         'avatar'            => $imageName,
+        //         'path_avatar'       => $imagePath,
+        //         'nomor_telfon'      => $request->no_hp,
+        //         'nomor_ktp'         => $request->nomor_ktp,
+        //         'tanggal_lahir'     => $request->tanggal_lahir,
+        //         'jenis_kelamin'     => $request->jenis_kelamin,
+        //         'kelurahan'         => $request->kelurahan,
+        //         'kecamatan'         => $request->kecamatan,
+        //         'kota_kabupaten'    => $request->kotkab,
+        //         'provinsi'          => $request->provinsi,
+        //         'kode_pos'          => $request->kode_pos,
+        //         'alamat_detail'     => $request->alamat_detail,
+        //         'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
+        //         'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
+        //     ]);
 
-            $storeOutlet = Outlet::create([
-                'user_id'      => $storeUser->id,
-                'nama_outlet'  => $request->nama_outlet,
-                'project_id'   => $request->project_id,
-                'slug'         => $request->slug,
-                'no_hp'        => $request->no_hp,
-                'is_verified'  => 0,
-                'outlet_id'    => $storeUser->outlet_id,
-                'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
-                'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
-            ]);
+        //     $storeOutlet = Outlet::create([
+        //         'user_id'      => $storeUser->id,
+        //         'nama_outlet'  => $request->nama_outlet,
+        //         'project_id'   => $request->project_id,
+        //         'slug'         => $request->slug,
+        //         'no_hp'        => $request->no_hp,
+        //         'is_verified'  => 0,
+        //         'outlet_id'    => $storeUser->outlet_id,
+        //         'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
+        //         'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
+        //     ]);
 
-            Alamat_Outlet::create([
-                'outlet_id'         => $storeOutlet->outlet_id,
-                'kode_propinsi'     => $request->provinsi_outlet,
-                'kode_kotakab'      => $request->kotkab_outlet,
-                'kode_kecamatan'    => $request->kecamatan_outlet,
-                'kode_kelurahan'    => $request->kelurahan_outlet,
-                'kodepos'           => $request->kode_pos_outlet,
-                'alamat_detail'     => $request->alamat_detail_outlet,
-                'map_location'      => $request->map_location_outlet,
-                'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
-                'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
-            ]);
+        //     Alamat_Outlet::create([
+        //         'outlet_id'         => $storeOutlet->outlet_id,
+        //         'kode_propinsi'     => $request->provinsi_outlet,
+        //         'kode_kotakab'      => $request->kotkab_outlet,
+        //         'kode_kecamatan'    => $request->kecamatan_outlet,
+        //         'kode_kelurahan'    => $request->kelurahan_outlet,
+        //         'kodepos'           => $request->kode_pos_outlet,
+        //         'alamat_detail'     => $request->alamat_detail_outlet,
+        //         'map_location'      => $request->map_location_outlet,
+        //         'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
+        //         'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
+        //     ]);
 
-            ref_KuotaPoint::create([
-                'outlet_id'    => $storeUser->outlet_id,
-                'kuota_point'  => 0,
-                'update_date'  => Carbon::now()->timezone('Asia/Jakarta')
-            ]);
+        //     ref_KuotaPoint::create([
+        //         'outlet_id'    => $storeUser->outlet_id,
+        //         'kuota_point'  => 0,
+        //         'update_date'  => Carbon::now()->timezone('Asia/Jakarta')
+        //     ]);
 
-            DB::commit(); // Commit the transaction
-        }catch (\Exception $e){
-            DB::rollback(); // Rollback the transaction in case of an exception
+        //     DB::commit(); // Commit the transaction
+        // }catch (\Exception $e){
+        //     DB::rollback(); // Rollback the transaction in case of an exception
 
-            Log::error($e); // Log the exception for debugging
+        //     Log::error($e); // Log the exception for debugging
 
-            return redirect()->route('admin.admin_user_owner')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-        }
-        return redirect()->route('admin.admin_user_owner')->with('success', 'Berhasil Menambah User Owner');
+        //     return redirect()->route('admin.admin_user_owner')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        // }
+        // return redirect()->route('admin.admin_user_owner')->with('success', 'Berhasil Menambah User Owner');
     }
 
     /**
@@ -208,13 +211,21 @@ class Admin_UserOwnerController extends Controller
 
     public function show($username)
     {
-        $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin,
-                alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan,
-                nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point
-        FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
-        $getData = $getDatas[0];
+        // $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin,
+        //         alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan,
+        //         nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point
+        // FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
+        // $getData = $getDatas[0];
         
-        return response()->json($getData);
+        // return response()->json($getData);
+
+        $getDatas = DB::select("SELECT *
+                FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
+        $getData = $getDatas[0];
+
+        return view('master.user-owner.brands.daftarUserBrands',[
+        'getData' => $getData
+        ]);
     }
 
     /**
@@ -326,9 +337,9 @@ class Admin_UserOwnerController extends Controller
         ]);
     }
     
-    public function outletSlug(Request $request)
+    public function brandSlug(Request $request)
     {
-        $slug = SlugService::createSlug(Outlet::class, 'slug', $request->nama_outlet);
+        $slug = SlugService::createSlug(Brand::class, 'slug', $request->brand_name);
 
         return response()->json(['slug' => $slug]);
     }
@@ -352,6 +363,14 @@ class Admin_UserOwnerController extends Controller
     {
         $noHp   = $request->no_hp;
         $isUsed = User::where('no_hp', $noHp)->exists();
+
+        return response()->json(['isUsed' => $isUsed]);
+    }
+
+    public function validateNoHp_brand(Request $request)
+    {
+        $noHp   = $request->no_hp;
+        $isUsed = Brand::where('no_hp', $noHp)->exists();
 
         return response()->json(['isUsed' => $isUsed]);
     }

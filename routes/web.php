@@ -95,9 +95,10 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
         Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
-        // Route::get('/outletSlug', [Admin_UserOwnerController::class, 'outletSlug']);
+        Route::get('/brandSlug', [Admin_UserOwnerController::class, 'brandSlug']);
         Route::get('/get_data_user_owner', [Admin_UserOwnerController::class, 'getDataUserOwner']);
-        // Route::get('/validateNoHp', [Admin_UserOwnerController::class, 'validateNoHp']);
+        Route::get('/validateNoHp', [Admin_UserOwnerController::class, 'validateNoHp']);
+        Route::get('/validateNoHp_brand', [Admin_UserOwnerController::class, 'validateNoHp_brand']);
         Route::get('/validateUsername', [Admin_UserOwnerController::class, 'validateUsername']);
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
 

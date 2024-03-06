@@ -38,7 +38,7 @@
                             <thead>
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-100px text-dark">Info Owner</th>
-                                    <th class="min-w-100px text-dark">Manajemen Brands</th>
+                                    {{-- <th class="min-w-100px text-dark">Manajemen Brands</th> --}}
                                     <th class="min-w-100px text-dark">Aktif</th>
                                     <th class="text-dark"></th>
                                 </tr>
@@ -54,7 +54,7 @@
     </div>
 
     <!-- Modal Detail User Owner -->
-    <div class="modal fade" id="detailUserOwner">
+    {{-- <div class="modal fade" id="detailUserOwner">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 8px;">
                 <div class="css-dtu37sh">
@@ -154,7 +154,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('script')
@@ -189,16 +189,16 @@
                                     </div>`;
                         }
                     },
-                    {
-                        data: 'status',
-                        render: function(data, type, row) {
-                            var checked = row.is_active == 1 ? 'checked' : '';
-                            return `<button onclick="window.location.href = 'manaj-brands/${row.username}'" class="css-kl2kd9a">
-                                        <i style="color:#fff;" class="fas fa-pencil me-2"></i>
-                                        Lihat Brands
-                                    </button>`;
-                        }
-                    },
+                    // {
+                    //     data: 'status',
+                    //     render: function(data, type, row) {
+                    //         var checked = row.is_active == 1 ? 'checked' : '';
+                    //         return `<button onclick="window.location.href = 'manaj-brands/${row.username}'" class="css-kl2kd9a">
+                    //                     <i style="color:#fff;" class="fas fa-pencil me-2"></i>
+                    //                     Lihat Brands
+                    //                 </button>`;
+                    //     }
+                    // },
                     {
                         data: 'status',
                         render: function(data, type, row) {
@@ -217,7 +217,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
                                             <li>
-                                                <button type="button" class="dropdown-item p-2 ps-5" style="cursor: pointer" onclick="detailUserOwner('${row.username}')">
+                                                <button onclick="window.location.href = 'detail-user-owner/${row.username}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                     <i style="color:#181C32;" class="fas fa-eye me-2"></i>
                                                     Detail
                                                 </button>
@@ -261,51 +261,51 @@
             });
         });
 
-        function detailUserOwner(username){
-            $.ajax({
-                url: "detail-user-owner/" + username,
-                type: "GET",
-                success: function (data){
-                    const formatTglSaja = (date) => {
-                        var dateObject  = new Date(date);
-                        var year        = dateObject.getFullYear();
-                        var day         = dateObject.getDate();
-                        var month       = dateObject.getMonth();
+        // function detailUserOwner(username){
+        //     $.ajax({
+        //         url: "detail-user-owner/" + username,
+        //         type: "GET",
+        //         success: function (data){
+        //             const formatTglSaja = (date) => {
+        //                 var dateObject  = new Date(date);
+        //                 var year        = dateObject.getFullYear();
+        //                 var day         = dateObject.getDate();
+        //                 var month       = dateObject.getMonth();
 
-                        var monthsArray = [
-                            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-                        ];
+        //                 var monthsArray = [
+        //                     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        //                     "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        //                 ];
 
-                        day                 = day < 10 ? "0" + day : day; 
-                        month               = monthsArray[month];
-                        var formattedDate   = day + ' ' + month + ' ' + year;
+        //                 day                 = day < 10 ? "0" + day : day; 
+        //                 month               = monthsArray[month];
+        //                 var formattedDate   = day + ' ' + month + ' ' + year;
 
-                        return formattedDate;
-                    }
+        //                 return formattedDate;
+        //             }
 
-                    var defaultImagePath    = '{{ asset("storage/user_owner/avatar/avatar.png") }}';
-                    var imagePath           = data.avatar ? '{{ asset("storage/user_owner/avatar") }}/' + data.avatar : defaultImagePath;
+        //             var defaultImagePath    = '{{ asset("storage/user_owner/avatar/avatar.png") }}';
+        //             var imagePath           = data.avatar ? '{{ asset("storage/user_owner/avatar") }}/' + data.avatar : defaultImagePath;
                     
-                    $('#imgUser').attr('src', imagePath);
-                    $('#namaUser').text(data.name);
-                    $('#noNIK').text(data.nomor_ktp || '-');
-                    $('#tglLahir').text(formatTglSaja(data.tanggal_lahir));
-                    $('#jenisKelamin').text(data.jenis_kelamin === "P" ? 'Pria' : 'Wanita');
-                    $('#namaOutlet').text(data.nama_outlet || '-');
-                    $('#namaKategori').text(data.project_name || '-');
-                    $('#noHpBawah').text(data.no_hp || '-');
+        //             $('#imgUser').attr('src', imagePath);
+        //             $('#namaUser').text(data.name);
+        //             $('#noNIK').text(data.nomor_ktp || '-');
+        //             $('#tglLahir').text(formatTglSaja(data.tanggal_lahir));
+        //             $('#jenisKelamin').text(data.jenis_kelamin === "P" ? 'Pria' : 'Wanita');
+        //             $('#namaOutlet').text(data.nama_outlet || '-');
+        //             $('#namaKategori').text(data.project_name || '-');
+        //             $('#noHpBawah').text(data.no_hp || '-');
                     
-                    var alamatDetail = (data.alamat_detail ? data.alamat_detail : 'Alamat Detail Belum Dicantumkan') + ', Kecamatan ' + (data.nama_kecamatan ? data.nama_kecamatan : 'Belum Dicantumkan') + ', Kota ' + (data.nama_kotakab ? data.nama_kotakab : 'Belum Dicantumkan') + ', Provinsi ' + (data.nama_propinsi ? data.nama_propinsi : 'Belum Dicantumkan') + ', Kode Pos ' + (data.kode_pos ? data.kode_pos : 'Belum Dicantumkan');
-                    $('#alamatDetail').text(alamatDetail);
+        //             var alamatDetail = (data.alamat_detail ? data.alamat_detail : 'Alamat Detail Belum Dicantumkan') + ', Kecamatan ' + (data.nama_kecamatan ? data.nama_kecamatan : 'Belum Dicantumkan') + ', Kota ' + (data.nama_kotakab ? data.nama_kotakab : 'Belum Dicantumkan') + ', Provinsi ' + (data.nama_propinsi ? data.nama_propinsi : 'Belum Dicantumkan') + ', Kode Pos ' + (data.kode_pos ? data.kode_pos : 'Belum Dicantumkan');
+        //             $('#alamatDetail').text(alamatDetail);
 
-                    $('#detailUserOwner').modal('show');
-                },
-                error: function(error){
+        //             $('#detailUserOwner').modal('show');
+        //         },
+        //         error: function(error){
 
-                }
-            });
-        }
+        //         }
+        //     });
+        // }
     </script>
 
 @endsection
