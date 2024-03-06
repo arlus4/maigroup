@@ -42,9 +42,7 @@
                                     <th class="min-w-100px text-dark">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-gray-600 fw-semibold">
-                                
-                            </tbody>
+                            <tbody class="text-gray-600 fw-semibold"></tbody>
                         </table>
                     </div>
                 </div>
@@ -52,6 +50,7 @@
         </div>
     </div>
 
+    <!-- Modal Tambah Kategori Brand -->
     <div class="modal fade" id="modal_add">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -79,6 +78,44 @@
                         Batalkan
                     </button>
                     <button type="submit" id="save" class="css-kl2kd9a">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Kategori Brand -->
+    <div class="modal fade" id="modal_edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-title-edit"></h4>
+                </div>
+                <div class="modal-body">
+                    <form action="#" id="form-update">
+                    @csrf
+                    <div class="form-group mb-3">
+                        <label style="color: #31353B!important;font-weight: 600;">Code Kategori Brand</label>
+                        <input type="text" name="code_category" class="form-control form-control-solid code_category" id="code_category" readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label style="color: #31353B!important;font-weight: 600;">Nama Kategori Brand</label>
+                        <input type="text" name="nama_category_edit" class="form-control nama_category_edit" id="nama_category_edit" placeholder="Input Nama Kategori Brand" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label style="color: #31353B!important;font-weight: 600;">Slug</label>
+                        <input type="text" name="slug_edit" class="form-control form-control-solid slug_edit" id="slug_edit" readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label style="color: #31353B!important;font-weight: 600;">Deskripsi Kategori</label>
+                        <textarea name="description_edit" class="form-control description_edit" id="description_edit" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
+                        Batalkan
+                    </button>
+                    <button type="submit" id="update" class="css-kl2kd9a">Simpan</button>
                     </form>
                 </div>
             </div>
@@ -191,7 +228,7 @@
 
 @section('script')
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-	<!-- slug -->
+	<!-- slug add -->
     <script type="text/javascript">
         const nama_category = document.querySelector('#nama_category');
         const slug          = document.querySelector('#slug');
@@ -202,6 +239,18 @@
             .then(data => slug.value = data.slug)
         });
     </script>
+
+	<!-- slug edit -->
+    <script type="text/javascript">
+        const nama_category_edit = document.querySelector('#nama_category_edit');
+        const slug_edit          = document.querySelector('#slug_edit');
+
+        nama_category_edit.addEventListener('change', function(){
+            fetch('/admin/catBrandSlug?nama_category=' + nama_category_edit.value)
+            .then(response => response.json())
+            .then(data => slug_edit.value = data.slug)
+        });
+    </script>
     
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -210,7 +259,7 @@
                 processing: true,
                 serverSide: false,
                 ajax: {
-                    url: "/admin/get_data_user_owner",
+                    url: "/admin/get_data_brandCategory",
                     dataType: "JSON",
                 },
                 language: {
@@ -222,8 +271,8 @@
                         render: function(data, type, row) {
                             return `<div class="d-flex align-items-center">
                                         <div class="d-flex flex-column">
-                                            <span class="text-gray-800 mb-1">${row.name}</span>
-                                            <span>${row.email}</span>
+                                            <span class="text-gray-800 mb-1">${row.brand_category_name}</span>
+                                            <span>${row.brand_category_code}</span>
                                         </div>
                                     </div>`;
                         }
@@ -231,11 +280,13 @@
                     {
                         data: 'status',
                         render: function(data, type, row) {
-                            var checked = row.is_active == 1 ? 'checked' : '';
-                            return `<button onclick="window.location.href = 'manaj-brands/${row.username}'" class="css-kl2kd9a">
-                                        <i style="color:#fff;" class="fas fa-pencil me-2"></i>
-                                        Lihat Brands
-                                    </button>`;
+                            var description = '';
+                            if (row.brand_category_description == null) {
+                                description += '-';
+                            } else {
+                                description += row.brand_category_description;
+                            }
+                            return description;
                         }
                     },
                     {
@@ -247,15 +298,15 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
                                             <li>
-                                                <button type="button" class="dropdown-item p-2 ps-5" style="cursor: pointer" onclick="detailUserOwner('${row.username}')">
-                                                    <i style="color:#181C32;" class="fas fa-eye me-2"></i>
-                                                    Detail
+                                                <button onclick="editCat(${row.id})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                    Edit
                                                 </button>
                                             </li>
                                             <li>
-                                                <button onclick="window.location.href = 'edit-user-owner/${row.username}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                    Edit
+                                                <button onclick="deleteCat(${row.id})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#181C32;" class="fas fa-trash me-2"></i>
+                                                    Hapus
                                                 </button>
                                             </li>
                                         </ul>
@@ -303,11 +354,11 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        (response.message);
-                        $('#tableCategoryBrand').load(' #tableCategoryBrand');
+                        // toastr[response.status](response.message);
+                        $('#tableCategoryBrand').DataTable().ajax.reload();
                     },
                     error: function(xhr, status, error) {
-                        error("Terjadi kesalahan. Silakan coba lagi.");
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
                     }
                 })
             })
@@ -320,6 +371,83 @@
             $('#slug').val('');
             $('#description').val('');
             $('#save').text('Simpan');
+        }
+
+        $(document).ready(function() {
+            $('#form-update').submit(function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $('#modal_edit').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('admin.admin_update_brand_category') }}",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // toastr[response.status](response.message);
+                        // $('#tableCategoryBrand').load(' #tableCategoryBrand');
+                        $('#tableCategoryBrand').DataTable().ajax.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                })
+            })
+        });
+
+        function editCat(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/edit_brandCategory',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#code_category').val(data.brand_category_code);
+                    $('#modal_edit').modal('show');
+                    $('#modal-title-edit').text('Edit Data Kategori Brand');
+                    $('#nama_category_edit').val(data.brand_category_name);
+                    $('#slug_edit').val(data.slug);
+                    $('#description_edit').val(data.brand_category_description);
+                    $('#update').text('Simpan Perubahan');
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+        }
+
+        function deleteCat(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: "Anda Ingin Menghapus Data Kategori ini ?",
+                icon: 'warning',
+                cancelButtonText: "Batal",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Ya, saya yakin!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("admin.admin_delete_brand_category") }}',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id : id
+                    },
+                    success: function(response) {
+                        toastr[response.status](response.message);
+                        // $('#tableCategoryBrand').DataTable().ajax.reload();
+                        $('#tableCategoryBrand').load(' #tableCategoryBrand');
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                })
+                }
+            })
         }
 
         // function detailUserOwner(username){

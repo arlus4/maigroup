@@ -22,6 +22,22 @@ class Admin_Brands_CategoryController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get_data_brandCategory()
+    {
+        $data = Brand_Category::get();
+
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -75,9 +91,9 @@ class Admin_Brands_CategoryController extends Controller
      * @param  \App\Models\Brand_Category  $brand_Category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brand_Category $brand_Category)
+    public function edit(Request $request)
     {
-        //
+        return response()->json(Brand_Category::find($request->id));
     }
 
     /**
@@ -87,9 +103,32 @@ class Admin_Brands_CategoryController extends Controller
      * @param  \App\Models\Brand_Category  $brand_Category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand_Category $brand_Category)
+    public function update(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            $request->validate([
+                'code_category'      => 'required',
+                'nama_category_edit' =>'required',
+                'slug_edit'         => 'required|unique:brand_categories,slug,' . $request->code_category,
+            ]);
+
+            Brand_Category::where('brand_category_code', $request->code_category)->update([
+                'brand_category_name' => $request->nama_category_edit,
+                'slug'                => $request->slug_edit,
+                'brand_category_description' => $request->description_edit,
+                'updated_at'          => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            DB::commit(); // Commit the transaction
+
+            return redirect()->back()->with('success', 'Berhasil Mengubah Kategori');
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
     }
 
     /**
@@ -98,9 +137,22 @@ class Admin_Brands_CategoryController extends Controller
      * @param  \App\Models\Brand_Category  $brand_Category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand_Category $brand_Category)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            Brand_Category::where('id', $request->id)->delete();
+
+            DB::commit(); // Commit the transaction
+
+            return redirect()->back()->with('success', 'Data Kategori berhasil dihapus');
+
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
     }
 
     public function catBrandSlug(Request $request)
