@@ -15,13 +15,15 @@ use App\Http\Controllers\Admin\Admin_OrderController;
 
 use App\Http\Controllers\Owner\AkunSettingController;
 use App\Http\Controllers\Admin\Admin_BannerController;
+use App\Http\Controllers\Admin\Admin_OutletController;
 use App\Http\Controllers\Admin\Admin_ReportController;
 use App\Http\Controllers\Admin\Admin_ArtikelController;
 use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Owner\ReportInvoiceController;
+use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Admin_OutletController;
+use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -69,19 +71,40 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);
 
         //User Penjual
-        Route::get('/user-penjual', [Admin_UserPenjualController::class, 'index'])->name('admin_user_penjual');
-        Route::get('/tambah-user-penjual', [Admin_UserPenjualController::class, 'create'])->name('admin_tambah_user_penjual');
-        Route::get('/edit-user-penjual/{username}', [Admin_UserPenjualController::class, 'edit'])->name('admin_edit_user_penjual');
-        Route::get('/detail-user-penjual/{username}', [Admin_UserPenjualController::class, 'show'])->name('admin_detail_user_penjual');
-        Route::post('/store-user-penjual', [Admin_UserPenjualController::class, 'store'])->name('admin_store_user_penjual');
-        Route::post('/update-user-penjual', [Admin_UserPenjualController::class, 'update'])->name('admin_update_user_penjual');
-        Route::post('/update-toggle/{user}', [Admin_UserPenjualController::class, 'updateNotifications'])->name('admin_update_notif_user_penjual');
-        Route::get('/userSlug', [Admin_UserPenjualController::class, 'userSlug']);
-        // Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
-        Route::get('/get_data_user_penjual', [Admin_UserPenjualController::class, 'getDataUserPenjual']);
-        // Route::get('/validateNoHp', [Admin_UserPenjualController::class, 'validateNoHp']);
-        Route::get('/validateUsername', [Admin_UserPenjualController::class, 'validateUsername']);
-        Route::get('/validateEmail', [Admin_UserPenjualController::class, 'validateEmail']);
+        // Route::get('/user-penjual', [Admin_UserPenjualController::class, 'index'])->name('admin_user_penjual');
+        // Route::get('/tambah-user-penjual', [Admin_UserPenjualController::class, 'create'])->name('admin_tambah_user_penjual');
+        // Route::get('/edit-user-penjual/{username}', [Admin_UserPenjualController::class, 'edit'])->name('admin_edit_user_penjual');
+        // Route::get('/detail-user-penjual/{username}', [Admin_UserPenjualController::class, 'show'])->name('admin_detail_user_penjual');
+        // Route::post('/store-user-penjual', [Admin_UserPenjualController::class, 'store'])->name('admin_store_user_penjual');
+        // Route::post('/update-user-penjual', [Admin_UserPenjualController::class, 'update'])->name('admin_update_user_penjual');
+        // Route::post('/update-toggle/{user}', [Admin_UserPenjualController::class, 'updateNotifications'])->name('admin_update_notif_user_penjual');
+        // Route::get('/userSlug', [Admin_UserPenjualController::class, 'userSlug']);
+        // // Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
+        // Route::get('/get_data_user_penjual', [Admin_UserPenjualController::class, 'getDataUserPenjual']);
+        // // Route::get('/validateNoHp', [Admin_UserPenjualController::class, 'validateNoHp']);
+        // Route::get('/validateUsername', [Admin_UserPenjualController::class, 'validateUsername']);
+        // Route::get('/validateEmail', [Admin_UserPenjualController::class, 'validateEmail']);
+
+        //User Owner
+        Route::get('/user-owner', [Admin_UserOwnerController::class, 'index'])->name('admin_user_owner');
+        Route::get('/tambah-user-owner', [Admin_UserOwnerController::class, 'create'])->name('admin_tambah_user_owner');
+        Route::get('/manaj-brands/{username}', [Admin_UserOwnerController::class, 'showManageBrands'])->name('admin_brands_user_owner');
+        Route::get('/edit-user-owner/{username}', [Admin_UserOwnerController::class, 'edit'])->name('admin_edit_user_owner');
+        Route::get('/detail-user-owner/{username}', [Admin_UserOwnerController::class, 'show'])->name('admin_detail_user_owner');
+        Route::post('/store-user-owner', [Admin_UserOwnerController::class, 'store'])->name('admin_store_user_owner');
+        Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
+        Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
+        Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
+        // Route::get('/outletSlug', [Admin_UserOwnerController::class, 'outletSlug']);
+        Route::get('/get_data_user_owner', [Admin_UserOwnerController::class, 'getDataUserOwner']);
+        // Route::get('/validateNoHp', [Admin_UserOwnerController::class, 'validateNoHp']);
+        Route::get('/validateUsername', [Admin_UserOwnerController::class, 'validateUsername']);
+        Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
+
+        // Brand Category
+        Route::get('/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');
+        Route::get('/catBrandSlug', [Admin_Brands_CategoryController::class, 'catBrandSlug']);
+        Route::post('/add_brandCategory', [Admin_Brands_CategoryController::class, 'store'])->name('admin_store_brand_category');
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');

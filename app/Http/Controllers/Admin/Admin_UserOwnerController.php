@@ -25,7 +25,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class Admin_UserPenjualController extends Controller
+class Admin_UserOwnerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,13 +34,14 @@ class Admin_UserPenjualController extends Controller
      */
     public function index(): View
     {
-        return view('master.user-penjual.daftarUserPenjual');
+        return view('master.user-owner.daftarUserOwner');
     }
 
-    public function getDataUserPenjual()
+    public function getDataUserOwner()
     {
-        $data = DB::select("SELECT idUserLogin, name, username, email, no_hp, is_active, avatar, path_avatar, nama_outlet, slug, outlet_id, kuota_point 
-                    FROM [maigroup].[dbo].[web.user_penjual_list] ()");
+        $data = DB::select("SELECT idUserLogin, name, username, email, no_hp, is_active, avatar, path_avatar
+                    FROM [maigroup].[dbo].[web.user_owner_list] ()");
+
         $datas = [
             'data' => $data
         ];
@@ -58,7 +59,7 @@ class Admin_UserPenjualController extends Controller
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();
         $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
 
-        return view('master.user-penjual.tambahUserPenjual', [
+        return view('master.user-owner.tambahUserOwner', [
             'getKategori' => $getKategori,
             'getProvinsi' => $getProvinsi
         ]);
@@ -88,7 +89,7 @@ class Admin_UserPenjualController extends Controller
                 'username.unique' => 'Username Sudah Digunakan',
                 'email.unique'    => 'Email Sudah Digunakan',
                 'no_hp.unique'    => 'Nomor HP Sudah Digunakan',
-            ]);            
+            ]);
 
             if ($request->hasFile('avatar')) {
                 $request->validate([
@@ -100,10 +101,10 @@ class Admin_UserPenjualController extends Controller
                 // Store the uploaded image in storage/app/storage/avatar directory
                 $imageName = Str::random(10) . '_' . $request->avatar->getClientOriginalName();
 
-                $request->avatar->storeAs('user_penjual/avatar/', $imageName, 'public');
+                $request->avatar->storeAs('user_owner/avatar/', $imageName, 'public');
                 
                 // Generate the public URL of the stored image using storage:link
-                $imagePath = 'storage/user_penjual/avatar/' . $imageName;
+                $imagePath = 'storage/user_owner/avatar/' . $imageName;
             } else {
                 $imageName = null;
                 $imagePath = null;
@@ -177,9 +178,9 @@ class Admin_UserPenjualController extends Controller
 
             Log::error($e); // Log the exception for debugging
 
-            return redirect()->route('admin.admin_user_penjual')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return redirect()->route('admin.admin_user_owner')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-        return redirect()->route('admin.admin_user_penjual')->with('success', 'Berhasil Menambah User Penjual');
+        return redirect()->route('admin.admin_user_owner')->with('success', 'Berhasil Menambah User Owner');
     }
 
     /**
@@ -202,7 +203,7 @@ class Admin_UserPenjualController extends Controller
         $getKelurahan = ref_Kelurahan::select('kode_kelurahan','kode_kecamatan','nama_kelurahan')->where('kode_kecamatan', $getData->kode_kecamatan)->get();
         $getKodePos   = ref_KodePos::select('kodepos','kode_kelurahan')->where('kode_kelurahan', $getData->kode_kelurahan)->get();
 
-        return view('master.user-penjual.editUserPenjual', compact('getKategori', 'getProvinsi', 'getData', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
+        return view('master.user-owner.editUserOwner', compact('getKategori', 'getProvinsi', 'getData', 'getKotaKab', 'getKecamatan', 'getKelurahan', 'getKodePos'));
     }
 
     public function show($username)
@@ -249,14 +250,14 @@ class Admin_UserPenjualController extends Controller
                 // Store the uploaded image in storage/app/storage/avatar directory
                 $imageName = Str::random(10) . '_' . $request->avatar->getClientOriginalName();
 
-                $request->avatar->storeAs('user_penjual/avatar/', $imageName, 'public');
+                $request->avatar->storeAs('user_owner/avatar/', $imageName, 'public');
                 
                 // Generate the public URL of the stored image using storage:link
-                $imagePath = 'storage/user_penjual/avatar/' . $imageName;
+                $imagePath = 'storage/user_owner/avatar/' . $imageName;
 
                 // Delete Old Image
-                if (Storage::disk('public')->exists('storage/user_penjual/avatar/' . $request->avatar)) {
-                    Storage::disk('public')->delete('storage/user_penjual/avatar/' . $request->avatar);
+                if (Storage::disk('public')->exists('storage/user_owner/avatar/' . $request->avatar)) {
+                    Storage::disk('public')->delete('storage/user_owner/avatar/' . $request->avatar);
                 }
             } else {
                 $imageName = $request->avatar;
@@ -309,9 +310,20 @@ class Admin_UserPenjualController extends Controller
 
             Log::error($e); // Log the exception for debugging
 
-            return redirect()->route('admin.admin_user_penjual')->with('error', 'Gagal Mengubah User Penjual. Silakan coba lagi');
+            return redirect()->route('admin.admin_user_owner')->with('error', 'Gagal Mengubah User Owner. Silakan coba lagi');
         }
-        return redirect()->route('admin.admin_user_penjual')->with('success', 'Berhasil Mengubah User Penjual');
+        return redirect()->route('admin.admin_user_owner')->with('success', 'Berhasil Mengubah User Owner');
+    }
+
+    public function showManageBrands($username)
+    {
+        $getDatas = DB::select("SELECT *
+                    FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
+        $getData = $getDatas[0];
+
+        return view('master.user-owner.brands.daftarUserBrands',[
+            'getData' => $getData
+        ]);
     }
     
     public function outletSlug(Request $request)

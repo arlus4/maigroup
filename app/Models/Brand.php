@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class Outlet_Category extends Model
+class Brand extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $table = 'outlet_categories';
+    protected $table = 'brands';
 
     /**
      * The attributes that aren't mass assignable.
@@ -34,7 +34,7 @@ class Outlet_Category extends Model
     {
         return [
             'slug' => [
-                'source' => 'nama_category'
+                'source' => 'brand_name'
             ]
         ];
     }
