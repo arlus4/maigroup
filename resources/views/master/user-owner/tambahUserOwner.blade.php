@@ -12,6 +12,21 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
 			<div id="kt_app_content_container" class="app-container container-xxl">
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle" style="margin-right: 9px;color: #0f5132!important;"></i>
+                        {{ $message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if ($message = Session::get('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-times-circle" style="margin-right: 9px;color: #f1416c!important;"></i>
+                        {{ $message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 				<form action="{{ route('admin.admin_store_user_owner') }}" method="post" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row">
 					@csrf
 					<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
@@ -186,29 +201,59 @@
 											</div>
 										</div>
 										<div class="card-body pt-0">
-                                            <div class="mb-10 fv-row">
-                                                <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kategori Brand</label>
-                                                <div class="input-group">
-                                                    <select class="form-select mb-2" data-control="select2" data-placeholder="Pilih Kategori" data-allow-clear="true" name="project_id" required>
-                                                        <option></option>
-                                                        @foreach($getBrands as $kategori)
-                                                            <option value="{{ $kategori->brand_category_code }}">{{ $kategori->brand_category_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
+                                            <div class="row fv-row">
+									            <h2 style="font-size: 1rem;">Foto / Logo Brand</h2>
                                                 <div class="col-md-6">
-                                                    <div class="mb-10 fv-row">
-                                                        <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Nama Brand</label>
-                                                        <input type="text" name="brand_name" class="form-control mb-2" id="brand_name" placeholder="Masukan Nama Brand" required>
+                                                    <style>
+                                                        .image-input-placeholder {
+                                                            background-image: url('../../../assets/master/media/svg/files/blank-image.svg');
+                                                        } [data-theme="dark"]
+                                                        .image-input-placeholder {
+                                                            background-image: url('../../../assets/master/media/svg/files/blank-image-dark.svg');
+                                                        }
+                                                    </style>
+                                                    <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
+                                                        <div class="image-input-wrapper w-150px h-150px"></div>
+                                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah Gambar">
+                                                            <i class="fas fa-pencil fs-7"></i>
+                                                            <input type="file" name="logo_brand" accept=".png, .jpg, .jpeg" required/>
+                                                            <input type="hidden" name="logo_brand_remove" />
+                                                        </label>
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Batal Gambar">
+                                                            <i class="fas fa-close fs-2"></i>
+                                                        </span>
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Hapus Gambar">
+                                                            <i class="fas fa-close fs-2"></i>
+                                                        </span>
                                                     </div>
+                                                    <div class="text-muted fs-7" style="color: #31353B!important;">Format gambar <strong style="font-size: 11px;">Wajib .jpg .jpeg .png</strong></div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
-                                                        <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Slug</label>
-                                                        <input type="text" name="slug" class="form-control mb-2" id="slug" style="background-color: #e2e2e2;cursor: not-allowed;" readonly>
-                                                        <div class="text-muted fs-7" style="color: #31353B!important;">Slug akan otomatis sesuai dengan inputan <strong>Nama Brand.</strong></div>
+                                                        <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kategori Brand</label>
+                                                        <div class="input-group">
+                                                            <select class="form-select mb-2" data-control="select2" data-placeholder="Pilih Kategori" data-allow-clear="true" name="brand_category_code" required>
+                                                                <option></option>
+                                                                @foreach($getBrands as $kategori)
+                                                                    <option value="{{ $kategori->brand_category_code }}">{{ $kategori->brand_category_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="mb-10 fv-row">
+                                                                <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Nama Brand</label>
+                                                                <input type="text" name="brand_name" class="form-control mb-2" id="brand_name" placeholder="Masukan Nama Brand" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="mb-10 fv-row">
+                                                                <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Slug</label>
+                                                                <input type="text" name="slug" class="form-control mb-2" id="slug" style="background-color: #e2e2e2;cursor: not-allowed;" readonly>
+                                                                <div class="text-muted fs-7" style="color: #31353B!important;">Slug akan otomatis sesuai dengan inputan <strong>Nama Brand.</strong></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

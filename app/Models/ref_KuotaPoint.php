@@ -11,6 +11,6 @@ class ref_KuotaPoint extends Model
 
     public $timestamps      = false;
     protected $table        = 'ref_kuota_point';
-    protected $primaryKey   = 'outlet_id';
+    protected $primaryKey   = 'id';
     protected $guarded      = ['id'];
 }
