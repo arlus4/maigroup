@@ -94,6 +94,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/store-user-owner', [Admin_UserOwnerController::class, 'store'])->name('admin_store_user_owner');
         Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
         Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
+        // utilitas
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
         Route::get('/brandSlug', [Admin_UserOwnerController::class, 'brandSlug']);
         Route::get('/get_data_user_owner', [Admin_UserOwnerController::class, 'getDataUserOwner']);

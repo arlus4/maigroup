@@ -136,7 +136,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="{{ route('admin.admin_tambah_order') }}">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="{{ route('admin.admin_tambah_user_owner') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>

@@ -224,20 +224,17 @@ class Admin_UserOwnerController extends Controller
 
     public function show($username)
     {
-        // $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin,
-        //         alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan,
-        //         nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point
-        // FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
-        // $getData = $getDatas[0];
-        
-        // return response()->json($getData);
-
-        $getDatas = DB::select("SELECT *
-                FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
+        $getDatas = DB::select("SELECT
+                                    idUserLogin, username, name, no_hp, email, avatar, path_avatar, nomor_ktp,
+                                    tanggal_lahir, jenis_kelamin, alamat_detail, nama_propinsi,
+                                    nama_kotakab, nama_kecamatan, nama_kelurahan, kode_pos
+                                FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')"
+                             );
         $getData = $getDatas[0];
 
-        return view('master.user-owner.brands.daftarUserBrands',[
-        'getData' => $getData
+        return view('master.user-owner.detailUserOwner', [
+            'username' => $username,
+            'getData' => $getData
         ]);
     }
 
