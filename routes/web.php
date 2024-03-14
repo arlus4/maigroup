@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Admin_OrderController;
 
 use App\Http\Controllers\Owner\AkunSettingController;
 use App\Http\Controllers\Admin\Admin_BannerController;
+use App\Http\Controllers\Admin\Admin_BrandsController;
 use App\Http\Controllers\Admin\Admin_OutletController;
 use App\Http\Controllers\Admin\Admin_ReportController;
 use App\Http\Controllers\Admin\Admin_ArtikelController;
@@ -98,11 +99,14 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
         Route::get('/brandSlug', [Admin_UserOwnerController::class, 'brandSlug']);
         Route::get('/get_data_user_owner', [Admin_UserOwnerController::class, 'getDataUserOwner']);
+        Route::get('/get_data_brand_owner/{username}', [Admin_UserOwnerController::class, 'getDataBrandOwner']);
         Route::get('/validateNoHp', [Admin_UserOwnerController::class, 'validateNoHp']);
-        Route::get('/validateNoHp_brand', [Admin_UserOwnerController::class, 'validateNoHp_brand']);
+        Route::get('/validate_Edit_NoHp', [Admin_UserOwnerController::class, 'validate_Edit_NoHp']);
         Route::get('/validateUsername', [Admin_UserOwnerController::class, 'validateUsername']);
+        Route::get('/validate_Edit_Username', [Admin_UserOwnerController::class, 'validate_Edit_Username']);
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
-
+        Route::get('/validate_Edit_Email', [Admin_UserOwnerController::class, 'validate_Edit_Email']);
+        
         // Brand Category
         Route::get('/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');
         Route::get('/get_data_brandCategory', [Admin_Brands_CategoryController::class, 'get_data_brandCategory']);
@@ -111,6 +115,15 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/edit_brandCategory', [Admin_Brands_CategoryController::class, 'edit'])->name('admin_edit_brandCategory');
         Route::post('/update_brandCategory', [Admin_Brands_CategoryController::class, 'update'])->name('admin_update_brand_category');
         Route::post('/delete_brandCategory', [Admin_Brands_CategoryController::class, 'destroy'])->name('admin_delete_brand_category');
+        
+        // Brand Owner
+        Route::get('/create_New_Brands/{username}', [Admin_BrandsController::class, 'create_New_Brands'])->name('admin_create_new_brands');
+        Route::post('/store_New_Brands', [Admin_BrandsController::class, 'store_New_Brands'])->name('admin_store_new_brands');
+        Route::get('/edit_New_Brands/{brand}', [Admin_BrandsController::class, 'edit_New_Brands'])->name('admin_edit_new_brands');
+        Route::post('/update_New_Brands/{brand}', [Admin_BrandsController::class, 'update_New_Brands'])->name('admin_update_new_brands');
+        Route::get('/detail_New_Brands/{brand}', [Admin_BrandsController::class, 'detail_New_Brands'])->name('admin_detail_new_brands');
+        Route::get('/validateNoHp_brand', [Admin_UserOwnerController::class, 'validateNoHp_brand']);
+        Route::get('/validate_Edit_NoHp_brand', [Admin_UserOwnerController::class, 'validate_Edit_NoHp_brand']);
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');

@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use App\Models\Ref_Provinsi;
 use App\Models\Users_Detail;
 use Illuminate\Http\Request;
-use App\Models\Alamat_Outlet;
 use App\Models\ref_Kecamatan;
 use App\Models\ref_Kelurahan;
 use App\Models\ref_KuotaPoint;
@@ -206,10 +205,12 @@ class Admin_UserOwnerController extends Controller
      */
     public function edit($username): View
     {
-        $getDatas = DB::select("SELECT idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp, tanggal_lahir, jenis_kelamin, 
-                    alamat_detail, nama_propinsi, kode_propinsi, nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan, 
-                    nama_kelurahan, kode_kelurahan, kode_pos, nama_outlet, slug, kuota_point, project_name, idProject
-        FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
+        $getDatas = DB::select("SELECT
+                                    idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp,
+                                    tanggal_lahir, jenis_kelamin, alamat_detail, nama_propinsi, kode_propinsi,
+                                    nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan, nama_kelurahan,
+                                    kode_kelurahan, kode_pos
+                                FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
         $getData = $getDatas[0];
         
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();
@@ -231,11 +232,28 @@ class Admin_UserOwnerController extends Controller
                                 FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')"
                              );
         $getData = $getDatas[0];
+        
+        $getBrands = Brand::select('brand_name', 'brand_code', 'slug')->where('user_id', $getData->idUserLogin)->get();
+        // dd($getBrands);
 
         return view('master.user-owner.detailUserOwner', [
             'username' => $username,
-            'getData' => $getData
+            'getData' => $getData,
+            'getBrands' => $getBrands
         ]);
+    }
+
+    public function getDataBrandOwner($username)
+    {
+        $getDatas = DB::select("SELECT idUserLogin FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
+        $getData = $getDatas[0];
+        $brand = Brand::where('user_id', $getData->idUserLogin)->get();
+
+        $datas = [
+            'data' => $brand
+        ];
+
+        return response()->json($datas);
     }
 
     /**
@@ -256,9 +274,6 @@ class Admin_UserOwnerController extends Controller
                 'username'      => 'required|unique:users_login,username,' . $validasi->id,
                 'email'         => 'required|email|unique:users_login,email,' . $validasi->id,
                 'no_hp'         => 'required|unique:users_login,no_hp,' . $validasi->id,
-                'nomor_ktp'     => 'required',
-                'nama_outlet'   => 'required',
-                'slug'          => 'required',
             ]);
 
             if ($request->hasFile('avatar')) {
@@ -277,15 +292,22 @@ class Admin_UserOwnerController extends Controller
                 $imagePath = 'storage/user_owner/avatar/' . $imageName;
 
                 // Delete Old Image
-                if (Storage::disk('public')->exists('storage/user_owner/avatar/' . $request->avatar)) {
-                    Storage::disk('public')->delete('storage/user_owner/avatar/' . $request->avatar);
+                if (Storage::disk('public')->exists('storage/user_owner/avatar/' . $request->avatar_exists)) {
+                    Storage::disk('public')->delete('storage/user_owner/avatar/' . $request->avatar_exists);
                 }
             } else {
-                $imageName = $request->avatar;
-                $imagePath = $request->path_avatar;
+                $imageName = $request->avatar_exists;
+                $imagePath = $request->path_avatar_exists;
             }
             
             $user = User::where('id', $request->idUserLogin)->first();
+
+            if ($request->password != NULL) {
+                $password = Hash::make($request->password);
+            } else {
+                $password = $user->password;
+            }
+            
 
             if ($user) {
                 $user->update([
@@ -293,10 +315,12 @@ class Admin_UserOwnerController extends Controller
                     'name'          => $request->name,
                     'username'      => $request->username,
                     'email'         => $request->email,
-                    'no_hp'         => $request->no_hp
+                    'password'      => $password,
+                    'no_hp'         => $request->no_hp,
+                    'updated_at'    => Carbon::now()->timezone('Asia/Jakarta')
                 ]);
 
-                $userDetail = Users_Detail::updateOrCreate(
+                Users_Detail::updateOrCreate(
                     ['user_id' => $user->id],
                     [
                         'avatar'            => $imageName,
@@ -311,41 +335,30 @@ class Admin_UserOwnerController extends Controller
                         'provinsi'          => $request->provinsi,
                         'kode_pos'          => $request->kode_pos,
                         'alamat_detail'     => $request->alamat_detail,
-                    ]
-                );
-
-                $outlet = Outlet::updateOrCreate(
-                    ['user_id' => $user->id],
-                    [
-                        'nama_outlet'  => $request->nama_outlet,
-                        'project_id'   => $request->project_id,
-                        'slug'         => $request->slug,
-                        'no_hp'        => $request->no_hp,
+                        'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
                     ]
                 );
             }
 
             DB::commit(); // Commit the transaction
-        } catch (\Exception $e) {
+        } catch (\Throwable $th) {
             DB::rollback(); // Rollback the transaction in case of an exception
 
-            Log::error($e); // Log the exception for debugging
-
-            return redirect()->route('admin.admin_user_owner')->with('error', 'Gagal Mengubah User Owner. Silakan coba lagi');
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
         return redirect()->route('admin.admin_user_owner')->with('success', 'Berhasil Mengubah User Owner');
     }
 
-    public function showManageBrands($username)
-    {
-        $getDatas = DB::select("SELECT *
-                    FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
-        $getData = $getDatas[0];
+    // public function showManageBrands($username)
+    // {
+    //     $getDatas = DB::select("SELECT *
+    //                 FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
+    //     $getData = $getDatas[0];
 
-        return view('master.user-owner.brands.daftarUserBrands',[
-            'getData' => $getData
-        ]);
-    }
+    //     return view('master.user-owner.brands.daftarUserBrands',[
+    //         'getData' => $getData
+    //     ]);
+    // }
     
     public function brandSlug(Request $request)
     {
@@ -377,11 +390,67 @@ class Admin_UserOwnerController extends Controller
         return response()->json(['isUsed' => $isUsed]);
     }
 
+    public function validate_Edit_NoHp(Request $request)
+    {
+        $noHp = $request->no_hp;
+        $UserId = $request->id;
+        
+        // Mengecek apakah nomor HP sudah digunakan
+        $user = User::where('no_hp', $noHp)->first();
+    
+        // Inisialisasi $isUsed sebagai false
+        $isUsed = false;
+    
+        // Jika user ditemukan
+        if ($user) {
+            // Jika id diberikan dan tidak sama dengan user yang ditemukan, atau jika id tidak diberikan sama sekali
+            if ($UserId !== null) {
+                if ($user->id != $UserId) {
+                    // Artinya ada nomor HP yang sama terdaftar di bawah user yang berbeda
+                    $isUsed = true;
+                }
+            } else {
+                // Jika tidak ada id yang diberikan dan nomor HP ditemukan, anggap nomor HP tersebut sudah digunakan
+                $isUsed = false;
+            }
+        }
+        
+        return response()->json(['isUsed' => $isUsed]);
+    }
+
     public function validateNoHp_brand(Request $request)
     {
         $noHp   = $request->no_hp;
         $isUsed = Brand::where('no_hp', $noHp)->exists();
 
+        return response()->json(['isUsed' => $isUsed]);
+    }
+
+    public function validate_Edit_NoHp_brand(Request $request)
+    {
+        $noHp = $request->no_hp;
+        $brandId = $request->brand_Code;
+        
+        // Mengecek apakah nomor HP sudah digunakan
+        $brand = Brand::where('no_hp', $noHp)->first();
+    
+        // Inisialisasi $isUsed sebagai false
+        $isUsed = false;
+    
+        // Jika brand ditemukan
+        if ($brand) {
+            // Jika brand_Code diberikan dan tidak sama dengan brand yang ditemukan, atau jika brand_Code tidak diberikan sama sekali
+            if ($brandId !== null) {
+                if ($brand->brand_code != $brandId) {
+                    // Artinya ada nomor HP yang sama terdaftar di bawah brand yang berbeda
+                    $isUsed = true;
+                }
+            } else {
+                // Jika tidak ada brand_Code yang diberikan dan nomor HP ditemukan, anggap nomor HP tersebut sudah digunakan
+                $isUsed = false;
+            }
+        }
+        
         return response()->json(['isUsed' => $isUsed]);
     }
 
@@ -393,11 +462,67 @@ class Admin_UserOwnerController extends Controller
         return response()->json(['dipakai' => $dipakai]);
     }
 
+    public function validate_Edit_Username(Request $request)
+    {
+        $username = $request->username;
+        $UserId = $request->id;
+        
+        // Mengecek apakah username sudah digunakan
+        $user = User::where('username', $username)->first();
+    
+        // Inisialisasi $dipakai sebagai false
+        $dipakai = false;
+    
+        // Jika user ditemukan
+        if ($user) {
+            // Jika id diberikan dan tidak sama dengan user yang ditemukan, atau jika id tidak diberikan sama sekali
+            if ($UserId !== null) {
+                if ($user->id != $UserId) {
+                    // Artinya ada username yang sama terdaftar di bawah user yang berbeda
+                    $dipakai = true;
+                }
+            } else {
+                // Jika tidak ada id yang diberikan dan username ditemukan, anggap username tersebut sudah digunakan
+                $dipakai = false;
+            }
+        }
+        
+        return response()->json(['dipakai' => $dipakai]);
+    }
+
     public function validateEmail(Request $request)
     {
         $email = $request->email;
         $used = User::where('email', $email)->exists();
 
+        return response()->json(['used' => $used]);
+    }
+
+    public function validate_Edit_Email(Request $request)
+    {
+        $email = $request->email;
+        $UserId = $request->id;
+        
+        // Mengecek apakah email sudah digunakan
+        $user = User::where('email', $email)->first();
+    
+        // Inisialisasi $used sebagai false
+        $used = false;
+    
+        // Jika user ditemukan
+        if ($user) {
+            // Jika id diberikan dan tidak sama dengan user yang ditemukan, atau jika id tidak diberikan sama sekali
+            if ($UserId !== null) {
+                if ($user->id != $UserId) {
+                    // Artinya ada email yang sama terdaftar di bawah user yang berbeda
+                    $used = true;
+                }
+            } else {
+                // Jika tidak ada id yang diberikan dan email ditemukan, anggap email tersebut sudah digunakan
+                $used = false;
+            }
+        }
+        
         return response()->json(['used' => $used]);
     }
 }
