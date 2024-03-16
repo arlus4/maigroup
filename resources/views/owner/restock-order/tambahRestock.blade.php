@@ -240,7 +240,7 @@
                                 </div>
                                 <div class="pt-1">
                                     <div class="d-flex align-items-center mb-7">
-                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 90gr</span>
+                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original Toko Seru 90gr</span>
                                         <span class="svg-icon svg-icon-1 svg-icon-success">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
@@ -333,7 +333,7 @@
                                 </div>
                                 <div class="pt-1">
                                     <div class="d-flex align-items-center mb-7">
-                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 180gr</span>
+                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original Toko Seru 180gr</span>
                                         <span class="svg-icon svg-icon-1 svg-icon-success">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -564,7 +564,7 @@
                                                 </div>
                                                 <div class="pt-1">
                                                     <div class="d-flex align-items-center mb-7">
-                                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 90gr</span>
+                                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original Toko Seru 90gr</span>
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                         <span class="svg-icon svg-icon-1 svg-icon-success">
                                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -653,7 +653,7 @@
                                                 </div>
                                                 <div class="pt-1">
                                                     <div class="d-flex align-items-center mb-7">
-                                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original MaiTea 180gr</span>
+                                                        <span class="fw-semibold fs-5 text-gray-700 flex-grow-1">Original Toko Seru 180gr</span>
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
                                                         <span class="svg-icon svg-icon-1 svg-icon-success">
                                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

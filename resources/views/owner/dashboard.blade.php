@@ -121,7 +121,7 @@
                             <div class="card p-3" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                                 <div class="card-body p-4">
                                     <h3 class="card-title align-items-start flex-column pt-2">
-                                        <span class="card-label fw-bold text-gray-800">MaiTea</span>
+                                        <span class="card-label fw-bold text-gray-800">Toko Seru</span>
                                     </h3>
                                     <div class="table-responsive">
                                         <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableStockReport">
@@ -180,7 +180,7 @@
                                                 <tr>
                                                     <td class="p-3">1</td>
                                                     <td class="p-3">
-                                                        <span class="badge badge-secondary">MaiTea</span>
+                                                        <span class="badge badge-secondary">Toko Seru</span>
                                                     </td>
                                                     <td class="d-flex align-items-center">
                                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
@@ -198,7 +198,7 @@
                                                 <tr>
                                                     <td class="p-3">2</td>
                                                     <td class="p-3">
-                                                        <span class="badge badge-secondary">MaiTea</span>
+                                                        <span class="badge badge-secondary">Toko Seru</span>
                                                     </td>
                                                     <td class="d-flex align-items-center">
                                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
@@ -216,7 +216,7 @@
                                                 <tr>
                                                     <td class="p-3">3</td>
                                                     <td class="p-3">
-                                                        <span class="badge badge-secondary">MaiTea</span>
+                                                        <span class="badge badge-secondary">Toko Seru</span>
                                                     </td>
                                                     <td class="d-flex align-items-center">
                                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
@@ -234,7 +234,7 @@
                                                 <tr>
                                                     <td class="p-3">4</td>
                                                     <td class="p-3">
-                                                        <span class="badge badge-secondary">MaiTea</span>
+                                                        <span class="badge badge-secondary">Toko Seru</span>
                                                     </td>
                                                     <td class="d-flex align-items-center">
                                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">

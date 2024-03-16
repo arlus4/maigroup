@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MaiTea - Nusantara</title>
+        <title>Toko Seru - Nusantara</title>
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
@@ -106,7 +106,7 @@
                     </h2>
                     <div style="margin-top: 16px;">
                         <button class="btn" style="position:relative;right: 54%;width:100%;border-radius:8px;background-color:#155724;border: 1.4px solid #d4edda;color: #fff;">
-                            <span style="font-size: 17px;font-weight: 600;">Gabung Mitra MaiTea</span>
+                            <span style="font-size: 17px;font-weight: 600;">Gabung Mitra Toko Seru</span>
                         </button>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
                 <div class="css-fnk2skj">
                     <div class="css-po2jsm">
                         <div class="css-hjsa2js">
-                            <h3 class="css-cjdkja">Varian MaiTea Nusantara</h3>
+                            <h3 class="css-cjdkja">Varian Toko Seru Nusantara</h3>
                         </div>
                     </div>
                     <div class="css-diop1ms">
@@ -143,7 +143,7 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/teh_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>MaiTea Leci</h4>
+                                <h4>Toko Seru Leci</h4>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -159,7 +159,7 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/teh_3.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>MaiTea Lemon</h4>
+                                <h4>Toko Seru Lemon</h4>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -167,7 +167,7 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/teh_4.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>MaiTea Original</h4>
+                                <h4>Toko Seru Original</h4>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -183,7 +183,7 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/teh_6.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>MaiTea Matcha</h4>
+                                <h4>Toko Seru Matcha</h4>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -213,7 +213,7 @@
             <div class="css-posn1da">
                 <div class="css-coan1sn">
                     <div class="css-bvjhaqo" style="justify-content: space-between;">
-                        <h4 class="css-ndk2nsa mb-0">Varian MaiTea Nusantara</h4>
+                        <h4 class="css-ndk2nsa mb-0">Varian Toko Seru Nusantara</h4>
                         <div class="css-dank90a">
                             <a href="#" class="css-lihat-semua">Lihat Semua</a>
                         </div>
@@ -243,7 +243,7 @@
                                         <div class="css-cv2ns0a">
                                             <a href="#" class="css-dnc2nsp">
                                                 <div class="css-g2hs9nb">Rp 26.500</div>
-                                                <div class="css-g2hs9na">Red Velvet MaiTea LARGE</div>
+                                                <div class="css-g2hs9na">Red Velvet Toko Seru LARGE</div>
                                             </a>
                                         </div>
                                     </div>
@@ -265,7 +265,7 @@
                                         <div class="css-cv2ns0a">
                                             <a href="#" class="css-dnc2nsp">
                                                 <div class="css-g2hs9nb">Rp 25.000</div>
-                                                <div class="css-g2hs9na">Leci MaiTea LARGE</div>
+                                                <div class="css-g2hs9na">Leci Toko Seru LARGE</div>
                                             </a>
                                         </div>
                                     </div>
@@ -287,7 +287,7 @@
                                         <div class="css-cv2ns0a">
                                             <a href="#" class="css-dnc2nsp">
                                                 <div class="css-g2hs9nb">Rp 17.500</div>
-                                                <div class="css-g2hs9na">Lemon MaiTea LARGE</div>
+                                                <div class="css-g2hs9na">Lemon Toko Seru LARGE</div>
                                             </a>
                                         </div>
                                     </div>
@@ -309,7 +309,7 @@
                                         <div class="css-cv2ns0a">
                                             <a href="#" class="css-dnc2nsp">
                                                 <div class="css-g2hs9nb">Rp 22.500</div>
-                                                <div class="css-g2hs9na">Taro MaiTea LARGE</div>
+                                                <div class="css-g2hs9na">Taro Toko Seru LARGE</div>
                                             </a>
                                         </div>
                                     </div>
@@ -324,8 +324,8 @@
         <div class="css-gabung-mitra">
             <div class="css-gj5js6a">
                 <div class="css-cnr9dm">
-                    <h4 class="css-ndk2nsa">Gabung Jadi Mitra MaiTea</h4>
-                    <p class="css-djk9qna">MaiTea Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
+                    <h4 class="css-ndk2nsa">Gabung Jadi Mitra Toko Seru</h4>
+                    <p class="css-djk9qna">Toko Seru Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
                 </div>
                 <div class="css-kld2jsh">
                     <img src="{{ asset('assets/images/bg_benefit.png') }}">
@@ -336,7 +336,7 @@
         <hr class="css-jarak-mobile">
 
         <div class="css-paket-mitra">
-            <h4 class="css-ndk2nsa">Varian Paket Populer MaiTea</h4>
+            <h4 class="css-ndk2nsa">Varian Paket Populer Toko Seru</h4>
             <div class="css-chj2akm">
                 <div class="css-pages">
                     <div class="css-bungkus-pages">
@@ -372,7 +372,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
+                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -426,7 +426,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
+                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -480,7 +480,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
+                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -534,7 +534,7 @@
                                         </div>
                                         <p>
                                             <strong>85%</strong>
-                                            Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.
+                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
                                         </p>
                                     </li>
                                     <li>
@@ -571,8 +571,8 @@
             <div class="css-dcnk23j">
                 <div class="row">
                     <div class="col-md-6 css-scnk2n">
-                        <h4 class="css-cjdkja">Gabung Jadi Mitra MaiTea</h4>
-                        <p class="css-text-p">MaiTea Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
+                        <h4 class="css-cjdkja">Gabung Jadi Mitra Toko Seru</h4>
+                        <p class="css-text-p">Toko Seru Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
                     </div>
                     <div class="col-md-6">
                         <img src="{{ asset('assets/images/bg_benefit.png') }}">
@@ -586,7 +586,7 @@
                 <div class="css-dfnn2ka">
                     <div class="css-tes-header" style="width: 100%;">
                         <div>
-                            <h3 class="css-cjdkja">Varian Paket populer MaiTea</h3>
+                            <h3 class="css-cjdkja">Varian Paket populer Toko Seru</h3>
                         </div>
                     </div>
                 </div>
@@ -625,7 +625,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -682,7 +682,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -739,7 +739,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikkan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -796,7 +796,7 @@
                                                     <img src="{{ asset('assets/images/line.webp') }}">
                                                 </picture>
                                             </div>
-                                            <p><strong>85%</strong> Mitra MaiTea Nusantara mengalami kenaikan bisnis teh mereka.</p>
+                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikan bisnis teh mereka.</p>
                                         </li>
                                         <li>
                                             <div class="css-preview-icon">
@@ -828,7 +828,7 @@
                 <div class="css-dfnn2ka">
                     <div class="css-tes-header" style="width: 100%;">
                         <div>
-                            <h3 class="css-cjdkja" style="text-align: center!important;">Apa Kata Pengguna Mitra <span>MaiTea?</span></h3>
+                            <h3 class="css-cjdkja" style="text-align: center!important;">Apa Kata Pengguna Mitra <span>Toko Seru?</span></h3>
                         </div>
                     </div>
                 </div>
@@ -929,7 +929,7 @@
                         <li class="content-entry">
                             <div class="article-title">
                                 <strong class="css-text-faq1">05</strong>
-                                <span class="css-text-faq2">Apa yang harus dilakukan jika tertarik bergabung dengan MaiTea Nusantara?</span>
+                                <span class="css-text-faq2">Apa yang harus dilakukan jika tertarik bergabung dengan Toko Seru Nusantara?</span>
                                 <i class="fas fa-angle-down"></i>
                             </div>
                             <div class="accordion-content" style="padding-left: 48px;">

@@ -2,13 +2,13 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 <head>
-		<title>Dashboard MaiTea</title>
+		<title>Dashboard Toko Seru</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="ID" />
 		<meta property="og:type" content="content" />
-		<meta property="og:title" content="Dashboard Admin| MaiTea" />
-		<meta property="og:site_name" content="Dashboard Admin| MaiTea" />
+		<meta property="og:title" content="Dashboard Admin| Toko Seru" />
+		<meta property="og:site_name" content="Dashboard Admin| Toko Seru" />
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 		<link rel="canonical" href="index.html" />
 		<link rel="shortcut icon" href="{{ asset('assets/images/ic_maitea.png') }}" />

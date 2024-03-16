@@ -139,14 +139,14 @@
                                                     <li style="font-size: 13px;">Masuk ke menu Transfer dari menu utama BRImo.</li>
                                                     <li style="font-size: 13px;">Klik menu <strong>"Tambah Penerima"</strong>.</li>
                                                     <li style="font-size: 13px;">Pastikan Bank Tujuan yaitu <strong>"Bank BRI"</strong>.</li>
-                                                    <li style="font-size: 13px;">Masukkan rekening tujuan <strong>038-601-002-588-303 a.n PT MaiTea Group</strong>.</li>
+                                                    <li style="font-size: 13px;">Masukkan rekening tujuan <strong>038-601-002-588-303 a.n PT Toko Seru Group</strong>.</li>
                                                     <li style="font-size: 13px;">Masukkan jumlah uang yang akan ditransfer.</li>
-                                                    <li style="font-size: 13px;">Pada halaman konfirmasi, pastikan Nomor Tujuan a.n. <strong>PT MaiTea Group</strong></li>
+                                                    <li style="font-size: 13px;">Pada halaman konfirmasi, pastikan Nomor Tujuan a.n. <strong>PT Toko Seru Group</strong></li>
                                                     <li style="font-size: 13px;">Tuliskan no. order Anda pada berita atau keterangan transfer.</li>
                                                     <li style="font-size: 13px;">Periksa kembali nominal yang akan ditransfer.</li>
                                                     <li style="font-size: 13px;">Masukkan Personal Identification Number (PIN) BRI Anda.</li>
                                                     <li style="font-size: 13px;">Transaksi selesai.</li>
-                                                    <li style="font-size: 13px;">Download resi transaksi atau screenshot halaman saat transaksi berhasil dan upload bukti pembayaran ke website MaiTea Group sebagai bukti pembayaran telah selesai.</li>
+                                                    <li style="font-size: 13px;">Download resi transaksi atau screenshot halaman saat transaksi berhasil dan upload bukti pembayaran ke website Toko Seru Group sebagai bukti pembayaran telah selesai.</li>
                                                 </ol>
                                             </div>
                                         </div>
@@ -172,14 +172,14 @@
                                                     <li style="font-size: 13px;">Masuk ke menu Transfer dari menu utama BRImo.</li>
                                                     <li style="font-size: 13px;">Klik menu <strong>"Tambah Penerima"</strong>.</li>
                                                     <li style="font-size: 13px;">Pastikan Bank Tujuan yaitu <strong>"Bank BRI"</strong>.</li>
-                                                    <li style="font-size: 13px;">Masukkan rekening tujuan <strong>038-601-002-588-303 a.n PT MaiTea Group</strong>.</li>
+                                                    <li style="font-size: 13px;">Masukkan rekening tujuan <strong>038-601-002-588-303 a.n PT Toko Seru Group</strong>.</li>
                                                     <li style="font-size: 13px;">Masukkan jumlah uang yang akan ditransfer.</li>
-                                                    <li style="font-size: 13px;">Pada halaman konfirmasi, pastikan Nomor Tujuan a.n. <strong>PT MaiTea Group</strong></li>
+                                                    <li style="font-size: 13px;">Pada halaman konfirmasi, pastikan Nomor Tujuan a.n. <strong>PT Toko Seru Group</strong></li>
                                                     <li style="font-size: 13px;">Tuliskan no. order Anda pada berita atau keterangan transfer.</li>
                                                     <li style="font-size: 13px;">Periksa kembali nominal yang akan ditransfer.</li>
                                                     <li style="font-size: 13px;">Masukkan Personal Identification Number (PIN) BRI Anda.</li>
                                                     <li style="font-size: 13px;">Transaksi selesai.</li>
-                                                    <li style="font-size: 13px;">Download resi transaksi atau screenshot halaman saat transaksi berhasil dan upload bukti pembayaran ke website MaiTea Group sebagai bukti pembayaran telah selesai.</li>
+                                                    <li style="font-size: 13px;">Download resi transaksi atau screenshot halaman saat transaksi berhasil dan upload bukti pembayaran ke website Toko Seru Group sebagai bukti pembayaran telah selesai.</li>
                                                 </ol>
                                             </div>
                                         </div>
@@ -205,14 +205,14 @@
                                                     <li style="font-size: 13px;">Masuk ke menu Transfer dari menu utama BRImo.</li>
                                                     <li style="font-size: 13px;">Klik menu <strong>"Tambah Penerima"</strong>.</li>
                                                     <li style="font-size: 13px;">Pastikan Bank Tujuan yaitu <strong>"Bank BRI"</strong>.</li>
-                                                    <li style="font-size: 13px;">Masukkan rekening tujuan <strong>038-601-002-588-303 a.n PT MaiTea Group</strong>.</li>
+                                                    <li style="font-size: 13px;">Masukkan rekening tujuan <strong>038-601-002-588-303 a.n PT Toko Seru Group</strong>.</li>
                                                     <li style="font-size: 13px;">Masukkan jumlah uang yang akan ditransfer.</li>
-                                                    <li style="font-size: 13px;">Pada halaman konfirmasi, pastikan Nomor Tujuan a.n. <strong>PT MaiTea Group</strong></li>
+                                                    <li style="font-size: 13px;">Pada halaman konfirmasi, pastikan Nomor Tujuan a.n. <strong>PT Toko Seru Group</strong></li>
                                                     <li style="font-size: 13px;">Tuliskan no. order Anda pada berita atau keterangan transfer.</li>
                                                     <li style="font-size: 13px;">Periksa kembali nominal yang akan ditransfer.</li>
                                                     <li style="font-size: 13px;">Masukkan Personal Identification Number (PIN) BRI Anda.</li>
                                                     <li style="font-size: 13px;">Transaksi selesai.</li>
-                                                    <li style="font-size: 13px;">Download resi transaksi atau screenshot halaman saat transaksi berhasil dan upload bukti pembayaran ke website MaiTea Group sebagai bukti pembayaran telah selesai.</li>
+                                                    <li style="font-size: 13px;">Download resi transaksi atau screenshot halaman saat transaksi berhasil dan upload bukti pembayaran ke website Toko Seru Group sebagai bukti pembayaran telah selesai.</li>
                                                 </ol>
                                             </div>
                                         </div>
