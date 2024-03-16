@@ -58,7 +58,9 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
                                                         <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kode Banner</label>
-                                                        <input type="text" name="banner_code" class="form-control mb-2" required>
+                                                        <input type="text" name="banner_code" id="banner_code" class="form-control mb-2" required>
+                                                        <div id="textAlerBannerCode" class="text-muted fs-7" style="color: #31353B!important;">Kode Banner <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                        <div id="BannerCodeMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Kode Banner Sudah digunakan</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -131,6 +133,7 @@
 
 @section('script')
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script>
         CKEDITOR.replace( 'description' );
     </script>
@@ -174,6 +177,37 @@
                     }
                 });
             });
+
+            var handleSearchBannerCode = _.debounce(function() {
+                var codeBanner = $('#banner_code').val();
+                var BannerCodeMsg = $('#BannerCodeMsg');
+                var textAlerBannerCode = $('#textAlerBannerCode');
+
+                if (codeBanner.length >= 3) {
+                    $.ajax({
+                        url: "/validate_bannerCode",
+                        type: "GET",
+                        data: { banner_code: codeBanner },
+                        success: function(data) {
+                            if (data.isUsed) {
+                                BannerCodeMsg.show();
+                                textAlerBannerCode.hide();
+                            } else {
+                                BannerCodeMsg.hide();
+                                textAlerBannerCode.show();
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Error saat pencarian:", error);
+                        }
+                    });
+                } else {
+                    BannerCodeMsg.hide();
+                    textAlerBannerCode.show();
+                }
+            }, 300);
+
+            $('#banner_code').on('input', handleSearchBannerCode);
         });
     </script>
 

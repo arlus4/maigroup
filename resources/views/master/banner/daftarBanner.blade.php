@@ -55,7 +55,6 @@
                             <thead>
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-125px text-dark">Info Banner</th>
-                                    <th class="min-w-125px text-dark">Kabupaten Kota</th>
                                     <th class="min-w-125px text-dark">Start Date</th>
                                     <th class="min-w-125px text-dark">End Date</th>
                                     <th class="min-w-125px text-dark">Created at</th>
@@ -76,13 +75,6 @@
                                             </div>
                                         </td>
                                         <td class="align-items-center">
-                                            @if ($banner->nama_kotakab != null)
-                                                <span class="badge badge-secondary">{{ $banner->nama_kotakab }}</span>
-                                            @else
-                                                <span class="badge badge-dark">National</span>
-                                            @endif
-                                        </td>
-                                        <td class="align-items-center">
                                             {{ \Carbon\Carbon::parse($banner->start_date)->format('d F Y') }}
                                         </td>
                                         <td class="align-items-center">
@@ -95,7 +87,7 @@
                                             <a href="{{ route('admin.admin_edit_banner', $banner->id) }}" class="btn btn-md hover-scale fw-bold btn-warning btn-sm me-2">Edit</a>
                                             <button type="button" class="btn btn-primary my-1 me-2 btn-sm btn-detail-banner" data-banner-id="{{ $banner->id }}">Detail</button>
                                             <button type="button" class="btn btn-danger my-1 me-2 btn-sm" data-banner-id="{{ $banner->id }}" data-bs-toggle="modal" data-bs-target="#modalDelete">Delete</button>
-                                        </td>                                        
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

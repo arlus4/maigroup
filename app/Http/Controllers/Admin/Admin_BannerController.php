@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Outlet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,9 +39,9 @@ class Admin_BannerController extends Controller
             'banner_promo.end_date',
             'banner_promo.created_date',
 
-            'ref_kotakab.nama_kotakab'
+            'brands.nama_kotakab'
         )
-        ->leftjoin('ref_kotakab', 'ref_kotakab.kode_kotakab', '=', 'banner_promo.kota_id')
+        ->leftjoin('brands', 'brands.brand_code', '=', 'banner_promo.kota_id')
         ->where('isall', 1)
         ->get();
 
@@ -98,13 +99,13 @@ class Admin_BannerController extends Controller
                 $imagePath = 'storage/banner/image/' . $imageName;
             }
 
-            if ($request->national == null) {
-                $provinsi = $request->provinsi;
-                $kotkab = $request->kotkab;
-            } else {
-                $provinsi = null;
-                $kotkab = null;
-            }
+            // if ($request->national == null) {
+            //     $provinsi = $request->provinsi;
+            //     $kotkab = $request->kotkab;
+            // } else {
+            //     $provinsi = null;
+            //     $kotkab = null;
+            // }
 
             Banner::create([
                 'banner_code'   => $request->banner_code,
@@ -113,8 +114,10 @@ class Admin_BannerController extends Controller
                 'image_name'    => $imageName,
                 'path'          => $imagePath,
                 'isall'         => '1',
-                'kota_id'       => $kotkab,
-                'kode_propinsi' => $provinsi,
+                // 'kota_id'       => $kotkab,
+                // 'kode_propinsi' => $provinsi,
+                'brand_code'    => $request->brand_code,
+                'outlet_code'   => $request->outlet_code,
                 'start_date'    => $request->start_date,
                 'end_date'      => $request->end_date,
                 'created_date'  => Carbon::now()->timezone('Asia/Jakarta')
@@ -151,9 +154,9 @@ class Admin_BannerController extends Controller
                 'banner_promo.end_date',
                 'banner_promo.created_date',
 
-                'ref_kotakab.nama_kotakab'
+                'brands.nama_kotakab'
             )
-            ->leftjoin('ref_kotakab', 'ref_kotakab.kode_kotakab', '=', 'banner_promo.kota_id')
+            ->leftjoin('brands', 'brands.brand_code', '=', 'banner_promo.kota_id')
             ->where('banner_promo.id', $banner->id)
             ->first();
 
@@ -184,28 +187,28 @@ class Admin_BannerController extends Controller
             'banner_promo.image_name',
             'banner_promo.path',
             'banner_promo.isall',
-            'banner_promo.kode_propinsi',
-            'banner_promo.kota_id',
+            'banner_promo.outlet_code',
+            'banner_promo.brand_code',
             'banner_promo.start_date',
             'banner_promo.end_date',
             'banner_promo.created_date',
 
-            'ref_kotakab.nama_kotakab',
-            'ref_propinsi.nama_propinsi'
+            'brands.brand_name',
+            'outlets.outlet_name'
         )
-        ->leftjoin('ref_propinsi', 'ref_propinsi.kode_propinsi', '=', 'banner_promo.kode_propinsi')
-        ->leftjoin('ref_kotakab', 'ref_kotakab.kode_kotakab', '=', 'banner_promo.kota_id')
+        ->leftjoin('outlets', 'outlets.outlet_code', '=', 'banner_promo.outlet_code')
+        ->leftjoin('brands', 'brands.brand_code', '=', 'banner_promo.brand_code')
         ->where('banner_promo.id', $banner->id)
         ->first();
 
-        $getProvinsi = Ref_Provinsi::select('kode_propinsi', 'nama_propinsi')->get();
-        $kotakab = ref_KotaKab::select('kode_kotakab','kode_propinsi','nama_kotakab')->where('kode_propinsi', $detail->kode_propinsi)->get();
+        $getBrands = Brand::select('brand_code', 'brand_name')->get();
+        $getOutlet = Outlet::select('outlet_code', 'outlet_name')->where('brand_code', $detail->brand_code)->get();
         
         return view('master.banner.editBanner', [
             'title' => "Banner Promo $banner->banner_code - $banner->banner_name",
             'banner' => $detail,
-            'getProvinsi' => $getProvinsi,
-            'kotakabs' => $kotakab
+            'getBrands' => $getBrands,
+            'getOutlet' => $getOutlet,
         ]);
     }
 
@@ -218,6 +221,7 @@ class Admin_BannerController extends Controller
      */
     public function update(Request $request, Banner $banner): RedirectResponse
     {
+        dd($request->all());
         try {
             DB::beginTransaction(); // Begin Transaction
 

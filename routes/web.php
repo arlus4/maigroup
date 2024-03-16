@@ -46,6 +46,7 @@ Route::get('/get_data_kelurahan/{kecamatan}', [AlamatController::class, 'get_dat
 Route::get('/get_data_kodepos/{kelurahan}', [AlamatController::class, 'get_data_kodepos']);
 
 Route::get('/get_data_outlet/{brand_code}', [UtilitasController::class, 'get_data_outlet']);
+Route::get('/validate_bannerCode', [UtilitasController::class, 'validate_bannerCode']);
 
 // Bagian Middleware & Prefix Admin
 Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
@@ -127,6 +128,15 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/detail_New_Brands/{brand}', [Admin_BrandsController::class, 'detail_New_Brands'])->name('admin_detail_new_brands');
         Route::get('/validateNoHp_brand', [Admin_UserOwnerController::class, 'validateNoHp_brand']);
         Route::get('/validate_Edit_NoHp_brand', [Admin_UserOwnerController::class, 'validate_Edit_NoHp_brand']);
+        
+        //Banner
+        Route::get('/banner', [Admin_BannerController::class, 'index'])->name('admin_banner');
+        Route::get('/create_banner', [Admin_BannerController::class, 'create'])->name('admin_create_banner');
+        Route::post('/store_banner', [Admin_BannerController::class, 'store'])->name('admin_store_banner');
+        Route::get('/get_detail_banner/{banner}', [Admin_BannerController::class, 'get_detail_banner'])->name('admin_detail_banner');
+        Route::get('/edit_banner/{banner}', [Admin_BannerController::class, 'edit'])->name('admin_edit_banner');
+        Route::post('/update_banner/{banner}', [Admin_BannerController::class, 'update'])->name('admin_update_banner');
+        Route::post('/destroy_banner/{banner}', [Admin_BannerController::class, 'destroy'])->name('admin_destroy_banner');
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
@@ -155,15 +165,6 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/order/get_data_approve', [Admin_OrderController::class, 'get_data_approve']);
         Route::get('/order/get_data_deliver', [Admin_OrderController::class, 'get_data_deliver']);
         Route::get('/order/get_data_rejected', [Admin_OrderController::class, 'get_data_rejected']);
-
-        //Banner
-        Route::get('/banner', [Admin_BannerController::class, 'index'])->name('admin_banner');
-        Route::get('/create_banner', [Admin_BannerController::class, 'create'])->name('admin_create_banner');
-        Route::post('/store_banner', [Admin_BannerController::class, 'store'])->name('admin_store_banner');
-        Route::get('/get_detail_banner/{banner}', [Admin_BannerController::class, 'get_detail_banner'])->name('admin_detail_banner');
-        Route::get('/edit_banner/{banner}', [Admin_BannerController::class, 'edit'])->name('admin_edit_banner');
-        Route::post('/update_banner/{banner}', [Admin_BannerController::class, 'update'])->name('admin_update_banner');
-        Route::post('/destroy_banner/{banner}', [Admin_BannerController::class, 'destroy'])->name('admin_destroy_banner');
 
         //News Artikel
         Route::get('/artikel', [Admin_ArtikelController::class, 'index'])->name('admin_artikel');

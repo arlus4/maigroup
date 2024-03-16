@@ -111,12 +111,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-											<div class="mb-10 fv-row">
-												<label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Username</label>
-												<input type="text" name="username" id="slug_user" class="form-control mb-2 username" placeholder="asep123" required>
-												<div id="textAlertUsername" class="text-muted fs-7" style="color: #31353B!important;">Username <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
-                                                <div id="usernameUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Username Sudah digunakan</div>
-											</div>
+                                            <div class="mb-10 fv-row">
+                                                <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kode Banner</label>
+                                                <input type="text" name="banner_code" id="banner_code" class="form-control mb-2 banner_code" required>
+                                                <div id="textAlerBannerCode" class="text-muted fs-7" style="color: #31353B!important;">Kode Banner <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
+                                                <div id="BannerCodeMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Kode Banner Sudah digunakan</div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">

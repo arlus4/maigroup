@@ -84,19 +84,19 @@
                                                 </div>
                                             </div>
                                             <div class="form-check form-check-custom form-check-transparent form-check-lg">
-                                                <input class="form-check-input" type="checkbox" value="national" name="national" id="national" @if (!$banner->kota_id) checked @endif/>
+                                                <input class="form-check-input" type="checkbox" value="national" name="national" id="national" @if (!$banner->outlet_code) checked @endif/>
                                                 <label class="form-check-label fw-semibold mb-2" for="national" style="color: black"> <strong>National</strong> </label>
-                                            </div> <br>                                            
+                                            </div> <br>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
-                                                        <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Provinsi</label>
-                                                        <select class="form-select mb-2" name="provinsi" id="prv_id" data-control="select2" data-placeholder="Pilih Provinsi" data-allow-clear="true" required>
+                                                        <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Brand</label>
+                                                        <select class="form-select mb-2" name="brand_code" id="brnd_code" data-control="select2" data-placeholder="Pilih Brand" data-allow-clear="true" required>
                                                             <option></option>
-                                                            <option value="{{ $banner->kode_propinsi }}" selected>{{ $banner->nama_propinsi }}</option>
-                                                            @foreach($getProvinsi as $provinsi)
-                                                                @if ($banner->kode_propinsi != $provinsi->kode_propinsi)
-                                                                    <option value="{{ $provinsi->kode_propinsi }}">{{ $provinsi->nama_propinsi }}</option>
+                                                            <option value="{{ $banner->brand_code }}" selected>{{ $banner->brand_name }}</option>
+                                                            @foreach($getBrands as $brand)
+                                                                @if ($banner->brand_code != $brand->brand_code)
+                                                                    <option value="{{ $brand->brand_code }}">{{ $brand->brand_name }}</option>
                                                                 @endif
                                                             @endforeach
                                                         </select>
@@ -104,13 +104,13 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
-                                                        <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kota / Kabupaten</label>
-                                                        <select class="form-select mb-2" name="kotkab" id="kotkab_id" data-control="select2" data-placeholder="Pilih Kota / Kabupaten" data-allow-clear="true" required>
-                                                            @if ($banner->kota_id)
-                                                                <option value="{{ $banner->kota_id }}" selected>{{ $banner->nama_kotakab }}</option>
-                                                                @foreach ($kotakabs as $kotakab)
-                                                                    @if ($banner->kota_id != $kotakab->kode_kotakab)
-                                                                        <option value="{{ $kotakab->kode_kotakab }}">{{ $kotakab->nama_kotakab }}</option>
+                                                        <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kota / Kabupaten</label>
+                                                        <select class="form-select mb-2" name="kotkab" id="outletCode" data-control="select2" data-placeholder="Pilih Kota / Kabupaten" data-allow-clear="true" required>
+                                                            @if ($banner->outlet_code)
+                                                                <option value="{{ $banner->outlet_code }}" selected>{{ $banner->outlet_name }}</option>
+                                                                @foreach ($getOutlet as $outlet)
+                                                                    @if ($banner->outlet_code != $outlet->outlet_code)
+                                                                        <option value="{{ $outlet->outlet_code }}">{{ $outlet->outlet_name }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             @else
@@ -152,8 +152,8 @@
         $(document).ready(function() {
             function updateSelectState() {
                 var isChecked = $('#national').is(':checked');
-                $('#prv_id').prop('disabled', isChecked).attr('required', !isChecked).val(isChecked ? '' : $('#prv_id').val());
-                $('#kotkab_id').prop('disabled', isChecked).attr('required', !isChecked).val(isChecked ? '' : $('#kotkab_id').val());
+                $('#brnd_code').prop('disabled', isChecked).attr('required', !isChecked).val(isChecked ? '' : $('#brnd_code').val());
+                $('#outletCode').prop('disabled', isChecked).attr('required', !isChecked).val(isChecked ? '' : $('#outletCode').val());
             }
 
             // Atur keadaan awal saat halaman dimuat
@@ -162,54 +162,27 @@
             // Event handler ketika checkbox berubah
             $('#national').change(updateSelectState);
 
-            $("#prv_id").change(function() {
-                var provinsi_id = $(this).val();
+            $("#brnd_code").change(function() {
+                var brand_code = $(this).val();
                 $.ajax({
-                    url: '/get_data_kotakab/' + provinsi_id ,
+                    url: '/get_data_outlet/' + brand_code ,
                     type: "GET",
                     data: {
-                        provinsi_id: provinsi_id
+                        brand_code: brand_code
                     },
                     dataType: "json",
                     success: function(data) {
-                        var kotakab_id = $("#kotkab_id");
-                        kotakab_id.empty();
-                        kotakab_id.append("<option></option>");
+                        var outlet_id = $("#outletCode");
+                        outlet_id.empty();
+                        outlet_id.append("<option></option>");
                         $.each(data, function(index, element) {
-                            var option = $("<option>").val(element.kode_kotakab).text(element.nama_kotakab);
+                            var option = $("<option>").val(element.outlet_code).text(element.outlet_name);
 
-                            if (element.kode_kotakab == '{{ old('kotakab_id') }}') {
+                            if (element.outlet_code == '{{ old('outlet_id') }}') {
                                 option.attr('selected', 'selected');
                             }
 
-                            kotakab_id.append(option);
-                        });
-                    }
-                });
-            });
-
-            $("#kotkab_id").change(function() {
-                var kotakab_id = $(this).val();
-                $.ajax({
-                    url: '/get_data_kecamatan/' + kotakab_id ,
-                    type: "GET",
-                    data: {
-                        kotakab_id: kotakab_id
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        var kecamatan_id = $("#kecamatan_id");
-                        kecamatan_id.empty();
-                        kecamatan_id.append("<option></option>");
-                        $.each(data, function(index, element) {
-                            var option = $("<option>").val(element.kode_kecamatan).text(element.nama_kecamatan);
-
-                            // Set opsi yang dipilih berdasarkan nilai old('kecamatan_id')
-                            if (element.kode_kecamatan == '{{ old('kecamatan_id') }}') {
-                                option.attr('selected', 'selected');
-                            }
-
-                            kecamatan_id.append(option);
+                            outlet_id.append(option);
                         });
                     }
                 });
