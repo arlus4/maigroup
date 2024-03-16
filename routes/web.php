@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
+use App\Http\Controllers\UtilitasController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -43,6 +44,8 @@ Route::get('/get_data_kotakab/{provinsi}', [AlamatController::class, 'get_data_k
 Route::get('/get_data_kecamatan/{kotakab}', [AlamatController::class, 'get_data_kecamatan']);
 Route::get('/get_data_kelurahan/{kecamatan}', [AlamatController::class, 'get_data_kelurahan']);
 Route::get('/get_data_kodepos/{kelurahan}', [AlamatController::class, 'get_data_kodepos']);
+
+Route::get('/get_data_outlet/{brand_code}', [UtilitasController::class, 'get_data_outlet']);
 
 // Bagian Middleware & Prefix Admin
 Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
@@ -55,10 +56,10 @@ class Admin_BannerController extends Controller
      */
     public function create(): View
     {
-        $getProvinsi = Ref_Provinsi::select('kode_propinsi', 'nama_propinsi')->get();
+        $getBrands = Brand::select('brand_code', 'brand_name')->get();
         return view('master.banner.tambahBanner', [
             'title' => "Banner Promo",
-            'getProvinsi' => $getProvinsi
+            'brands' => $getBrands
         ]);
     }
 

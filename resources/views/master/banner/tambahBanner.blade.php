@@ -27,7 +27,14 @@
                                             <div class="row fv-row">
 									            <h2 style="font-size: 1rem;">Foto Banner Promo</h2>
                                                 <div class="col-md-8">
-                                                    <style>.image-input-placeholder { background-image: url('../../../assets/media/svg/files/blank-image.svg'); } [data-theme="dark"] .image-input-placeholder { background-image: url('../../../assets/media/svg/files/blank-image-dark.svg'); }</style>
+                                                    <style>
+                                                        .image-input-placeholder {
+                                                            background-image: url('../../../assets/master/media/svg/files/blank-image.svg');
+                                                        } [data-theme="dark"]
+                                                        .image-input-placeholder {
+                                                            background-image: url('../../../assets/master/media/svg/files/blank-image-dark.svg');
+                                                        }
+                                                    </style>
                                                     <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
                                                         <!-- start:Ukuran Card Image -->
                                                         <div class="image-input-wrapper w-500px h-200px"></div>
@@ -82,19 +89,19 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
-                                                        <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Provinsi</label>
-                                                        <select class="form-select mb-2" name="provinsi" id="prv_id" data-control="select2" data-placeholder="Pilih Provinsi" data-allow-clear="true" required>
+                                                        <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Brand</label>
+                                                        <select class="form-select mb-2" name="brand_code" id="brnd_code" data-control="select2" data-placeholder="Pilih Brand" data-allow-clear="true" required>
                                                             <option></option>
-                                                            @foreach($getProvinsi as $provinsi)
-                                                                <option value="{{ $provinsi->kode_propinsi }}">{{ $provinsi->nama_propinsi }}</option>
+                                                            @foreach($brands as $brand)
+                                                                <option value="{{ $brand->brand_code }}">{{ $brand->brand_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-10 fv-row">
-                                                        <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kota / Kabupaten</label>
-                                                        <select class="form-select mb-2" name="kotkab" id="kotkab_id" data-control="select2" data-placeholder="Pilih Kota / Kabupaten" data-allow-clear="true" required>
+                                                        <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Outlet</label>
+                                                        <select class="form-select mb-2" name="outlet_code" id="outletCode" data-control="select2" data-placeholder="Pilih Outlet" data-allow-clear="true" required>
                                                             <option></option>
                                                         </select>
                                                     </div>
@@ -133,63 +140,36 @@
             $('#national').change(function() {
                 if ($(this).is(':checked')) {
                     // Checkbox dicentang, reset, disable kedua select dan hilangkan required
-                    $('#prv_id').val('').prop('disabled', true).removeAttr('required');
-                    $('#kotkab_id').val('').prop('disabled', true).removeAttr('required');
+                    $('#brnd_code').val('').prop('disabled', true).removeAttr('required');
+                    $('#outletCode').val('').prop('disabled', true).removeAttr('required');
                 } else {
                     // Checkbox tidak dicentang, enable kedua select dan tambahkan required
-                    $('#prv_id').prop('disabled', false).attr('required', 'required');
-                    $('#kotkab_id').prop('disabled', false).attr('required', 'required');
+                    $('#brnd_code').prop('disabled', false).attr('required', 'required');
+                    $('#outletCode').prop('disabled', false).attr('required', 'required');
                 }
             });
 
-            $("#prv_id").change(function() {
-                var provinsi_id = $(this).val();
+            $("#brnd_code").change(function() {
+                var brand_code = $(this).val();
                 $.ajax({
-                    url: '/get_data_kotakab/' + provinsi_id ,
+                    url: '/get_data_outlet/' + brand_code ,
                     type: "GET",
                     data: {
-                        provinsi_id: provinsi_id
+                        brand_code: brand_code
                     },
                     dataType: "json",
                     success: function(data) {
-                        var kotakab_id = $("#kotkab_id");
-                        kotakab_id.empty();
-                        kotakab_id.append("<option></option>");
+                        var outletCode = $("#outletCode");
+                        outletCode.empty();
+                        outletCode.append("<option></option>");
                         $.each(data, function(index, element) {
-                            var option = $("<option>").val(element.kode_kotakab).text(element.nama_kotakab);
+                            var option = $("<option>").val(element.outlet_code).text(element.outlet_name);
 
-                            if (element.kode_kotakab == '{{ old('kotakab_id') }}') {
+                            if (element.outlet_code == '{{ old('outletCode') }}') {
                                 option.attr('selected', 'selected');
                             }
 
-                            kotakab_id.append(option);
-                        });
-                    }
-                });
-            });
-
-            $("#kotkab_id").change(function() {
-                var kotakab_id = $(this).val();
-                $.ajax({
-                    url: '/get_data_kecamatan/' + kotakab_id ,
-                    type: "GET",
-                    data: {
-                        kotakab_id: kotakab_id
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        var kecamatan_id = $("#kecamatan_id");
-                        kecamatan_id.empty();
-                        kecamatan_id.append("<option></option>");
-                        $.each(data, function(index, element) {
-                            var option = $("<option>").val(element.kode_kecamatan).text(element.nama_kecamatan);
-
-                            // Set opsi yang dipilih berdasarkan nilai old('kecamatan_id')
-                            if (element.kode_kecamatan == '{{ old('kecamatan_id') }}') {
-                                option.attr('selected', 'selected');
-                            }
-
-                            kecamatan_id.append(option);
+                            outletCode.append(option);
                         });
                     }
                 });
