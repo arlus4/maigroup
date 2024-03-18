@@ -59,12 +59,12 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         })->name('dashboard-admin');
 
         //Kategori Produk
-        Route::get('/category_outlet', [Admin_OutletController::class, 'index'])->name('admin_category_outlet');
-        Route::get('/edit_category_outlet/{kategori_Product:slug}', [Admin_OutletController::class, 'edit'])->name('admin_edit_category_outlet');
-        Route::post('/store_category_outlet', [Admin_OutletController::class, 'store'])->name('admin_store_category_outlet');
-        Route::post('/update_category_outlet', [Admin_OutletController::class, 'update'])->name('admin_update_category_outlet');
-        Route::post('/delete_category_outlet', [Admin_OutletController::class, 'destroy'])->name('admin_delete_category_outlet');
-        Route::get('/kategoriOutletSlug', [Admin_OutletController::class, 'kategoriOutletSlug']);
+        // Route::get('/category_outlet', [Admin_OutletController::class, 'index'])->name('admin_category_outlet');
+        // Route::get('/edit_category_outlet/{kategori_Product:slug}', [Admin_OutletController::class, 'edit'])->name('admin_edit_category_outlet');
+        // Route::post('/store_category_outlet', [Admin_OutletController::class, 'store'])->name('admin_store_category_outlet');
+        // Route::post('/update_category_outlet', [Admin_OutletController::class, 'update'])->name('admin_update_category_outlet');
+        // Route::post('/delete_category_outlet', [Admin_OutletController::class, 'destroy'])->name('admin_delete_category_outlet');
+        // Route::get('/kategoriOutletSlug', [Admin_OutletController::class, 'kategoriOutletSlug']);
 
         //Produk
         Route::get('/product', [Admin_ProductController::class, 'index'])->name('admin_product');
