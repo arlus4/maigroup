@@ -135,14 +135,14 @@
                                             <span class="menu-title">Daftar Owner</span>
                                         </a>
                                     </div>
-                                    <div class="menu-item">
+                                    {{-- <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="{{ route('admin.admin_tambah_user_owner') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
                                             <span class="menu-title">Tambah Owner</span>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="menu-item">
