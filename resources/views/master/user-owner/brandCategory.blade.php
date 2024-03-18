@@ -259,7 +259,7 @@
                 processing: true,
                 serverSide: false,
                 ajax: {
-                    url: "/admin/get_data_brandCategory",
+                    url: "{{ url('/admin/get_data_brandCategory') }}",
                     dataType: "JSON",
                 },
                 language: {
@@ -358,7 +358,7 @@
                         $('#tableCategoryBrand').DataTable().ajax.reload();
                     },
                     error: function(xhr, status, error) {
-                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi. " + xhr.status + "." + xhr.statusText + "." + xhr.responseText);
                     }
                 })
             })
