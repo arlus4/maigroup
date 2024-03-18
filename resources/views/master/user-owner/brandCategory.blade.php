@@ -259,7 +259,7 @@
                 processing: true,
                 serverSide: false,
                 ajax: {
-                    url: "{{ url('/admin/get_data_brandCategory') }}",
+                    url: "/admin/get_data_brandCategory",
                     dataType: "JSON",
                 },
                 language: {
