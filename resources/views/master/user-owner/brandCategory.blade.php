@@ -348,9 +348,6 @@
                 let formData = new FormData(this);
                 $('#modal_add').modal('hide');
                 $.ajax({
-                    // headers: {
-                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    // },
                     type: 'POST',
                     url: "/admin/add_brandCategory",
                     data: formData,
@@ -382,9 +379,6 @@
                 let formData = new FormData(this);
                 $('#modal_edit').modal('hide');
                 $.ajax({
-                    // headers: {
-                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    // },
                     type: 'POST',
                     url: "/admin/update_brandCategory",
                     data: formData,
@@ -436,22 +430,22 @@
                 confirmButtonText: `Ya, saya yakin!`
             }).then((result) => {
                 if (result.isConfirmed) {
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route("admin.admin_delete_brand_category") }}',
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        id : id
-                    },
-                    success: function(response) {
-                        toastr[response.status](response.message);
-                        // $('#tableCategoryBrand').DataTable().ajax.reload();
-                        $('#tableCategoryBrand').load(' #tableCategoryBrand');
-                    },
-                    error: function (xhr, status, error) {
-                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
-                    }
-                })
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/delete_brandCategory',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id : id
+                        },
+                        success: function(response) {
+                            toastr[response.status](response.message);
+                            // $('#tableCategoryBrand').DataTable().ajax.reload();
+                            $('#tableCategoryBrand').load(' #tableCategoryBrand');
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        }
+                    })
                 }
             })
         }
