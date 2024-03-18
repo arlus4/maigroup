@@ -39,9 +39,9 @@ class Admin_BannerController extends Controller
             'banner_promo.end_date',
             'banner_promo.created_date',
 
-            'brands.nama_kotakab'
+            'brands.brand_code'
         )
-        ->leftjoin('brands', 'brands.brand_code', '=', 'banner_promo.kota_id')
+        ->leftjoin('brands', 'brands.brand_code', '=', 'banner_promo.brand_code')
         ->where('isall', 1)
         ->get();
 
