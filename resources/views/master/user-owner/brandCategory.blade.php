@@ -348,11 +348,11 @@
                 let formData = new FormData(this);
                 $('#modal_add').modal('hide');
                 $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
                     type: 'POST',
-                    url: "{{ route('admin.admin_store_brand_category') }}",
+                    url: "/admin/add_brandCategory",
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -382,11 +382,11 @@
                 let formData = new FormData(this);
                 $('#modal_edit').modal('hide');
                 $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
                     type: 'POST',
-                    url: "{{ route('admin.admin_update_brand_category') }}",
+                    url: "/admin/update_brandCategory",
                     data: formData,
                     contentType: false,
                     processData: false,
