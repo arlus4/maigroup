@@ -343,44 +343,28 @@
         });
 
         $(document).ready(function() {
-            // $('#form-save').submit(function(e) {
-            //     e.preventDefault();
-            //     let formData = new FormData(this);
-            //     $('#modal_add').modal('hide');
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: "{{ route('admin.admin_store_brand_category') }}",
-            //         data: formData,
-            //         contentType: false,
-            //         processData: false,
-            //         success: function(response) {
-            //             // toastr[response.status](response.message);
-            //             $('#tableCategoryBrand').DataTable().ajax.reload();
-            //         },
-            //         error: function(xhr, status, error) {
-            //             toastr.error("Terjadi kesalahan. Silakan coba lagi. " + xhr.status + "." + xhr.statusText + "." + xhr.responseText);
-            //         }
-            //     })
-            // })
-            // Event listener untuk form save
             $('#form-save').submit(function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
                 $('#modal_add').modal('hide');
                 $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     type: 'POST',
-                    url: "{{ route('admin.admin_store_brand_category') }}", // Gunakan route helper Laravel
+                    url: "{{ route('admin.admin_store_brand_category') }}",
                     data: formData,
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        $('#tableCategoryBrand').DataTable().ajax.reload(); // Reload data table
+                        // toastr[response.status](response.message);
+                        $('#tableCategoryBrand').DataTable().ajax.reload();
                     },
                     error: function(xhr, status, error) {
-                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi. " + xhr.status + "." + xhr.statusText + "." + xhr.responseText);
                     }
-                });
-            });
+                })
+            })
         });
 
         function addData() {
@@ -398,6 +382,9 @@
                 let formData = new FormData(this);
                 $('#modal_edit').modal('hide');
                 $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     type: 'POST',
                     url: "{{ route('admin.admin_update_brand_category') }}",
                     data: formData,
