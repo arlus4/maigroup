@@ -45,6 +45,7 @@ class Admin_Brands_CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         try {
             DB::beginTransaction(); // Begin Transaction
 
