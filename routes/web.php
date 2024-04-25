@@ -5,14 +5,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Check_Connection;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UtilitasController;
 use App\Http\Controllers\Owner\OutletsController;
 use App\Http\Controllers\Owner\RestockController;
+use App\Http\Controllers\Admin\Admin_FaQController;
 use App\Http\Controllers\Owner\DashboardController;
 use App\Http\Controllers\Owner\MenuOrderController;
 use App\Http\Controllers\Admin\Admin_BankController;
+
 use App\Http\Controllers\Owner\ClaimBonusController;
 use App\Http\Controllers\Admin\Admin_OrderController;
-
 use App\Http\Controllers\Owner\AkunSettingController;
 use App\Http\Controllers\Admin\Admin_BannerController;
 use App\Http\Controllers\Admin\Admin_BrandsController;
@@ -25,7 +27,6 @@ use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
-use App\Http\Controllers\UtilitasController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -99,6 +100,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/store-user-owner', [Admin_UserOwnerController::class, 'store'])->name('admin_store_user_owner');
         Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
         Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
+
         // utilitas
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
         Route::get('/brandSlug', [Admin_UserOwnerController::class, 'brandSlug']);
@@ -137,6 +139,21 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/edit_banner/{banner}', [Admin_BannerController::class, 'edit'])->name('admin_edit_banner');
         Route::post('/update_banner/{banner}', [Admin_BannerController::class, 'update'])->name('admin_update_banner');
         Route::post('/destroy_banner/{banner}', [Admin_BannerController::class, 'destroy'])->name('admin_destroy_banner');
+
+        //Setting-FaQ
+        Route::get('/setting/faq/categories', [Admin_FaQController::class, 'faq_categories'])->name('admin_faq_categories');
+        Route::get('/setting/faq/categories/get_data_faq_category', [Admin_FaQController::class, 'get_data_faq_category']);
+        Route::get('/catFaQSlug', [Admin_FaQController::class, 'catFaQSlug']);
+        Route::post('/faq_category_store', [Admin_FaQController::class, 'faq_category_store'])->name('admin_faq_category_store');
+        Route::get('/setting/faq/categories/faq_category_edit', [Admin_FaQController::class, 'faq_category_edit'])->name('admin_faq_category_edit');
+        Route::post('/setting/faq/categories/faq_category_update', [Admin_FaQController::class, 'faq_category_update'])->name('admin_faq_category_update');
+        Route::post('/setting/faq/categories/faq_category_delete', [Admin_FaQController::class, 'faq_category_delete'])->name('admin_faq_category_delete');
+        //Setting-FaQ-Pembeli
+        Route::get('/setting/faq/user/pembeli', [Admin_FaQController::class, 'faq_user_pembeli'])->name('admin_faq_user_pembeli');
+        //Setting-FaQ-Owner
+        Route::get('/setting/faq/user/owner', [Admin_FaQController::class, 'faq_user_owner'])->name('admin_faq_user_owner');
+        //Setting-FaQ-Pegawai
+        Route::get('/setting/faq/user/pegawai', [Admin_FaQController::class, 'faq_user_pegawai'])->name('admin_faq_user_pegawai');
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');

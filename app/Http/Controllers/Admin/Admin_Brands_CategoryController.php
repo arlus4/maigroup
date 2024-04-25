@@ -105,13 +105,14 @@ class Admin_Brands_CategoryController extends Controller
      */
     public function update(Request $request)
     {
+        // dd($request->all());
         try {
             DB::beginTransaction(); // Begin Transaction
 
             $request->validate([
                 'code_category'      => 'required',
                 'nama_category_edit' =>'required',
-                'slug_edit'         => 'required|unique:brand_categories,slug,' . $request->code_category,
+                'slug_edit'         => 'required|unique:brand_categories,slug,' . $request->slug_edit,
             ]);
 
             Brand_Category::where('brand_category_code', $request->code_category)->update([

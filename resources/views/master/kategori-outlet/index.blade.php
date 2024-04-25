@@ -143,7 +143,7 @@
                             <input type="text" class="form-control slug" name="slug" id="slug" style="background-color: #e4ebf5;cursor: not-allowed" readonly>
                         </div>
                     </div>
-               </div> 
+               </div>
             </div>
             <div class="modal-footer">
                     <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">Batalkan</button>
