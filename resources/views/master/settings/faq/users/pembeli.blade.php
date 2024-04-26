@@ -45,7 +45,7 @@
                             <span class="svg-icon svg-icon-2">
                                 <i class="fas fa-plus-circle text-white"></i>
                             </span>
-                            Tambah Category
+                            Tambah FaQ Pembeli
                         </button>
                     </div>
                 </div>

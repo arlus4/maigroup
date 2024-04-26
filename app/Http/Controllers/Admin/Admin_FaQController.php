@@ -7,6 +7,7 @@ use App\Models\FaQ_Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\FaQ;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Admin_FaQController extends Controller
@@ -19,6 +20,17 @@ class Admin_FaQController extends Controller
     public function faq_categories()
     {
         return view('master.settings.faq.categories');
+    }
+
+    public function get_data_faq_category()
+    {
+        $data = FaQ_Category::all();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
     }
 
     /**
@@ -52,17 +64,6 @@ class Admin_FaQController extends Controller
 
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
-    }
-
-    public function get_data_faq_category()
-    {
-        $data = FaQ_Category::all();
-
-        $datas = [
-            'data' => $data
-        ];
-
-        return response()->json($datas);
     }
 
     /**
@@ -164,7 +165,98 @@ class Admin_FaQController extends Controller
      */
     public function faq_user_owner()
     {
-        return view('master.settings.faq.users.owner');
+        $categories = FaQ_Category::where('users_type', 2)->get();
+        return view('master.settings.faq.users.owner', [
+            'categories' => $categories
+        ]);
+    }
+
+    public function get_data_faq_user_owner()
+    {
+        $data = DB::table('faqs')
+            ->select(
+                'faqs.id',
+                'faqs.question',
+                'faqs.answer',
+                'faqs_categories.name as category_name',
+            )
+            ->leftJoin('faqs_categories', 'faqs.faqs_categories', 'faqs_categories.id')
+            ->where('faqs_categories.users_type', 2)
+            ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_owner_store(Request $request)
+    {
+        try {
+            $request->validate([
+                'faqs_categories' => 'required',
+                'question'        => 'required',
+                'answer'          => 'required',
+            ]);
+
+            DB::beginTransaction(); // Begin Transaction
+
+            FaQ::create([
+                'faqs_categories' => $request->faqs_categories,
+                'question'        => $request->question,
+                'answer'          => $request->answer,
+            ]);
+
+            DB::commit(); // Commit the transaction
+
+            return redirect()->back()->with('success', 'Berhasil Menambah FaQ Owner Baru');
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\FaQ  $faq
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_owner_edit(Request $request)
+    {
+        $data = DB::table('faqs')
+            ->select(
+                'faqs.id',
+                'faqs.question',
+                'faqs.answer',
+                'faqs_categories.name as category_name',
+                'faqs_categories.id as category_id',
+            )
+            ->leftJoin('faqs_categories', 'faqs.faqs_categories', 'faqs_categories.id')
+            ->where('faqs.id', $request->id)
+            ->first();
+
+        return response()->json($data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\FaQ  $faq
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_owner_update(Request $request)
+    {
+        dd($request->all());
     }
 
     /**

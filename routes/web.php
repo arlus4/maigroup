@@ -150,6 +150,11 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/setting/faq/categories/faq_category_delete', [Admin_FaQController::class, 'faq_category_delete'])->name('admin_faq_category_delete');
         //Setting-FaQ-Pembeli
         Route::get('/setting/faq/user/pembeli', [Admin_FaQController::class, 'faq_user_pembeli'])->name('admin_faq_user_pembeli');
+        Route::get('/setting/faq/categories/get_data_faq_user_owner', [Admin_FaQController::class, 'get_data_faq_user_owner']);
+        Route::post('/setting/faq/user/faq_user_owner_store', [Admin_FaQController::class, 'faq_user_owner_store'])->name('admin_faq_user_owner_store');
+        Route::get('/setting/faq/categories/faq_user_owner_edit', [Admin_FaQController::class, 'faq_user_owner_edit'])->name('admin_faq_user_owner_edit');
+        Route::post('/setting/faq/categories/faq_user_owner_update', [Admin_FaQController::class, 'faq_user_owner_update'])->name('admin_faq_user_owner_update');
+        Route::post('/setting/faq/categories/faq_user_owner_delete', [Admin_FaQController::class, 'faq_user_owner_delete'])->name('admin_faq_user_owner_delete');
         //Setting-FaQ-Owner
         Route::get('/setting/faq/user/owner', [Admin_FaQController::class, 'faq_user_owner'])->name('admin_faq_user_owner');
         //Setting-FaQ-Pegawai
