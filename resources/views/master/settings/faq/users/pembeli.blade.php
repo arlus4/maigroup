@@ -52,7 +52,7 @@
             </div>
             <div class="card-body py-4">
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableCategoryBrand">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableFaQ">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-100px text-dark">Kategori</th>
@@ -64,8 +64,277 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Modal Tambah FaQ -->
+            <div class="modal fade" id="modalAdd">
+                <div class="modal-dialog modal-dialog-centered mw-1000px">
+                    <div class="modal-content" style="border-radius: 8px;">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h4 class="css-lk3jsp">Tambah FaQ User Owner</h4>
+                        </div>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="css-flj2ej">
+                        <div class="css-fjkpo0ma">
+                            <div class="css-wj23sk">
+                            <form action="{{ route('admin.admin_faq_user_pembeli_store') }}" method="POST">
+                                @csrf
+                                <div class="form-group mb-3">
+                                    <label class="form-label required" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Tipe Kategori</label>
+                                    <select class="form-select mb-2" name="faqs_categories" data-control="select2" data-placeholder="Pilih Tipe Kategori" data-allow-clear="true" required>
+                                        <option></option>
+                                        @foreach ($categories as $cat)
+                                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="required fw-semibold fs-6 mb-1">Pertanyaan</label>
+                                    <input type="text" class="form-control question" name="question" id="question" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label mt-5" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Jawaban</label>
+                                    <textarea name="answer" id="answer"></textarea>
+                                    <div class="text-muted fs-7" style="color: #31353B!important;">Pastikan jawaban memuat penjelasan yang jelas.</div>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+                    <div class="modal-footer">
+                            <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">Batalkan</button>
+                            <button type="submit" id="simpan-button" class="css-kl2kd9a">Simpan</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Detail FaQ -->
+            <div class="modal fade" id="modal_detail">
+                <div class="modal-dialog modal-dialog-centered mw-1000px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title fs-2x" id="modal-title-detail"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="fs-2x text-gray-800 w-bolder mb-6" id="question_detail"></div>
+                            <p class="mb-4 text-gray-600 fw-semibold fs-6 ps-10" id="answer_detail"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
+                                Batalkan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Edit Kategori FaQ -->
+            <div class="modal fade" id="modal_edit">
+                <div class="modal-dialog modal-dialog-centered mw-1000px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-title-edit"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" id="form-update">
+                            @csrf
+                            <input type="hidden" name="id" class="form-control id" id="id_edit" readonly>
+                            <div class="form-group mb-3">
+                                <label class="form-label required" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Tipe Kategori</label>
+                                <select class="form-select mb-2" name="faqs_categories" id="faqs_categories_edit" data-control="select2" data-placeholder="Pilih Tipe User" data-allow-clear="true" required>
+                                    <option></option>
+                                    @foreach ($categories as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="required fw-semibold fs-6 mb-1">Pertanyaan</label>
+                                <input type="text" class="form-control question" name="question" id="question_edit" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label mt-5" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Jawaban</label>
+                                <textarea name="answer_edit" id="answer_edit"></textarea>
+                                <div class="text-muted fs-7" style="color: #31353B!important;">Pastikan jawaban memuat penjelasan yang jelas.</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
+                                Batalkan
+                            </button>
+                            <button type="submit" id="update" class="css-kl2kd9a">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+@endsection
+
+@section('script')
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'answer' );
+    </script>
+    <script>
+        CKEDITOR.replace( 'answer_edit' );
+    </script>
+
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function() {
+            $('#tableFaQ').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: "/admin/setting/faq/user/get_data_faq_user_pembeli",
+                columns: [
+                    { data: "category_name" },
+                    { data: "question" },
+                    {
+                        data: 'atur',
+                        render: function(data, type, row) {
+                            return `<div class="dropdown">
+                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton${row.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Atur
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
+                                            <li>
+                                                <button onclick="detailCat(${row.id})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#181C32;" class="fas fa-circle-info me-2"></i>
+                                                    Detail
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button onclick="editCat(${row.id})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                    Edit
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button onclick="deleteCat(${row.id})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#181C32;" class="fas fa-trash me-2"></i>
+                                                    Hapus
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>`;
+                        }
+                    }
+                ]
+            });
+        });
+
+        function detailCat(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/setting/faq/user/faq_user_pembeli_edit',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data);
+                    $('#modal_detail').modal('show');
+                    $('#modal-title-detail').text('Kategori ' + data.category_name);
+                    $('#question_detail').text(data.question);
+                    $('#answer_detail').html(data.answer);
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+        }
+
+        function editCat(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/setting/faq/user/faq_user_pembeli_edit',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#modal_edit').modal('show');
+                    $('#modal-title-edit').text('Edit Data Kategori FaQ');
+                    $('#id_edit').val(data.id);
+                    $('#faqs_categories_edit').val(data.category_id).trigger('change');
+                    $('#question_edit').val(data.question);
+                    CKEDITOR.instances['answer_edit'].setData(data.answer);
+                    $('#update').text('Simpan Perubahan');
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+        }
+
+        // Action Update
+        $(document).ready(function() {
+            $('#form-update').submit(function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $('#modal_edit').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    // url: "/admin/setting/faq/user/faq_user_pembeli_update", // answer masih ngebugs karena update datanya masih null
+                    url: "#",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            toastr.success(response.message);
+                            $('#tableFaQ').DataTable().ajax.reload();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                })
+            })
+        });
+
+        function deleteCat(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: "Anda Ingin Menghapus Data FaQ ini ?",
+                icon: 'warning',
+                cancelButtonText: "Batal",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Ya, saya yakin!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/setting/faq/user/faq_user_pembeli_delete',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id : id
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                toastr.success(response.message);
+                                $('#tableFaQ').DataTable().ajax.reload();
+                            } else {
+                                toastr.error(response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        }
+                    })
+                }
+            })
+        }
+    </script>
 @endsection

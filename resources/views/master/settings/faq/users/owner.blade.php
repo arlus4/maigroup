@@ -194,7 +194,7 @@
             $('#tableFaQ').DataTable({
                 processing: true,
                 serverSide: false,
-                ajax: "/admin/setting/faq/categories/get_data_faq_user_owner",
+                ajax: "/admin/setting/faq/user/get_data_faq_user_owner",
                 columns: [
                     { data: "category_name" },
                     { data: "question" },
@@ -235,7 +235,7 @@
         function detailCat(id) {
             $.ajax({
                 type: 'GET',
-                url: '/admin/setting/faq/categories/faq_user_owner_edit',
+                url: '/admin/setting/faq/user/faq_user_owner_edit',
                 data: {
                     id: id
                 },
@@ -255,7 +255,7 @@
         function editCat(id) {
             $.ajax({
                 type: 'GET',
-                url: '/admin/setting/faq/categories/faq_user_owner_edit',
+                url: '/admin/setting/faq/user/faq_user_owner_edit',
                 data: {
                     id: id
                 },
@@ -282,7 +282,7 @@
                 $('#modal_edit').modal('hide');
                 $.ajax({
                     type: 'POST',
-                    // url: "/admin/setting/faq/categories/faq_user_owner_update", // answer masih ngebugs karena update datanya masih null
+                    // url: "/admin/setting/faq/user/faq_user_owner_update", // answer masih ngebugs karena update datanya masih null
                     url: "#",
                     data: formData,
                     contentType: false,
@@ -316,7 +316,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'POST',
-                        url: '/admin/setting/faq/categories/faq_user_owner_delete',
+                        url: '/admin/setting/faq/user/faq_user_owner_delete',
                         data: {
                             _token: "{{ csrf_token() }}",
                             id : id
