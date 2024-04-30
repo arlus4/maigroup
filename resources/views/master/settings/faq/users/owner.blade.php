@@ -283,7 +283,7 @@
                 $.ajax({
                     type: 'POST',
                     // url: "/admin/setting/faq/categories/faq_user_owner_update", // answer masih ngebugs karena update datanya masih null
-                    url: "#";
+                    url: "#",
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -301,5 +301,40 @@
                 })
             })
         });
+
+        function deleteCat(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: "Anda Ingin Menghapus Data FaQ ini ?",
+                icon: 'warning',
+                cancelButtonText: "Batal",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Ya, saya yakin!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/setting/faq/categories/faq_user_owner_delete',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id : id
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                toastr.success(response.message);
+                                $('#tableFaQ').DataTable().ajax.reload();
+                            } else {
+                                toastr.error(response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        }
+                    })
+                }
+            })
+        }
     </script>
 @endsection

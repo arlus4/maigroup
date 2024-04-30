@@ -260,6 +260,36 @@ class Admin_FaQController extends Controller
     }
 
     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\FaQ  $faq
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_owner_delete(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            FaQ::find($request->id)->delete();
+
+            DB::commit(); // Commit the transaction
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data FaQ berhasil dihapus'
+            ]);
+
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $th->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
