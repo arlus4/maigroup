@@ -238,6 +238,18 @@ class Admin_FaQController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\FaQ  $faq
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_pembeli_update(Request $request)
+    {
+        dd($request->all());
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\FaQ  $faq
@@ -405,7 +417,128 @@ class Admin_FaQController extends Controller
      */
     public function faq_user_pegawai()
     {
-        return view('master.settings.faq.users.pegawai');
+        $categories = FaQ_Category::where('users_type', 4)->get();
+        return view('master.settings.faq.users.pegawai', [
+            'categories' => $categories
+        ]);
+    }
+
+    public function get_data_faq_user_pegawai()
+    {
+        $data = DB::table('faqs')
+            ->select(
+                'faqs.id',
+                'faqs.question',
+                'faqs.answer',
+                'faqs_categories.name as category_name',
+            )
+            ->leftJoin('faqs_categories', 'faqs.faqs_categories', 'faqs_categories.id')
+            ->where('faqs_categories.users_type', 4)
+            ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+
+        return response()->json($datas);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_pegawai_store(Request $request)
+    {
+        try {
+            $request->validate([
+                'faqs_categories' => 'required',
+                'question'        => 'required',
+                'answer'          => 'required',
+            ]);
+
+            DB::beginTransaction(); // Begin Transaction
+
+            FaQ::create([
+                'faqs_categories' => $request->faqs_categories,
+                'question'        => $request->question,
+                'answer'          => $request->answer,
+            ]);
+
+            DB::commit(); // Commit the transaction
+
+            return redirect()->back()->with('success', 'Berhasil Menambah FaQ Pegawai Baru');
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\FaQ  $faq
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_pegawai_edit(Request $request)
+    {
+        $data = DB::table('faqs')
+            ->select(
+                'faqs.id',
+                'faqs.question',
+                'faqs.answer',
+                'faqs_categories.name as category_name',
+                'faqs_categories.id as category_id',
+            )
+            ->leftJoin('faqs_categories', 'faqs.faqs_categories', 'faqs_categories.id')
+            ->where('faqs.id', $request->id)
+            ->first();
+
+        return response()->json($data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\FaQ  $faq
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_pegawai_update(Request $request)
+    {
+        dd($request->all());
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\FaQ  $faq
+     * @return \Illuminate\Http\Response
+     */
+    public function faq_user_pegawai_delete(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            FaQ::find($request->id)->delete();
+
+            DB::commit(); // Commit the transaction
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data FaQ berhasil dihapus'
+            ]);
+
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $th->getMessage()
+            ], 500);
+        }
     }
 
 

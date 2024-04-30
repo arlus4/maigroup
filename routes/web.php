@@ -164,6 +164,11 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/setting/faq/user/faq_user_owner_delete', [Admin_FaQController::class, 'faq_user_owner_delete'])->name('admin_faq_user_owner_delete');
         //Setting-FaQ-Pegawai
         Route::get('/setting/faq/user/pegawai', [Admin_FaQController::class, 'faq_user_pegawai'])->name('admin_faq_user_pegawai');
+        Route::get('/setting/faq/user/get_data_faq_user_pegawai', [Admin_FaQController::class, 'get_data_faq_user_pegawai']);
+        Route::post('/setting/faq/user/faq_user_pegawai_store', [Admin_FaQController::class, 'faq_user_pegawai_store'])->name('admin_faq_user_pegawai_store');
+        Route::get('/setting/faq/user/faq_user_pegawai_edit', [Admin_FaQController::class, 'faq_user_pegawai_edit'])->name('admin_faq_user_pegawai_edit');
+        Route::post('/setting/faq/user/faq_user_pegawai_update', [Admin_FaQController::class, 'faq_user_pegawai_update'])->name('admin_faq_user_pegawai_update');
+        Route::post('/setting/faq/user/faq_user_pegawai_delete', [Admin_FaQController::class, 'faq_user_pegawai_delete'])->name('admin_faq_user_pegawai_delete');
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');

@@ -56,7 +56,7 @@
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-100px text-dark">Kategori</th>
-                                <th class="min-w-100px text-dark">User</th>
+                                <th class="min-w-100px text-dark">Pertanyaan</th>
                                 <th class="min-w-100px text-dark">Action</th>
                             </tr>
                         </thead>
