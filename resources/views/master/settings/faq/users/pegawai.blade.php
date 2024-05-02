@@ -100,6 +100,18 @@
                                     <textarea name="answer" id="answer"></textarea>
                                     <div class="text-muted fs-7" style="color: #31353B!important;">Pastikan jawaban memuat penjelasan yang jelas.</div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="padding-bottom: 2%">
+                                        <label class="fs-6 fw-semibold mb-2">Attach Image</label>
+                                        <input type="file" class="form-control form-control-transparent" name="image" id="image" accept=".jpg, .jpeg, .png">
+                                        <span style="color: blue; font-size: 11px">Mohon untuk melampirkan gambar dengan format .jpg atau .png (jika diperlukan)</span> <br>
+                                        <img id="image_preview" src="#" alt="Preview" style="display: none; max-width: 100%; margin-top: 10px;">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="fw-semibold fs-6 mb-1">Url Video</label>
+                                    <input type="text" class="form-control url" name="url" id="url" />
+                                </div>
                             </div>
                        </div>
                     </div>
@@ -122,6 +134,10 @@
                         <div class="modal-body">
                             <div class="fs-2x text-gray-800 w-bolder mb-6" id="question_detail"></div>
                             <p class="mb-4 text-gray-600 fw-semibold fs-6 ps-10" id="answer_detail"></p>
+                            <!-- Menampilkan gambar -->
+                            <img id="image_detail" src="" alt="Image" style="max-width: 100%; display: none;">
+                            <!-- Menampilkan video YouTube -->
+                            <div id="video_detail"></div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
@@ -160,6 +176,19 @@
                                 <label class="form-label mt-5" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Jawaban</label>
                                 <textarea name="answer_edit" id="answer_edit"></textarea>
                                 <div class="text-muted fs-7" style="color: #31353B!important;">Pastikan jawaban memuat penjelasan yang jelas.</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="padding-bottom: 2%">
+                                    <label class="fs-6 fw-semibold mb-2">Attach Image</label>
+                                    <input type="file" class="form-control form-control-transparent" name="image" id="image_edit" accept=".jpg, .jpeg, .png">
+                                    <span style="color: blue; font-size: 11px">Mohon untuk melampirkan gambar dengan format .jpg atau .png (jika diperlukan)</span> <br>
+                                    <img id="image_preview_edit" src="#" alt="Preview" style="display: none; max-width: 100%; margin-top: 10px;">
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="fw-semibold fs-6 mb-1">Url Video</label>
+                                <input type="text" class="form-control url" name="url" id="url_edit" />
+                                <div id="video_preview_edit" style="margin-top: 10px;"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -245,6 +274,19 @@
                     $('#modal-title-detail').text('Kategori ' + data.category_name);
                     $('#question_detail').text(data.question);
                     $('#answer_detail').html(data.answer);
+                    // Menampilkan gambar
+                    if (data.image_path) {
+                        var imagePath = '/' + data.image_path;
+                        $('#image_detail').attr('src', imagePath).show();
+                    } else {
+                        $('#image_detail').hide();
+                    }
+                    // Menampilkan video YouTube
+                    if (data.url) {
+                        $('#video_detail').html(data.url).show();
+                    } else {
+                        $('#video_detail').hide();
+                    }
                 },
                 error: function (xhr, status, error) {
                     toastr.error("Terjadi kesalahan. Silakan coba lagi.");
@@ -266,6 +308,22 @@
                     $('#faqs_categories_edit').val(data.category_id).trigger('change');
                     $('#question_edit').val(data.question);
                     CKEDITOR.instances['answer_edit'].setData(data.answer);
+                    // Menampilkan gambar jika ada
+                    if (data.image) {
+                        var imagePath_edit = '/' + data.image_path;
+                        $('#image_preview_edit').attr('src', imagePath_edit);
+                        $('#image_preview_edit').css('display', 'block');
+                    } else {
+                        $('#image_preview_edit').attr('src', '#');
+                        $('#image_preview_edit').css('display', 'none');
+                    }
+                    
+                    // Menampilkan video YouTube jika ada
+                    if (data.url) {
+                        $('#video_preview_edit').html(data.url);
+                    } else {
+                        $('#video_preview_edit').html('');
+                    }
                     $('#update').text('Simpan Perubahan');
                 },
                 error: function (xhr, status, error) {
