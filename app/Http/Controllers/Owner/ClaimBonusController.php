@@ -78,7 +78,7 @@ class ClaimBonusController extends Controller
             
             DB::commit();
 
-            return response()->json(['message' => 'Prosedur berhasil dijalankan']);
+            return response()->json(['message' => 'Voucher Berhasil diClaim']);
 
         } catch (\Throwable $th) {
             DB::rollback();

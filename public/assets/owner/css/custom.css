@@ -207,3 +207,44 @@
     width: 160px;
     color: #525867!important;
 }
+.css-nkvw90sn{
+    padding-top: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 2px;
+    display: flex;
+}
+.css-nkvw90sn > div{
+    width: 100%;
+}
+.css-fwkjgh2{
+    margin: 0px 0px 20px;
+    line-height: 1;
+    text-align: left;
+}
+.css-fwkjgh2 span{
+    font-size: 12px;
+    color: #808080;
+    display: block;
+    margin: 0px 0px 6px;
+}
+.css-fwkjgh2 p{
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 600;
+    vertical-align: middle;
+    display: inline-block;
+    color: #212121;
+}
+.css-nmae2hsd{
+    display: block;
+    position: relative;
+    letter-spacing: 0px;
+    color: #212121;
+    text-decoration: initial;
+    font-size: 0.857143rem;
+    line-height: 1.4;
+    margin: 0px;
+    font-weight: 600;
+    padding-right: 10px;
+}

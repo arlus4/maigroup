@@ -8,6 +8,7 @@
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/bootsnav.css" >
         <link rel="stylesheet" href="assets/css/style.css">
@@ -39,6 +40,9 @@
                         <div class="carousel-item">
                             <img src="{{ asset('assets/images/bg_mobile_2.png') }}" class="d-block w-100">
                         </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('assets/images/bg_mobile_3.png') }}" class="d-block w-100">
+                        </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -51,8 +55,8 @@
                 </div>
             </div>
 
-            <div class="px-4 py-5" style="background: linear-gradient(68deg,rgba(1,168,196,.15) -1.82%,rgba(251,254,127,.2) 106.59%)">
-                <span style="color: #293237">"Selamat Datang Pada Sebuah Terobosan Baru Dalam Es Teh Yang Menyajikan Rasa Memukau Dan Menghargai Setiap Tegukan Dengan Program Loyalty Eksklusif Juga Manfaat Istimewa Pada Setiap Keanggotaan Mitra. Rasakan Pengalaman Es Teh Yang Tak Tertandingi Dan Jadilah Bagian Dari Revolusi Teh Anak Negeri!"</span>
+            <div class="px-4 py-5">
+                <span style="font-size: 14px;color: #293237">"Selamat Datang Pada Sebuah Terobosan Baru Dalam Es Teh Yang Menyajikan Rasa Memukau Dan Menghargai Setiap Tegukan Dengan Program Loyalty Eksklusif Juga Manfaat Istimewa Pada Setiap Keanggotaan Mitra. Rasakan Pengalaman Es Teh Yang Tak Tertandingi Dan Jadilah Bagian Dari Revolusi Teh Anak Negeri!"</span>
             </div>
         </section>
 
@@ -113,7 +117,7 @@
             </div>
         </section>
 
-        <section class="mobile-hidden" style="margin: 0 60px">
+        <section class="mobile-hidden" style="margin: 0 60px;">
             <div class="model-search-content">
                 <div class="row">
                     <div class="col-md-12">
@@ -137,10 +141,33 @@
                             <h3 class="css-cjdkja">Varian Toko Seru Nusantara</h3>
                         </div>
                     </div>
+                    <div class="col-md-5" style="padding-left: 80px;">
+                        <img width="300" height="200" src="{{ asset('assets/images/banner_body_1.png') }}">
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <img style="width: 400px; height: 390px;" src="{{ asset('assets/images/banner_body_2.png') }}">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="css-fj2kjdm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tristique pretium ligula, in mollis tellus ultrices vitae. Quisque iaculis condimentum turpis a ultricies. In nisl dolor, condimentum in gravida id, laoreet eget dui. Donec eu mollis turpis, at gravida quam. Curabitur accumsan, urna hendrerit tristique aliquet, mauris urna aliquam lacus, vel ullamcorper turpis sem ac turpis. Aliquam interdum lobortis viverra. Sed eget faucibus ex. </div>
+                    </div>
+                </div>
+        </section>
+
+
+        <section class="mobile-hidden sec-menu" style="padding:0px!important;margin: 0px;padding-bottom: 0px;">
+            <div class="css-po2jsm" style="margin: 0 60px;">
+                <div class="css-hjsa2js">
+                    <h3 class="css-cjdkja"><span style="color: #155724">Varian</span> MaiTea Nusantara</h3>
+                </div>
+            </div>
+            <div class="css-dcnk23j">
+                <div class="css-fnk2skj css-vkn9jca">
                     <div class="css-diop1ms">
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_1.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/honey_cup_2.png') }}">
                             </div>
                             <div class="css-kanan-text">
                                 <h4>Toko Seru Leci</h4>
@@ -148,15 +175,16 @@
                         </div>
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_2.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/lychee_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Taro</h4>
+                                <h4>Lychee <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_3.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/lemon_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
                                 <h4>Toko Seru Lemon</h4>
@@ -164,7 +192,7 @@
                         </div>
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_4.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/strawberry_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
                                 <h4>Toko Seru Original</h4>
@@ -172,15 +200,16 @@
                         </div>
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_5.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/manggo_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Milo Original</h4>
+                                <h4>Manggo <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_6.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/greentea_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
                                 <h4>Toko Seru Matcha</h4>
@@ -188,24 +217,33 @@
                         </div>
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_7.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/milktea_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Thai Tea</h4>
+                                <h4>Milk <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
                             <div class="css-lojd1h">
-                                <img class="css-menu-img" src="{{ asset('assets/images/teh_8.png') }}">
+                                <img class="css-menu-img" src="{{ asset('assets/images/thai_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Red Velvet</h4>
-                                <p>Es Teh dengan Rasa Red Velvet bertaburkan cream cheese yang asik</p>
+                                <h4>Thai <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section class="mobile-hidden">
+            <img src="{{ asset('assets/images/bg_body_3.png') }}" alt="">
+        </section>
+
+        <section class="mobile-hidden">
+            <img src="{{ asset('assets/images/bg_body_4.png') }}" alt="">
         </section>
 
         <!-- Awal Bagian Mobile Menu -->
@@ -219,14 +257,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="css-hjsk2d">
-                    <div class="css-bg-a"></div>
-                    <div class="css-fbkd4js">
-                        <div class="css-dqk2jsa"></div>
-                        <div class="css-ryqan12">
-                            <picture class="css-pict-mobile">
-                                <img src="assets/images/bg_mobile.png">
-                            </picture>
+                <div class="css-88fj2na">
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/bg_pinggir_1.png') }}">
                         </div>
                         <div class="css-fdn2kns"> <!-- 1 -->
                             <div class="css-jfk2nsa">
@@ -317,6 +352,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="swiper-pagination" style="padding-bottom: 20px;"></div>
                 </div>
             </div>
         </div>
@@ -567,7 +603,7 @@
 
         <!-- Akhir Bagian Mobile Menu -->
 
-        <section class="service css-cdn2osa" style="padding: 0px;">
+        <!-- <section class="service css-cdn2osa" style="padding: 0px;">
             <div class="css-dcnk23j">
                 <div class="row">
                     <div class="col-md-6 css-scnk2n">
@@ -579,9 +615,9 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
-        <section class="paketMitra css-doqn24z" style="padding: 0px;">
+        <!-- <section class="paketMitra css-doqn24z" style="padding: 0px;">
             <div class="css-cnk32ns">
                 <div class="css-dfnn2ka">
                     <div class="css-tes-header" style="width: 100%;">
@@ -821,7 +857,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <section class="testimoni css-dad09am" style="padding: 0px;">
             <div class="css-cnk32ns">
@@ -835,42 +871,73 @@
                 <div class="row">
                     <div class="col-md-3 css-margin">
                         <div class="css-cnka2he">
+                            <h3 style="color: #212121; font-weight: 700; font-size: 25px;">Doddy Prayogo</h3>
+                            <hr class="m-0" style="border-top: 2px solid #146600;">
+                            <div class="css-fnk2kjd">Customer</div>
                             <div class="css-fjl2js">
-                                <img src="{{ asset('assets/images/c1.png') }}">
+                                <img class="rounded-circle" src="{{ asset('assets/images/dodi.png') }}">
                             </div>
-                            <h5>Om Brewok</h5>
-                            <h6 style="font-family: sans-serif">Pembisnis</h6>
-                            <p style="color:#333;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ea autem et exercitationem a tempore ipsa praesentium, voluptatem rerum assumenda perspiciatis.</p>
+                            <div class="css-wnk3ms" style="border-radius: 10px;">
+                                <p class="mt-0 text-white p-3">"Kalian semua harus coba WAJIB, ini gue ga bokis rasanya seger."</p>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 css-margin">
                         <div class="css-cnka2he">
+                            <h3 style="color: #212121; font-weight: 700; font-size: 25px;">Deddy Cobuzier</h3>
+                            <hr class="m-0" style="border-top: 2px solid #146600;">
+                            <div class="css-fnk2kjd">Customer</div>
                             <div class="css-fjl2js">
-                                <img src="{{ asset('assets/images/c2.png') }}">
+                                <img class="rounded-circle" src="{{ asset('assets/images/dedi.png') }}">
                             </div>
-                            <h5>Malika</h5>
-                            <h6 style="font-family: sans-serif">Wirausaha</h6>
-                            <p style="color:#333;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ea autem et exercitationem a tempore ipsa praesentium, voluptatem rerum assumenda perspiciatis.</p>
+                            <div class="css-wnk3ms" style="border-radius: 10px;">
+                                <p class="mt-0 text-white p-3">"Kalian semua harus coba WAJIB, ini gue ga bokis rasanya seger."</p>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 css-margin">
                         <div class="css-cnka2he">
+                            <h3 style="color: #212121; font-weight: 700; font-size: 25px;">Raditya Dika</h3>
+                            <hr class="m-0" style="border-top: 2px solid #146600;">
+                            <div class="css-fnk2kjd">Customer</div>
                             <div class="css-fjl2js">
-                                <img src="{{ asset('assets/images/c3.png') }}">
+                                <img class="rounded-circle" src="{{ asset('assets/images/radit.png') }}">
                             </div>
-                            <h5>Usup</h5>
-                            <h6 style="font-family: sans-serif">Wirausaha</h6>
-                            <p style="color:#333;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ea autem et exercitationem a tempore ipsa praesentium, voluptatem rerum assumenda perspiciatis.</p>
+                            <div class="css-wnk3ms" style="border-radius: 10px;">
+                                <p class="mt-0 text-white p-3">"MaiTea adalah minuman teh yang selalu gue sarankan tiap saat."</p>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 css-margin">
                         <div class="css-cnka2he">
+                            <h3 style="color: #212121; font-weight: 700; font-size: 25px;">Anisa Steviani</h3>
+                            <hr class="m-0" style="border-top: 2px solid #146600;">
+                            <div class="css-fnk2kjd">Mitra Bogor</div>
                             <div class="css-fjl2js">
-                                <img src="{{ asset('assets/images/radit.png') }}">
+                                <img class="rounded-circle" src="{{ asset('assets/images/anisa.png') }}">
                             </div>
-                            <h5>Radit</h5>
-                            <h6 style="font-family: sans-serif">Artis</h6>
-                            <p style="color:#333;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ea autem et exercitationem a tempore ipsa praesentium, voluptatem rerum assumenda perspiciatis.</p>
+                            <div class="css-wnk3ms" style="border-radius: 10px;">
+                                <p class="mt-0 text-white p-3">"Aku sudah jadi Mitra MaiTea sejak launching hingga sekarang."</p>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                                <i class="fas fa-star" style="color: #ffe234;"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -878,7 +945,7 @@
         </section>
 
         <section id="content">
-            <div class="css-dajk2js">
+            <div class="css-dajk2js mt-4">
                 <h3 class="css-cjdkja" style="margin-bottom: 20px;text-align: center;">FAQ (Frequently Asked Questions)</h3>
                 <div class="faq-list">
                     <ul id="accordion" class="accordion-container">
@@ -941,38 +1008,131 @@
             </div>
         </section>
 
+        <section class="css-dahk1nbs css-footer" style="margin-top: 15px;">
+            <div class="css-fio833na">
+                <div class="footer-content">
+                    <div class="footer-content-top">
+                        <div class="css-sec-top">
+                            <div class="css-alamat">
+                                <div class="css-fwkn99na">
+                                    <a href="">
+                                        <img style="width: 150px; height: 95px;" src="{{ asset('assets/images/maitea.png') }}">
+                                    </a>
+                                </div>
+                                <div class="css-fjkw9nw">
+                                    <p class="text-dark css-fji09njs mb-2">MAITEA NUSANTARA | MAIAPPS</p>
+                                    <p class="text-dark css-fji09njs" style="line-height: 15px;font-weight: 400;">Jl Villa Bogor Indah 5 Cluster Nuri Blok CB 2 No. 5, Ciparigi, Kota Bogor, Jawa Barat 16170</p>
+                                </div>
+                            </div>
+                            <p class="text-dark css-fji09njs" style="margin-bottom: 1.25rem;">Coba GRATIS Aplikasi MaiApps</p>
+                            <!-- <div class="css-ionf77fb"> -->
+                                <!-- <div style="background: #000; border: 1px solid #fff; border-radius: 8px;"> -->
+                                    <img style="width: 170px; height: 50px;" src="{{ asset('assets/images/google_play.png') }}" alt="">
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="footer-content-bottom">
+                        <div class="text-center">
+                            <p class="text-dark css-fji09njs" style="margin-bottom: 1.25rem;">Ikuti Kami :</p>
+                            <div class="text-center">
+                                <div style="display: inline-flex">
+                                    <a href="#" style="margin: 0.25rem;">
+                                        <img src="{{ asset('assets/images/ic_ig.svg') }}" alt="">
+                                    </a>
+                                    <a href="#" style="margin: 0.25rem;">
+                                        <img src="{{ asset('assets/images/ic_tt.svg') }}" alt="">
+                                    </a>
+                                    <a href="#" style="margin: 0.25rem;">
+                                        <img src="{{ asset('assets/images/ic_fb.svg') }}" alt="">
+                                    </a>
+                                    <a href="#" style="margin: 0.25rem;">
+                                        <img src="{{ asset('assets/images/ic_yt.svg') }}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-year">
+                    <p class="text-dark text-center css-fji09njs">All Right Reserved &copy; Toko Indonesia Seru 2023</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mobile-hidden">
+            <div class="css-ehkd3ka">
+                <div class="d-flex justify-content-between">
+                    <img class="img-fluid" style="width: 280px" src="{{ asset('assets/images/banner_body_1.png') }}" alt="">
+                    <div class="css-git4knd">
+                        <span style="font-size: 20px;">MaiTea Nusantara | MaiApps</span><br><br>
+                        Villa Bogor Indah 5 Cluster Nuri<br>
+                        Blok CB 2 No. 5<br>
+                        Bogor - Indonesia<br><br>
+                        support@tokoseru.com
+                    </div>
+                    <div class="css-git4knd" style="padding-left: 0px;">
+                        Follow Us :<br><br>
+                        <div class="d-flex align-items-center">
+                            <img class="mr-2" width="30" src="{{ asset('assets/images/ic_ig.png') }}">
+                            <img class="mr-2" width="30" src="{{ asset('assets/images/ic_tt.png') }}">
+                            <img class="mr-2" width="30" src="{{ asset('assets/images/ic_fb.png') }}">
+                            <img class="mr-2" width="30" src="{{ asset('assets/images/ic_yt.png') }}">
+                        </div>
+                        <div class="text-right css-git4knd" style="padding-left: 0px;">
+                            <div>Privacy Policy</div>
+                            <div>Terms and Conditions</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right text-white css-git4knd" style="margin-bottom: 30px;padding-left: 0px;padding-top: 70px;">
+                    <div style="float: right;width: 12.5%;border: 1px solid #fff"></div>
+                    <div style="padding-top: 10px; padding-bottom: 15px">All Right Reserved &copy; Toko Indonesia Seru 2023</div>
+                </div>
+            </div>
+        </section>
+
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="assets/js/jquery.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         
         <script>
-           $(function() {
-                var Accordion = function(el, multiple) {
-                    this.el = el || {};
-                    this.multiple = multiple || false;
-
-                    var links = this.el.find('.article-title');
-                    links.on('click', {
-                        el: this.el,
-                        multiple: this.multiple
-                    }, this.dropdown)
-                }
-
-                Accordion.prototype.dropdown = function(e) {
-                    var $el = e.data.el;
-                    $this = $(this),
-                        $next = $this.next();
-
-                    $next.slideToggle();
-                    $this.parent().toggleClass('open');
-
-                    if (!e.data.multiple) {
-                        $el.find('.accordion-content').not($next).slideUp().parent().removeClass('open');
-                    };
-                }
-                var accordion = new Accordion($('.accordion-container'), false);
+            var swiper = new Swiper(".mySwiper", {
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
             });
+
+            $(function() {
+                    var Accordion = function(el, multiple) {
+                        this.el = el || {};
+                        this.multiple = multiple || false;
+
+                        var links = this.el.find('.article-title');
+                        links.on('click', {
+                            el: this.el,
+                            multiple: this.multiple
+                        }, this.dropdown)
+                    }
+
+                    Accordion.prototype.dropdown = function(e) {
+                        var $el = e.data.el;
+                        $this = $(this),
+                            $next = $this.next();
+
+                        $next.slideToggle();
+                        $this.parent().toggleClass('open');
+
+                        if (!e.data.multiple) {
+                            $el.find('.accordion-content').not($next).slideUp().parent().removeClass('open');
+                        };
+                    }
+                    var accordion = new Accordion($('.accordion-container'), false);
+                });
         </script>
     </body>
 </html>

@@ -38,16 +38,18 @@
 }
 .css-dcnk23j{
     /* margin-top: 100px; */
-    margin-top: 55px;
+    /* margin-top: 55px; */
     position: relative;
     display: block;
     width: 100%;
 }
 .css-fnk2skj{
-    margin: 24px 0px;
-    padding: 0px;
-    border-color: #d6dfeb;
-    background-color: #ffffff;
+    /* margin: 24px 0px; */
+    margin-top: 24px;
+    /* padding: 0px; */
+    padding: 50px;
+    /* border-color: #d6dfeb;
+    background-color: #ffffff; */
     cursor: default;
     display: block;
     border-radius: 0px;
@@ -123,7 +125,8 @@
 }
 .css-kanan-text{
     padding-top: 6px;
-    margin-left: 70px;
+    padding-left: 100px;
+    /* margin-left: 70px; */
     position: relative;
     width: 100%;
 }
@@ -189,20 +192,30 @@
     width: 50px;
 }
 .css-cnka2he{
-    background-color: #fff;
-    box-shadow: 0 1px 6px 0 rgba(141,150,170,0.4);
+    background-color: #bed8b2;
+    /* box-shadow: 0 1px 6px 0 rgba(141,150,170,0.4); */
     border-radius: 8px;
     box-sizing: border-box;
-    height: 355px;
+    /* height: 355px; */
+    height: auto;
     margin: 0 20px 30px;
     padding: 30px 20px;
     text-align: center;
 }
+.css-wnk3ms{
+    padding: 50px 0px 15px 0px;
+    background-color: #146600;
+}
 .css-cnka2he .css-fjl2js{
     width: 74px;
     height: 74px;
-    position: relative;
+    position: absolute;
+    left: 110px;
+    top: 100px;
     margin: auto;
+}
+.css-fjl2js img{
+    border: 2px solid #146600;
 }
 .css-cnka2he h5{
     font-weight: 600;
@@ -334,13 +347,13 @@
     flex-shrink: 1;
 }
 .faq-list{
-    padding: 0 100px;
+    /* padding: 0 100px; */
 }
 .faq-list ul{
     padding: 0;
 }
 .faq-list li{
-    padding: 20px;
+    padding: 20px 15px 10px 25px;
 }
 .accordion-container {
     position: relative;
@@ -373,8 +386,8 @@
 
 #content {
     width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 47px;
+    padding-right: 53px;
     padding-bottom: 48px;
 }
 .content-entry{

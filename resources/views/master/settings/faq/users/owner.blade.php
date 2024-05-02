@@ -302,6 +302,7 @@
                     id: id
                 },
                 success: function(data) {
+                    console.log(data);
                     $('#modal_edit').modal('show');
                     $('#modal-title-edit').text('Edit Data Kategori FaQ');
                     $('#id_edit').val(data.id);
@@ -336,12 +337,17 @@
         $(document).ready(function() {
             $('#form-update').submit(function(e) {
                 e.preventDefault();
+
+                for (instance in CKEDITOR.instances) {
+                    CKEDITOR.instances[instance].updateElement();
+                }
+                
                 let formData = new FormData(this);
                 $('#modal_edit').modal('hide');
                 $.ajax({
                     type: 'POST',
-                    // url: "/admin/setting/faq/user/faq_user_owner_update", // answer masih ngebugs karena update datanya masih null
-                    url: "#",
+                    url: "/admin/setting/faq/user/faq_user_owner_update", // answer masih ngebugs karena update datanya masih null
+                    // url: "#",
                     data: formData,
                     contentType: false,
                     processData: false,
