@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use App\Models\FaQ;
+use App\Models\FaQ_Attach;
+use Illuminate\Support\Str;
 use App\Models\FaQ_Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\FaQ;
+use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Admin_FaQController extends Controller
@@ -198,11 +201,45 @@ class Admin_FaQController extends Controller
 
             DB::beginTransaction(); // Begin Transaction
 
-            FaQ::create([
+            $faq = FaQ::create([
                 'faqs_categories' => $request->faqs_categories,
                 'question'        => $request->question,
                 'answer'          => $request->answer,
+                'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
             ]);
+
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image'        => 'required|mimes:jpeg,png,jpg,gif',
+                ], [
+                    'image.mimes'  => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
+                ]);
+
+                // Store the uploaded image in storage/app/storage/image directory
+                $imageBrandName = Str::random(5) . '_' . $request->image->getClientOriginalName();
+
+                $request->image->storeAs('user_owner/image_faq/', $imageBrandName, 'public');
+                
+                // Generate the public URL of the stored image using storage:link
+                $imageBrandPath = 'storage/user_owner/image_faq/' . $imageBrandName;
+
+                FaQ_Attach::create([
+                    'faqs_id'         => $faq->id,
+                    'image'           => $imageBrandName,
+                    'image_path'      => $imageBrandPath,
+                    'url'             => $request->url,
+                    'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                    'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                ]);
+            } elseif ($request->url != null) {
+                FaQ_Attach::create([
+                    'faqs_id'         => $faq->id,
+                    'url'             => $request->url,
+                    'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                    'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                ]);
+            }
 
             DB::commit(); // Commit the transaction
 
@@ -229,8 +266,12 @@ class Admin_FaQController extends Controller
                 'faqs.answer',
                 'faqs_categories.name as category_name',
                 'faqs_categories.id as category_id',
+                'faqs_attaches.image',
+                'faqs_attaches.image_path',
+                'faqs_attaches.url'
             )
             ->leftJoin('faqs_categories', 'faqs.faqs_categories', 'faqs_categories.id')
+            ->leftJoin('faqs_attaches', 'faqs.id', 'faqs_attaches.faqs_id')
             ->where('faqs.id', $request->id)
             ->first();
 
@@ -260,7 +301,19 @@ class Admin_FaQController extends Controller
         try {
             DB::beginTransaction(); // Begin Transaction
 
-            FaQ::find($request->id)->delete();
+            $faq = FaQ::find($request->id);
+
+            // Hapus gambar terkait jika ada
+            $faqAttach = FaQ_Attach::where('faqs_id', $faq->id)->first();
+            if ($faqAttach && $faqAttach->image) {
+                Storage::disk('public')->delete('user_owner/image_faq/' . $faqAttach->image);
+            }
+    
+            // Hapus data FaQ_Attach terkait
+            FaQ_Attach::where('faqs_id', $faq->id)->delete();
+    
+            // Hapus data FaQ
+            $faq->delete();
 
             DB::commit(); // Commit the transaction
 
@@ -329,11 +382,45 @@ class Admin_FaQController extends Controller
 
             DB::beginTransaction(); // Begin Transaction
 
-            FaQ::create([
+            $faq = FaQ::create([
                 'faqs_categories' => $request->faqs_categories,
                 'question'        => $request->question,
                 'answer'          => $request->answer,
+                'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
             ]);
+
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image'        => 'required|mimes:jpeg,png,jpg,gif',
+                ], [
+                    'image.mimes'  => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
+                ]);
+
+                // Store the uploaded image in storage/app/storage/image directory
+                $imageBrandName = Str::random(5) . '_' . $request->image->getClientOriginalName();
+
+                $request->image->storeAs('user_owner/image_faq/', $imageBrandName, 'public');
+                
+                // Generate the public URL of the stored image using storage:link
+                $imageBrandPath = 'storage/user_owner/image_faq/' . $imageBrandName;
+
+                FaQ_Attach::create([
+                    'faqs_id'         => $faq->id,
+                    'image'           => $imageBrandName,
+                    'image_path'      => $imageBrandPath,
+                    'url'             => $request->url,
+                    'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                    'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                ]);
+            } elseif ($request->url != null) {
+                FaQ_Attach::create([
+                    'faqs_id'         => $faq->id,
+                    'url'             => $request->url,
+                    'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                    'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                ]);
+            }
 
             DB::commit(); // Commit the transaction
 
@@ -360,8 +447,12 @@ class Admin_FaQController extends Controller
                 'faqs.answer',
                 'faqs_categories.name as category_name',
                 'faqs_categories.id as category_id',
+                'faqs_attaches.image',
+                'faqs_attaches.image_path',
+                'faqs_attaches.url'
             )
             ->leftJoin('faqs_categories', 'faqs.faqs_categories', 'faqs_categories.id')
+            ->leftJoin('faqs_attaches', 'faqs.id', 'faqs_attaches.faqs_id')
             ->where('faqs.id', $request->id)
             ->first();
 
@@ -391,7 +482,19 @@ class Admin_FaQController extends Controller
         try {
             DB::beginTransaction(); // Begin Transaction
 
-            FaQ::find($request->id)->delete();
+            $faq = FaQ::find($request->id);
+
+            // Hapus gambar terkait jika ada
+            $faqAttach = FaQ_Attach::where('faqs_id', $faq->id)->first();
+            if ($faqAttach && $faqAttach->image) {
+                Storage::disk('public')->delete('user_owner/image_faq/' . $faqAttach->image);
+            }
+    
+            // Hapus data FaQ_Attach terkait
+            FaQ_Attach::where('faqs_id', $faq->id)->delete();
+    
+            // Hapus data FaQ
+            $faq->delete();
 
             DB::commit(); // Commit the transaction
 
@@ -460,11 +563,45 @@ class Admin_FaQController extends Controller
 
             DB::beginTransaction(); // Begin Transaction
 
-            FaQ::create([
+            $faq = FaQ::create([
                 'faqs_categories' => $request->faqs_categories,
                 'question'        => $request->question,
                 'answer'          => $request->answer,
+                'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
             ]);
+
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image'        => 'required|mimes:jpeg,png,jpg,gif',
+                ], [
+                    'image.mimes'  => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
+                ]);
+
+                // Store the uploaded image in storage/app/storage/image directory
+                $imageBrandName = Str::random(5) . '_' . $request->image->getClientOriginalName();
+
+                $request->image->storeAs('user_owner/image_faq/', $imageBrandName, 'public');
+                
+                // Generate the public URL of the stored image using storage:link
+                $imageBrandPath = 'storage/user_owner/image_faq/' . $imageBrandName;
+
+                FaQ_Attach::create([
+                    'faqs_id'         => $faq->id,
+                    'image'           => $imageBrandName,
+                    'image_path'      => $imageBrandPath,
+                    'url'             => $request->url,
+                    'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                    'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                ]);
+            } elseif ($request->url != null) {
+                FaQ_Attach::create([
+                    'faqs_id'         => $faq->id,
+                    'url'             => $request->url,
+                    'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                    'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                ]);
+            }
 
             DB::commit(); // Commit the transaction
 
@@ -491,8 +628,12 @@ class Admin_FaQController extends Controller
                 'faqs.answer',
                 'faqs_categories.name as category_name',
                 'faqs_categories.id as category_id',
+                'faqs_attaches.image',
+                'faqs_attaches.image_path',
+                'faqs_attaches.url'
             )
             ->leftJoin('faqs_categories', 'faqs.faqs_categories', 'faqs_categories.id')
+            ->leftJoin('faqs_attaches', 'faqs.id', 'faqs_attaches.faqs_id')
             ->where('faqs.id', $request->id)
             ->first();
 
@@ -522,7 +663,19 @@ class Admin_FaQController extends Controller
         try {
             DB::beginTransaction(); // Begin Transaction
 
-            FaQ::find($request->id)->delete();
+            $faq = FaQ::find($request->id);
+
+            // Hapus gambar terkait jika ada
+            $faqAttach = FaQ_Attach::where('faqs_id', $faq->id)->first();
+            if ($faqAttach && $faqAttach->image) {
+                Storage::disk('public')->delete('user_owner/image_faq/' . $faqAttach->image);
+            }
+    
+            // Hapus data FaQ_Attach terkait
+            FaQ_Attach::where('faqs_id', $faq->id)->delete();
+    
+            // Hapus data FaQ
+            $faq->delete();
 
             DB::commit(); // Commit the transaction
 

@@ -80,7 +80,7 @@
                     <div class="css-flj2ej">
                         <div class="css-fjkpo0ma">
                             <div class="css-wj23sk">
-                            <form action="{{ route('admin.admin_faq_user_owner_store') }}" method="POST">
+                            <form action="{{ route('admin.admin_faq_user_owner_store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label class="form-label required" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Tipe Kategori</label>
@@ -95,10 +95,22 @@
                                     <label class="required fw-semibold fs-6 mb-1">Pertanyaan</label>
                                     <input type="text" class="form-control question" name="question" id="question" required>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="padding-bottom: 2%">
                                     <label class="form-label mt-5" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Jawaban</label>
                                     <textarea name="answer" id="answer"></textarea>
                                     <div class="text-muted fs-7" style="color: #31353B!important;">Pastikan jawaban memuat penjelasan yang jelas.</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="padding-bottom: 2%">
+                                        <label class="fs-6 fw-semibold mb-2">Attach Image</label>
+                                        <input type="file" class="form-control form-control-transparent" name="image" id="image" accept=".jpg, .jpeg, .png">
+                                        <span style="color: blue; font-size: 11px">Mohon untuk melampirkan gambar dengan format .jpg atau .png (jika diperlukan)</span> <br>
+                                        <img id="image_preview" src="#" alt="Preview" style="display: none; max-width: 100%; margin-top: 10px;">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="fw-semibold fs-6 mb-1">Url Video</label>
+                                    <input type="text" class="form-control url" name="url" id="url" />
                                 </div>
                             </div>
                        </div>
@@ -122,6 +134,10 @@
                         <div class="modal-body">
                             <div class="fs-2x text-gray-800 w-bolder mb-6" id="question_detail"></div>
                             <p class="mb-4 text-gray-600 fw-semibold fs-6 ps-10" id="answer_detail"></p>
+                            <!-- Menampilkan gambar -->
+                            <img id="image_detail" src="" alt="Image" style="max-width: 100%; display: none;">
+                            <!-- Menampilkan video YouTube -->
+                            <div id="video_detail"></div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
@@ -245,6 +261,19 @@
                     $('#modal-title-detail').text('Kategori ' + data.category_name);
                     $('#question_detail').text(data.question);
                     $('#answer_detail').html(data.answer);
+                    // Menampilkan gambar
+                    if (data.image_path) {
+                        var imagePath = '/' + data.image_path;
+                        $('#image_detail').attr('src', imagePath).show();
+                    } else {
+                        $('#image_detail').hide();
+                    }
+                    // Menampilkan video YouTube
+                    if (data.url) {
+                        $('#video_detail').html(data.url).show();
+                    } else {
+                        $('#video_detail').hide();
+                    }
                 },
                 error: function (xhr, status, error) {
                     toastr.error("Terjadi kesalahan. Silakan coba lagi.");
@@ -336,5 +365,28 @@
                 }
             })
         }
+    </script>
+
+    <!-- Image Preview -->
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#image_preview').attr('src', e.target.result);
+                    $('#image_preview').css('display', 'block');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function() {
+            // Ketika input file berubah, panggil fungsi readURL
+            $('#image').change(function() {
+                readURL(this);
+            });
+        });
     </script>
 @endsection
