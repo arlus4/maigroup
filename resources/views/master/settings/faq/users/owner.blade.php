@@ -156,7 +156,7 @@
                             <h4 class="modal-title" id="modal-title-edit"></h4>
                         </div>
                         <div class="modal-body">
-                            <form action="#" id="form-update">
+                            <form action="#" id="form-update" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" class="form-control id" id="id_edit" readonly>
                             <div class="form-group mb-3">
@@ -346,8 +346,7 @@
                 $('#modal_edit').modal('hide');
                 $.ajax({
                     type: 'POST',
-                    url: "/admin/setting/faq/user/faq_user_owner_update", // answer masih ngebugs karena update datanya masih null
-                    // url: "#",
+                    url: "/admin/setting/faq/user/faq_user_owner_update",
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -357,6 +356,7 @@
                             $('#tableFaQ').DataTable().ajax.reload();
                         } else {
                             toastr.error(response.message);
+                            $('#tableFaQ').DataTable().ajax.reload();
                         }
                     },
                     error: function(xhr, status, error) {
@@ -421,6 +421,27 @@
             // Ketika input file berubah, panggil fungsi readURL
             $('#image').change(function() {
                 readURL(this);
+            });
+        });
+    </script>
+    <script>
+        function readURLEdit(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#image_preview_edit').attr('src', e.target.result);
+                    $('#image_preview_edit').css('display', 'block');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function() {
+            // Ketika input file berubah, panggil fungsi readURLEdit
+            $('#image_edit').change(function() {
+                readURLEdit(this);
             });
         });
     </script>

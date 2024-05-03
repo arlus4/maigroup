@@ -468,7 +468,109 @@ class Admin_FaQController extends Controller
      */
     public function faq_user_owner_update(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+
+        try {
+            $request->validate([
+                'faqs_categories' => 'required',
+                'question'        => 'required',
+                'answer_edit'     => 'required',
+            ]);
+
+            DB::beginTransaction(); // Begin Transaction
+
+            $faq = FaQ::find($request->id);
+            $faqAttach = FaQ_Attach::where('faqs_id', $faq->id)->first();
+
+            if (!$faqAttach) {
+                if ($request->hasFile('image')) {
+                    $request->validate([
+                        'image'        => 'required|mimes:jpeg,png,jpg,gif',
+                    ], [
+                        'image.mimes'  => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
+                    ]);
+    
+                    // Store the uploaded image in storage/app/storage/image directory
+                    $imageBrandName = Str::random(5) . '_' . $request->image->getClientOriginalName();
+    
+                    $request->image->storeAs('user_owner/image_faq/', $imageBrandName, 'public');
+                    
+                    // Generate the public URL of the stored image using storage:link
+                    $imageBrandPath = 'storage/user_owner/image_faq/' . $imageBrandName;
+    
+                    FaQ_Attach::create([
+                        'faqs_id'         => $faq->id,
+                        'image'           => $imageBrandName,
+                        'image_path'      => $imageBrandPath,
+                        'url'             => $request->url,
+                        'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                        'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                    ]);
+                }
+
+                if ($request->url != null) {
+                    FaQ_Attach::create([
+                        'faqs_id'         => $faq->id,
+                        'url'             => $request->url,
+                        'created_at'      => Carbon::now()->timezone('Asia/Jakarta'),
+                        'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                    ]);
+                }
+            } else {
+                if ($request->hasFile('image')) {
+                    $request->validate([
+                        'image'        => 'required|mimes:jpeg,png,jpg,gif',
+                    ], [
+                        'image.mimes'  => 'Format file exception harus berupa JPG, JPEG, atau PNG.', // Pesan error
+                    ]);
+    
+                    // Hapus gambar terkait jika ada
+                    if ($faqAttach->image) {
+                        Storage::disk('public')->delete('user_owner/image_faq/' . $faqAttach->image);
+                    }
+    
+                    // Store the uploaded image in storage/app/storage/image directory
+                    $imageBrandName = Str::random(5) . '_' . $request->image->getClientOriginalName();
+    
+                    $request->image->storeAs('user_owner/image_faq/', $imageBrandName, 'public');
+                    
+                    // Generate the public URL of the stored image using storage:link
+                    $imageBrandPath = 'storage/user_owner/image_faq/' . $imageBrandName;
+                } else {
+                    $imageBrandName = $faqAttach->image;
+                    $imageBrandPath = $faqAttach->image_path;
+                }
+    
+                if ($request->url != null) {
+                    $url = $request->url;
+                } else {
+                    $url = $faqAttach->url;
+                }
+                
+                FaQ_Attach::where('faqs_id', $faq->id)->update([
+                    'image'           => $imageBrandName,
+                    'image_path'      => $imageBrandPath,
+                    'url'             => $url,
+                    'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+                ]);
+
+            }
+
+            $faq->update([
+                'faqs_categories' => $request->faqs_categories,
+                'question'        => $request->question,
+                'answer'          => $request->answer_edit,
+                'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            DB::commit(); // Commit the transaction
+
+            return redirect()->back()->with('success', 'Berhasil Mengubah FaQ Owner');
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
     }
 
     /**
