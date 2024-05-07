@@ -86,7 +86,6 @@ class Admin_UserOwnerController extends Controller
 
     public function approve_UserPending(Request $request)
     {
-        dd($request->all());
         $user_register = Users_Register::find($request->id);
         $brand_register = Brands_Register::where('user_id', $request->id)->first();
 
