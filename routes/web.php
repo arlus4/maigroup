@@ -100,11 +100,15 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/store-user-owner', [Admin_UserOwnerController::class, 'store'])->name('admin_store_user_owner');
         Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
         Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
+        Route::get('/user-pending', [Admin_UserOwnerController::class, 'index_userPending'])->name('admin_user_pending');
+        Route::post('/approve-user-pending', [Admin_UserOwnerController::class, 'approve_UserPending'])->name('admin_approve_user_pending');
 
         // utilitas
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
         Route::get('/brandSlug', [Admin_UserOwnerController::class, 'brandSlug']);
         Route::get('/get_data_user_owner', [Admin_UserOwnerController::class, 'getDataUserOwner']);
+        Route::get('/get_data_user_pending', [Admin_UserOwnerController::class, 'getDataPending']);
+        Route::get('/get_data_detail_user_pending', [Admin_UserOwnerController::class, 'getDataDetailUserPending']);
         Route::get('/get_data_brand_owner/{username}', [Admin_UserOwnerController::class, 'getDataBrandOwner']);
         Route::get('/validateNoHp', [Admin_UserOwnerController::class, 'validateNoHp']);
         Route::get('/validate_Edit_NoHp', [Admin_UserOwnerController::class, 'validate_Edit_NoHp']);
@@ -169,6 +173,11 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/setting/faq/user/faq_user_pegawai_edit', [Admin_FaQController::class, 'faq_user_pegawai_edit'])->name('admin_faq_user_pegawai_edit');
         Route::post('/setting/faq/user/faq_user_pegawai_update', [Admin_FaQController::class, 'faq_user_pegawai_update'])->name('admin_faq_user_pegawai_update');
         Route::post('/setting/faq/user/faq_user_pegawai_delete', [Admin_FaQController::class, 'faq_user_pegawai_delete'])->name('admin_faq_user_pegawai_delete');
+        //Setting-Bank
+        Route::get('/setting/bank', [Admin_BankController::class, 'index'])->name('admin_bank');
+        Route::post('/storeUpdate_bank', [Admin_BankController::class, 'storeOrUpdate'])->name('admin_store_update_bank');
+        Route::get('/edit_bank', [Admin_BankController::class, 'edit'])->name('admin_edit_bank');
+        Route::post('/destroy_bank', [Admin_BankController::class, 'destroy'])->name('admin_destroy_bank');
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
@@ -207,12 +216,6 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/artikel/update_artikel/{artikel}', [Admin_ArtikelController::class, 'update'])->name('admin_update_artikel');
         Route::post('/artikel/destroy_artikel/{artikel}', [Admin_ArtikelController::class, 'destroy'])->name('admin_destroy_artikel');
         Route::post('/artikel/destroy_image_artikel/{artikel_image}', [Admin_ArtikelController::class, 'destroy_image'])->name('admin_destroy_image_artikel');
-
-        //Bank
-        Route::get('/bank', [Admin_BankController::class, 'index'])->name('admin_bank');
-        Route::post('/storeUpdate_bank', [Admin_BankController::class, 'storeOrUpdate'])->name('admin_store_update_bank');
-        Route::get('/edit_bank', [Admin_BankController::class, 'edit'])->name('admin_edit_bank');
-        Route::post('/destroy_bank', [Admin_BankController::class, 'destroy'])->name('admin_destroy_bank');
 
         // Report
         Route::get('/report_invoice', [Admin_ReportController::class, 'report_inovice'])->name('admin_report_invoice');

@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Brand_Category;
+use App\Models\Brands_Register;
+use App\Models\Users_Register;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -48,6 +50,133 @@ class Admin_UserOwnerController extends Controller
         ];
     
         return response()->json($datas);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_userPending() : View
+    {
+        return view('master.user-owner.user-pending.daftarUserPending');
+    }
+
+    public function getDataPending()
+    {
+        $users = Users_Register::select(
+            'id',
+            'name',
+            'email',
+            'no_hp',
+            'nomor_ktp',
+            'is_regis',
+            'created_at'
+        )
+        ->where('is_regis', 0)
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $users
+        ];
+    
+        return response()->json($datas);
+    }
+
+    public function approve_UserPending(Request $request)
+    {
+        dd($request->all());
+        $user_register = Users_Register::find($request->id);
+        $brand_register = Brands_Register::where('user_id', $request->id)->first();
+
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            $request->validate([
+                'username'      => 'required|unique:users_login',
+                'password'      => 'required',
+            ], [
+                'username.unique' => 'Username Sudah Digunakan',
+            ]);
+
+            $storeUser = User::create([
+                'users_type'   => 2,
+                'name'         => $user_register->name,
+                'username'     => $request->username,
+                'email'        => $user_register->email,
+                'password'     => Hash::make($request->password),
+                'no_hp'        => $user_register->no_hp,
+                'brand_code'   => str_pad(mt_rand(0, 9999999999), 10, "0", STR_PAD_LEFT),
+                'is_active'    => 1,
+                'created_at'   => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'   => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            Users_Detail::create([
+                'user_id'           => $storeUser->id,
+                'nomor_telfon'      => $user_register->no_hp,
+                'nomor_ktp'         => $user_register->nomor_ktp,
+                'tanggal_lahir'     => $user_register->tanggal_lahir,
+                'jenis_kelamin'     => $user_register->jenis_kelamin,
+                'kelurahan'         => $user_register->kelurahan,
+                'kecamatan'         => $user_register->kecamatan,
+                'kota_kabupaten'    => $user_register->kotkab,
+                'provinsi'          => $user_register->provinsi,
+                'kode_pos'          => $user_register->kode_pos,
+                'alamat_detail'     => $user_register->alamat_detail,
+                'created_at'        => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'        => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            Brand::create([
+                'user_id'             => $storeUser->id,
+                'brand_category_code' => $brand_register->brand_category_code,
+                'brand_code'          => $brand_register->brand_code,
+                'brand_name'          => $brand_register->brand_name,
+                'slug'                => $brand_register->slug,
+                'no_hp_brand'         => $user_register->no_hp,
+                'brand_description'   => $brand_register->brand_description,
+                'brand_image'         => $brand_register->brand_image,
+                'brand_image_path'    => $brand_register->brand_image_path,
+                'website'             => $brand_register->website,
+                'whatsapp'            => $brand_register->whatsapp,
+                'facebook'            => $brand_register->facebook,
+                'instagram'           => $brand_register->instagram,
+                'tiktok'              => $brand_register->tiktok,
+                'youtube'             => $brand_register->youtube,
+                'is_verified'         => 1,
+                'is_active'           => 1,
+                'created_at'          => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'          => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            ref_KuotaPoint::create([
+                'brand_code'   => $brand_register->brand_code,
+                'kuota_point'  => 0,
+                'update_date'  => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            $user_register->update([
+                'is_regis' => 1
+            ]);
+
+            $brand_register->update([
+                'is_regis' => 1
+            ]);
+
+            DB::commit(); // Commit the transaction
+        }catch (\Exception $e){
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+        return redirect()->back()->with('success', 'Owner berhasil diapprove');
+    }
+
+    public function getDataDetailUserPending(Request $request)
+    {
+        return response()->json(Users_Register::find($request->id));
     }
 
     /**

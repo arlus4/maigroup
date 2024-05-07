@@ -120,6 +120,30 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_owner') || Request::routeIs('admin.admin_order_pending') || Request::routeIs('admin.admin_tambah_order')) || Request::is('admin/order*') ? 'here show' : '' }}">
                                     <div class="menu-item">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="{{ route('admin.admin_tambah_user_owner') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Tambah Owner</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_user_pending') ? 'active' : '' }}" href="{{ route('admin.admin_user_pending') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Daftar Owner Pending</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="#">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Daftar Owner Rejected</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_brand_category') ? 'active' : '' }}" href="{{ route('admin.admin_brand_category') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
@@ -132,19 +156,12 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Daftar Owner</span>
+                                            <span class="menu-title">Daftar Owner Aktif</span>
                                         </a>
                                     </div>
-                                    {{-- <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="{{ route('admin.admin_tambah_user_owner') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Tambah Owner</span>
-                                        </a>
-                                    </div> --}}
                                 </div>
                             </div>
+
                             <div class="menu-item">
                                 <a class="menu-link {{ Request::routeIs('admin.admin_banner') || Request::routeIs('admin.admin_create_banner') || Request::routeIs('admin.admin_edit_banner') ? 'active' : '' }}" href="{{ route('admin.admin_banner') }}">
                                     <span class="menu-icon">
@@ -158,6 +175,7 @@
                                     <span class="menu-title">Banner Promo</span>
                                 </a>
                             </div>
+
                             {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="menu-link">
                                     <span class="menu-icon">
@@ -190,8 +208,9 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="menu-item">
+                            </div> --}}
+
+                            {{-- <div class="menu-item">
                                 <a class="menu-link {{ Request::routeIs('admin.admin_report_invoice') ? 'active' : '' }}" href="{{ route('admin.admin_report_invoice') }}">
                                     <span class="menu-icon">
                                         <span class="svg-icon svg-icon-2">
@@ -204,8 +223,9 @@
                                     </span>
                                     <span class="menu-title">Report Invoice</span>
                                 </a>
-                            </div>
+                            </div> --}}
 
+                            <!--begin:Artikel-->
                             <div class="menu-item">
                                 <a class="menu-link {{ Request::is('admin/artikel*') ? 'active' : '' }}" href="{{ route('admin.admin_artikel') }}">
                                     <span class="menu-icon">
@@ -219,20 +239,9 @@
                                     <span class="menu-title">News Artikel</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
-                                <a class="menu-link {{ Request::is('admin/bank*') ? 'active' : '' }}" href="{{ route('admin.admin_bank') }}">
-                                    <span class="menu-icon">
-                                        <span class="svg-icon svg-icon-2">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M22 7H2V11H22V7Z" fill="currentColor"></path>
-                                                <path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z" fill="currentColor"></path>
-                                            </svg>
-                                        </span>
-                                    </span>
-                                    <span class="menu-title">Bank Maigroup</span>
-                                </a>
-                            </div> --}}
-                            <!--begin:Menu item-->
+                            <!--begin:Artikel-->
+
+                            <!--begin:Setting-->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ Request::is('admin/setting*') ? 'here show' : '' }}">
                                 <!--begin:Menu link-->
                                 <span class="menu-link {{ Request::is('admin/setting*') ? 'active' : '' }}">
@@ -333,6 +342,18 @@
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
+                                        <a class="menu-link {{ Request::is('admin/setting/bank*') ? 'active' : '' }}" href="{{ route('admin.admin_bank') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Bank Toko Seru</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
                                         <a class="menu-link" href="#">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
@@ -345,7 +366,7 @@
                                 </div>
                                 <!--end:Menu sub-->
                             </div>
-                            <!--end:Menu item-->
+                            <!--end:Setting-->
                         </div>
                     </div>
                 </div>
