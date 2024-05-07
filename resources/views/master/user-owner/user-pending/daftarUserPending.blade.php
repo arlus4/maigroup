@@ -141,7 +141,7 @@
                         data: 'is_regis',
                         render: function(data, type, row) {
                             return `<div class="align-items-center d-flex">
-                                    <button type="button" class="btn btn-primary me-4" onclick="showModal()">Detail</button>
+                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = 'detail-user-pending/${row.id}'">Detail</button>
                                     <button type="button" class="btn btn-success me-4" onclick="approveUser(${row.id})">Approve</button>
                                     <button type="button" class="btn btn-danger" onclick="rejectUser(${row.id})">Reject</button>
                                 </div>`;

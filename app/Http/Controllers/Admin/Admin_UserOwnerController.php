@@ -84,6 +84,18 @@ class Admin_UserOwnerController extends Controller
         return response()->json($datas);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function detail_userPending(Users_Register $id): View
+    {
+        return view('master.user-owner.user-pending.detailUserPending', [
+            'user' => $id,
+        ]);
+    }
+
     public function approve_UserPending(Request $request)
     {
         $user_register = Users_Register::find($request->id);

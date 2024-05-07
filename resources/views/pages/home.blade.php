@@ -133,13 +133,11 @@
             </div>
         </section>
 
-        <section class="sec-menu" style="padding-bottom: 0px;">
-            <div class="css-dcnk23j">
-                <div class="css-fnk2skj">
-                    <div class="css-po2jsm">
-                        <div class="css-hjsa2js">
-                            <h3 class="css-cjdkja">Varian Toko Seru Nusantara</h3>
-                        </div>
+        <section class="mobile-hidden" style="margin: 0 60px; margin-top: 70px;">
+            <div class="css-fn4gnkak">
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <div class="css-fwnk4jd">Kini saat yang tepat bagi Anda untuk membangun bisnis yang mengutamakan kesetiaan pelanggan melalui kemitraan bersama Maitea Nusantara + MaiApps</div>
                     </div>
                     <div class="col-md-5" style="padding-left: 80px;">
                         <img width="300" height="200" src="{{ asset('assets/images/banner_body_1.png') }}">
@@ -170,7 +168,8 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/honey_cup_2.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Toko Seru Leci</h4>
+                                <h4>Honey <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -187,7 +186,8 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/lemon_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Toko Seru Lemon</h4>
+                                <h4>Lemon <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -195,7 +195,8 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/strawberry_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Toko Seru Original</h4>
+                                <h4>Strawberry <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -212,7 +213,8 @@
                                 <img class="css-menu-img" src="{{ asset('assets/images/greentea_cup_1.png') }}">
                             </div>
                             <div class="css-kanan-text">
-                                <h4>Toko Seru Matcha</h4>
+                                <h4>Greentea <span style="color: #155724">Tea</span></h4>
+                                <p style="font-weight: 500; font-size: 15px; color: #212121;">Rp 6000</p>
                             </div>
                         </div>
                         <div class="css-jk1hsk">
@@ -251,10 +253,7 @@
             <div class="css-posn1da">
                 <div class="css-coan1sn">
                     <div class="css-bvjhaqo" style="justify-content: space-between;">
-                        <h4 class="css-ndk2nsa mb-0">Varian Toko Seru Nusantara</h4>
-                        <div class="css-dank90a">
-                            <a href="#" class="css-lihat-semua">Lihat Semua</a>
-                        </div>
+                        <h4 class="css-ndk2nsa mb-0">Varian MaiTea Nusantara</h4>
                     </div>
                 </div>
                 <div class="css-88fj2na">
@@ -263,91 +262,128 @@
                             <span class="responsive css-i899jdl"></span>
                             <img class="css-fn22nd9a" src="{{ asset('assets/images/bg_pinggir_1.png') }}">
                         </div>
-                        <div class="css-fdn2kns"> <!-- 1 -->
-                            <div class="css-jfk2nsa">
-                                <div class="css-kljh2hs">
-                                    <div class="css-bnsn8am">
-                                        <div class="css-ghxb2na">
-                                            <a href="#">
-                                                <div class="css-dg2jsp">
-                                                    <span class="css-dnbm12n"></span>
-                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_8.png') }}">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="css-cv2ns0a">
-                                            <a href="#" class="css-dnc2nsp">
-                                                <div class="css-g2hs9nb">Rp 26.500</div>
-                                                <div class="css-g2hs9na">Red Velvet Toko Seru LARGE</div>
-                                            </a>
-                                        </div>
-                                    </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_1.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_2.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/bg_pinggir_2.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_3.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_4.png') }}">
+                        </div>
+                    </a>
+                </div>
+                <hr class="css-jarak-mobile m-0">
+                <div class="css-88fj2na">
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/bg_pinggir_3.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_5.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_6.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/bg_pinggir_4.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_7.png') }}">
+                        </div>
+                    </a>
+                    <a href="#" class="css-p78hg8j">
+                        <div class="css-op09wjn responsive">
+                            <span class="responsive css-i899jdl"></span>
+                            <img class="css-fn22nd9a" src="{{ asset('assets/images/cth_8.png') }}">
+                        </div>
+                    </a>
+                </div>
+                <hr class="css-jarak-mobile m-0">
+            </div>
+        </div>
+
+        <div class="css-dahk1nbs" style="padding: 0px!important;">
+            <img src="{{ asset('assets/images/bg_body_3.png') }}" alt="">
+        </div>
+        <div class="css-dahk1nbs" style="padding: 0px!important;">
+            <img src="{{ asset('assets/images/bg_body_4.png') }}" alt="">
+            <div style="background: #f6f6f6">
+                <div class="css-tes-header w-100">
+                    <h3 class="css-cjdkja text-center" style="padding-top: 50px;">Testimoni Mitra &amp; Customer <span>MaiTea</span></h3>
+                </div>
+                <div class="swiper mySwiper" style="padding-top: 130px; padding-bottom: 80px;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="css-jfwi09fn">
+                                <div class="css-j88hd2n">
+                                    <img class="css-po00nd2" src="{{ asset('assets/images/dodi.png') }}" alt="">
+                                </div>
+                                <div class="css-66ggb3b">
+                                    <p style="font-size: 16px; font-weight: 600; color: #212121;">Doddy Prayogo</p>
+                                    <hr class="mt-0 mb-0 p-0" style="margin-left: 25%;margin-right: 25%;width: 50%;border: 1px solid #146600;">
+                                    <p style="font-weight:600;color: #146600;">Customer</p>
+                                    <span style="color: #333">"Kalian semua harus coba WAJIB, ini gue ga bokis rasanya seger."</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="css-fdn2kns"> <!-- 1 -->
-                            <div class="css-jfk2nsa">
-                                <div class="css-kljh2hs">
-                                    <div class="css-bnsn8am">
-                                        <div class="css-ghxb2na">
-                                            <a href="#">
-                                                <div class="css-dg2jsp">
-                                                    <span class="css-dnbm12n"></span>
-                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_1.png') }}">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="css-cv2ns0a">
-                                            <a href="#" class="css-dnc2nsp">
-                                                <div class="css-g2hs9nb">Rp 25.000</div>
-                                                <div class="css-g2hs9na">Leci Toko Seru LARGE</div>
-                                            </a>
-                                        </div>
-                                    </div>
+                        <div class="swiper-slide">
+                            <div class="css-jfwi09fn">
+                                <div class="css-j88hd2n">
+                                    <img class="css-po00nd2" src="{{ asset('assets/images/dedi.png') }}" alt="">
+                                </div>
+                                <div class="css-66ggb3b">
+                                    <p style="font-size: 16px; font-weight: 600; color: #212121;">Deddy Cobuzier</p>
+                                    <hr class="mt-0 mb-0 p-0" style="margin-left: 25%;margin-right: 25%;width: 50%;border: 1px solid #146600;">
+                                    <p style="font-weight:600;color: #146600;">Customer</p>
+                                    <span style="color: #333;">"MaiTea adalah minuman teh yang selalu gue sarankan tiap saat."</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="css-fdn2kns"> <!-- 1 -->
-                            <div class="css-jfk2nsa">
-                                <div class="css-kljh2hs">
-                                    <div class="css-bnsn8am">
-                                        <div class="css-ghxb2na">
-                                            <a href="#">
-                                                <div class="css-dg2jsp">
-                                                    <span class="css-dnbm12n"></span>
-                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_3.png') }}">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="css-cv2ns0a">
-                                            <a href="#" class="css-dnc2nsp">
-                                                <div class="css-g2hs9nb">Rp 17.500</div>
-                                                <div class="css-g2hs9na">Lemon Toko Seru LARGE</div>
-                                            </a>
-                                        </div>
-                                    </div>
+                        <div class="swiper-slide">
+                            <div class="css-jfwi09fn">
+                                <div class="css-j88hd2n">
+                                    <img class="css-po00nd2" src="{{ asset('assets/images/anisa.png') }}" alt="">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="css-fdn2kns"> <!-- 1 -->
-                            <div class="css-jfk2nsa">
-                                <div class="css-kljh2hs">
-                                    <div class="css-bnsn8am">
-                                        <div class="css-ghxb2na">
-                                            <a href="#">
-                                                <div class="css-dg2jsp">
-                                                    <span class="css-dnbm12n"></span>
-                                                    <img class="css-rthjx2n" src="{{ asset('assets/images/teh_2.png') }}">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="css-cv2ns0a">
-                                            <a href="#" class="css-dnc2nsp">
-                                                <div class="css-g2hs9nb">Rp 22.500</div>
-                                                <div class="css-g2hs9na">Taro Toko Seru LARGE</div>
-                                            </a>
-                                        </div>
-                                    </div>
+                                <div class="css-66ggb3b">
+                                    <p style="font-size: 16px; font-weight: 600; color: #212121;">Anisa Steviani</p>
+                                    <hr class="mt-0 mb-0 p-0" style="margin-left: 25%;margin-right: 25%;width: 50%;border: 1px solid #146600;">
+                                    <p style="font-weight:600;color: #146600;">Mitra Bogor</p>
+                                    <span style="color: #333;">"Aku sudah jadi Mitra MaiTea sejak launching hingga sekarang."</span>
                                 </div>
                             </div>
                         </div>
@@ -357,514 +393,12 @@
             </div>
         </div>
 
-        <div class="css-gabung-mitra">
-            <div class="css-gj5js6a">
-                <div class="css-cnr9dm">
-                    <h4 class="css-ndk2nsa">Gabung Jadi Mitra Toko Seru</h4>
-                    <p class="css-djk9qna">Toko Seru Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
-                </div>
-                <div class="css-kld2jsh">
-                    <img src="{{ asset('assets/images/bg_benefit.png') }}">
-                </div>
-            </div>
-        </div>
-
-        <hr class="css-jarak-mobile">
-
-        <div class="css-paket-mitra">
-            <h4 class="css-ndk2nsa">Varian Paket Populer Toko Seru</h4>
-            <div class="css-chj2akm">
-                <div class="css-pages">
-                    <div class="css-bungkus-pages">
-                        <div class="css-bungkus-card card-a">
-                            <div class="css-bungkus-card-atas-a">
-                                <div class="css-bungkus-label">
-                                    <img src="assets/images/bintang.svg">
-                                    <p class="css-label-atas">Populer</p>
-                                </div>
-                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
-                                <picture>
-                                    <img class="css-img-paket" src="assets/images/paket_1.png">
-                                </picture>
-                            </div>
-                            <div class="css-bungkus-card-bawah">
-                                <div class="css-informasi">
-                                    <div class="css-informasi-b">
-                                        <p class="css-text-informasi-top">
-                                            <span>Spesial Paket Super Premium</span>
-                                        </p>
-                                        <div class="css-bungkus-harga">
-                                            <span class="css-harga-paket">Rp 3.700.000</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
-                                <ul class="css-paket-preview">
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <img src="assets/images/line.webp">
-                                            </picture>
-                                        </div>
-                                        <p>
-                                            <strong>85%</strong>
-                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="css-bungkus-card card-a">
-                            <div class="css-bungkus-card-atas-b">
-                                <div class="css-bungkus-label">
-                                    <img src="assets/images/bintang.svg">
-                                    <p class="css-label-atas">Populer</p>
-                                </div>
-                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
-                                <picture>
-                                    <img class="css-img-paket" src="assets/images/paket_1.png">
-                                </picture>
-                            </div>
-                            <div class="css-bungkus-card-bawah">
-                                <div class="css-informasi">
-                                    <div class="css-informasi-b">
-                                        <p class="css-text-informasi-top">
-                                            <span>Spesial Paket Super Premium</span>
-                                        </p>
-                                        <div class="css-bungkus-harga">
-                                            <span class="css-harga-paket">Rp 3.700.000</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
-                                <ul class="css-paket-preview">
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <img src="assets/images/line.webp">
-                                            </picture>
-                                        </div>
-                                        <p>
-                                            <strong>85%</strong>
-                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="css-bungkus-card card-a">
-                            <div class="css-bungkus-card-atas-c">
-                                <div class="css-bungkus-label">
-                                    <img src="assets/images/bintang.svg">
-                                    <p class="css-label-atas">Populer</p>
-                                </div>
-                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
-                                <picture>
-                                    <img class="css-img-paket" src="assets/images/paket_1.png">
-                                </picture>
-                            </div>
-                            <div class="css-bungkus-card-bawah">
-                                <div class="css-informasi">
-                                    <div class="css-informasi-b">
-                                        <p class="css-text-informasi-top">
-                                            <span>Spesial Paket Super Premium</span>
-                                        </p>
-                                        <div class="css-bungkus-harga">
-                                            <span class="css-harga-paket">Rp 3.700.000</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
-                                <ul class="css-paket-preview">
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <img src="assets/images/line.webp">
-                                            </picture>
-                                        </div>
-                                        <p>
-                                            <strong>85%</strong>
-                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="css-bungkus-card card-a">
-                            <div class="css-bungkus-card-atas-d">
-                                <div class="css-bungkus-label">
-                                    <img src="assets/images/bintang.svg">
-                                    <p class="css-label-atas">Populer</p>
-                                </div>
-                                <h5 class="css-text-sub-label">Paket Nusantara Dapat Anda Miliki Hanya Dengan 3 Jutaan, Termasuk Free Bahan Baku Hingga 200 Porsi</h5>
-                                <picture>
-                                    <img class="css-img-paket" src="assets/images/paket_1.png">
-                                </picture>
-                            </div>
-                            <div class="css-bungkus-card-bawah">
-                                <div class="css-informasi">
-                                    <div class="css-informasi-b">
-                                        <p class="css-text-informasi-top">
-                                            <span>Spesial Paket Super Premium</span>
-                                        </p>
-                                        <div class="css-bungkus-harga">
-                                            <span class="css-harga-paket">Rp 3.700.000</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#" class="css-href-beli">Gabung Sekarang</a>
-                                <ul class="css-paket-preview">
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <img src="assets/images/line.webp">
-                                            </picture>
-                                        </div>
-                                        <p>
-                                            <strong>85%</strong>
-                                            Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                    </li>
-                                    <li>
-                                        <div class="css-preview-icon">
-                                            <picture>
-                                                <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                            </picture>
-                                        </div>
-                                        <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr class="css-jarak-mobile">
-
-        <div></div>
-
-        <!-- Akhir Bagian Mobile Menu -->
-
-        <!-- <section class="service css-cdn2osa" style="padding: 0px;">
-            <div class="css-dcnk23j">
-                <div class="row">
-                    <div class="col-md-6 css-scnk2n">
-                        <h4 class="css-cjdkja">Gabung Jadi Mitra Toko Seru</h4>
-                        <p class="css-text-p">Toko Seru Nusantara kini sudah memiliki lebih dari 1000 mitra yang tersebar diseluruh wilayah Nusantara dan masih akan bertambah lagi serta lebih dari 1 Juta Cup Terjual setiap bulan nya.</p>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="{{ asset('assets/images/bg_benefit.png') }}">
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
-        <!-- <section class="paketMitra css-doqn24z" style="padding: 0px;">
-            <div class="css-cnk32ns">
-                <div class="css-dfnn2ka">
-                    <div class="css-tes-header" style="width: 100%;">
-                        <div>
-                            <h3 class="css-cjdkja">Varian Paket populer Toko Seru</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row css-margin">
-                    <div class="col-md-3 css-margin">
-                        <div class="d-flex">
-                            <div class="css-bungkus-card">
-                                <div class="css-bungkus-card-atas-a">
-                                    <div class="css-bungkus-label">
-                                        <img src="{{ asset('assets/images/bintang.svg') }}">
-                                        <p class="css-label-atas">Terpopuler</p>
-                                    </div>
-                                    <h5 class="css-text-sub-label">Paket Nusantara dapat Anda miliki hanya dengan 3 jutaan, termasuk Free bahan baku hingga 200 Porsi</h5>
-                                    <picture>
-                                        <img class="css-img-paket" src="{{ asset('assets/images/paket_1.png') }}">
-                                    </picture>
-                                </div>
-                                <div class="css-bungkus-card-bawah">
-                                    <div class="css-informasi">
-                                        <div class="css-informasi-b">
-                                            <p class="css-text-informasi-top">
-                                                <span>Spesial Paket Super Premium</span>
-                                            </p>
-                                            <div class="css-bungkus-harga">
-                                                <span class="css-harga-paket">
-                                                    Rp&nbsp;3.700.000
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="" class="css-href-beli">Gabung Sekarang</a>
-                                    <ul class="css-paket-preview">
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <img src="{{ asset('assets/images/line.webp') }}">
-                                                </picture>
-                                            </div>
-                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 css-margin">
-                        <div class="d-flex">
-                            <div class="css-bungkus-card">
-                                <div class="css-bungkus-card-atas-b">
-                                    <div class="css-bungkus-label">
-                                        <img src="{{ asset('assets/images/bintang.svg') }}">
-                                        <p class="css-label-atas">Terpopuler</p>
-                                    </div>
-                                    <h5 class="css-text-sub-label">Paket Super Premium dapat Anda miliki hanya dengan 3 jutaan, termasuk Free bahan baku hingga 200 Porsi</h5>
-                                    <picture>
-                                        <img class="css-img-paket" src="{{ asset('assets/images/paket_2.png') }}">
-                                    </picture>
-                                </div>
-                                <div class="css-bungkus-card-bawah">
-                                    <div class="css-informasi">
-                                        <div class="css-informasi-b">
-                                            <p class="css-text-informasi-top">
-                                                <span>Spesial Paket Super Premium</span>
-                                            </p>
-                                            <div class="css-bungkus-harga">
-                                                <span class="css-harga-paket">
-                                                    Rp&nbsp;5.500.000
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="" class="css-href-beli">Gabung Sekarang</a>
-                                    <ul class="css-paket-preview">
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <img src="{{ asset('assets/images/line.webp') }}">
-                                                </picture>
-                                            </div>
-                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 css-margin">
-                        <div class="d-flex">
-                            <div class="css-bungkus-card">
-                                <div class="css-bungkus-card-atas-c">
-                                    <div class="css-bungkus-label">
-                                        <img src="{{ asset('assets/images/bintang.svg') }}">
-                                        <p class="css-label-atas">Terpopuler</p>
-                                    </div>
-                                    <h5 class="css-text-sub-label">Paket Deluxe Star dapat Anda miliki hanya dengan 3 jutaan, termasuk Free bahan baku hingga 200 Porsi</h5>
-                                    <picture>
-                                        <img class="css-img-paket" src="{{ asset('assets/images/paket_3.png') }}">
-                                    </picture>
-                                </div>
-                                <div class="css-bungkus-card-bawah">
-                                    <div class="css-informasi">
-                                        <div class="css-informasi-b">
-                                            <p class="css-text-informasi-top">
-                                                <span>Spesial Paket Super Premium</span>
-                                            </p>
-                                            <div class="css-bungkus-harga">
-                                                <span class="css-harga-paket">
-                                                    Rp&nbsp;7.200.000
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="" class="css-href-beli">Gabung Sekarang</a>
-                                    <ul class="css-paket-preview">
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <img src="{{ asset('assets/images/line.webp') }}">
-                                                </picture>
-                                            </div>
-                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikkan bisnis teh mereka.</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 css-margin">
-                        <div class="d-flex">
-                            <div class="css-bungkus-card">
-                                <div class="css-bungkus-card-atas-d">
-                                    <div class="css-bungkus-label">
-                                        <img src="{{ asset('assets/images/bintang.svg') }}">
-                                        <p class="css-label-atas">Terpopuler</p>
-                                    </div>
-                                    <h5 class="css-text-sub-label">Paket Deluxe Star dapat Anda miliki hanya dengan 3 jutaan, termasuk Free bahan baku hingga 200 Porsi</h5>
-                                    <picture>
-                                        <img class="css-img-paket" src="{{ asset('assets/images/paket_4.png') }}">
-                                    </picture>
-                                </div>
-                                <div class="css-bungkus-card-bawah">
-                                    <div class="css-informasi">
-                                        <div class="css-informasi-b">
-                                            <p class="css-text-informasi-top">
-                                                <span>Spesial Paket Super Premium</span>
-                                            </p>
-                                            <div class="css-bungkus-harga">
-                                                <span class="css-harga-paket">
-                                                    Rp&nbsp;8.450.000
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="" class="css-href-beli">Gabung Sekarang</a>
-                                    <ul class="css-paket-preview">
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <img src="{{ asset('assets/images/line.webp') }}">
-                                                </picture>
-                                            </div>
-                                            <p><strong>85%</strong> Mitra Toko Seru Nusantara mengalami kenaikan bisnis teh mereka.</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+Cup Sealer</strong> mendapat keuntungan dengan gratis</p>
-                                        </li>
-                                        <li>
-                                            <div class="css-preview-icon">
-                                                <picture>
-                                                    <i style="color: #00bf71;" class="fas fa-check-circle"></i>
-                                                </picture>
-                                            </div>
-                                            <p><strong>+600 Porsi</strong> dan Booth lebih besar 120cm x 60cm x 80cm</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
         <section class="testimoni css-dad09am" style="padding: 0px;">
             <div class="css-cnk32ns">
                 <div class="css-dfnn2ka">
                     <div class="css-tes-header" style="width: 100%;">
                         <div>
-                            <h3 class="css-cjdkja" style="text-align: center!important;">Apa Kata Pengguna Mitra <span>Toko Seru?</span></h3>
+                            <h3 class="css-cjdkja" style="text-align: center!important;">Testimoni Mitra & Customer <span>MaiTea</span></h3>
                         </div>
                     </div>
                 </div>
