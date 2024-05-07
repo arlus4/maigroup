@@ -143,7 +143,7 @@
                             return `<div class="align-items-center d-flex">
                                     <button type="button" class="btn btn-primary me-4" onclick="showModal()">Detail</button>
                                     <button type="button" class="btn btn-success me-4" onclick="approveUser(${row.id})">Approve</button>
-                                    <button type="button" class="btn btn-danger" onclick="RejectUser(${row.id})">Reject</button>
+                                    <button type="button" class="btn btn-danger" onclick="rejectUser(${row.id})">Reject</button>
                                 </div>`;
                         }
                     }
@@ -210,8 +210,6 @@
                     },
                     error: function(xhr, status, error) {
                         toastr.error("Terjadi kesalahan. Silakan coba lagi.");
-                        toastr.error(status.message);
-                        toastr.error(error.message);
                     }
                 })
             })
@@ -235,6 +233,38 @@
                 },
                 error: function (xhr, status, error) {
                     toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+        }
+
+        function rejectUser(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: "Anda Ingin Reject Data User ini ?",
+                icon: 'warning',
+                cancelButtonText: "Batal",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Ya, saya yakin!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/reject-user-pending',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id : id
+                        },
+                        success: function(response) {
+                            toastr[response.status](response.message);
+                            // $('#tableUserOwner').DataTable().ajax.reload();
+                            $('#tableUserOwner').load(' #tableUserOwner');
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        }
+                    })
                 }
             })
         }

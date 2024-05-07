@@ -178,6 +178,27 @@ class Admin_UserOwnerController extends Controller
         return response()->json(Users_Register::find($request->id));
     }
 
+    public function reject_UserPending(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            $request->validate([
+                'id' => 'required'
+            ]);
+
+            Users_Register::find($request->id)->update(['is_regis' => 2]);
+            Brands_Register::where('user_id', $request->id)->update(['is_regis' => 2]);
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
+        return redirect()->back()->with('success', 'Owner berhasil direject');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
