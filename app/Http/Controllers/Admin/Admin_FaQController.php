@@ -661,13 +661,19 @@ class Admin_FaQController extends Controller
                 'updated_at'      => Carbon::now()->timezone('Asia/Jakarta')
             ]);
 
-            DB::commit(); // Commit the transaction
+            DB::commit();
 
-            return redirect()->back()->with('success', 'Berhasil Mengubah FaQ Owner');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil Mengubah FaQ Owner'
+            ]);
         } catch (\Throwable $th) {
-            DB::rollback(); // Rollback the transaction in case of an exception
+            DB::rollback();
 
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
         }
     }
 

@@ -269,7 +269,6 @@
                     id: id
                 },
                 success: function(data) {
-                    console.log(data);
                     $('#modal_detail').modal('show');
                     $('#modal-title-detail').text('Kategori ' + data.category_name);
                     $('#question_detail').text(data.question);
@@ -302,7 +301,6 @@
                     id: id
                 },
                 success: function(data) {
-                    console.log(data);
                     $('#modal_edit').modal('show');
                     $('#modal-title-edit').text('Edit Data Kategori FaQ');
                     $('#id_edit').val(data.id);

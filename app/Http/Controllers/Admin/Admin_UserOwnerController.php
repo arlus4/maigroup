@@ -98,7 +98,7 @@ class Admin_UserOwnerController extends Controller
 
     public function approve_UserPending(Request $request)
     {
-        $user_register = Users_Register::find($request->id);
+        $user_register  = Users_Register::find($request->id);
         $brand_register = Brands_Register::where('user_id', $request->id)->first();
 
         try {
@@ -177,12 +177,20 @@ class Admin_UserOwnerController extends Controller
             ]);
 
             DB::commit(); // Commit the transaction
+
         }catch (\Exception $e){
             DB::rollback(); // Rollback the transaction in case of an exception
 
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $e->getMessage()
+            ]);
         }
-        return redirect()->back()->with('success', 'Owner berhasil diapprove');
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Owner berhasil diapprove'
+        ]);
     }
 
     public function getDataDetailUserPending(Request $request)
@@ -206,9 +214,15 @@ class Admin_UserOwnerController extends Controller
         } catch (\Throwable $th) {
             DB::rollback(); // Rollback the transaction in case of an exception
 
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
         }
-        return redirect()->back()->with('success', 'Owner berhasil direject');
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Owner berhasil direject'
+        ]);
     }
 
     /**

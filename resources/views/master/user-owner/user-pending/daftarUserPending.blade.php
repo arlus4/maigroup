@@ -201,6 +201,7 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+                        console.log(response);
                         if (response.status === 'success') {
                             toastr.success(response.message);
                             $('#tableUserOwner').DataTable().ajax.reload();
@@ -258,8 +259,8 @@
                         },
                         success: function(response) {
                             toastr[response.status](response.message);
-                            // $('#tableUserOwner').DataTable().ajax.reload();
-                            $('#tableUserOwner').load(' #tableUserOwner');
+                            $('#tableUserOwner').DataTable().ajax.reload();
+                            // $('#tableUserOwner').load(' #tableUserOwner');
                         },
                         error: function (xhr, status, error) {
                             toastr.error("Terjadi kesalahan. Silakan coba lagi.");
