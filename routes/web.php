@@ -104,6 +104,8 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/detail-user-pending/{id}', [Admin_UserOwnerController::class, 'detail_userPending'])->name('admin_detail_user_pending');
         Route::post('/approve-user-pending', [Admin_UserOwnerController::class, 'approve_UserPending'])->name('admin_approve_user_pending');
         Route::post('/reject-user-pending', [Admin_UserOwnerController::class, 'reject_UserPending'])->name('admin_reject_user_pending');
+        Route::get('/user-reject', [Admin_UserOwnerController::class, 'index_userReject'])->name('admin_user_reject');
+        // Route::get('/detail-brand-pending/{slug}', [])
 
         // utilitas
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);

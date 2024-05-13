@@ -91,8 +91,10 @@ class Admin_UserOwnerController extends Controller
      */
     public function detail_userPending(Users_Register $id): View
     {
+        $getBrands = Brands_Register::select('brand_name', 'brand_code', 'slug')->where('user_id', $id->id)->get();
         return view('master.user-owner.user-pending.detailUserPending', [
-            'user' => $id,
+            'getData' => $id,
+            'getBrands' => $getBrands
         ]);
     }
 
