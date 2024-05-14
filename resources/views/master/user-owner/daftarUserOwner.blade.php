@@ -7,12 +7,6 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar User Owner</h1>
                 </div>
-                <a href="{{ route('admin.admin_tambah_user_owner') }}" class="css-kl2kd9a" style="color:#fff!important;line-height: 40px;">
-                    <span class="svg-icon svg-icon-2">
-                        <i class="fas fa-plus-circle text-white"></i>
-                    </span>
-                    Tambah User Owner
-                </a>
             </div>
         </div>
         <div id="kt_app_content_container" class="app-container container-xxl">

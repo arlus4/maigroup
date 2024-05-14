@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Outlet;
 use App\Models\ref_KodePos;
 use App\Models\ref_KotaKab;
 use App\Models\Ref_Project;
@@ -17,7 +16,6 @@ use App\Models\ref_Kelurahan;
 use App\Models\ref_KuotaPoint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Brand_Category;
@@ -225,6 +223,11 @@ class Admin_UserOwnerController extends Controller
             'status'  => 'success',
             'message' => 'Owner berhasil direject'
         ]);
+    }
+
+    public function index_userReject()
+    {
+        return view('master.user-owner.user-pending.daftarUserReject');
     }
 
     /**

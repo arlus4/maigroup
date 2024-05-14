@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Brand_Category;
 use App\Models\ref_KuotaPoint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,9 +21,124 @@ class Admin_BrandsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index_brandActive(): View
     {
-        //
+        return view('master.user-owner.brands.daftarBrandActive');
+    }
+
+    public function getDatabrandActive()
+    {
+        $data = DB::table('brands')
+            ->select(
+                'brands.id',
+                'brands.brand_code',
+                'brands.brand_name',
+                'brands.slug',
+                'brands.brand_description',
+                'brands.brand_image',
+                'brands.brand_image_path',
+                'brands.created_at',
+                'brand_categories.brand_category_name',
+                'users_login.name',
+            )
+            ->leftJoin('users_login', 'brands.user_id', 'users_login.id')
+            ->leftJoin('brand_categories', 'brands.brand_category_code', 'brand_categories.brand_category_code')
+            ->where('brands.is_active', 1)
+            ->orderBy('brands.created_at', 'asc')
+            ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
+
+    public function detailBrands(Brand $brand)
+    {
+        $user = User::where('id', $brand->user_id)->first();
+        $category = Brand_Category::select('brand_category_name')->where('brand_category_code', $brand->brand_category_code)->first();
+        return view('master.user-owner.brands.detailUserBrands', [
+            'user' => $user,
+            'brand' => $brand,
+            'categories' => $category
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_brandPending(): View
+    {
+        return view('master.user-owner.brands.daftarBrandPending');
+    }
+
+    public function getDatabrandPending()
+    {
+        $data = DB::table('brands_registers')
+            ->select(
+                'brands_registers.id',
+                'brands_registers.brand_code',
+                'brands_registers.brand_name',
+                'brands_registers.slug',
+                'brands_registers.brand_description',
+                'brands_registers.brand_image',
+                'brands_registers.brand_image_path',
+                'brands_registers.created_at',
+                'brand_categories.brand_category_name',
+                'users_registers.name',
+                'users_registers.email'
+            )
+            ->leftJoin('users_registers', 'brands_registers.user_id', 'users_registers.id')
+            ->leftJoin('brand_categories', 'brands_registers.brand_category_code', 'brand_categories.brand_category_code')
+            ->where('brands_registers.is_regis', 0)
+            ->orderBy('brands_registers.created_at', 'asc')
+            ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
+
+    public function reject_BrandPending(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            $request->validate([
+                'id' => 'required'
+            ]);
+
+            // Users_Register::find($request->id)->update(['is_regis' => 2]);
+            // Brands_Register::where('user_id', $request->id)->update(['is_regis' => 2]);
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
+        }
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Owner berhasil direject'
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_brandReject(): View
+    {
+        return view('master.user-owner.brands.daftarBrandReject');
     }
 
     /**

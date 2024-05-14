@@ -68,13 +68,13 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         // Route::get('/kategoriOutletSlug', [Admin_OutletController::class, 'kategoriOutletSlug']);
 
         //Produk
-        Route::get('/product', [Admin_ProductController::class, 'index'])->name('admin_product');
-        Route::get('/tambah-product', [Admin_ProductController::class, 'create'])->name('admin_tambah_product');
-        Route::get('/edit-product/{ref_Product:slug}', [Admin_ProductController::class, 'edit'])->name('admin_edit_product');
-        Route::post('/store_product', [Admin_ProductController::class, 'store'])->name('admin_store_product');
-        Route::post('/update_product/{ref_Product:slug}', [Admin_ProductController::class, 'update'])->name('admin_update_product');
-        Route::post('/delete_product', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
-        Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);
+        // Route::get('/product', [Admin_ProductController::class, 'index'])->name('admin_product');
+        // Route::get('/tambah-product', [Admin_ProductController::class, 'create'])->name('admin_tambah_product');
+        // Route::get('/edit-product/{ref_Product:slug}', [Admin_ProductController::class, 'edit'])->name('admin_edit_product');
+        // Route::post('/store_product', [Admin_ProductController::class, 'store'])->name('admin_store_product');
+        // Route::post('/update_product/{ref_Product:slug}', [Admin_ProductController::class, 'update'])->name('admin_update_product');
+        // Route::post('/delete_product', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
+        // Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);
 
         //User Penjual
         // Route::get('/user-penjual', [Admin_UserPenjualController::class, 'index'])->name('admin_user_penjual');
@@ -105,7 +105,6 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/approve-user-pending', [Admin_UserOwnerController::class, 'approve_UserPending'])->name('admin_approve_user_pending');
         Route::post('/reject-user-pending', [Admin_UserOwnerController::class, 'reject_UserPending'])->name('admin_reject_user_pending');
         Route::get('/user-reject', [Admin_UserOwnerController::class, 'index_userReject'])->name('admin_user_reject');
-        // Route::get('/detail-brand-pending/{slug}', [])
 
         // utilitas
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
@@ -120,6 +119,15 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/validate_Edit_Username', [Admin_UserOwnerController::class, 'validate_Edit_Username']);
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
         Route::get('/validate_Edit_Email', [Admin_UserOwnerController::class, 'validate_Edit_Email']);
+
+        // Manajemen Brand
+        Route::get('/brand-active', [Admin_BrandsController::class, 'index_brandActive'])->name('admin_brand_active');
+        Route::get('/getDatabrandActive', [Admin_BrandsController::class, 'getDatabrandActive']);
+        Route::get('/detail-user-brand/{brand}', [Admin_BrandsController::class, 'detailBrands'])->name('admin_brand_detail');
+        Route::get('/brand-pending', [Admin_BrandsController::class, 'index_brandPending'])->name('admin_brand_pending');
+        Route::get('/getDatabrandPending', [Admin_BrandsController::class, 'getDatabrandPending']);
+        Route::post('/reject-brand-pending', [Admin_BrandsController::class, 'reject_BrandPending'])->name('admin_reject_brand_pending');
+        Route::get('/brand-reject', [Admin_BrandsController::class, 'index_brandReject'])->name('admin_brand_reject');
         
         // Brand Category
         Route::get('/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');

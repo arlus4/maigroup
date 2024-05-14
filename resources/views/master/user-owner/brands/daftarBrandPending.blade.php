@@ -5,7 +5,7 @@
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar User Owner</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Daftar Brands Owner Pending</h1>
                 </div>
             </div>
         </div>
@@ -28,62 +28,18 @@
             <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
                 <div class="card-body py-4">
                     <div class="table-responsive">
-                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableUserOwner">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableBrandOwner">
                             <thead>
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="min-w-100px text-dark">Info Owner</th>
-                                    <th class="min-w-100px text-dark">Kontak</th>
+                                    <th class="min-w-100px text-dark">Info Brand</th>
+                                    <th class="min-w-100px text-dark">Owner</th>
+                                    <th class="min-w-100px text-dark">Categories</th>
                                     <th class="min-w-100px text-dark">Register</th>
                                     <th class="text-dark">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-semibold"></tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal Approve User -->
-            <div class="modal fade" id="modal_approve">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modal-title-approve"></h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="#" id="form-approve">
-                            @csrf
-                            <input type="hidden" name="id" class="form-control id" id="id" readonly>
-                            <div class="form-group mb-3">
-                                <label style="color: #31353B!important;font-weight: 600;">Nama</label>
-                                <input type="text" class="form-control name form-control-solid" id="name" readonly>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label style="color: #31353B!important;font-weight: 600;">Email</label>
-                                <input type="text" class="form-control email form-control-solid" id="email" readonly>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label style="color: #31353B!important;font-weight: 600;">Nomor HP</label>
-                                <input type="text" class="form-control no_hp form-control-solid" id="no_hp" readonly>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label style="color: #31353B!important;font-weight: 600;">Username</label>
-                                <input type="text" name="username" id="username" class="form-control mb-2 username" placeholder="Input Username" required>
-                                <div id="textAlertUsername" class="text-muted fs-7" style="color: #31353B!important;">Username <strong style="font-size: 11px;">Wajib Diisi</strong>, ya.</div>
-                                <div id="usernameUsedMsg" class="text-muted fs-7" style="color: #d90429!important; display: none;">Username Sudah digunakan</div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label style="color: #31353B!important;font-weight: 600;">Password</label>
-                                <input type="password" name="password" class="form-control password" id="password" placeholder="Input Password" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
-                                Batalkan
-                            </button>
-                            <button type="submit" id="approve" class="css-kl2kd9a">Simpan</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -96,11 +52,11 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#tableUserOwner').DataTable({
+            $('#tableBrandOwner').DataTable({
                 processing: true,
                 serverSide: false,
                 ajax: {
-                    url: "/admin/get_data_user_pending",
+                    url: "/admin/getDatabrandPending",
                     dataType: "JSON",
                 },
                 language: {
@@ -108,9 +64,20 @@
                 },
                 columns: [
                     {
+                        data: 'brand_name',
+                        render: function(data, type, row) {
+                            var imagePath = row.brand_image_path ? row.brand_image_path : '/avatar.png';
+                            return `<div class="d-flex align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="text-gray-800 mb-1">${row.brand_name}</span>
+                                            <span>${row.brand_code}</span>
+                                        </div>
+                                    </div>`;
+                        }
+                    },
+                    {
                         data: 'name',
                         render: function(data, type, row) {
-                            var imagePath = row.avatar ? row.avatar : '/avatar.png';
                             return `<div class="d-flex align-items-center">
                                         <div class="d-flex flex-column">
                                             <span class="text-gray-800 mb-1">${row.name}</span>
@@ -119,7 +86,7 @@
                                     </div>`;
                         }
                     },
-                    { data: 'no_hp' },
+                    { data: 'brand_category_name' },
                     {
                         data: 'created_at',
                         render: function(data, type, row) {
@@ -135,9 +102,9 @@
                         data: 'is_regis',
                         render: function(data, type, row) {
                             return `<div class="align-items-center d-flex">
-                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = 'detail-user-pending/${row.id}'">Detail</button>
-                                    <button type="button" class="btn btn-success me-4" onclick="approveUser(${row.id})">Approve</button>
-                                    <button type="button" class="btn btn-danger" onclick="rejectUser(${row.id})">Reject</button>
+                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = 'detail-brand-pending/${row.slug}'">Detail</button>
+                                    <button type="button" class="btn btn-success me-4" onclick="approveBrand(${row.id})">Approve</button>
+                                    <button type="button" class="btn btn-danger" onclick="rejectBrand(${row.id})">Reject</button>
                                 </div>`;
                         }
                     }
@@ -210,10 +177,10 @@
             })
         });
 
-        function approveUser(id) {
+        function approveBrand(id) {
             $.ajax({
                 type: 'GET',
-                url: '/admin/get_data_detail_user_pending',
+                url: '#',
                 data: {
                     id: id
                 },
@@ -232,7 +199,8 @@
             })
         }
 
-        function rejectUser(id) {
+        function rejectBrand(id) {
+            console.log(id);
             Swal.fire({
                 title: 'Konfirmasi',
                 text: "Anda Ingin Reject Data User ini ?",
@@ -246,7 +214,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'POST',
-                        url: '/admin/reject-user-pending',
+                        url: '/admin/reject-brand-pending',
                         data: {
                             _token: "{{ csrf_token() }}",
                             id : id
@@ -264,5 +232,4 @@
             })
         }
     </script>
-
 @endsection
