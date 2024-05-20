@@ -119,7 +119,6 @@ class Admin_BrandsController extends Controller
 
     public function approve_BrandPending(Request $request)
     {
-        // dd($request->all());
         try {
             DB::beginTransaction(); // Begin Transaction
             

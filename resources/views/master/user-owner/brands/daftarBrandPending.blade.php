@@ -144,43 +144,6 @@
 
         // Action Approve
         $(document).ready(function() {
-            // var handleSearchUsername = _.debounce(function() {
-            //     var userId             = $('#id').val();
-            //     var userName           = $('#username').val();
-            //     var usernameUsedMsg    = $('#usernameUsedMsg');
-            //     var textAlertUsername  = $('#textAlertUsername');
-
-            //     if (userName.length >= 3) {
-            //         $.ajax({
-            //             url: "/admin/validate_Edit_Username",
-            //             type: "GET",
-            //             data: {
-            //                 'username': userName,
-            //                 'id' : userId
-            //             },
-            //             success: function(data) {
-            //                 let dipakai = data && data.dipakai;
-
-            //                 if (dipakai) {
-            //                     usernameUsedMsg.css('display', 'block');
-            //                     textAlertUsername.css('display', 'none');
-            //                 } else {
-            //                     usernameUsedMsg.css('display', 'none');
-            //                     textAlertUsername.css('display', 'block');
-            //                 }
-            //             },
-            //             error: function(xhr, status, error) {
-            //                 console.log("Error saat pencarian:", error);
-            //             }
-            //         });
-            //     } else {
-            //         usernameUsedMsg.css('display', 'none');
-            //         textAlertUsername.css('display', 'block');
-            //     }
-            // }, 300);
-
-            // $('#username').on('input', handleSearchUsername);
-
             $('#form-approve').submit(function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
