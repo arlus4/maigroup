@@ -119,6 +119,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/validate_Edit_Username', [Admin_UserOwnerController::class, 'validate_Edit_Username']);
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
         Route::get('/validate_Edit_Email', [Admin_UserOwnerController::class, 'validate_Edit_Email']);
+        Route::get('/get_data_detail_brand_pending', [Admin_BrandsController::class, 'getDataDetailBrandPending']);
 
         // Manajemen Brand
         Route::get('/brand-active', [Admin_BrandsController::class, 'index_brandActive'])->name('admin_brand_active');
@@ -126,6 +127,8 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/detail-user-brand/{brand}', [Admin_BrandsController::class, 'detailBrands'])->name('admin_brand_detail');
         Route::get('/brand-pending', [Admin_BrandsController::class, 'index_brandPending'])->name('admin_brand_pending');
         Route::get('/getDatabrandPending', [Admin_BrandsController::class, 'getDatabrandPending']);
+        Route::get('/detail-brand-pending/{brand_regis}', [Admin_BrandsController::class, 'detail_BrandPending'])->name('admin_detail_brand_detail');
+        Route::post('/approve-brand-pending', [Admin_BrandsController::class, 'approve_BrandPending'])->name('admin_approve_brand_pending');
         Route::post('/reject-brand-pending', [Admin_BrandsController::class, 'reject_BrandPending'])->name('admin_reject_brand_pending');
         Route::get('/brand-reject', [Admin_BrandsController::class, 'index_brandReject'])->name('admin_brand_reject');
         

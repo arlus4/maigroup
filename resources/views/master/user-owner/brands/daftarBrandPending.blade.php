@@ -43,6 +43,36 @@
                     </div>
                 </div>
             </div>
+            <!-- Modal Approve User -->
+            <div class="modal fade" id="modal_approve">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-title-approve"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" id="form-approve">
+                            @csrf
+                            <input type="hidden" name="id" class="form-control id" id="id" readonly>
+                            <div class="form-group mb-3">
+                                <label style="color: #31353B!important;font-weight: 600;">Brand Code</label>
+                                <input type="text" class="form-control brand_code form-control-solid" id="brand_code" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label style="color: #31353B!important;font-weight: 600;">Brand Name</label>
+                                <input type="text" class="form-control brand_name form-control-solid" id="brand_name" readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
+                                Batalkan
+                            </button>
+                            <button type="submit" id="approve" class="css-kl2kd9a">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -102,7 +132,7 @@
                         data: 'is_regis',
                         render: function(data, type, row) {
                             return `<div class="align-items-center d-flex">
-                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = 'detail-brand-pending/${row.slug}'">Detail</button>
+                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = '/admin/detail-brand-pending/${row.slug}'">Detail</button>
                                     <button type="button" class="btn btn-success me-4" onclick="approveBrand(${row.id})">Approve</button>
                                     <button type="button" class="btn btn-danger" onclick="rejectBrand(${row.id})">Reject</button>
                                 </div>`;
@@ -114,42 +144,42 @@
 
         // Action Approve
         $(document).ready(function() {
-            var handleSearchUsername = _.debounce(function() {
-                var userId             = $('#id').val();
-                var userName           = $('#username').val();
-                var usernameUsedMsg    = $('#usernameUsedMsg');
-                var textAlertUsername  = $('#textAlertUsername');
+            // var handleSearchUsername = _.debounce(function() {
+            //     var userId             = $('#id').val();
+            //     var userName           = $('#username').val();
+            //     var usernameUsedMsg    = $('#usernameUsedMsg');
+            //     var textAlertUsername  = $('#textAlertUsername');
 
-                if (userName.length >= 3) {
-                    $.ajax({
-                        url: "/admin/validate_Edit_Username",
-                        type: "GET",
-                        data: {
-                            'username': userName,
-                            'id' : userId
-                        },
-                        success: function(data) {
-                            let dipakai = data && data.dipakai;
+            //     if (userName.length >= 3) {
+            //         $.ajax({
+            //             url: "/admin/validate_Edit_Username",
+            //             type: "GET",
+            //             data: {
+            //                 'username': userName,
+            //                 'id' : userId
+            //             },
+            //             success: function(data) {
+            //                 let dipakai = data && data.dipakai;
 
-                            if (dipakai) {
-                                usernameUsedMsg.css('display', 'block');
-                                textAlertUsername.css('display', 'none');
-                            } else {
-                                usernameUsedMsg.css('display', 'none');
-                                textAlertUsername.css('display', 'block');
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.log("Error saat pencarian:", error);
-                        }
-                    });
-                } else {
-                    usernameUsedMsg.css('display', 'none');
-                    textAlertUsername.css('display', 'block');
-                }
-            }, 300);
+            //                 if (dipakai) {
+            //                     usernameUsedMsg.css('display', 'block');
+            //                     textAlertUsername.css('display', 'none');
+            //                 } else {
+            //                     usernameUsedMsg.css('display', 'none');
+            //                     textAlertUsername.css('display', 'block');
+            //                 }
+            //             },
+            //             error: function(xhr, status, error) {
+            //                 console.log("Error saat pencarian:", error);
+            //             }
+            //         });
+            //     } else {
+            //         usernameUsedMsg.css('display', 'none');
+            //         textAlertUsername.css('display', 'block');
+            //     }
+            // }, 300);
 
-            $('#username').on('input', handleSearchUsername);
+            // $('#username').on('input', handleSearchUsername);
 
             $('#form-approve').submit(function(e) {
                 e.preventDefault();
@@ -157,7 +187,7 @@
                 $('#modal_approve').modal('hide');
                 $.ajax({
                     type: 'POST',
-                    url: "/admin/approve-user-pending",
+                    url: "/admin/approve-brand-pending",
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -180,7 +210,7 @@
         function approveBrand(id) {
             $.ajax({
                 type: 'GET',
-                url: '#',
+                url: '/admin/get_data_detail_brand_pending',
                 data: {
                     id: id
                 },
@@ -188,10 +218,8 @@
                     $('#modal_approve').modal('show');
                     $('#modal-title-approve').text('Approve Data User');
                     $('#id').val(data.id);
-                    $('#name').val(data.name);
-                    $('#email').val(data.email);
-                    $('#no_hp').val(data.no_hp);
-                    $('#approve').text('Approve');
+                    $('#brand_code').val(data.brand_code);
+                    $('#brand_name').val(data.brand_name);
                 },
                 error: function (xhr, status, error) {
                     toastr.error("Terjadi kesalahan. Silakan coba lagi.");

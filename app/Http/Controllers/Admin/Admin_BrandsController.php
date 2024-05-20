@@ -9,9 +9,11 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Brand_Category;
 use App\Models\ref_KuotaPoint;
+use App\Models\Brands_Register;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Models\Users_Register;
 use Illuminate\Support\Facades\Storage;
 
 class Admin_BrandsController extends Controller
@@ -104,6 +106,84 @@ class Admin_BrandsController extends Controller
         return response()->json($datas);
     }
 
+    public function detail_BrandPending(Brands_Register $brand_regis)
+    {
+        $user = Users_Register::where('id', $brand_regis->user_id)->first();
+        $category = Brand_Category::select('brand_category_name')->where('brand_category_code', $brand_regis->brand_category_code)->first();
+        return view('master.user-owner.brands.detailBrandPending', [
+            'brand' => $brand_regis,
+            'user' => $user,
+            'categories' => $category
+        ]);
+    }
+
+    public function approve_BrandPending(Request $request)
+    {
+        // dd($request->all());
+        try {
+            DB::beginTransaction(); // Begin Transaction
+            
+            $request->validate([
+                'id' => 'required'
+            ]);
+
+            $regis = Brands_Register::find($request->id);
+
+            // Cek user sudah teregistrasi atau belum
+            $user = Users_Register::find($regis->user_id);
+
+            if ($user->is_regis == 0) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Owner belum terdaftar'
+                ]);
+            }
+
+            Brand::create([
+                'user_id'               => $regis->user_id,
+                'brand_category_code'   => $regis->brand_category_code,
+                'brand_code'            => $regis->brand_code,
+                'brand_name'            => $regis->brand_name,
+                'slug'                  => $regis->slug,
+                'no_hp'                 => $regis->whatsapp,
+                'brand_description'     => $regis->brand_description,
+                'brand_image'           => $regis->brand_image,
+                'brand_image_path'      => $regis->brand_image_path,
+                'website'               => $regis->website,
+                'whatsapp'              => $regis->whatsapp,
+                'facebook'              => $regis->facebook,
+                'instagram'             => $regis->instagram,
+                'tiktok'                => $regis->tiktok,
+                'youtube'               => $regis->youtube,
+                'is_active'             => 1,
+                'created_at'            => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'            => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            $regis->update([
+                'is_regis' => 1
+            ]);
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
+        }
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Owner berhasil direject'
+        ]);
+    }
+
+    public function getDataDetailBrandPending(Request $request)
+    {
+        return response()->json(Brands_Register::find($request->id));
+    }
+
     public function reject_BrandPending(Request $request)
     {
         try {
@@ -113,8 +193,7 @@ class Admin_BrandsController extends Controller
                 'id' => 'required'
             ]);
 
-            // Users_Register::find($request->id)->update(['is_regis' => 2]);
-            // Brands_Register::where('user_id', $request->id)->update(['is_regis' => 2]);
+            Brands_Register::find($request->id)->update(['is_regis' => 2]);
 
             DB::commit(); // Commit the transaction
         } catch (\Throwable $th) {
