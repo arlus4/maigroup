@@ -67,7 +67,7 @@
                             <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
                                 Batalkan
                             </button>
-                            <button type="submit" id="approve" class="css-kl2kd9a">Simpan</button>
+                            <button type="submit" id="approve" class="css-kl2kd9a">Approve</button>
                             </form>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
             console.log(id);
             Swal.fire({
                 title: 'Konfirmasi',
-                text: "Anda Ingin Reject Data User ini ?",
+                text: "Anda Ingin Reject Data Brands ini ?",
                 icon: 'warning',
                 cancelButtonText: "Batal",
                 showCancelButton: true,
