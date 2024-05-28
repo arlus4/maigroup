@@ -260,7 +260,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('admin.admin_user_reject') ? 'active' : '' }}" href="{{ route('admin.admin_user_reject') }}">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_outlet_reject') ? 'active' : '' }}" href="{{ route('admin.admin_outlet_reject') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Users_Register;
+use App\Models\Outlet_Register;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Brands_Register;
+use App\Models\Outlet;
 use Illuminate\Http\RedirectResponse;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -94,106 +97,153 @@ class Admin_OutletController extends Controller
         return response()->json($datas);
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request): RedirectResponse
-    // {
-    //     try {
-    //         DB::beginTransaction(); // Begin Transaction
+    public function getDataDetailOutletPending(Request $request)
+    {
+        return response()->json(Outlet_Register::find($request->id));
+    }
 
-    //         $request->validate([
-    //             'nama_category' => 'required|string|max:255',
-    //             'slug'          => 'required|string|max:255|unique:outlet_categories',
-    //         ]);
-
-    //         Outlet_Category::create([
-    //             'nama_category'=> $request->nama_category,
-    //             'slug'         => $request->slug,
-    //             'created_at' => Carbon::now('Asia/Jakarta'),
-    //             'updated_at' => Carbon::now('Asia/Jakarta')
-    //         ]);
-
-    //         DB::commit(); // Commit the transaction
-    //     } catch (\Exception $e) {
-    //         DB::rollback(); // Rollback the transaction in case of an exception
-
-    //         Log::error($e); // Log the exception for debugging
-
-    //         return redirect()->back()->with('error', 'Gagal Menambah Kategori Outlet. Silakan coba lagi.');
-    //     }
-    //     return redirect()->back()->with('success', 'Berhasil Menambah Kategori Outlet!');
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\Models\Outlet_Category  $outlet_id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, Outlet_Category $outlet_id)
-    // {
-    //     try {
-    //         DB::beginTransaction(); // Begin Transaction
-
-    //         $request->validate([
-    //             'nama_category_edit' => 'required|string|max:255',
-    //             'slug_edit'          => 'required|string|max:255|unique:outlet_categories,slug,' . $outlet_id->id,
-    //         ]);
-
-    //         Outlet_Category::findOrFail($request->idKategoriOutlet)->update([
-    //             'nama_category' => $request->nama_category_edit,
-    //             'slug'          => $request->slug_edit,
-    //             'updated_at'    => Carbon::now('Asia/Jakarta')
-    //         ]);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function approve_OutletPending(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
             
-    //         DB::commit(); // Commit the transaction
-    //     } catch (\Exception $e) {
-    //         DB::rollback(); // Rollback the transaction in case of an exception
+            $request->validate([
+                'id' => 'required'
+            ]);
 
-    //         Log::error($e); // Log the exception for debugging
+            $regis = Outlet_Register::find($request->id);
 
-    //         return redirect()->back()->with('error', 'Gagal Mengubah Kategori Outlet. Silakan coba lagi. : ' . $e->getMessage());
-    //     }
-    //     return redirect()->back()->with('success', 'Berhasil Mengubah Kategori Outlet');
-    // }
+            // Cek user sudah teregistrasi atau belum
+            $user = Users_Register::find($regis->user_id);
+            if ($user->is_regis == 0) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Owner belum terdaftar'
+                ]);
+            }
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  \App\Models\Outlet_Category  $outlet_id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy(Request $request, Outlet_Category $outlet_id)
-    // {
-    //     try {
-    //         DB::beginTransaction(); // Begin Transaction
+            // Cek brand sudah teregistrasi atau belum
+            $brand = Brands_Register::where('brand_code', $regis->brand_code)->first();
+            if ($brand->is_regis == 0) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Brand belum terdaftar'
+                ]);
+            }
 
-    //         $request->validate([
-    //             'id_kategori' => 'required|integer',
-    //         ]);
+            Outlet::create([
+                'user_id'       => $regis->user_id,
+                'outlet_code'   => $regis->outlet_code,
+                'outlet_name'   => $regis->outlet_name,
+                'brand_code'    => $regis->brand_code,
+                'slug'          => $regis->slug,
+                'no_hp'         => $regis->no_hp,
+                'image_name'    => $regis->image_name,
+                'path'          => $regis->path,
+                'website'       => $regis->website,
+                'whatsapp'      => $regis->whatsapp,
+                'facebook'      => $regis->facebook,
+                'instagram'     => $regis->instagram,
+                'tiktok'        => $regis->tiktok,
+                'youtube'       => $regis->youtube,
+                'is_active'     => 1,
+                'created_at'    => Carbon::now()->timezone('Asia/Jakarta'),
+                'updated_at'    => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
 
-    //         Outlet_Category::findOrFail($request->id_kategori)->delete();
+            $regis->update([
+                'is_regis' => 1
+            ]);
 
-    //         DB::commit(); // Commit the transaction
-    //     } catch (\Exception $e) {
-    //         DB::rollback(); // Rollback the transaction in case of an exception
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
 
-    //         Log::error($e); // Log the exception for debugging
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
+        }
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Outlet berhasil diapprove'
+        ]);
+    }
 
-    //         return redirect()->back()->with('error', 'Gagal Menghapus Kategori Outlet. Silakan coba lagi.');
-    //     }
-    //     return redirect()->back()->with('success', 'Kategori Outlet Berhasil Dihapus.');
-    // }
+    public function reject_OutletPending(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
 
-    // public function kategorioutletSlug(Request $request)
-    // {
-    //     $slug = SlugService::createSlug(Outlet_Category::class, 'slug', $request->nama_category);
+            $request->validate([
+                'id' => 'required'
+            ]);
 
-    //     return response()->json(['slug' => $slug]);
-    // }
+            $reject = Outlet_Register::find($request->id);
+
+            $reject->update([
+                'is_regis' => 2
+            ]);
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
+        }
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Outlets berhasil direject'
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_outletReject()
+    {
+        return view('master.user-owner.outlet.daftarOutletReject');
+    }
+
+    public function getDataoutletReject()
+    {
+        $data = DB::table('outlet_registers')
+            ->select(
+                'outlet_registers.id',
+                'outlet_registers.outlet_code',
+                'outlet_registers.outlet_name',
+                'outlet_registers.slug',
+                'outlet_registers.image_name',
+                'outlet_registers.path',
+                'outlet_registers.created_at',
+                'users_registers.name',
+                'users_registers.email',
+                'brands_registers.brand_code',
+                'brands_registers.brand_name',
+                'brand_categories.brand_category_name',
+            )
+            ->leftJoin('users_registers', 'outlet_registers.user_id', 'users_registers.id')
+            ->leftJoin('brands_registers', 'outlet_registers.brand_code', 'brands_registers.brand_code')
+            ->leftJoin('brand_categories', 'brands_registers.brand_category_code', 'brand_categories.brand_category_code')
+            ->where('outlet_registers.is_regis', 2)
+            ->orderBy('outlet_registers.created_at', 'asc')
+            ->get();
+        
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
 }

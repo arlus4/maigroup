@@ -44,6 +44,36 @@
                 </div>
             </div>
         </div>
+        <!-- Modal Approve User -->
+        <div class="modal fade" id="modal_approve">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-title-approve"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" id="form-approve">
+                        @csrf
+                        <input type="hidden" name="id" class="form-control id" id="id" readonly>
+                        <div class="form-group mb-3">
+                            <label style="color: #31353B!important;font-weight: 600;">Outlet Code</label>
+                            <input type="text" class="form-control outlet_code form-control-solid" id="outlet_code" readonly>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label style="color: #31353B!important;font-weight: 600;">Outlet Name</label>
+                            <input type="text" class="form-control outlet_name form-control-solid" id="outlet_name" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
+                            Batalkan
+                        </button>
+                        <button type="submit" id="approve" class="css-kl2kd9a">Approve</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -117,29 +147,96 @@
                     {
                         data: 'atur',
                         render: function(data, type, row) {
-                            return `<div class="dropdown">
-                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton${row.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Atur
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
-                                            <li>
-                                                <button onclick="window.location.href = 'detail-outlet/${row.slug}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-eye me-2"></i>
-                                                    Detail
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button onclick="window.location.href = 'edit-outlet/${row.slug}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                    Edit
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>`;
+                            return `<div class="align-items-center d-flex">
+                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = '/admin/detail-outlet-pending/${row.slug}'">Detail</button>
+                                    <button type="button" class="btn btn-success me-4" onclick="approveBrand(${row.id})">Approve</button>
+                                    <button type="button" class="btn btn-danger" onclick="rejectBrand(${row.id})">Reject</button>
+                                </div>`;
                         }
                     }
                 ],
             });
         });
+
+        // Action Approve
+        $(document).ready(function() {
+            $('#form-approve').submit(function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $('#modal_approve').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "/admin/approve-outlet-pending",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status === 'success') {
+                            toastr.success(response.message);
+                            $('#tableOutletPending').DataTable().ajax.reload();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                })
+            })
+        });
+
+        function approveBrand(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/get_data_detail_outlet_pending',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#modal_approve').modal('show');
+                    $('#modal-title-approve').text('Approve Data User');
+                    $('#id').val(data.id);
+                    $('#outlet_code').val(data.outlet_code);
+                    $('#outlet_name').val(data.outlet_name);
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+        }
+
+        function rejectBrand(id) {
+            console.log(id);
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: "Anda Ingin Reject Data Outlet ini ?",
+                icon: 'warning',
+                cancelButtonText: "Batal",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Ya, saya yakin!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/reject-outlet-pending',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id : id
+                        },
+                        success: function(response) {
+                            toastr[response.status](response.message);
+                            $('#tableOutletPending').DataTable().ajax.reload();
+                            // $('#tableOutletPending').load(' #tableOutletPending');
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        }
+                    })
+                }
+            })
+        }
     </script>
 @endsection

@@ -113,28 +113,30 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/validate_Edit_Username', [Admin_UserOwnerController::class, 'validate_Edit_Username']);
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
         Route::get('/validate_Edit_Email', [Admin_UserOwnerController::class, 'validate_Edit_Email']);
-        Route::get('/get_data_detail_brand_pending', [Admin_BrandsController::class, 'getDataDetailBrandPending']);
-
+        
         // Manajemen Brand
         Route::get('/brand-active', [Admin_BrandsController::class, 'index_brandActive'])->name('admin_brand_active');
         Route::get('/getDatabrandActive', [Admin_BrandsController::class, 'getDatabrandActive']);
         Route::get('/detail-user-brand/{brand}', [Admin_BrandsController::class, 'detailBrands'])->name('admin_brand_detail');
         Route::get('/brand-pending', [Admin_BrandsController::class, 'index_brandPending'])->name('admin_brand_pending');
+        Route::get('/get_data_detail_brand_pending', [Admin_BrandsController::class, 'getDataDetailBrandPending']);
         Route::get('/getDatabrandPending', [Admin_BrandsController::class, 'getDatabrandPending']);
         Route::get('/detail-brand-pending/{brand_regis}', [Admin_BrandsController::class, 'detail_BrandPending'])->name('admin_detail_brand_detail');
         Route::post('/approve-brand-pending', [Admin_BrandsController::class, 'approve_BrandPending'])->name('admin_approve_brand_pending');
         Route::post('/reject-brand-pending', [Admin_BrandsController::class, 'reject_BrandPending'])->name('admin_reject_brand_pending');
         Route::get('/brand-reject', [Admin_BrandsController::class, 'index_brandReject'])->name('admin_brand_reject');
+        Route::get('/getDatabrandReject', [Admin_BrandsController::class, 'getDatabrandReject']);
 
         // Manajemen Outlet
         Route::get('/outlet-active', [Admin_OutletController::class, 'index_outletActive'])->name('admin_outlet_active');
         Route::get('/getDataoutletActive', [Admin_OutletController::class, 'getDataoutletActive']);
         Route::get('/outlet-pending', [Admin_OutletController::class, 'index_outletPending'])->name('admin_outlet_pending');
         Route::get('/getDataoutletPending', [Admin_OutletController::class, 'getDataoutletPending']);
-        // Route::get('/edit_category_outlet/{kategori_Product:slug}', [Admin_OutletController::class, 'edit'])->name('admin_edit_category_outlet');
-        // Route::post('/store_category_outlet', [Admin_OutletController::class, 'store'])->name('admin_store_category_outlet');
-        // Route::post('/update_category_outlet', [Admin_OutletController::class, 'update'])->name('admin_update_category_outlet');
-        // Route::post('/delete_category_outlet', [Admin_OutletController::class, 'destroy'])->name('admin_delete_category_outlet');
+        Route::get('/get_data_detail_outlet_pending', [Admin_OutletController::class, 'getDataDetailOutletPending']);
+        Route::post('/approve-outlet-pending', [Admin_OutletController::class, 'approve_OutletPending'])->name('admin_approve_outlet_pending');
+        Route::post('/reject-outlet-pending', [Admin_OutletController::class, 'reject_OutletPending'])->name('admin_reject_outlet_pending');
+        Route::get('/outlet-reject', [Admin_OutletController::class, 'index_outletReject'])->name('admin_outlet_reject');
+        Route::get('/getDataoutletReject', [Admin_OutletController::class, 'getDataoutletReject']);
         
         // Brand Category
         Route::get('/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');

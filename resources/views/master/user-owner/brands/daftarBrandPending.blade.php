@@ -158,7 +158,7 @@
                         console.log(response);
                         if (response.status === 'success') {
                             toastr.success(response.message);
-                            $('#tableUserOwner').DataTable().ajax.reload();
+                            $('#tableBrandOwner').DataTable().ajax.reload();
                         } else {
                             toastr.error(response.message);
                         }
@@ -212,8 +212,8 @@
                         },
                         success: function(response) {
                             toastr[response.status](response.message);
-                            $('#tableUserOwner').DataTable().ajax.reload();
-                            // $('#tableUserOwner').load(' #tableUserOwner');
+                            $('#tableBrandOwner').DataTable().ajax.reload();
+                            // $('#tableBrandOwner').load(' #tableBrandOwner');
                         },
                         error: function (xhr, status, error) {
                             toastr.error("Terjadi kesalahan. Silakan coba lagi.");

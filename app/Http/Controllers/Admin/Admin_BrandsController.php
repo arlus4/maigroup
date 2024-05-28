@@ -9,11 +9,11 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Brand_Category;
 use App\Models\ref_KuotaPoint;
+use App\Models\Users_Register;
 use App\Models\Brands_Register;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Models\Users_Register;
 use Illuminate\Support\Facades\Storage;
 
 class Admin_BrandsController extends Controller
@@ -174,7 +174,7 @@ class Admin_BrandsController extends Controller
         }
         return response()->json([
             'status'  => 'success',
-            'message' => 'Owner berhasil direject'
+            'message' => 'Brands berhasil diapprove'
         ]);
     }
 
@@ -205,7 +205,7 @@ class Admin_BrandsController extends Controller
         }
         return response()->json([
             'status'  => 'success',
-            'message' => 'Owner berhasil direject'
+            'message' => 'Brands berhasil direject'
         ]);
     }
 
@@ -219,6 +219,38 @@ class Admin_BrandsController extends Controller
         return view('master.user-owner.brands.daftarBrandReject');
     }
 
+    public function getDatabrandReject()
+    {
+        $data = DB::table('brands_registers')
+            ->select(
+                'brands_registers.id',
+                'brands_registers.brand_code',
+                'brands_registers.brand_name',
+                'brands_registers.slug',
+                'brands_registers.brand_description',
+                'brands_registers.brand_image',
+                'brands_registers.brand_image_path',
+                'brands_registers.created_at',
+                'brand_categories.brand_category_name',
+                'users_registers.name',
+                'users_registers.email'
+            )
+            ->leftJoin('users_registers', 'brands_registers.user_id', 'users_registers.id')
+            ->leftJoin('brand_categories', 'brands_registers.brand_category_code', 'brand_categories.brand_category_code')
+            ->where('brands_registers.is_regis', 2)
+            ->orderBy('brands_registers.created_at', 'asc')
+            ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
+
+
+
+    // CEK LAGI
     /**
      * Show the form for creating a new resource.
      *
