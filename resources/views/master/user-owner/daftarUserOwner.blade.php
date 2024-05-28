@@ -169,11 +169,11 @@
                     {
                         data: 'name',
                         render: function(data, type, row) {
-                            var imagePath = row.avatar ? row.avatar : '/avatar.png';
+                            var imagePath = row.path_avatar ? row.path_avatar : '/avatar.png';
                             return `<div class="d-flex align-items-center">
                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                             <div class="symbol-label">
-                                                <img src="{{ asset('storage/user_owner/avatar/${imagePath}') }}" class="w-100"/>
+                                                <img src="{{ asset('${imagePath}') }}" class="w-100"/>
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column">
