@@ -70,21 +70,6 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         // Route::post('/delete_product', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
         // Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);
 
-        //User Penjual
-        // Route::get('/user-penjual', [Admin_UserPenjualController::class, 'index'])->name('admin_user_penjual');
-        // Route::get('/tambah-user-penjual', [Admin_UserPenjualController::class, 'create'])->name('admin_tambah_user_penjual');
-        // Route::get('/edit-user-penjual/{username}', [Admin_UserPenjualController::class, 'edit'])->name('admin_edit_user_penjual');
-        // Route::get('/detail-user-penjual/{username}', [Admin_UserPenjualController::class, 'show'])->name('admin_detail_user_penjual');
-        // Route::post('/store-user-penjual', [Admin_UserPenjualController::class, 'store'])->name('admin_store_user_penjual');
-        // Route::post('/update-user-penjual', [Admin_UserPenjualController::class, 'update'])->name('admin_update_user_penjual');
-        // Route::post('/update-toggle/{user}', [Admin_UserPenjualController::class, 'updateNotifications'])->name('admin_update_notif_user_penjual');
-        // Route::get('/userSlug', [Admin_UserPenjualController::class, 'userSlug']);
-        // // Route::get('/outletSlug', [Admin_UserPenjualController::class, 'outletSlug']);
-        // Route::get('/get_data_user_penjual', [Admin_UserPenjualController::class, 'getDataUserPenjual']);
-        // // Route::get('/validateNoHp', [Admin_UserPenjualController::class, 'validateNoHp']);
-        // Route::get('/validateUsername', [Admin_UserPenjualController::class, 'validateUsername']);
-        // Route::get('/validateEmail', [Admin_UserPenjualController::class, 'validateEmail']);
-
         //User Owner
         Route::get('/user-owner', [Admin_UserOwnerController::class, 'index'])->name('admin_user_owner');
         Route::get('/tambah-user-owner', [Admin_UserOwnerController::class, 'create'])->name('admin_tambah_user_owner');
