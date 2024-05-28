@@ -169,7 +169,7 @@
                     {
                         data: 'name',
                         render: function(data, type, row) {
-                            var imagePath = row.path_avatar ? row.path_avatar : '/avatar.png';
+                            var imagePath = row.path_avatar ? row.path_avatar : 'avatar.png';
                             return `<div class="d-flex align-items-center">
                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                             <div class="symbol-label">
