@@ -60,12 +60,6 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         })->name('dashboard-admin');
 
         //Kategori Produk
-        // Route::get('/category_outlet', [Admin_OutletController::class, 'index'])->name('admin_category_outlet');
-        // Route::get('/edit_category_outlet/{kategori_Product:slug}', [Admin_OutletController::class, 'edit'])->name('admin_edit_category_outlet');
-        // Route::post('/store_category_outlet', [Admin_OutletController::class, 'store'])->name('admin_store_category_outlet');
-        // Route::post('/update_category_outlet', [Admin_OutletController::class, 'update'])->name('admin_update_category_outlet');
-        // Route::post('/delete_category_outlet', [Admin_OutletController::class, 'destroy'])->name('admin_delete_category_outlet');
-        // Route::get('/kategoriOutletSlug', [Admin_OutletController::class, 'kategoriOutletSlug']);
 
         //Produk
         // Route::get('/product', [Admin_ProductController::class, 'index'])->name('admin_product');
@@ -131,6 +125,16 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/approve-brand-pending', [Admin_BrandsController::class, 'approve_BrandPending'])->name('admin_approve_brand_pending');
         Route::post('/reject-brand-pending', [Admin_BrandsController::class, 'reject_BrandPending'])->name('admin_reject_brand_pending');
         Route::get('/brand-reject', [Admin_BrandsController::class, 'index_brandReject'])->name('admin_brand_reject');
+
+        // Manajemen Outlet
+        Route::get('/outlet-active', [Admin_OutletController::class, 'index_outletActive'])->name('admin_outlet_active');
+        Route::get('/getDataoutletActive', [Admin_OutletController::class, 'getDataoutletActive']);
+        Route::get('/outlet-pending', [Admin_OutletController::class, 'index_outletPending'])->name('admin_outlet_pending');
+        Route::get('/getDataoutletPending', [Admin_OutletController::class, 'getDataoutletPending']);
+        // Route::get('/edit_category_outlet/{kategori_Product:slug}', [Admin_OutletController::class, 'edit'])->name('admin_edit_category_outlet');
+        // Route::post('/store_category_outlet', [Admin_OutletController::class, 'store'])->name('admin_store_category_outlet');
+        // Route::post('/update_category_outlet', [Admin_OutletController::class, 'update'])->name('admin_update_category_outlet');
+        // Route::post('/delete_category_outlet', [Admin_OutletController::class, 'destroy'])->name('admin_delete_category_outlet');
         
         // Brand Category
         Route::get('/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');
