@@ -32,7 +32,7 @@
                             <thead>
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-100px text-dark">Info Owner</th>
-                                    {{-- <th class="min-w-100px text-dark">Manajemen Brands</th> --}}
+                                    <th class="min-w-100px text-dark">Nomor HP</th>
                                     <th class="min-w-100px text-dark">Aktif</th>
                                     <th class="text-dark"></th>
                                 </tr>
@@ -46,109 +46,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Detail User Owner -->
-    {{-- <div class="modal fade" id="detailUserOwner">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 8px;">
-                <div class="css-dtu37sh">
-                    <div class="css-cfn3ksa">
-                        <h5 class="css-fnm3aj">Detail Owner & Outlet</h5>
-                    </div>
-                    <button type="button" class="btn-close css-fhk9sna" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="css-cnm6w2a">
-                    <div class="css-bnm3js">
-                        <div class="css-vbdw2js">
-                            <div class="css-hk23nab">
-                                <div class="css-sui2nz d-flex">
-                                    <div style="border-left: 4px solid #b1c5cd;">
-                                    </div>
-                                    <h5 class="css-gh9fjq" style="margin-left: 6px;">Informasi User Owner</h5>
-                                </div>
-                                <div class="css-uwad2ha">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <img class="img-fluid rounded" id="imgUser" src="{{ asset('assets/images/avatar.png') }}">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="css-i9mf6m mt-0">
-                                                <div class="css-iopf2sj mb-1">
-                                                    <p class="css-fgusn1a">Nama</p>
-                                                    <span>:</span>
-                                                    <div class="css-fgdh0kl">
-                                                        <p class="css-fgusn1a" id="namaUser"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="css-iopf2sj mb-1">
-                                                    <p class="css-fgusn1a">NIK</p>
-                                                    <span>:</span>
-                                                    <div class="css-fgdh0kl">
-                                                        <p class="css-fgusn1a" id="noNIK"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="css-iopf2sj mb-1">
-                                                    <p class="css-fgusn1a">Tanggal Lahir</p>
-                                                    <span>:</span>
-                                                    <div class="css-fgdh0kl">
-                                                        <p class="css-fgusn1a" id="tglLahir"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="css-iopf2sj mb-1">
-                                                    <p class="css-fgusn1a">Jenis Kelamin</p>
-                                                    <span>:</span>
-                                                    <div class="css-fgdh0kl">
-                                                        <p class="css-fgusn1a" id="jenisKelamin"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="css-kdfh3a">
-                                <div class="css-hk23nab" style="padding: 15px 0px;border-bottom:0px;">
-                                    <div class="css-jgdh2a">
-                                        <h4 class="css-gh9fjq">Informasi Outlet</h4>
-                                    </div>
-                                    <div class="css-i9mf6m">
-                                        <div class="css-iopf2sj">
-                                            <p class="css-fgusn1a" style="width: 160px;">Nama Outlet</p>
-                                            <span>:</span>
-                                            <div class="css-fgdh0kl">
-                                                <p class="css-fgusn1a" id="namaOutlet"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="css-i9mf6m">
-                                        <div class="css-iopf2sj">
-                                            <p class="css-fgusn1a" style="width: 160px;">Kategori Projek Outlet</p>
-                                            <span>:</span>
-                                            <div class="css-fgdh0kl">
-                                                <p class="css-fgusn1a" id="namaKategori"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="css-i9mf6m">
-                                        <div class="css-iopf2sj">
-                                            <p class="css-fgusn1a" style="width: 160px;">Alamat</p>
-                                            <span>:</span>
-                                            <div class="css-fgdh0kl">
-                                                <p class="css-fgusn1a">
-                                                    <span id="noHpBawah"></span><br>
-                                                    <span id="alamatDetail"></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
 
 @section('script')
@@ -183,16 +80,7 @@
                                     </div>`;
                         }
                     },
-                    // {
-                    //     data: 'status',
-                    //     render: function(data, type, row) {
-                    //         var checked = row.is_active == 1 ? 'checked' : '';
-                    //         return `<button onclick="window.location.href = 'manaj-brands/${row.username}'" class="css-kl2kd9a">
-                    //                     <i style="color:#fff;" class="fas fa-pencil me-2"></i>
-                    //                     Lihat Brands
-                    //                 </button>`;
-                    //     }
-                    // },
+                    { data: 'no_hp' },
                     {
                         data: 'status',
                         render: function(data, type, row) {
@@ -205,25 +93,10 @@
                     {
                         data: 'atur',
                         render: function(data, type, row) {
-                            return `<div class="dropdown">
-                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton${row.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Atur
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
-                                            <li>
-                                                <button onclick="window.location.href = 'detail-user-owner/${row.username}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-eye me-2"></i>
-                                                    Detail
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button onclick="window.location.href = 'edit-user-owner/${row.username}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                    Edit
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>`;
+                            return `<div class="align-items-center d-flex">
+                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = 'detail-user-owner/${row.username}'">Detail</button>
+                                    <button type="button" class="btn btn-warning me-4" onclick="window.location.href = 'edit-user-owner/${row.username}'">Edit</button>
+                                </div>`;
                         }
                     }
                 ]
@@ -254,52 +127,6 @@
                 });
             });
         });
-
-        // function detailUserOwner(username){
-        //     $.ajax({
-        //         url: "detail-user-owner/" + username,
-        //         type: "GET",
-        //         success: function (data){
-        //             const formatTglSaja = (date) => {
-        //                 var dateObject  = new Date(date);
-        //                 var year        = dateObject.getFullYear();
-        //                 var day         = dateObject.getDate();
-        //                 var month       = dateObject.getMonth();
-
-        //                 var monthsArray = [
-        //                     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-        //                     "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-        //                 ];
-
-        //                 day                 = day < 10 ? "0" + day : day; 
-        //                 month               = monthsArray[month];
-        //                 var formattedDate   = day + ' ' + month + ' ' + year;
-
-        //                 return formattedDate;
-        //             }
-
-        //             var defaultImagePath    = '{{ asset("storage/user_owner/avatar/avatar.png") }}';
-        //             var imagePath           = data.avatar ? '{{ asset("storage/user_owner/avatar") }}/' + data.avatar : defaultImagePath;
-                    
-        //             $('#imgUser').attr('src', imagePath);
-        //             $('#namaUser').text(data.name);
-        //             $('#noNIK').text(data.nomor_ktp || '-');
-        //             $('#tglLahir').text(formatTglSaja(data.tanggal_lahir));
-        //             $('#jenisKelamin').text(data.jenis_kelamin === "P" ? 'Pria' : 'Wanita');
-        //             $('#namaOutlet').text(data.nama_outlet || '-');
-        //             $('#namaKategori').text(data.project_name || '-');
-        //             $('#noHpBawah').text(data.no_hp || '-');
-                    
-        //             var alamatDetail = (data.alamat_detail ? data.alamat_detail : 'Alamat Detail Belum Dicantumkan') + ', Kecamatan ' + (data.nama_kecamatan ? data.nama_kecamatan : 'Belum Dicantumkan') + ', Kota ' + (data.nama_kotakab ? data.nama_kotakab : 'Belum Dicantumkan') + ', Provinsi ' + (data.nama_propinsi ? data.nama_propinsi : 'Belum Dicantumkan') + ', Kode Pos ' + (data.kode_pos ? data.kode_pos : 'Belum Dicantumkan');
-        //             $('#alamatDetail').text(alamatDetail);
-
-        //             $('#detailUserOwner').modal('show');
-        //         },
-        //         error: function(error){
-
-        //         }
-        //     });
-        // }
     </script>
 
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Brand;
+use App\Models\Outlet;
 use App\Models\ref_KodePos;
 use App\Models\ref_KotaKab;
 use App\Models\Ref_Project;
@@ -14,16 +16,16 @@ use Illuminate\Http\Request;
 use App\Models\ref_Kecamatan;
 use App\Models\ref_Kelurahan;
 use App\Models\ref_KuotaPoint;
+use App\Models\Brand_Category;
+use App\Models\Users_Register;
+use App\Models\Brands_Register;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
-use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Brand_Category;
-use App\Models\Brands_Register;
-use App\Models\Users_Register;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Admin_UserOwnerController extends Controller
@@ -414,13 +416,106 @@ class Admin_UserOwnerController extends Controller
         $getData = $getDatas[0];
         
         $getBrands = Brand::select('brand_name', 'brand_code', 'slug')->where('user_id', $getData->idUserLogin)->get();
-        // dd($getBrands);
+
+        $getOutlets = Outlet::where('user_id', $getData->idUserLogin)->get();
 
         return view('master.user-owner.detailUserOwner', [
             'username' => $username,
             'getData' => $getData,
-            'getBrands' => $getBrands
+            'getBrands' => $getBrands,
+            'getOutlets' => $getOutlets
         ]);
+    }
+
+    public function updatenoHPOwner(Request $request): RedirectResponse
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            $request->validate([
+                'id'    => 'required',
+                'no_hp' => 'required',
+            ]);
+
+            // Cek Nomor HP
+            $used = User::where('no_hp', $request->no_hp)->exists();
+            if ($used) {
+                return redirect()->back()->with('error', 'Nomor HP Sudah Digunakan, Silahkan Gunakan Nomor HP yang lain.');
+            }
+
+            // Update Nomor HP
+            $update_nohp = User::findOrFail($request->id);
+            $update_nohp->update(['no_hp' => $request->no_hp]);
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
+        }
+        return redirect()->back()->with('success', 'Nomor HP berhasil diperbaharui');
+    }
+
+    public function updateEmailOwner(Request $request): RedirectResponse
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            $request->validate([
+                'id'    => 'required',
+                'email' => 'required|email',
+            ]);
+
+            // Cek Email
+            $used = User::where('email', $request->email)->exists();
+            if ($used) {
+                return redirect()->back()->with('error', 'Email Sudah Digunakan, Silahkan Gunakan Email yang lain.');
+            }
+
+            // Update Email
+            $update_email = User::findOrFail($request->id);
+            $update_email->update(['email' => $request->email]);
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
+        }
+        return redirect()->back()->with('success', 'Email berhasil diperbaharui');
+    }
+
+    public function updatePasswordOwner(Request $request): RedirectResponse
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+            
+            $request->validate([
+                'current_password'  => 'required',
+                'new_password'      => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/',
+                'confirm_password'  => 'required|same:new_password',
+            ]);
+
+            $user = User::findOrFail($request->id);
+
+            // Cek apakah current_password sesuai
+            if (!Hash::check($request->current_password, $user->password)) {
+                throw ValidationException::withMessages([
+                    'current_password' => ['Current password is incorrect.'],
+                ]);
+            }
+
+            $user->update([
+                'password' => Hash::make($request->new_password),
+            ]);
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return redirect()->back()->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
+        }
+        return redirect()->back()->with('success', 'Password berhasil diperbaharui');
     }
 
     public function getDataBrandOwner($username)

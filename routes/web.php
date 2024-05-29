@@ -76,6 +76,9 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/manaj-brands/{username}', [Admin_UserOwnerController::class, 'showManageBrands'])->name('admin_brands_user_owner');
         Route::get('/edit-user-owner/{username}', [Admin_UserOwnerController::class, 'edit'])->name('admin_edit_user_owner');
         Route::get('/detail-user-owner/{username}', [Admin_UserOwnerController::class, 'show'])->name('admin_detail_user_owner');
+        Route::post('/update-nohp-user-owner', [Admin_UserOwnerController::class, 'updatenoHPOwner']);
+        Route::post('/update-email-user-owner', [Admin_UserOwnerController::class, 'updateEmailOwner']);
+        Route::post('/update-password-user-owner', [Admin_UserOwnerController::class, 'updatePasswordOwner']);
         Route::post('/store-user-owner', [Admin_UserOwnerController::class, 'store'])->name('admin_store_user_owner');
         Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
         Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
