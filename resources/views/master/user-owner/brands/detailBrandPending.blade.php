@@ -71,7 +71,8 @@
                                             <h2 style="font-size: 18px;">Informasi Brand {{ $brand->brand_name }}</h2>
                                         </div>
                                         <div class="card-toolbar">
-                                            <a href="/admin/edit_New_Brands/{{ $brand->slug }}" class="btn fw-bold btn-warning">Edit Brand</a>
+                                            <button type="button" class="btn fw-bold btn-success" onclick="approveBrand({{ $brand->id }})">Approve Brand</button>
+                                            {{-- <a href="/admin/edit_New_Brands/{{ $brand->slug }}" class="btn fw-bold btn-success">Approve Brand</a> --}}
                                         </div>
                                     </div>
                                     <div class="card-body pt-0">
@@ -172,10 +173,95 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Modal Approve User -->
+                    <div class="modal fade" id="modal_approve">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-title-approve"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="#" id="form-approve">
+                                    @csrf
+                                    <input type="hidden" name="id" class="form-control id" id="id" value="{{ $brand->id }}" readonly>
+                                    <div class="form-group mb-3">
+                                        <label style="color: #31353B!important;font-weight: 600;">Brand Code</label>
+                                        <input type="text" class="form-control brand_code form-control-solid" value="{{ $brand->brand_code }}" readonly>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label style="color: #31353B!important;font-weight: 600;">Brand Name</label>
+                                        <input type="text" class="form-control brand_name form-control-solid" value="{{ $brand->brand_name }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
+                                        Batalkan
+                                    </button>
+                                    <button type="submit" id="approve" class="css-kl2kd9a">Approve</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!--end::Content wrapper-->
+
+@endsection
+
+@section('script')
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script>
+        function approveBrand(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/get_data_detail_brand_pending',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#modal_approve').modal('show');
+                    $('#modal-title-approve').text('Approve Data User');
+                    $('#id').val(data.id);
+                    $('#brand_code').val(data.brand_code);
+                    $('#brand_name').val(data.brand_name);
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+        }
+
+        // Action Approve
+        $(document).ready(function() {
+            $('#form-approve').submit(function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $('#modal_approve').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "/admin/approve-brand-pending",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status === 'success') {
+                            toastr.success(response.message);
+                            $('#tableBrandOwner').DataTable().ajax.reload();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                })
+            })
+        });
+    </script>
 
 @endsection

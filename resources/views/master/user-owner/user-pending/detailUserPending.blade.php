@@ -187,7 +187,6 @@
                             <div class="card-header mt-6">
                                 <div class="card-title flex-column">
                                     <h2 class="mb-1">Brands User</h2>
-                                    {{-- <div class="fs-6 fw-semibold text-muted">Total {{ count($data) }} tasks in backlog</div> --}}
                                 </div>
                             </div>
                             <div class="card-body d-flex flex-column">
@@ -199,7 +198,7 @@
                                         <div class="fs-7 text-muted">{{ $brand->brand_code }}</div>
                                     </div>
                                     <div class="btn btn-active-light-primary">
-                                        <a href="/admin/detail_New_Brands/{{ $brand->slug }}" style="cursor: pointer">
+                                        <a href="/admin/detail-brand-pending/{{ $brand->slug }}" style="cursor: pointer">
                                             <i style="color:#181C32;" class="fas fa-eye me-2"></i>
                                             Detail
                                         </a>
