@@ -300,64 +300,67 @@
                                     </div>
                                 </div>
                                 <!--begin::Outlet-->
-                                <div class="card card-flush mb-6 mb-xl-9">
-                                    <div class="card-header mt-6">
-                                        <div class="card-title flex-column">
-                                            <h2 class="mb-1">Outlets User</h2>
-                                            <div class="fs-6 fw-semibold text-muted">Total {{ count($outlets) }} Outlets</div>
-                                        </div>
-                                        <div class="card-toolbar">
-                                            <a href="#" class="btn btn-light-primary btn-sm">
-                                                <span class="svg-icon svg-icon-3">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 13.5L12.5 13V10C12.5 9.4 12.6 9.5 12 9.5C11.4 9.5 11.5 9.4 11.5 10L11 13L8 13.5C7.4 13.5 7 13.4 7 14C7 14.6 7.4 14.5 8 14.5H11V18C11 18.6 11.4 19 12 19C12.6 19 12.5 18.6 12.5 18V14.5L16 14C16.6 14 17 14.6 17 14C17 13.4 16.6 13.5 16 13.5Z" fill="currentColor" />
-                                                        <rect x="11" y="19" width="10" height="2" rx="1" transform="rotate(-90 11 19)" fill="currentColor" />
-                                                        <rect x="7" y="13" width="10" height="2" rx="1" fill="currentColor" />
-                                                        <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                Add New Outlet
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body d-flex flex-column">
-                                        @foreach ($outlets as $outlet)
-                                            <div class="d-flex align-items-center position-relative mb-7">
-                                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
-                                                <div class="fw-semibold ms-5">
-                                                    <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">{{ $outlet->outlet_name }}</a>
-                                                    <div class="fs-7 text-muted">{{ $outlet->outlet_code }}</div>
-                                                </div>
-                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                @if (count($outlets) != NULL)
+                                    <div class="card card-flush mb-6 mb-xl-9">
+                                        <div class="card-header mt-6">
+                                            <div class="card-title flex-column">
+                                                <h2 class="mb-1">Outlets User</h2>
+                                                <div class="fs-6 fw-semibold text-muted">Total {{ count($outlets) }} Outlets</div>
+                                            </div>
+                                            <div class="card-toolbar">
+                                                <a href="#" class="btn btn-light-primary btn-sm">
                                                     <span class="svg-icon svg-icon-3">
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor" />
-                                                            <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor" />
+                                                            <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 13.5L12.5 13V10C12.5 9.4 12.6 9.5 12 9.5C11.4 9.5 11.5 9.4 11.5 10L11 13L8 13.5C7.4 13.5 7 13.4 7 14C7 14.6 7.4 14.5 8 14.5H11V18C11 18.6 11.4 19 12 19C12.6 19 12.5 18.6 12.5 18V14.5L16 14C16.6 14 17 14.6 17 14C17 13.4 16.6 13.5 16 13.5Z" fill="currentColor" />
+                                                            <rect x="11" y="19" width="10" height="2" rx="1" transform="rotate(-90 11 19)" fill="currentColor" />
+                                                            <rect x="7" y="13" width="10" height="2" rx="1" fill="currentColor" />
+                                                            <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->
-                                                </button>
-                                                <div class="dropdown">
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <li>
-                                                            <a href="/admin/detail_New_Outlets/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                                <i style="color:#181C32;" class="fas fa-eye me-2"></i>
-                                                                Detail
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="/admin/edit_New_Outlets/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
-                                                                <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                    Add New Outlet
+                                                </a>
                                             </div>
-                                        @endforeach
+                                        </div>
+                                        <div class="card-body d-flex flex-column">
+                                            @foreach ($outlets as $outlet)
+                                                <div class="d-flex align-items-center position-relative mb-7">
+                                                    <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
+                                                    <div class="fw-semibold ms-5">
+                                                        <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">{{ $outlet->outlet_name }}</a>
+                                                        <div class="fs-7 text-muted">{{ $outlet->outlet_code }}</div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                        <span class="svg-icon svg-icon-3">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor" />
+                                                                <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </button>
+                                                    <div class="dropdown">
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <li>
+                                                                <a href="/admin/detail_New_Outlets/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                    <i style="color:#181C32;" class="fas fa-eye me-2"></i>
+                                                                    Detail
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="/admin/edit_New_Outlets/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                    <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                                    Edit
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
+                                    
+                                @endif
                                 <!--end::Outlet-->
                             </div>
                             <!--end:::Overview-->

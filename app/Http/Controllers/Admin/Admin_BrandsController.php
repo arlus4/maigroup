@@ -43,6 +43,7 @@ class Admin_BrandsController extends Controller
                 'brands.created_at',
                 'brand_categories.brand_category_name',
                 'users_login.name',
+                'users_login.email'
             )
             ->leftJoin('users_login', 'brands.user_id', 'users_login.id')
             ->leftJoin('brand_categories', 'brands.brand_category_code', 'brand_categories.brand_category_code')
@@ -61,10 +62,12 @@ class Admin_BrandsController extends Controller
     {
         $user = User::where('id', $brand->user_id)->first();
         $category = Brand_Category::select('brand_category_name')->where('brand_category_code', $brand->brand_category_code)->first();
+        $outlet = Outlet::where('brand_code', $brand->brand_code)->get();
         return view('master.user-owner.brands.detailUserBrands', [
             'user' => $user,
             'brand' => $brand,
-            'categories' => $category
+            'categories' => $category,
+            'outlets' => $outlet
         ]);
     }
 
@@ -247,25 +250,6 @@ class Admin_BrandsController extends Controller
         ];
     
         return response()->json($datas);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function detail_New_Brands(Brand $brand)
-    {
-        $user = User::where('id', $brand->user_id)->first();
-        $category = Brand_Category::select('brand_category_name')->where('brand_category_code', $brand->brand_category_code)->first();
-        $outlet = Outlet::where('brand_code', $brand->brand_code)->get();
-        return view('master.user-owner.brands.detailUserBrands', [
-            'user' => $user,
-            'brand' => $brand,
-            'categories' => $category,
-            'outlets' => $outlet
-        ]);
     }
 
     /**

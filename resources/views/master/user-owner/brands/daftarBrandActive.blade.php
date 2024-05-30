@@ -79,7 +79,17 @@
                                     </div>`;
                         }
                     },
-                    { data: 'name' },
+                    {
+                        data: 'name',
+                        render: function(data, type, row) {
+                            return `<div class="d-flex align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="text-gray-800 mb-1">${row.name}</span>
+                                            <span>${row.email}</span>
+                                        </div>
+                                    </div>`;
+                        }
+                    },
                     { data: 'brand_category_name' },
                     {
                         data: 'created_at',

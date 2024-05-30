@@ -249,7 +249,7 @@
                                                 <div class="dropdown">
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <li>
-                                                            <a href="/admin/detail_New_Brands/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                            <a href="/admin/detail-user-brand/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                                 <i style="color:#181C32;" class="fas fa-eye me-2"></i>
                                                                 Detail
                                                             </a>

@@ -101,7 +101,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
                                             <li>
-                                                <button onclick="window.location.href = 'detail-user-brand/${row.slug}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                <button onclick="window.location.href = 'detail-brand-pending/${row.slug}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                     <i style="color:#181C32;" class="fas fa-eye me-2"></i>
                                                     Detail
                                                 </button>
