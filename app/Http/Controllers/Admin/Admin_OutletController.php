@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Brands_Register;
 use App\Models\Outlet;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -100,6 +101,13 @@ class Admin_OutletController extends Controller
     public function getDataDetailOutletPending(Request $request)
     {
         return response()->json(Outlet_Register::find($request->id));
+    }
+
+    public function detail_OutletPending(Outlet_Register $outlet): View
+    {
+        return view('master.user-owner.outlet.detailOutletPending', [
+            'outlet' => $outlet
+        ]);
     }
 
     /**

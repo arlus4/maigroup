@@ -212,6 +212,7 @@
 @endsection
 
 @section('script')
+
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script>
@@ -224,7 +225,7 @@
                 },
                 success: function(data) {
                     $('#modal_approve').modal('show');
-                    $('#modal-title-approve').text('Approve Data User');
+                    $('#modal-title-approve').text('Approve Brand');
                     $('#id').val(data.id);
                     $('#brand_code').val(data.brand_code);
                     $('#brand_name').val(data.brand_name);

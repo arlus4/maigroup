@@ -138,6 +138,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/outlet-pending', [Admin_OutletController::class, 'index_outletPending'])->name('admin_outlet_pending');
         Route::get('/getDataoutletPending', [Admin_OutletController::class, 'getDataoutletPending']);
         Route::get('/get_data_detail_outlet_pending', [Admin_OutletController::class, 'getDataDetailOutletPending']);
+        Route::get('/detail-outlet-pending/{outlet}', [Admin_OutletController::class, 'detail_OutletPending'])->name('admin_outlet_pending_detail');
         Route::post('/approve-outlet-pending', [Admin_OutletController::class, 'approve_OutletPending'])->name('admin_approve_outlet_pending');
         Route::post('/reject-outlet-pending', [Admin_OutletController::class, 'reject_OutletPending'])->name('admin_reject_outlet_pending');
         Route::get('/outlet-reject', [Admin_OutletController::class, 'index_outletReject'])->name('admin_outlet_reject');
