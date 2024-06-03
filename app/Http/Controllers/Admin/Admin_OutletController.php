@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Brands_Register;
 use App\Models\Outlet;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -57,12 +58,21 @@ class Admin_OutletController extends Controller
         return response()->json($datas);
     }
 
+    public function detail_Outlet(Outlet $outlet): View
+    {
+        $owner = User::find($outlet->user_id);
+        return view('master.user-owner.outlet.detailOutlet', [
+            'outlet' => $outlet,
+            'owner'  => $owner
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_outletPending()
+    public function index_outletPending(): View
     {
         return view('master.user-owner.outlet.daftarOutletPending');
     }

@@ -46,102 +46,117 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-xxl">
                 <!--begin::Navbar-->
-                <div class="card mb-6 mb-xl-9">
-                    <div class="card-body pt-9 pb-0">
-                        <!--begin::Details-->
-                        <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
-                            <!--begin::Image-->
-                            <div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                                <img class="mw-50px mw-lg-75px" src="{{ asset($outlet->path) }}" alt="image" />
-                            </div>
-                            <!--end::Image-->
-                            <!--begin::Wrapper-->
-                            <div class="flex-grow-1">
-                                <!--begin::Head-->
-                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                                    <!--begin::Details-->
-                                    <div class="d-flex flex-column">
-                                        <!--begin::Status-->
-                                        <div class="d-flex align-items-center mb-1">
-                                            <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">{{ $outlet->outlet_name }}</a>
+                <div class="row g-6 g-xl-9">
+                    <div class="col-lg-7">
+                        <div class="card mb-6 mb-xl-9">
+                            <div class="card-body pt-9 pb-0">
+                                <!--begin::Details-->
+                                <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
+                                    <!--begin::Image-->
+                                    <div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
+                                        <img class="mw-50px mw-lg-75px" src="{{ asset($outlet->path) }}" alt="image" />
+                                    </div>
+                                    <!--end::Image-->
+                                    <!--begin::Wrapper-->
+                                    <div class="flex-grow-1">
+                                        <!--begin::Head-->
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                            <!--begin::Details-->
+                                            <div class="d-flex flex-column">
+                                                <!--begin::Status-->
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">{{ $outlet->outlet_name }}</a>
+                                                </div>
+                                                <!--end::Status-->
+                                                <!--begin::Description-->
+                                                <div class="d-flex flex-wrap fw-semibold mb-4 fs-5 text-gray-400">{{ $outlet->outlet_code }}</div>
+                                                <!--end::Description-->
+                                            </div>
+                                            <!--end::Details-->
                                         </div>
-                                        <!--end::Status-->
-                                        <!--begin::Description-->
-                                        <div class="d-flex flex-wrap fw-semibold mb-4 fs-5 text-gray-400">{{ $outlet->outlet_code }}</div>
-                                        <!--end::Description-->
+                                        <!--end::Head-->
+                                        <!--begin::Info-->
+                                        <div class="d-flex flex-wrap justify-content-start">
+                                            <!--begin::Stats-->
+                                            <div class="d-flex flex-wrap">
+                                                <!--begin::Stat-->
+                                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <!--begin::Number-->
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="fs-4 fw-bold"> {{ \Carbon\Carbon::parse($outlet->created_at)->format('d F Y') }}</div>
+                                                    </div>
+                                                    <!--end::Number-->
+                                                    <!--begin::Label-->
+                                                    <div class="fw-semibold fs-6 text-gray-400">Register</div>
+                                                    <!--end::Label-->
+                                                </div>
+                                                <!--end::Stat-->
+                                            </div>
+                                            <!--end::Stats-->
+                                        </div>
+                                        <!--end::Info-->
                                     </div>
-                                    <!--end::Details-->
-                                    <!--begin::Actions-->
-                                    <div class="d-flex mb-4">
-                                        <button type="button" class="btn btn-md btn-success me-3" onclick="approveOutlet({{ $outlet->id }})">Approve</button>
-                                    </div>
-                                    <!--end::Actions-->
+                                    <!--end::Wrapper-->
                                 </div>
-                                <!--end::Head-->
-                                <!--begin::Info-->
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <!--begin::Stats-->
-                                    <div class="d-flex flex-wrap">
-                                        <!--begin::Stat-->
-                                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                            <!--begin::Number-->
-                                            <div class="d-flex align-items-center">
-                                                <div class="fs-4 fw-bold"> {{ \Carbon\Carbon::parse($outlet->created_at)->format('d F Y') }}</div>
-                                            </div>
-                                            <!--end::Number-->
-                                            <!--begin::Label-->
-                                            <div class="fw-semibold fs-6 text-gray-400">Register</div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Stat-->
-                                        <!--begin::Stat-->
-                                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                            <!--begin::Number-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
-                                                <span class="svg-icon svg-icon-3 svg-icon-danger me-2">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                                        <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                                <div class="fs-4 fw-bold" data-kt-countup="true" data-kt-countup-value="75">0</div>
-                                            </div>
-                                            <!--end::Number-->
-                                            <!--begin::Label-->
-                                            <div class="fw-semibold fs-6 text-gray-400">Open Tasks</div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Stat-->
-                                        <!--begin::Stat-->
-                                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                            <!--begin::Number-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                <span class="svg-icon svg-icon-3 svg-icon-success me-2">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor" />
-                                                        <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                                <div class="fs-4 fw-bold" data-kt-countup="true" data-kt-countup-value="15000" data-kt-countup-prefix="$">0</div>
-                                            </div>
-                                            <!--end::Number-->
-                                            <!--begin::Label-->
-                                            <div class="fw-semibold fs-6 text-gray-400">Budget Spent</div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Stat-->
-                                    </div>
-                                    <!--end::Stats-->
-                                </div>
-                                <!--end::Info-->
+                                <!--end::Details-->
                             </div>
-                            <!--end::Wrapper-->
                         </div>
-                        <!--end::Details-->
+                    </div>
+                    <div class="col-lg-5">
+                        <!--begin::Customer details-->
+                        <div class="card card-flush flex-row-fluid">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap">
+                                        <div class="d-flex flex-column mt-3">
+                                            <div class="d-flex align-items-center mb-1">
+                                                <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">{{ $owner->name }}</a>
+                                            </div>
+                                            <div class="d-flex flex-wrap fw-semibold mb-1 fs-5 text-gray-400">Owner</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                        <tbody class="fw-semibold text-gray-600">
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="svg-icon svg-icon-2 me-2">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="currentColor" />
+                                                                <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        Email
+                                                    </div>
+                                                </td>
+                                                <td class="fw-bold text-end">
+                                                    <a href="javascript:;" class="text-gray-600 text-hover-primary">{{ $owner->email }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="svg-icon svg-icon-2 me-2">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z" fill="currentColor" />
+                                                                <path opacity="0.3" d="M19 4H5V20H19V4Z" fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        Phone
+                                                    </div>
+                                                </td>
+                                                <td class="fw-bold text-end">{{ $owner->no_hp }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Customer details-->
                     </div>
                 </div>
                 <!--end::Navbar-->
@@ -557,54 +572,5 @@
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-    <script>
-        function approveOutlet(id) {
-            $.ajax({
-                type: 'GET',
-                url: '/admin/get_data_detail_outlet_pending',
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    $('#modal_approve').modal('show');
-                    $('#modal-title-approve').text('Approve Outlet');
-                    $('#id').val(data.id);
-                    $('#outlet_code').val(data.outlet_code);
-                    $('#outlet_name').val(data.outlet_name);
-                },
-                error: function (xhr, status, error) {
-                    toastr.error("Terjadi kesalahan. Silakan coba lagi.");
-                }
-            })
-        }
-
-        // Action Approve
-        $(document).ready(function() {
-            $('#form-approve').submit(function(e) {
-                e.preventDefault();
-                let formData = new FormData(this);
-                $('#modal_approve').modal('hide');
-                $.ajax({
-                    type: 'POST',
-                    url: "/admin/approve-outlet-pending",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        console.log(response);
-                        if (response.status === 'success') {
-                            toastr.success(response.message);
-                            $('#tableOutletOwner').DataTable().ajax.reload();
-                        } else {
-                            toastr.error(response.message);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
-                    }
-                })
-            })
-        });
-    </script>
 
 @endsection

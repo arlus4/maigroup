@@ -432,7 +432,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'POST',
-                        url: '/admin/delete_brandCategory',
+                        // url: '/admin/delete_brandCategory',
                         data: {
                             _token: "{{ csrf_token() }}",
                             id : id

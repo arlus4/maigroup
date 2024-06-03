@@ -136,6 +136,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         // Manajemen Outlet
         Route::get('/outlet-active', [Admin_OutletController::class, 'index_outletActive'])->name('admin_outlet_active');
         Route::get('/getDataoutletActive', [Admin_OutletController::class, 'getDataoutletActive']);
+        Route::get('/detail-outlet/{outlet:slug}', [Admin_OutletController::class, 'detail_Outlet'])->name('admin_outlet_detail');
         Route::get('/outlet-pending', [Admin_OutletController::class, 'index_outletPending'])->name('admin_outlet_pending');
         Route::get('/getDataoutletPending', [Admin_OutletController::class, 'getDataoutletPending']);
         Route::get('/get_data_detail_outlet_pending', [Admin_OutletController::class, 'getDataDetailOutletPending']);
