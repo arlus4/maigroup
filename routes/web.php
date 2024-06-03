@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
+use App\Http\Controllers\Admin\Admin_Product_CategoryController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -143,6 +144,15 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/reject-outlet-pending', [Admin_OutletController::class, 'reject_OutletPending'])->name('admin_reject_outlet_pending');
         Route::get('/outlet-reject', [Admin_OutletController::class, 'index_outletReject'])->name('admin_outlet_reject');
         Route::get('/getDataoutletReject', [Admin_OutletController::class, 'getDataoutletReject']);
+
+        // Category Product
+        Route::get('/category-product', [Admin_Product_CategoryController::class, 'index'])->name('admin_category_product');
+        Route::get('/catProductSlug', [Admin_Product_CategoryController::class, 'catProductSlug']);
+        Route::get('/getDataProductCategory', [Admin_Product_CategoryController::class, 'getDataProductCategory']);
+        Route::post('/add_productCategory', [Admin_Product_CategoryController::class, 'store'])->name('admin_store_category_product');
+        Route::get('/edit_productCategory', [Admin_Product_CategoryController::class, 'edit'])->name('admin_edit_category_product');
+        Route::post('/update_productCategory', [Admin_Product_CategoryController::class, 'update'])->name('admin_update_category_product');
+        Route::post('/delete_productCategory', [Admin_Product_CategoryController::class, 'destroy'])->name('admin_delete_category_product');
         
         
         //Banner
@@ -233,75 +243,75 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
     });
 });
 
-Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
+// Route::group(['middleware' => ['penjual:2', 'auth', 'verified']], function () {
 
-    Route::prefix('owner')->name('owner.')->group(function() {
+//     Route::prefix('owner')->name('owner.')->group(function() {
 
-        // Outlet
-        Route::get('/listOutlet', [OutletsController::class, 'index']);
-        Route::get('/get_data_listOutlet', [OutletsController::class, 'get_data_listOutlet']);
-        Route::get('/detail_user_outlet/{outlet}', [OutletsController::class, 'show']);
-        Route::get('/createOutlet', [OutletsController::class, 'create']);
-        Route::post('/storeOutlet', [OutletsController::class, 'store']);
-        Route::get('/editOutlet/{outlet}', [OutletsController::class, 'edit']);
-        Route::post('/updateOutlet/{outlet}', [OutletsController::class, 'update']);
-        Route::get('/outletSlug', [OutletsController::class, 'outletSlug']);
-        Route::get('/validateNoHp', [OutletsController::class, 'validateNoHp']);
+//         // Outlet
+//         Route::get('/listOutlet', [OutletsController::class, 'index']);
+//         Route::get('/get_data_listOutlet', [OutletsController::class, 'get_data_listOutlet']);
+//         Route::get('/detail_user_outlet/{outlet}', [OutletsController::class, 'show']);
+//         Route::get('/createOutlet', [OutletsController::class, 'create']);
+//         Route::post('/storeOutlet', [OutletsController::class, 'store']);
+//         Route::get('/editOutlet/{outlet}', [OutletsController::class, 'edit']);
+//         Route::post('/updateOutlet/{outlet}', [OutletsController::class, 'update']);
+//         Route::get('/outletSlug', [OutletsController::class, 'outletSlug']);
+//         Route::get('/validateNoHp', [OutletsController::class, 'validateNoHp']);
 
-        // Dashboard Owner
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-owner');
-        Route::get('/get_data_stock_report', [DashboardController::class, 'getDataStockReport']);
+//         // Dashboard Owner
+//         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-owner');
+//         Route::get('/get_data_stock_report', [DashboardController::class, 'getDataStockReport']);
 
-        // POS Sistem atau Menu Order
-        Route::get('/menu-order', [MenuOrderController::class, 'index'])->name('owner_menu_order');
-        Route::get('/get-produk/{produkId}', [MenuOrderController::class, 'getProduk'])->name('owner_get_produk');
-        Route::get('/getNomorHP', [MenuOrderController::class, 'getNomorHP']);
-        Route::get('/getIdPembeli', [MenuOrderController::class, 'getIdPembeli']);
-        Route::post('/store-order', [MenuOrderController::class, 'store']);
+//         // POS Sistem atau Menu Order
+//         Route::get('/menu-order', [MenuOrderController::class, 'index'])->name('owner_menu_order');
+//         Route::get('/get-produk/{produkId}', [MenuOrderController::class, 'getProduk'])->name('owner_get_produk');
+//         Route::get('/getNomorHP', [MenuOrderController::class, 'getNomorHP']);
+//         Route::get('/getIdPembeli', [MenuOrderController::class, 'getIdPembeli']);
+//         Route::post('/store-order', [MenuOrderController::class, 'store']);
 
-        // Claim Bonus
-        Route::get('/claim_bonus', [ClaimBonusController::class, 'claim_bonus'])->name('owner_claim_bonus');
-        Route::get('/store_claim_bonus', [ClaimBonusController::class, 'store_claim_bonus'])->name('owner_store_claim_bonus');
-        Route::post('/konfirmasi_claim', [ClaimBonusController::class, 'konfirmasi_claim'])->name('owner_konfirmasi_claim');
-        Route::post('/update_claim', [ClaimBonusController::class, 'update_claim'])->name('owner_update_claim');
-        Route::post('/konfirmasi_gift', [ClaimBonusController::class, 'konfirmasi_gift'])->name('owner_konfirmasi_gift');
-        Route::post('/update_gift', [ClaimBonusController::class, 'update_gift'])->name('owner_update_gift');
+//         // Claim Bonus
+//         Route::get('/claim_bonus', [ClaimBonusController::class, 'claim_bonus'])->name('owner_claim_bonus');
+//         Route::get('/store_claim_bonus', [ClaimBonusController::class, 'store_claim_bonus'])->name('owner_store_claim_bonus');
+//         Route::post('/konfirmasi_claim', [ClaimBonusController::class, 'konfirmasi_claim'])->name('owner_konfirmasi_claim');
+//         Route::post('/update_claim', [ClaimBonusController::class, 'update_claim'])->name('owner_update_claim');
+//         Route::post('/konfirmasi_gift', [ClaimBonusController::class, 'konfirmasi_gift'])->name('owner_konfirmasi_gift');
+//         Route::post('/update_gift', [ClaimBonusController::class, 'update_gift'])->name('owner_update_gift');
 
-        Route::get('/bonus', [ClaimBonusController::class, 'new_bonus'])->name('owner_bonus');
-        Route::get('/bonus/get_data_pembeli_claim', [ClaimBonusController::class, 'get_data_pembeli_claim'])->name('get_data_pembeli_claim');
-        Route::get('/bonus_gift', [ClaimBonusController::class, 'new_bonus_gift'])->name('owner_bonus_gift');
-        Route::get('/bonus/get_data_pembeli_gift', [ClaimBonusController::class, 'get_data_pembeli_gift'])->name('get_data_pembeli_gift');
+//         Route::get('/bonus', [ClaimBonusController::class, 'new_bonus'])->name('owner_bonus');
+//         Route::get('/bonus/get_data_pembeli_claim', [ClaimBonusController::class, 'get_data_pembeli_claim'])->name('get_data_pembeli_claim');
+//         Route::get('/bonus_gift', [ClaimBonusController::class, 'new_bonus_gift'])->name('owner_bonus_gift');
+//         Route::get('/bonus/get_data_pembeli_gift', [ClaimBonusController::class, 'get_data_pembeli_gift'])->name('get_data_pembeli_gift');
 
-        // Restock
-        Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');
-        Route::get('/get-harga-order-penjual/{id}', [RestockController::class, 'getHargaOrder'])->name('owner_get_harga_order');
-        Route::post('/store-restock-order', [RestockController::class, 'store'])->name('owner_store_restock_order');
-        Route::get('/konfirmasi-pembayaran-order', [RestockController::class, 'konfPembayaran'])->name('owner_konf_pembayaran_order');
-        Route::get('/cek-data-invoice/{invoice}', [RestockController::class, 'cekDataInvoice'])->name('owner_cek_data_invoice');
-        Route::post('/store-konfirmasi-pembayaran-order', [RestockController::class, 'storeKonfPembayaran'])->name('owner_store_konf_pembayaran_order');
-        Route::get('/status-restock', [RestockController::class, 'statusRestock'])->name('owner_status_restock');
-        Route::get('/detail-pembelian/{invoice}', [RestockController::class, 'detailPembelian'])->name('owner_detail_pembelian');
-        Route::get('/change-progress-order/{invoice}', [RestockController::class, 'changeProgressOrder'])->name('owner_change_progress_order');
+//         // Restock
+//         Route::get('/restock-order', [RestockController::class, 'index'])->name('owner_restock');
+//         Route::get('/get-harga-order-penjual/{id}', [RestockController::class, 'getHargaOrder'])->name('owner_get_harga_order');
+//         Route::post('/store-restock-order', [RestockController::class, 'store'])->name('owner_store_restock_order');
+//         Route::get('/konfirmasi-pembayaran-order', [RestockController::class, 'konfPembayaran'])->name('owner_konf_pembayaran_order');
+//         Route::get('/cek-data-invoice/{invoice}', [RestockController::class, 'cekDataInvoice'])->name('owner_cek_data_invoice');
+//         Route::post('/store-konfirmasi-pembayaran-order', [RestockController::class, 'storeKonfPembayaran'])->name('owner_store_konf_pembayaran_order');
+//         Route::get('/status-restock', [RestockController::class, 'statusRestock'])->name('owner_status_restock');
+//         Route::get('/detail-pembelian/{invoice}', [RestockController::class, 'detailPembelian'])->name('owner_detail_pembelian');
+//         Route::get('/change-progress-order/{invoice}', [RestockController::class, 'changeProgressOrder'])->name('owner_change_progress_order');
 
-        // Report Invoice
-        Route::get('/report-invoice-pembelian', [ReportInvoiceController::class, 'invoicePembelian'])->name('owner_report_invoice_pembelian');
-        Route::get('/detail-invoice-pembelian/{invoice}', [ReportInvoiceController::class, 'detailInvoicePembelian'])->name('owner_detail_invoice_pembelian');
-        Route::get('/get-data-invoice-pembelian', [ReportInvoiceController::class, 'getDataInvoicePembelian'])->name('getDataInvoicePembelian');
+//         // Report Invoice
+//         Route::get('/report-invoice-pembelian', [ReportInvoiceController::class, 'invoicePembelian'])->name('owner_report_invoice_pembelian');
+//         Route::get('/detail-invoice-pembelian/{invoice}', [ReportInvoiceController::class, 'detailInvoicePembelian'])->name('owner_detail_invoice_pembelian');
+//         Route::get('/get-data-invoice-pembelian', [ReportInvoiceController::class, 'getDataInvoicePembelian'])->name('getDataInvoicePembelian');
 
-        Route::get('/report-invoice-penjualan', [ReportInvoiceController::class, 'invoicePenjualan'])->name('owner_report_invoice_penjualan');
-        Route::get('/detail-invoice-penjualan/{invoice}', [ReportInvoiceController::class, 'detailInvoicePenjualan'])->name('owner_detail_invoice_penjualan');
-        Route::get('/get-data-invoice-penjualan', [ReportInvoiceController::class, 'getDataInvoicePenjualan'])->name('getDataInvoicePenjualan');
+//         Route::get('/report-invoice-penjualan', [ReportInvoiceController::class, 'invoicePenjualan'])->name('owner_report_invoice_penjualan');
+//         Route::get('/detail-invoice-penjualan/{invoice}', [ReportInvoiceController::class, 'detailInvoicePenjualan'])->name('owner_detail_invoice_penjualan');
+//         Route::get('/get-data-invoice-penjualan', [ReportInvoiceController::class, 'getDataInvoicePenjualan'])->name('getDataInvoicePenjualan');
 
-        Route::get('/download-invoice/{invoice}', [ReportInvoiceController::class, 'downloadInvoice'])->name('owner_download_invoice');
+//         Route::get('/download-invoice/{invoice}', [ReportInvoiceController::class, 'downloadInvoice'])->name('owner_download_invoice');
         
 
-        // Akun Setting
-        Route::get('/pengaturan-akun/{username}', [AkunSettingController::class, 'index'])->name('owner_pengaturan_akun');
-        Route::get('/pengaturan-akun/edit-profile/{username}', [AkunSettingController::class, 'editProfile'])->name('owner_edit_profile');
-        Route::post('/pengaturan-akun/update-profile/{username}', [AkunSettingController::class, 'updateProfile'])->name('owner_update_profile');
-        Route::post('/pengaturan-akun/update-password/{username}', [AkunSettingController::class, 'updatePassword'])->name('owner_update_password');
-        Route::get('/OwnervalidateNoHp', [AkunSettingController::class, 'OwnervalidateNoHp']);
-        Route::get('/OwnervalidateUsername', [AkunSettingController::class, 'OwnervalidateUsername']);
-        Route::get('/OwnervalidateEmail', [AkunSettingController::class, 'OwnervalidateEmail']);
-    });
-});
+//         // Akun Setting
+//         Route::get('/pengaturan-akun/{username}', [AkunSettingController::class, 'index'])->name('owner_pengaturan_akun');
+//         Route::get('/pengaturan-akun/edit-profile/{username}', [AkunSettingController::class, 'editProfile'])->name('owner_edit_profile');
+//         Route::post('/pengaturan-akun/update-profile/{username}', [AkunSettingController::class, 'updateProfile'])->name('owner_update_profile');
+//         Route::post('/pengaturan-akun/update-password/{username}', [AkunSettingController::class, 'updatePassword'])->name('owner_update_password');
+//         Route::get('/OwnervalidateNoHp', [AkunSettingController::class, 'OwnervalidateNoHp']);
+//         Route::get('/OwnervalidateUsername', [AkunSettingController::class, 'OwnervalidateUsername']);
+//         Route::get('/OwnervalidateEmail', [AkunSettingController::class, 'OwnervalidateEmail']);
+//     });
+// });

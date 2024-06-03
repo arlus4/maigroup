@@ -235,14 +235,14 @@
                                 </span>
                                 {{-- <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_owner') || Request::routeIs('admin.admin_order_pending') || Request::routeIs('admin.admin_tambah_order')) || Request::is('admin/order*') ? 'here show' : '' }}"> --}}
                                 <div class="menu-sub menu-sub-accordion">
-                                    {{-- <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('admin.admin_tambah_order') ? 'active' : '' }}" href="{{ route('admin.admin_tambah_user_owner') }}">
+                                    <div class="menu-item">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_category_product') ? 'active' : '' }}" href="{{ route('admin.admin_category_product') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Tambah Outlet</span>
+                                            <span class="menu-title">Kategori Product</span>
                                         </a>
-                                    </div> --}}
+                                    </div>
                                     <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_outlet_active') ? 'active' : '' }} || {{ Request::routeIs('admin.admin_tambah_user_owner') ? 'active' : '' }}" href="{{ route('admin.admin_outlet_active') }}">
                                             <span class="menu-bullet">

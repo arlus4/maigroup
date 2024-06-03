@@ -449,51 +449,5 @@
                 }
             })
         }
-
-        // function detailUserOwner(username){
-        //     $.ajax({
-        //         url: "detail-user-owner/" + username,
-        //         type: "GET",
-        //         success: function (data){
-        //             const formatTglSaja = (date) => {
-        //                 var dateObject  = new Date(date);
-        //                 var year        = dateObject.getFullYear();
-        //                 var day         = dateObject.getDate();
-        //                 var month       = dateObject.getMonth();
-
-        //                 var monthsArray = [
-        //                     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-        //                     "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-        //                 ];
-
-        //                 day                 = day < 10 ? "0" + day : day; 
-        //                 month               = monthsArray[month];
-        //                 var formattedDate   = day + ' ' + month + ' ' + year;
-
-        //                 return formattedDate;
-        //             }
-
-        //             var defaultImagePath    = '{{ asset("storage/user_owner/avatar/avatar.png") }}';
-        //             var imagePath           = data.avatar ? '{{ asset("storage/user_owner/avatar") }}/' + data.avatar : defaultImagePath;
-                    
-        //             $('#imgUser').attr('src', imagePath);
-        //             $('#namaUser').text(data.name);
-        //             $('#noNIK').text(data.nomor_ktp || '-');
-        //             $('#tglLahir').text(formatTglSaja(data.tanggal_lahir));
-        //             $('#jenisKelamin').text(data.jenis_kelamin === "P" ? 'Pria' : 'Wanita');
-        //             $('#namaOutlet').text(data.nama_category || '-');
-        //             $('#namaKategori').text(data.project_name || '-');
-        //             $('#noHpBawah').text(data.no_hp || '-');
-                    
-        //             var alamatDetail = (data.alamat_detail ? data.alamat_detail : 'Alamat Detail Belum Dicantumkan') + ', Kecamatan ' + (data.nama_kecamatan ? data.nama_kecamatan : 'Belum Dicantumkan') + ', Kota ' + (data.nama_kotakab ? data.nama_kotakab : 'Belum Dicantumkan') + ', Provinsi ' + (data.nama_propinsi ? data.nama_propinsi : 'Belum Dicantumkan') + ', Kode Pos ' + (data.kode_pos ? data.kode_pos : 'Belum Dicantumkan');
-        //             $('#alamatDetail').text(alamatDetail);
-
-        //             $('#detailUserOwner').modal('show');
-        //         },
-        //         error: function(error){
-
-        //         }
-        //     });
-        // }
     </script>
 @endsection
