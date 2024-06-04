@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        <!--begin::Customer details-->
+                        <!--begin::Owner-->
                         <div class="card card-flush flex-row-fluid">
                             <div class="card-header">
                                 <div class="card-title">
@@ -156,60 +156,51 @@
                                 </div>
                             </div>
                         </div>
-                        <!--end::Customer details-->
+                        <!--end::Owner-->
                     </div>
                 </div>
                 <!--end::Navbar-->
                 <!--begin::Row-->
                 <div class="row g-6 g-xl-9">
-                    <!--begin::Col-->
-                    <div class="col-lg-6">
-                        <!--begin::Card-->
+                    <!--begin::Pegawai-->
+                    <div class="col-lg-4">
                         <div class="card card-flush h-lg-100">
-                            <!--begin::Card header-->
                             <div class="card-header mt-6">
-                                <!--begin::Card title-->
                                 <div class="card-title flex-column">
                                     <h3 class="fw-bold mb-1">Pegawai</h3>
-                                    <div class="fs-6 text-gray-400">From total 482 Participants</div>
+                                    <div class="fs-6 text-gray-400">Total {{ $pegawai->total() }} Pegawai</div>
                                 </div>
-                                <!--end::Card title-->
-                                <!--begin::Card toolbar-->
-                                <div class="card-toolbar">
-                                    <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">View All</a>
-                                </div>
-                                <!--end::Card toolbar-->
+                                @if ($pegawai->total() >= 5)
+                                    <div class="card-toolbar">
+                                        <a href="javascript:;" class="btn btn-bg-light btn-active-color-primary btn-sm" onclick="listPegawai()">View All</a>
+                                    </div>
+                                @endif
                             </div>
-                            <!--end::Card toolbar-->
-                            <!--begin::Card body-->
                             <div class="card-body d-flex flex-column p-9 pt-3 mb-9">
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center mb-5">
-                                    <!--begin::Avatar-->
-                                    <div class="me-5 position-relative">
-                                        <!--begin::Image-->
-                                        <div class="symbol symbol-35px symbol-circle">
-                                            <img alt="Pic" src="../../assets/media/avatars/300-6.jpg" />
+                                @if ($pegawai->isEmpty())
+                                    <span class="badge badge-light-info fw-bold px-4 py-3">Belum Memiliki Pegawai</span>
+                                @else
+                                    @foreach ($pegawai as $p)
+                                        <div class="d-flex align-items-center mb-5">
+                                            <div class="fw-semibold">
+                                                <a href="javascript:;" class="fs-5 fw-bold text-gray-900 text-hover-primary">{{ $p->name }}</a>
+                                                <div class="text-gray-400">{{ $p->email }}</div>
+                                            </div>
+                                            @if ($p->is_active == 1)
+                                                <div class="badge badge-success ms-auto">Active</div>
+                                            @else
+                                                <div class="badge badge-danger ms-auto">Non-Active</div>
+                                            @endif
                                         </div>
-                                        <!--end::Image-->
-                                    </div>
-                                    <!--end::Avatar-->
-                                    <!--begin::Details-->
-                                    <div class="fw-semibold">
-                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">Emma Smith</a>
-                                        <div class="text-gray-400">8 Pending & 97 Completed Tasks</div>
-                                    </div>
-                                    <!--end::Details-->
-                                </div>
-                                <!--end::Item-->
+                                    @endforeach
+                                @endif
                             </div>
-                            <!--end::Card body-->
                         </div>
-                        <!--end::Card-->
                     </div>
-                    <!--end::Col-->
+                    <!--end::Pegawai-->
+                    
                     <!--begin::Col-->
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                         <!--begin::Tasks-->
                         <div class="card card-flush h-lg-100">
                             <!--begin::Card header-->
@@ -259,14 +250,14 @@
                     <!--end::Col-->
                 </div>
                 <!--end::Row-->
-                <!--begin::Table-->
+
+                <!--begin::Table Product-->
                 <div class="card card-flush mt-6 mt-xl-9">
                     <!--begin::Card header-->
                     <div class="card-header mt-5">
                         <!--begin::Card title-->
                         <div class="card-title flex-column">
-                            <h3 class="fw-bold mb-1">Project Spendings</h3>
-                            <div class="fs-6 text-gray-400">Total $260,300 sepnt so far</div>
+                            <h3 class="fw-bold mb-1">Product {{ $outlet->outlet_name }}</h3>
                         </div>
                         <!--begin::Card title-->
                         <!--begin::Card toolbar-->
@@ -315,7 +306,7 @@
                         <!--begin::Table container-->
                         <div class="table-responsive">
                             <!--begin::Table-->
-                            <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
+                            <table id="product_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
                                 <!--begin::Head-->
                                 <thead class="fs-7 text-gray-400 text-uppercase">
                                     <tr>
@@ -394,133 +385,6 @@
                                             <a href="#" class="btn btn-light btn-sm">View</a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <!--begin::User-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-5 position-relative">
-                                                    <!--begin::Avatar-->
-                                                    <div class="symbol symbol-35px symbol-circle">
-                                                        <img alt="Pic" src="../../assets/media/avatars/300-1.jpg" />
-                                                    </div>
-                                                    <!--end::Avatar-->
-                                                </div>
-                                                <!--end::Wrapper-->
-                                                <!--begin::Info-->
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <a href="#" class="fs-6 text-gray-800 text-hover-primary">Max Smith</a>
-                                                    <div class="fw-semibold text-gray-400">max@kt.com</div>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::User-->
-                                        </td>
-                                        <td>Sep 22, 2022</td>
-                                        <td>$504.00</td>
-                                        <td>
-                                            <span class="badge badge-light-info fw-bold px-4 py-3">In progress</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="#" class="btn btn-light btn-sm">View</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <!--begin::User-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-5 position-relative">
-                                                    <!--begin::Avatar-->
-                                                    <div class="symbol symbol-35px symbol-circle">
-                                                        <img alt="Pic" src="../../assets/media/avatars/300-5.jpg" />
-                                                    </div>
-                                                    <!--end::Avatar-->
-                                                </div>
-                                                <!--end::Wrapper-->
-                                                <!--begin::Info-->
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <a href="#" class="fs-6 text-gray-800 text-hover-primary">Sean Bean</a>
-                                                    <div class="fw-semibold text-gray-400">sean@dellito.com</div>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::User-->
-                                        </td>
-                                        <td>Apr 15, 2022</td>
-                                        <td>$470.00</td>
-                                        <td>
-                                            <span class="badge badge-light-success fw-bold px-4 py-3">Approved</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="#" class="btn btn-light btn-sm">View</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <!--begin::User-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-5 position-relative">
-                                                    <!--begin::Avatar-->
-                                                    <div class="symbol symbol-35px symbol-circle">
-                                                        <img alt="Pic" src="../../assets/media/avatars/300-25.jpg" />
-                                                    </div>
-                                                    <!--end::Avatar-->
-                                                </div>
-                                                <!--end::Wrapper-->
-                                                <!--begin::Info-->
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <a href="#" class="fs-6 text-gray-800 text-hover-primary">Brian Cox</a>
-                                                    <div class="fw-semibold text-gray-400">brian@exchange.com</div>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::User-->
-                                        </td>
-                                        <td>Apr 15, 2022</td>
-                                        <td>$409.00</td>
-                                        <td>
-                                            <span class="badge badge-light-success fw-bold px-4 py-3">Approved</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="#" class="btn btn-light btn-sm">View</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <!--begin::User-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-5 position-relative">
-                                                    <!--begin::Avatar-->
-                                                    <div class="symbol symbol-35px symbol-circle">
-                                                        <span class="symbol-label bg-light-warning text-warning fw-semibold">C</span>
-                                                    </div>
-                                                    <!--end::Avatar-->
-                                                    <!--begin::Online-->
-                                                    <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                                    <!--end::Online-->
-                                                </div>
-                                                <!--end::Wrapper-->
-                                                <!--begin::Info-->
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <a href="#" class="fs-6 text-gray-800 text-hover-primary">Mikaela Collins</a>
-                                                    <div class="fw-semibold text-gray-400">mik@pex.com</div>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::User-->
-                                        </td>
-                                        <td>Mar 10, 2022</td>
-                                        <td>$633.00</td>
-                                        <td>
-                                            <span class="badge badge-light-success fw-bold px-4 py-3">Approved</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="#" class="btn btn-light btn-sm">View</a>
-                                        </td>
-                                    </tr>
                                 </tbody>
                                 <!--end::Body-->
                             </table>
@@ -530,33 +394,35 @@
                     </div>
                     <!--end::Card body-->
                 </div>
-                <!--end::Table-->
-                <!-- Modal Approve User -->
-                <div class="modal fade" id="modal_approve">
-                    <div class="modal-dialog">
+                <!--end::Table Product-->
+
+                <!--Modal::Detail List Pegawai-->
+                <div class="modal fade" id="modal_list">
+                    <div class="modal-dialog modal-dialog-centered mw-1000px">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="modal-title-approve"></h4>
+                                <h4 class="modal-title" id="modal-title"></h4>
                             </div>
                             <div class="modal-body">
-                                <form action="#" id="form-approve">
-                                @csrf
-                                <input type="hidden" name="id" class="form-control id" id="id" value="{{ $outlet->id }}" readonly>
-                                <div class="form-group mb-3">
-                                    <label style="color: #31353B!important;font-weight: 600;">Outlet Code</label>
-                                    <input type="text" class="form-control outlet_code form-control-solid" value="{{ $outlet->outlet_code }}" readonly>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label style="color: #31353B!important;font-weight: 600;">Outlet Name</label>
-                                    <input type="text" class="form-control outlet_name form-control-solid" value="{{ $outlet->outlet_name }}" readonly>
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableListPegawai">
+                                        <thead>
+                                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-100px text-dark">Nama</th>
+                                                <th class="min-w-100px text-dark">Email</th>
+                                                <th class="min-w-100px text-dark">Nomor HP</th>
+                                                <th class="min-w-100px text-dark">Register</th>
+                                                <th class="min-w-100px text-dark">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-gray-600 fw-semibold"></tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
-                                    Batalkan
+                                    Close
                                 </button>
-                                <button type="submit" id="approve" class="css-kl2kd9a">Approve</button>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -571,6 +437,70 @@
 @section('script')
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script>
+        // Datatable List Pegawai
+        $(document).ready(function() {
+           $('#tableListPegawai').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: "/admin/getDataPegawaiOutlet/{{ $outlet->slug }}",
+                    dataType: "JSON"
+                },
+                language: {
+                    processing: "Loading..."
+                },
+                columns: [
+                    { data: 'name' },
+                    { data: 'email' },
+                    { data: 'no_hp' },
+                    {
+                        data: 'created_at',
+                        render: function(data, type, row) {
+                            // Ubah format tanggal dari YYYY-MM-DDTHH:mm:ss.sssZ menjadi dd-MM-YYYY
+                            var date = new Date(data);
+                            var day = date.getDate().toString().padStart(2, '0');
+                            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+                            var year = date.getFullYear();
+                            return day + '-' + month + '-' + year;
+                        }
+                    },
+                    {
+                        data: "Status",
+                        render: function(data, type, row) {
+                            if (row.is_active == 1) {
+                                return '<span class="badge badge-light-success fw-bold px-4 py-3">Active</span>';
+                            } else {
+                                return '<span class="badge badge-light-danger fw-bold px-4 py-3">Non-Active</span>';
+                            }
+                        }
+                    },
+                ],
+           });
+        });
+
+        function listPegawai() {
+            $('#modal_list').modal('show');
+            $('#modal-title').text('List Pegawai');
+        }
+
+        // Datatable Product Outlet
+        $(document).ready(function() {
+            $('#product_table').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: "/admin/getDataProductOutlet/{{ $outlet->slug }}",
+                    dataType: "JSON"
+                },
+                language: {
+                    processing: "Loading..."
+                },
+                columns: [
+
+                ],
+            });
+        });
+    </script>
 
 @endsection

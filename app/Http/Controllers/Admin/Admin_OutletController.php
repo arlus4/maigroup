@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Brands_Register;
 use App\Models\Outlet;
+use App\Models\Pegawai;
+use App\Models\Product_Outlet;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -61,10 +63,38 @@ class Admin_OutletController extends Controller
     public function detail_Outlet(Outlet $outlet): View
     {
         $owner = User::find($outlet->user_id);
+        $pegawai = Pegawai::where('outlet_code', $outlet->outlet_code)->paginate(5);
         return view('master.user-owner.outlet.detailOutlet', [
             'outlet' => $outlet,
-            'owner'  => $owner
+            'owner'  => $owner,
+            'pegawai' => $pegawai
         ]);
+    }
+
+    public function getDataPegawaiOutlet(Outlet $outlet)
+    {
+        $pegawai = Pegawai::where('outlet_code', $outlet->outlet_code)->orderBy('created_at')->get();
+
+        $datas = [
+            'data' => $pegawai
+        ];
+      
+        return response()->json($datas);
+    }
+
+    public function getDataProductOutlet(Outlet $outlet)
+    {
+        // $product = Product_Outlet::where('outlet_id', $outlet->outlet_code)->orderBy('created_at')->get();
+        $product = DB::table('product_outlets')
+        ->leftJoin('product_category', 'product_category.category_code', 'product_outlets.category_id')
+        ->orderBy('product_outlets.created_at')
+        ->get();
+
+        $datas = [
+            'data' => $product
+        ];
+
+        return response()->json($datas);
     }
 
     /**
