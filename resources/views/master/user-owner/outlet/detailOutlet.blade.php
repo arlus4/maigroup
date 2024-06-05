@@ -170,7 +170,7 @@
                                     <h3 class="fw-bold mb-1">Pegawai</h3>
                                     <div class="fs-6 text-gray-400">Total {{ $pegawai->total() }} Pegawai</div>
                                 </div>
-                                @if ($pegawai->total() <= 5)
+                                @if ($pegawai->total() >= 5)
                                     <div class="card-toolbar">
                                         <a href="javascript:;" class="btn btn-bg-light btn-active-color-primary btn-sm" onclick="listPegawai()">View All</a>
                                     </div>

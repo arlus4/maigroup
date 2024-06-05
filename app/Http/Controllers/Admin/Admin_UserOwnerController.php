@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Models\Users_Session;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -419,11 +420,18 @@ class Admin_UserOwnerController extends Controller
 
         $getOutlets = Outlet::where('user_id', $getData->idUserLogin)->get();
 
+        $getSessions = Users_Session::where('user_id', $getData->idUserLogin)->get();
+        // Format the last_activity timestamp
+        foreach ($getSessions as $session) {
+            $session->last_activity = Carbon::createFromTimestamp($session->last_activity)->diffForHumans();
+        };
+
         return view('master.user-owner.detailUserOwner', [
             'username' => $username,
             'getData' => $getData,
             'getBrands' => $getBrands,
-            'getOutlets' => $getOutlets
+            'getOutlets' => $getOutlets,
+            'sessions' => $getSessions,
         ]);
     }
 
@@ -516,6 +524,32 @@ class Admin_UserOwnerController extends Controller
             return redirect()->back()->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }
         return redirect()->back()->with('success', 'Password berhasil diperbaharui');
+    }
+
+    public function deleteSessionOwner(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            Users_Session::where('user_id', $request->id)->delete();
+
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
+        }
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Session berhasil dihapus'
+        ]);
     }
 
     public function getDataBrandOwner($username)

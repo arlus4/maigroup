@@ -80,6 +80,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/update-nohp-user-owner', [Admin_UserOwnerController::class, 'updatenoHPOwner']);
         Route::post('/update-email-user-owner', [Admin_UserOwnerController::class, 'updateEmailOwner']);
         Route::post('/update-password-user-owner', [Admin_UserOwnerController::class, 'updatePasswordOwner']);
+        Route::post('/sign-out-users', [Admin_UserOwnerController::class, 'deleteSessionOwner']);
         Route::post('/store-user-owner', [Admin_UserOwnerController::class, 'store'])->name('admin_store_user_owner');
         Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
         Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
