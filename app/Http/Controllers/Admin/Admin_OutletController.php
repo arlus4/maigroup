@@ -84,11 +84,21 @@ class Admin_OutletController extends Controller
 
     public function getDataProductOutlet(Outlet $outlet)
     {
-        // $product = Product_Outlet::where('outlet_id', $outlet->outlet_code)->orderBy('created_at')->get();
         $product = DB::table('product_outlets')
-        ->leftJoin('product_category', 'product_category.category_code', 'product_outlets.category_id')
-        ->orderBy('product_outlets.created_at')
-        ->get();
+            ->select(
+                'product_outlets.id',
+                'product_outlets.product_name',
+                'product_outlets.description',
+                'product_outlets.stock',
+                'product_outlets.price',
+                'product_outlets.image',
+                'product_outlets.slug',
+                'product_category.category_name',
+            )
+            ->leftJoin('product_category', 'product_category.category_code', 'product_outlets.category_id')
+            ->where('outlet_id', $outlet->outlet_code)
+            ->orderBy('product_outlets.created_at')
+            ->get();
 
         $datas = [
             'data' => $product

@@ -207,7 +207,7 @@
                             <div class="card-header mt-6">
                                 <!--begin::Card title-->
                                 <div class="card-title flex-column">
-                                    <h3 class="fw-bold mb-1">History Transaction</h3>
+                                    <h3 class="fw-bold mb-1">History Transaction [Masih Template]</h3>
                                     <div class="fs-6 text-gray-400">Total 25 tasks in backlog</div>
                                 </div>
                                 <!--end::Card title-->
@@ -253,14 +253,10 @@
 
                 <!--begin::Table Product-->
                 <div class="card card-flush mt-6 mt-xl-9">
-                    <!--begin::Card header-->
                     <div class="card-header mt-5">
-                        <!--begin::Card title-->
                         <div class="card-title flex-column">
                             <h3 class="fw-bold mb-1">Product {{ $outlet->outlet_name }}</h3>
                         </div>
-                        <!--begin::Card title-->
-                        <!--begin::Card toolbar-->
                         <div class="card-toolbar my-1">
                             <!--begin::Select-->
                             <div class="me-6 my-1">
@@ -298,101 +294,22 @@
                             </div>
                             <!--end::Search-->
                         </div>
-                        <!--begin::Card toolbar-->
                     </div>
-                    <!--end::Card header-->
-                    <!--begin::Card body-->
                     <div class="card-body pt-0">
-                        <!--begin::Table container-->
                         <div class="table-responsive">
-                            <!--begin::Table-->
                             <table id="product_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
-                                <!--begin::Head-->
-                                <thead class="fs-7 text-gray-400 text-uppercase">
+                                <thead class="fs-7 text-gray-800 text-uppercase">
                                     <tr>
-                                        <th class="min-w-250px">Manager</th>
-                                        <th class="min-w-150px">Date</th>
-                                        <th class="min-w-90px">Amount</th>
-                                        <th class="min-w-90px">Status</th>
-                                        <th class="min-w-50px text-end">Details</th>
+                                        <th class="min-w-250px">Product</th>
+                                        <th class="min-w-150px">Category</th>
+                                        <th class="min-w-90px">Price</th>
+                                        <th class="min-w-90px">Stock</th>
                                     </tr>
                                 </thead>
-                                <!--end::Head-->
-                                <!--begin::Body-->
-                                <tbody class="fs-6">
-                                    <tr>
-                                        <td>
-                                            <!--begin::User-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-5 position-relative">
-                                                    <!--begin::Avatar-->
-                                                    <div class="symbol symbol-35px symbol-circle">
-                                                        <img alt="Pic" src="../../assets/media/avatars/300-6.jpg" />
-                                                    </div>
-                                                    <!--end::Avatar-->
-                                                </div>
-                                                <!--end::Wrapper-->
-                                                <!--begin::Info-->
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <a href="#" class="fs-6 text-gray-800 text-hover-primary">Emma Smith</a>
-                                                    <div class="fw-semibold text-gray-400">smith@kpmg.com</div>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::User-->
-                                        </td>
-                                        <td>Apr 15, 2022</td>
-                                        <td>$476.00</td>
-                                        <td>
-                                            <span class="badge badge-light-info fw-bold px-4 py-3">In progress</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="#" class="btn btn-light btn-sm">View</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <!--begin::User-->
-                                            <div class="d-flex align-items-center">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-5 position-relative">
-                                                    <!--begin::Avatar-->
-                                                    <div class="symbol symbol-35px symbol-circle">
-                                                        <span class="symbol-label bg-light-danger text-danger fw-semibold">M</span>
-                                                    </div>
-                                                    <!--end::Avatar-->
-                                                    <!--begin::Online-->
-                                                    <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                                    <!--end::Online-->
-                                                </div>
-                                                <!--end::Wrapper-->
-                                                <!--begin::Info-->
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <a href="#" class="fs-6 text-gray-800 text-hover-primary">Melody Macy</a>
-                                                    <div class="fw-semibold text-gray-400">melody@altbox.com</div>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div>
-                                            <!--end::User-->
-                                        </td>
-                                        <td>Mar 10, 2022</td>
-                                        <td>$747.00</td>
-                                        <td>
-                                            <span class="badge badge-light-success fw-bold px-4 py-3">Approved</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="#" class="btn btn-light btn-sm">View</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <!--end::Body-->
+                                <tbody class="fs-6"></tbody>
                             </table>
-                            <!--end::Table-->
                         </div>
-                        <!--end::Table container-->
                     </div>
-                    <!--end::Card body-->
                 </div>
                 <!--end::Table Product-->
 
@@ -485,22 +402,65 @@
         }
 
         // Datatable Product Outlet
-        // $(document).ready(function() {
-        //     $('#product_table').DataTable({
-        //         processing: true,
-        //         serverSide: false,
-        //         ajax: {
-        //             url: "/admin/getDataProductOutlet/{{ $outlet->slug }}",
-        //             dataType: "JSON"
-        //         },
-        //         language: {
-        //             processing: "Loading..."
-        //         },
-        //         columns: [
+        $(document).ready(function() {
+            $('#product_table').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: "/admin/getDataProductOutlet/{{ $outlet->slug }}",
+                    dataType: "JSON"
+                },
+                language: {
+                    processing: "Loading..."
+                },
+                columns: [
+                    {
+                        data: "Product",
+                        render: function(data, type, row) {
 
-        //         ],
-        //     });
-        // });
+                            var imagePath;
+                            // Check for null or empty image path
+                            if (!row.image || row.image.trim() === '') {
+                                imagePath = '<span class="symbol-label bg-light-danger text-danger fw-semibold">P</span>';
+                            } else {
+                                imagePath = '{{ asset("' + row.image + '") }}';
+                            }
+
+                            return `<div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-5">
+                                            <div class="symbol-label">
+                                                ${imagePath}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <span class="text-gray-800 mb-1">${row.product_name}</span>
+                                            <span class="text-gray-500" >${row.slug}</span>
+                                        </div>
+                                    </div>`;
+                        }
+                    },
+                    { data: 'category_name' },
+                    {
+                        data: 'price',
+                        render: function (data, type, row) {
+                            // Convert price to number
+                            const price = parseFloat(data) || 0;
+
+                            // Format price as Rupiah (without ".00")
+                            const formattedPrice = new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                                minimumFractionDigits: 0, // Set minimum fraction digits to 0
+                                maximumFractionDigits: 0 // Set maximum fraction digits to 0
+                            }).format(price);
+
+                            return formattedPrice;
+                        }
+                    },
+                    { data: 'stock' },
+                ],
+            });
+        });
     </script>
 
 @endsection
