@@ -67,7 +67,7 @@
                     {
                         data: 'outlet_name',
                         render: function(data, type, row) {
-                            var imagePath = row.brand_image ? row.brand_image : '/avatar.png';
+                            var imagePath = row.image_name ? row.image_name : '/avatar.png';
                             return `<div class="d-flex align-items-center">
                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                             <div class="symbol-label">
