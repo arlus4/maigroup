@@ -252,21 +252,21 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{ Request::routeIs('admin.admin_outlet_pending') ? 'active' : '' }}" href="{{ route('admin.admin_outlet_pending') }}">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_pegawai_outlet') ? 'active' : '' }}" href="{{ route('admin.admin_pegawai_outlet') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Daftar Outlet Pending</span>
+                                            <span class="menu-title">Daftar Pegawai Outlet</span>
                                         </a>
                                     </div>
-                                    <div class="menu-item">
+                                    {{-- <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_outlet_reject') ? 'active' : '' }}" href="{{ route('admin.admin_outlet_reject') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
                                             <span class="menu-title">Daftar Outlet Rejected</span>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <!--end:Manajemen Outlet-->

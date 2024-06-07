@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
+use App\Http\Controllers\Admin\Admin_PegawaiController;
 use App\Http\Controllers\Admin\Admin_Product_CategoryController;
 
 Route::get('/', [HomeController::class, 'home']);
@@ -103,6 +104,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/validate_Edit_Username', [Admin_UserOwnerController::class, 'validate_Edit_Username']);
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
         Route::get('/validate_Edit_Email', [Admin_UserOwnerController::class, 'validate_Edit_Email']);
+        Route::get('/validateEmailPegawai', [Admin_PegawaiController::class, 'validateEmailPegawai']);
         
         // Manajemen Brand
         Route::get('/brand-active', [Admin_BrandsController::class, 'index_brandActive'])->name('admin_brand_active');
@@ -140,14 +142,23 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/detail-outlet/{outlet:slug}', [Admin_OutletController::class, 'detail_Outlet'])->name('admin_outlet_detail');
         Route::get('/getDataPegawaiOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataPegawaiOutlet']);
         Route::get('/getDataProductOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataProductOutlet']);
-        Route::get('/outlet-pending', [Admin_OutletController::class, 'index_outletPending'])->name('admin_outlet_pending');
-        Route::get('/getDataoutletPending', [Admin_OutletController::class, 'getDataoutletPending']);
-        Route::get('/get_data_detail_outlet_pending', [Admin_OutletController::class, 'getDataDetailOutletPending']);
-        Route::get('/detail-outlet-pending/{outlet}', [Admin_OutletController::class, 'detail_OutletPending'])->name('admin_outlet_pending_detail');
-        Route::post('/approve-outlet-pending', [Admin_OutletController::class, 'approve_OutletPending'])->name('admin_approve_outlet_pending');
-        Route::post('/reject-outlet-pending', [Admin_OutletController::class, 'reject_OutletPending'])->name('admin_reject_outlet_pending');
-        Route::get('/outlet-reject', [Admin_OutletController::class, 'index_outletReject'])->name('admin_outlet_reject');
-        Route::get('/getDataoutletReject', [Admin_OutletController::class, 'getDataoutletReject']);
+        Route::get('/daftar-pegawai', [Admin_PegawaiController::class, 'index'])->name('admin_pegawai_outlet');
+        Route::get('/getDataListPegawai', [Admin_PegawaiController::class, 'getDataListPegawai']);
+        Route::get('/detail-pegawai/{id}', [Admin_PegawaiController::class, 'show']);
+        Route::get('/get_data_detail_profile_pegawai/{id}', [Admin_PegawaiController::class, 'getDataDetailProfilePegawai']);
+        Route::post('/update-email-user-pegawai', [Admin_PegawaiController::class, 'updateEmailPegawai']);
+        Route::post('/update-password-user-pegawai', [Admin_PegawaiController::class, 'updatePasswordPegawai']);
+        Route::post('/update-status-user-pegawai', [Admin_PegawaiController::class, 'updateStatusPegawai']);
+        // Jangan Dihapus!!!
+        // Route::get('/outlet-pending', [Admin_OutletController::class, 'index_outletPending'])->name('admin_outlet_pending');
+        // Route::get('/getDataoutletPending', [Admin_OutletController::class, 'getDataoutletPending']);
+        // Route::get('/get_data_detail_outlet_pending', [Admin_OutletController::class, 'getDataDetailOutletPending']);
+        // Route::get('/detail-outlet-pending/{outlet}', [Admin_OutletController::class, 'detail_OutletPending'])->name('admin_outlet_pending_detail');
+        // Route::post('/approve-outlet-pending', [Admin_OutletController::class, 'approve_OutletPending'])->name('admin_approve_outlet_pending');
+        // Route::post('/reject-outlet-pending', [Admin_OutletController::class, 'reject_OutletPending'])->name('admin_reject_outlet_pending');
+        // Route::get('/outlet-reject', [Admin_OutletController::class, 'index_outletReject'])->name('admin_outlet_reject');
+        // Route::get('/getDataoutletReject', [Admin_OutletController::class, 'getDataoutletReject']);
+        // Jangan Dihapus!!!
 
         // Category Product
         Route::get('/category-product', [Admin_Product_CategoryController::class, 'index'])->name('admin_category_product');

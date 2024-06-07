@@ -9,7 +9,7 @@ class Pegawai_Detail extends Model
 {
     use HasFactory;
 
-    protected $table = 'users_details';
+    protected $table = 'pegawai_details';
 
     /**
      * The attributes that aren't mass assignable.
