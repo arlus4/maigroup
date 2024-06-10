@@ -94,8 +94,8 @@
                                     <a href="#" class="css-cnmt3nsa">
                                         Tentang Kami
                                     </a>
-                                    <a href="#" class="css-cnmt3nsa">
-                                        Kontak Kami
+                                    <a href="/login" class="css-cnmt3nsa">
+                                        Login
                                     </a>
                                 </div>
                             </div>
