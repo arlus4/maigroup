@@ -395,54 +395,15 @@
                                                 <!--end:Menu link-->
                                             </div>
                                             <!--end:Menu item-->
-                                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ Request::is('admin/setting/faq/user*') ? 'here show' : '' }}">
+                                            <div class="menu-item">
                                                 <!--begin:Menu link-->
-                                                    <span class="menu-link {{ Request::is('admin/setting/faq/user*') ? 'active' : '' }}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">User FaQ</span>
-                                                        <span class="menu-arrow"></span>
+                                                <a class="menu-link {{ Request::is('admin/setting/faq*') ? 'active' : '' }}" href="/admin/setting/faq">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
                                                     </span>
+                                                    <span class="menu-title">FaQ</span>
+                                                </a>
                                                 <!--end:Menu link-->
-                                                <div class="menu-sub menu-sub-accordion">
-                                                    <!--begin:Menu item-->
-                                                    <div class="menu-item">
-                                                        <!--begin:Menu link-->
-                                                        <a class="menu-link {{ Request::is('admin/setting/faq/user/pembeli*') ? 'active' : '' }}" href="/admin/setting/faq/user/pembeli">
-                                                            <span class="menu-bullet">
-                                                                <span class="bullet bullet-dot"></span>
-                                                            </span>
-                                                            <span class="menu-title">Pembeli</span>
-                                                        </a>
-                                                        <!--end:Menu link-->
-                                                    </div>
-                                                    <!--end:Menu item-->
-                                                    <!--begin:Menu item-->
-                                                    <div class="menu-item">
-                                                        <!--begin:Menu link-->
-                                                        <a class="menu-link {{ Request::is('admin/setting/faq/user/owner*') ? 'active' : '' }}" href="/admin/setting/faq/user/owner">
-                                                            <span class="menu-bullet">
-                                                                <span class="bullet bullet-dot"></span>
-                                                            </span>
-                                                            <span class="menu-title">Owner / Brand</span>
-                                                        </a>
-                                                        <!--end:Menu link-->
-                                                    </div>
-                                                    <!--end:Menu item-->
-                                                    <!--begin:Menu item-->
-                                                    <div class="menu-item">
-                                                        <!--begin:Menu link-->
-                                                        <a class="menu-link {{ Request::is('admin/setting/faq/user/pegawai*') ? 'active' : '' }}" href="/admin/setting/faq/user/pegawai">
-                                                            <span class="menu-bullet">
-                                                                <span class="bullet bullet-dot"></span>
-                                                            </span>
-                                                            <span class="menu-title">Pegawai / Outlet</span>
-                                                        </a>
-                                                        <!--end:Menu link-->
-                                                    </div>
-                                                    <!--end:Menu item-->
-                                                </div>
                                             </div>
                                         </div>
                                         <!--end:Menu sub-->

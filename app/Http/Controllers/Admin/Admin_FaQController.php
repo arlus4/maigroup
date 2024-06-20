@@ -151,16 +151,15 @@ class Admin_FaQController extends Controller
         }
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function faq_user_pembeli()
+    public function faq()
     {
-        $categories = FaQ_Category::where('users_type', 3)->get();
-        return view('master.settings.faq.users.pembeli', [
-            'categories' => $categories
+        $categories = FaQ_Category::where('users_type', 2)->get();
+        $categories_pembeli = FaQ_Category::where('users_type', 3)->get();
+        $categories_pegawai = FaQ_Category::where('users_type', 4)->get();
+        return view('master.settings.faq.faq', [
+            'categories' => $categories,
+            'cat_pembeli' => $categories_pembeli,
+            'cat_pegawai' => $categories_pegawai
         ]);
     }
 
@@ -430,19 +429,6 @@ class Admin_FaQController extends Controller
                 'message' => 'Terjadi kesalahan: ' . $th->getMessage()
             ], 500);
         }
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function faq_user_owner()
-    {
-        $categories = FaQ_Category::where('users_type', 2)->get();
-        return view('master.settings.faq.users.owner', [
-            'categories' => $categories
-        ]);
     }
 
     public function get_data_faq_user_owner()
@@ -717,19 +703,6 @@ class Admin_FaQController extends Controller
                 'message' => 'Terjadi kesalahan: ' . $th->getMessage()
             ], 500);
         }
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function faq_user_pegawai()
-    {
-        $categories = FaQ_Category::where('users_type', 4)->get();
-        return view('master.settings.faq.users.pegawai', [
-            'categories' => $categories
-        ]);
     }
 
     public function get_data_faq_user_pegawai()

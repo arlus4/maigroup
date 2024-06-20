@@ -187,6 +187,8 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/setting/faq/categories/faq_category_edit', [Admin_FaQController::class, 'faq_category_edit'])->name('admin_faq_category_edit');
         Route::post('/setting/faq/categories/faq_category_update', [Admin_FaQController::class, 'faq_category_update'])->name('admin_faq_category_update');
         Route::post('/setting/faq/categories/faq_category_delete', [Admin_FaQController::class, 'faq_category_delete'])->name('admin_faq_category_delete');
+        
+        Route::get('/setting/faq', [Admin_FaQController::class, 'faq'])->name('admin_faq');
         //Setting-FaQ-Pembeli
         Route::get('/setting/faq/user/pembeli', [Admin_FaQController::class, 'faq_user_pembeli'])->name('admin_faq_user_pembeli');
         Route::get('/setting/faq/user/get_data_faq_user_pembeli', [Admin_FaQController::class, 'get_data_faq_user_pembeli']);
