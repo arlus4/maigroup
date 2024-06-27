@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label style="color: #31353B!important;font-weight: 600;">Nama Kategori Produk</label>
+                        <label class="required form-label" style="color: #31353B!important;font-size: 1rem;font-weight: 700;">Nama Kategori Produk</label>
                         <input type="text" name="category_name" class="form-control category_name" id="category_name" placeholder="Input Nama Kategori Produk" required>
                     </div>
                     <div class="form-group mb-3">
@@ -83,6 +83,12 @@
                     <div class="form-group mb-3">
                         <label style="color: #31353B!important;font-weight: 600;">Deskripsi Kategori</label>
                         <textarea name="description" class="form-control description" id="description" cols="10" rows="5"></textarea>
+                    </div>
+                    <div class="form-group mb-3" style="padding-bottom: 2%">
+                        <label class="fs-6 fw-semibold mb-2">Attach Image</label>
+                        <input type="file" class="form-control form-control-transparent" name="image" id="image" accept=".jpg, .jpeg, .png">
+                        <span style="color: blue; font-size: 11px">Mohon untuk melampirkan gambar dengan format .jpg atau .png (jika diperlukan)</span> <br>
+                        <img id="image_preview" src="#" alt="Preview" style="display: none; max-width: 100%; margin-top: 10px;">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -104,7 +110,7 @@
                     <h4 class="modal-title" id="modal-title-edit"></h4>
                 </div>
                 <div class="modal-body">
-                    <form action="#" id="form-update">
+                    <form action="#" id="form-update" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group mb-3">
                         <label style="color: #31353B!important;font-weight: 600;">Code Kategori Produk</label>
@@ -129,6 +135,12 @@
                     <div class="form-group mb-3">
                         <label style="color: #31353B!important;font-weight: 600;">Deskripsi Kategori</label>
                         <textarea name="description_edit" class="form-control description_edit" id="description_edit" cols="10" rows="5"></textarea>
+                    </div>
+                    <div class="form-group mb-3" style="padding-bottom: 2%">
+                        <label class="fs-6 fw-semibold mb-2">Attach Image</label>
+                        <input type="file" class="form-control form-control-transparent" name="image" id="image_edit" accept=".jpg, .jpeg, .png">
+                        <span style="color: blue; font-size: 11px">Mohon untuk melampirkan gambar dengan format .jpg atau .png (jika diperlukan)</span> <br>
+                        <img id="image_preview_edit" src="#" alt="Preview" style="display: none; max-width: 100%; margin-top: 10px;">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -186,7 +198,13 @@
                     {
                         data: 'name',
                         render: function(data, type, row) {
+                            var imagePath = row.path_image ? row.path_image : 'assets/images/avatar.png';
                             return `<div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <div class="symbol-label">
+                                                <img src="{{ asset('${imagePath}') }}" class="w-100"/>
+                                            </div>
+                                        </div>
                                         <div class="d-flex flex-column">
                                             <span class="text-gray-800 mb-1">${row.category_name}</span>
                                             <span>${row.category_code}</span>
@@ -203,7 +221,7 @@
                             } else {
                                 description += row.description;
                             }
-                            return description;
+                            return description.length > 20 ? description.substr(0, 40) + '...' : description;
                         }
                     },
                     {
@@ -340,4 +358,47 @@
         });
     </script>
 
+    <!-- Image Preview -->
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#image_preview').attr('src', e.target.result);
+                    $('#image_preview').css('display', 'block');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function() {
+            // Ketika input file berubah, panggil fungsi readURL
+            $('#image').change(function() {
+                readURL(this);
+            });
+        });
+    </script>
+    <script>
+        function readURLEdit(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#image_preview_edit').attr('src', e.target.result);
+                    $('#image_preview_edit').css('display', 'block');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function() {
+            // Ketika input file berubah, panggil fungsi readURLEdit
+            $('#image_edit').change(function() {
+                readURLEdit(this);
+            });
+        });
+    </script>
 @endsection
