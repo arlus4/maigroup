@@ -15,7 +15,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.7",
         "sakiot/laravel-sqlsrv-err-avoid": "^1.0",
-        "OneSignal/onesignal-php-api": "*@dev"
+        "onesignal/onesignal-php-api": "*@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
