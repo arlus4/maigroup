@@ -65,49 +65,69 @@
 
         <!-- Modal New Message -->
         <div class="modal fade" id="modalSendMessage">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered mw-750px">
                 <div class="modal-content" style="border-radius: 8px;">
-                <div class="content-header">
-                    <div class="content-title">
-                        <h4 class="css-lk3jsp">Tambah Categories</h4>
-                    </div>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="css-flj2ej">
-                    <div class="css-fjkpo0ma">
-                        <div class="css-wj23sk">
-                            <div class="css-pp2kjsn">
-                                <div class="css-fhxb1ns">
-                                    <div class="css-akcdj8w">
-                                        <div class="css-gh3knsa">
-                                            <i class="fas fa-info-circle" style="color: #004085;"></i>
-                                        </div>
-                                        <div>
-                                            <span class="css-vcnak2s">Input <strong>Image</strong> hanya dilakukan pada <strong>Dashboard OneSignal</strong>.</span>
+                    <div class="modal-content">
+                        <form id="notification-form" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-header">
+                                <div class="content-title">
+                                    <h4 class="css-lk3jsp">New Messages</h4>
+                                </div>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span style="font-size: 30px;color: grey;" aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="css-flj2ej">
+                                <div class="css-fjkpo0ma">
+                                    <div class="css-wj23sk">
+                                        <div class="row fv-row">
+                                            <h2 style="font-size: 1rem;">Thumbnail</h2>
+                                            <div class="col-md-6">
+                                                <style>
+                                                    .image-input-placeholder {
+                                                        background-image: url('../../../assets/master/media/svg/files/blank-image.svg');
+                                                    } 
+                                                    [data-theme="dark"] .image-input-placeholder {
+                                                        background-image: url('../../../assets/master/media/svg/files/blank-image-dark.svg');
+                                                    }
+                                                </style>
+                                                <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
+                                                    <div class="image-input-wrapper w-150px h-150px"></div>
+                                                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah Gambar">
+                                                        <i class="fas fa-pencil fs-7"></i>
+                                                        <input type="file" name="avatar" accept=".png, .jpg, .jpeg" required/>
+                                                        <input type="hidden" name="avatar_remove" />
+                                                    </label>
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Batal Gambar">
+                                                        <i class="fas fa-close fs-2"></i>
+                                                    </span>
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Hapus Gambar">
+                                                        <i class="fas fa-close fs-2"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="text-muted fs-7" style="color: #31353B!important;">Format gambar <strong style="font-size: 11px;">Wajib .jpg .jpeg .png</strong></div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-10 fv-row">
+                                                    <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Title</label>
+                                                    <input type="text" name="title" class="form-control mb-2" id="title" required/>
+                                                </div>
+                                                <div class="mb-10 fv-row">
+                                                    <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Message</label>
+                                                    <textarea name="message" id="message" class="form-control mb-2" rows="4"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <form id="notification-form">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Title</label>
-                                <input type="text" name="title" class="form-control mb-2" id="title" required/>
+                            <div class="modal-footer">
+                                <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">Batalkan</button>
+                                <button type="submit" class="css-kl2kd9a">Send Notification</button>
                             </div>
-                            <div class="form-group">
-                                <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Message</label>
-                                <textarea name="message" id="message" class="form-control mb-2" rows="4" required></textarea>
-                            </div>
-                        </div>
-                   </div>
-                </div>
-                <div class="modal-footer">
-                        <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">Batalkan</button>
-                        <button type="submit" class="css-kl2kd9a">Simpan</button>
-                    </form>
-                </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
