@@ -19,11 +19,8 @@ class Admin_NotificationController extends Controller
 
     public function getNotifications(): JsonResponse
     {
-        // $appId = env('ONESIGNAL_APP_ID');
-        // $apiKey = env('ONESIGNAL_REST_API_KEY');
-
-        $appId = '0cab2099-1b06-428c-8aee-d7ee20e11592';
-        $apiKey = 'NTY0YzIwZjItOGViMC00M2ViLWIwM2QtZGZhNmQ4ZWMyMjYy';
+        $appId = env('ONESIGNAL_APP_ID');
+        $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         try {
             $client = new Client();
@@ -58,10 +55,8 @@ class Admin_NotificationController extends Controller
             'message' => 'required|string|max:255',
         ]);
 
-        // $appId = env('ONESIGNAL_APP_ID');
-        // $apiKey = env('ONESIGNAL_REST_API_KEY');
-        $appId = '0cab2099-1b06-428c-8aee-d7ee20e11592';
-        $apiKey = 'NTY0YzIwZjItOGViMC00M2ViLWIwM2QtZGZhNmQ4ZWMyMjYy';
+        $appId = env('ONESIGNAL_APP_ID');
+        $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         $title = $request->input('title');
         $message = $request->input('message');
@@ -110,8 +105,8 @@ class Admin_NotificationController extends Controller
     {
         $notificationIds = $request->notification_ids;
 
-        $appId = '0cab2099-1b06-428c-8aee-d7ee20e11592';
-        $apiKey = 'NTY0YzIwZjItOGViMC00M2ViLWIwM2QtZGZhNmQ4ZWMyMjYy';
+        $appId = env('ONESIGNAL_APP_ID');
+        $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         try {
             $client = new Client();
@@ -143,8 +138,8 @@ class Admin_NotificationController extends Controller
 
     public function getSegments(): JsonResponse
     {
-        $appId = '0cab2099-1b06-428c-8aee-d7ee20e11592';
-        $apiKey = 'NTY0YzIwZjItOGViMC00M2ViLWIwM2QtZGZhNmQ4ZWMyMjYy';
+        $appId = env('ONESIGNAL_APP_ID');
+        $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         try {
             $client = new Client();
