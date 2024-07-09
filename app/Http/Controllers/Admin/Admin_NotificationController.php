@@ -19,18 +19,20 @@ class Admin_NotificationController extends Controller
 
     public function getNotifications(): JsonResponse
     {
-        $appId = env('ONESIGNAL_APP_ID');
-        $apiKey = env('ONESIGNAL_REST_API_KEY');
+        // $appId = env('ONESIGNAL_APP_ID');
+        // $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         try {
             $client = new Client();
             $response = $client->request('GET', 'https://api.onesignal.com/notifications', [
                 'headers' => [
                     'accept' => 'application/json',
-                    'Authorization' => 'Basic ' . $apiKey,
+                    'Authorization' => 'Basic ' . env('ONESIGNAL_REST_API_KEY'),
+                    // 'Authorization' => 'Basic ' . $apiKey,
                 ],
                 'query' => [
-                    'app_id' => $appId,
+                    'app_id' => env('ONESIGNAL_APP_ID'),
+                    // 'app_id' => $appId,
                 ],
             ]);
 
@@ -55,8 +57,8 @@ class Admin_NotificationController extends Controller
             'message' => 'required|string|max:255',
         ]);
 
-        $appId = env('ONESIGNAL_APP_ID');
-        $apiKey = env('ONESIGNAL_REST_API_KEY');
+        // $appId = env('ONESIGNAL_APP_ID');
+        // $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         $title = $request->input('title');
         $message = $request->input('message');
@@ -74,10 +76,10 @@ class Admin_NotificationController extends Controller
             $response = $client->request('POST', 'https://onesignal.com/api/v1/notifications', [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Authorization' => 'Basic '. $apiKey,
+                    'Authorization' => 'Basic '. env('ONESIGNAL_REST_API_KEY'),
                 ],
                 'json' => [
-                    'app_id' => $appId,
+                    'app_id' => env('ONESIGNAL_APP_ID'),
                     'headings' => ['en' => $title],
                     'contents' => ['en' => $message],
                     'included_segments' => ['All'],
@@ -105,8 +107,8 @@ class Admin_NotificationController extends Controller
     {
         $notificationIds = $request->notification_ids;
 
-        $appId = env('ONESIGNAL_APP_ID');
-        $apiKey = env('ONESIGNAL_REST_API_KEY');
+        // $appId = env('ONESIGNAL_APP_ID');
+        // $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         try {
             $client = new Client();
@@ -114,10 +116,10 @@ class Admin_NotificationController extends Controller
                 $response = $client->request('DELETE', 'https://api.onesignal.com/notifications/'. $notificationId, [
                     'headers' => [
                         'accept' => 'application/json',
-                        'Authorization' => 'Basic '. $apiKey,
+                        'Authorization' => 'Basic '. env('ONESIGNAL_REST_API_KEY'),
                     ],
                     'query' => [
-                        'app_id' => $appId,
+                        'app_id' => env('ONESIGNAL_APP_ID'),
                     ],
                 ]);
             }
@@ -139,14 +141,14 @@ class Admin_NotificationController extends Controller
     public function getSegments(): JsonResponse
     {
         $appId = env('ONESIGNAL_APP_ID');
-        $apiKey = env('ONESIGNAL_REST_API_KEY');
+        // $apiKey = env('ONESIGNAL_REST_API_KEY');
 
         try {
             $client = new Client();
             $response = $client->request('GET', "https://api.onesignal.com/apps/{$appId}/segments", [
                 'headers' => [
                     'accept' => 'application/json',
-                    'Authorization' => 'Basic ' . $apiKey,
+                    'Authorization' => 'Basic ' . env('ONESIGNAL_REST_API_KEY'),
                 ],
                 'query' => [
                     'app_id' => $appId,
