@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
+use App\Http\Controllers\Admin\Admin_NotificationController;
 use App\Http\Controllers\Admin\Admin_PegawaiController;
 use App\Http\Controllers\Admin\Admin_Product_CategoryController;
 
@@ -215,6 +216,14 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/storeUpdate_bank', [Admin_BankController::class, 'storeOrUpdate'])->name('admin_store_update_bank');
         Route::get('/edit_bank', [Admin_BankController::class, 'edit'])->name('admin_edit_bank');
         Route::post('/destroy_bank', [Admin_BankController::class, 'destroy'])->name('admin_destroy_bank');
+        //Setting-Notification
+        Route::get('/setting/segment', [Admin_NotificationController::class, 'segment'])->name('admin_segment_index');
+        Route::get('/setting/getSegments', [Admin_NotificationController::class, 'getSegments']);
+        Route::get('/setting/notification', [Admin_NotificationController::class, 'index'])->name('admin_notification_index');
+        Route::get('/setting/getNotifications', [Admin_NotificationController::class, 'getNotifications']);
+        Route::get('/setting/notification/createNotifications', [Admin_NotificationController::class, 'createNotifications']);
+        Route::post('/setting/storeNotifications', [Admin_NotificationController::class, 'storeNotifications']);
+        Route::post('/setting/deleteNotifications', [Admin_NotificationController::class, 'deleteNotifications']);
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');

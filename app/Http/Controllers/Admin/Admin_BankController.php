@@ -23,14 +23,13 @@ class Admin_BankController extends Controller
             'path_icon_bank'
         )->get();
 
-        return view('master.bank.daftarBank',[
+        return view('master.settings.bank.daftarBank',[
             'dataBank' => $dataBank,
         ]);
     }
 
     public function storeOrUpdate(Request $request)
     {
-        // dd($request->all());
         try {
             DB::beginTransaction(); // Begin Transaction
 
