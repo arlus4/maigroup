@@ -85,14 +85,11 @@ class Admin_NotificationController extends Controller
                     'headings' => ['en' => $title],
                     'contents' => ['en' => $message],
                     'included_segments' => ['All'],
-                    // 'big_picture' => 'https://order.tokoseru.com/' . $imageUrl, // Menambahkan gambar untuk Android Push Notifications
-                    // 'chrome_web_image' => 'https://order.tokoseru.com/' . $imageUrl, // Menambahkan gambar untuk Chrome Web Push
-                    // 'adm_big_picture' => 'https://order.tokoseru.com/' . $imageUrl, // Menambahkan gambar untuk Amazon Device Messaging
-                    // 'chrome_big_picture' => 'https://order.tokoseru.com/' . $imageUrl, // Menambahkan gambar untuk Chrome Push Notifications
                     'big_picture' => $imageUrl, // Menambahkan gambar untuk Android Push Notifications
                     'chrome_web_image' => $imageUrl, // Menambahkan gambar untuk Chrome Web Push
                     'adm_big_picture' => $imageUrl, // Menambahkan gambar untuk Amazon Device Messaging
                     'chrome_big_picture' => $imageUrl, // Menambahkan gambar untuk Chrome Push Notifications
+                    'global_image' => $imageUrl
                 ],
             ]);
 
