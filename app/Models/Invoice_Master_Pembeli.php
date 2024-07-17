@@ -10,7 +10,7 @@ class Invoice_Master_Pembeli extends Model
     use HasFactory;
 
     protected $table = 'invoice_master_pembeli';
-    protected $primaryKey = 'id'; // Nama kolom primary key
+    protected $primaryKey = 'invoice_no'; // Nama kolom primary key
     public $incrementing = false; // Non-incrementing atau bukan auto-increment
     protected $keyType = 'string'; // Tipe data primary key adalah string
 
