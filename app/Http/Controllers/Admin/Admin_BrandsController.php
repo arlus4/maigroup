@@ -14,11 +14,159 @@ use App\Models\Brands_Register;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Models\Konfirmasi_Pembayaran;
 use App\Models\Outlet;
+use App\Models\Point_Deposit;
+use App\Models\Point_Deposit_Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class Admin_BrandsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_requestPoint()
+    {
+        return view('master.user-owner.brands.daftarRequestPoint');
+    }
+
+    public function getDataRequestPoint()
+    {
+        $data = DB::table('konfirmasi_pembayaran')
+        ->select(
+            'konfirmasi_pembayaran.id',
+            'konfirmasi_pembayaran.invoice_no',
+            'konfirmasi_pembayaran.point_request',
+            'konfirmasi_pembayaran.jumlah_pembayaran',
+            'konfirmasi_pembayaran.path_bukti_pembayaran',
+            'konfirmasi_pembayaran.created_at',
+            'brands.brand_code',
+            'brands.brand_name',
+            'brands.no_hp',
+            'ref_bank.nama_bank',
+            'ref_bank.nomor_rekening',
+            'users_login.name',
+        )
+        ->join('brands','konfirmasi_pembayaran.brand_code', 'brands.brand_code')
+        ->leftJoin('ref_bank', 'konfirmasi_pembayaran.id_bank_tokoseru', 'ref_bank.id')
+        ->leftJoin('users_login', 'konfirmasi_pembayaran.user_request', 'users_login.id')
+        ->where('konfirmasi_pembayaran.status', 0)
+        ->orderBy('konfirmasi_pembayaran.created_at', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
+
+    public function detailRequestPoint($id)
+    {
+        $data = DB::table('konfirmasi_pembayaran')
+        ->select(
+            'konfirmasi_pembayaran.id',
+            'konfirmasi_pembayaran.invoice_no',
+            'konfirmasi_pembayaran.point_request',
+            'konfirmasi_pembayaran.jumlah_pembayaran',
+            'konfirmasi_pembayaran.path_bukti_pembayaran',
+            'konfirmasi_pembayaran.created_at',
+            'brands.brand_code',
+            'brands.brand_name',
+            'brands.no_hp',
+            'ref_bank.nama_bank',
+            'ref_bank.nomor_rekening',
+            'users_login.name',
+        )
+        ->join('brands','konfirmasi_pembayaran.brand_code', 'brands.brand_code')
+        ->leftJoin('ref_bank', 'konfirmasi_pembayaran.id_bank_tokoseru', 'ref_bank.id')
+        ->leftJoin('users_login', 'konfirmasi_pembayaran.user_request', 'users_login.id')
+        ->where('konfirmasi_pembayaran.id', $id)
+        ->where('konfirmasi_pembayaran.status', 0)
+        ->orderBy('konfirmasi_pembayaran.created_at', 'asc')
+        ->first();
+
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
+
+    public function approveRequestPoint(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $approve = Konfirmasi_Pembayaran::find($request->id);
+
+            $deposit = Point_Deposit::where('brand_code', $approve->brand_code)->first();
+            if ($deposit) {
+                $deposit->update([
+                    'point_current' => $deposit->point_current + $approve->point_request,
+                    'update_by' => Auth::user()->id,
+                    'updated_at' => Carbon::now()->timezone('Asia/Jakarta'),
+                ]);
+            } else {
+                Point_Deposit::create([
+                    'brand_code' => $approve->brand_code,
+                    'point_current' => $approve->point_request,
+                    'update_by' => Auth::user()->id,
+                    'updated_at' => Carbon::now()->timezone('Asia/Jakarta'),
+                    'created_at' => Carbon::now()->timezone('Asia/Jakarta'),
+                ]);
+            }
+
+            Point_Deposit_Request::where('invoice_no', $approve->invoice_no)->update(['status' => 3]);
+            
+            $approve->update(['status' => 1]);
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Request berhasil diterima'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
+        }
+    }
+
+    public function rejectRequestPoint(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $reject = Konfirmasi_Pembayaran::find($request->id);
+
+            Point_Deposit_Request::where('invoice_no', $reject->invoice_no)->update(['status' => 4]);
+
+            $reject->update(['status' => 2]);
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Request berhasil ditolak'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Terjadi Kesalahan: ' . $th->getMessage()
+            ]);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *

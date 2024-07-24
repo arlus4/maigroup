@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Konfirmasi_Pembayaran extends Model
+class Point_Get_Brand extends Model
 {
     use HasFactory;
 
-    protected $table = 'konfirmasi_pembayaran';
-
-    public $timestamps = false;
+    protected $table = 'point_get_brand';
 
     /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'created_at'];
 }

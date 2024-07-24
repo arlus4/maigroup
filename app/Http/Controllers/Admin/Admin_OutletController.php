@@ -19,11 +19,6 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Admin_OutletController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index_outletActive()
     {
         return view('master.user-owner.outlet.daftarOutletActive');

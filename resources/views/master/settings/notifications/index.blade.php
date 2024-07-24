@@ -159,7 +159,15 @@
                     {
                         "data": "id",
                         render: function(data, type, row) {
-                            var imagePath = row.global_image ? row.global_image : "{{ asset('assets/master/media/svg/files/blank-image.svg') }}";
+                            // var imagePath = row.global_image ? row.global_image : "{{ asset('assets/master/media/svg/files/blank-image.svg') }}";
+                            var imagePath = '';
+                            if (row.adm_big_picture !== null) {
+                                var imagePath = row.adm_big_picture;
+                            } else if (row.global_image !== null) {
+                                var imagePath = row.global_image;
+                            } else {
+                                var imagePath = "{{ asset('assets/master/media/svg/files/blank-image.svg') }}";
+                            }
                             return `<div class="d-flex align-items-center">
                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                             <div class="symbol-label">
@@ -189,7 +197,7 @@
                         "data": "id",
                         "render": function(data, type, row) {
                             // return `<button class="btn btn-info" onclick="deleteNotification('${data}')">Detail</button>`;
-                            return `<button class="btn btn-primary">Detail</button>`;
+                            return `<a href="/admin/setting/notification/${row.id}/detail" class="btn btn-primary">Detail</a>`;
                         }
                     }
                 ]

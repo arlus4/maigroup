@@ -6,99 +6,59 @@
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
-                <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">View Project</h1>
-                    <!--end::Title-->
-                    <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-                        <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
                             <a href="../../index.html" class="text-muted text-hover-primary">Home</a>
                         </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">Projects</li>
-                        <!--end::Item-->
                     </ul>
-                    <!--end::Breadcrumb-->
                 </div>
-                <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <a href="/admin/outlet-pending" class="btn btn-lg fw-bold btn-primary">Kembali</a>
+                    <a href="/admin/outlet-active" class="btn btn-lg fw-bold btn-primary">Kembali</a>
                 </div>
                 <!--end::Actions-->
             </div>
-            <!--end::Toolbar container-->
         </div>
         <!--end::Toolbar-->
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
-            <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-xxl">
-                <!--begin::Navbar-->
                 <div class="row g-6 g-xl-9">
                     <div class="col-lg-7">
                         <div class="card mb-6 mb-xl-9">
                             <div class="card-body pt-9 pb-0">
-                                <!--begin::Details-->
                                 <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
-                                    <!--begin::Image-->
                                     <div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
                                         <img class="mw-50px mw-lg-75px" src="{{ asset($outlet->path) }}" alt="image" />
                                     </div>
-                                    <!--end::Image-->
-                                    <!--begin::Wrapper-->
                                     <div class="flex-grow-1">
-                                        <!--begin::Head-->
                                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                                            <!--begin::Details-->
                                             <div class="d-flex flex-column">
-                                                <!--begin::Status-->
                                                 <div class="d-flex align-items-center mb-1">
                                                     <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">{{ $outlet->outlet_name }}</a>
                                                 </div>
-                                                <!--end::Status-->
-                                                <!--begin::Description-->
                                                 <div class="d-flex flex-wrap fw-semibold mb-4 fs-5 text-gray-400">{{ $outlet->outlet_code }}</div>
-                                                <!--end::Description-->
                                             </div>
-                                            <!--end::Details-->
                                         </div>
-                                        <!--end::Head-->
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-wrap justify-content-start">
-                                            <!--begin::Stats-->
-                                            <div class="d-flex flex-wrap">
-                                                <!--begin::Stat-->
+                                        <div class="d-flex flex-column flex-grow-1 pe-8">
+                                            <div class="d-flex">
                                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                                    <!--begin::Number-->
                                                     <div class="d-flex align-items-center">
                                                         <div class="fs-4 fw-bold"> {{ \Carbon\Carbon::parse($outlet->created_at)->format('d F Y') }}</div>
                                                     </div>
-                                                    <!--end::Number-->
-                                                    <!--begin::Label-->
                                                     <div class="fw-semibold fs-6 text-gray-400">Register</div>
-                                                    <!--end::Label-->
                                                 </div>
-                                                <!--end::Stat-->
                                             </div>
-                                            <!--end::Stats-->
                                         </div>
-                                        <!--end::Info-->
                                     </div>
-                                    <!--end::Wrapper-->
                                 </div>
-                                <!--end::Details-->
                             </div>
                         </div>
                     </div>

@@ -178,6 +178,14 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion {{ (Request::routeIs('admin.admin_owner') || Request::routeIs('admin.admin_order_pending') || Request::routeIs('admin.admin_tambah_order')) || Request::is('admin/order*') ? 'here show' : '' }}">
                                     <div class="menu-item">
+                                        <a class="menu-link {{ Request::routeIs('admin.admin_request_point') ? 'active' : '' }}" href="{{ route('admin.admin_request_point') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Request Point</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
                                         <a class="menu-link {{ Request::routeIs('admin.admin_brand_category') ? 'active' : '' }}" href="{{ route('admin.admin_brand_category') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>

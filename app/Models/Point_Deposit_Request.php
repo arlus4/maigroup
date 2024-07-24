@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Point_Get_Outlet extends Model
+class Point_Deposit_Request extends Model
 {
     use HasFactory;
 
-    protected $table = 'point_get_outlet';
+    protected $table = 'point_deposit_request';
 
     /**
      * The attributes that aren't mass assignable.

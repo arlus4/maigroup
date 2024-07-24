@@ -108,6 +108,11 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/validateEmailPegawai', [Admin_PegawaiController::class, 'validateEmailPegawai']);
         
         // Manajemen Brand
+        Route::get('/request_point_brands', [Admin_BrandsController::class, 'index_requestPoint'])->name('admin_request_point');
+        Route::get('/getDataRequestPoint', [Admin_BrandsController::class, 'getDataRequestPoint']);
+        Route::get('/detailRequestPoint/{id}', [Admin_BrandsController::class, 'detailRequestPoint']);
+        Route::post('/approveRequestPoint', [Admin_BrandsController::class, 'approveRequestPoint']);
+        Route::post('/rejectRequestPoint', [Admin_BrandsController::class, 'rejectRequestPoint']);
         Route::get('/brand-active', [Admin_BrandsController::class, 'index_brandActive'])->name('admin_brand_active');
         Route::get('/getDatabrandActive', [Admin_BrandsController::class, 'getDatabrandActive']);
         Route::get('/detail-user-brand/{brand}', [Admin_BrandsController::class, 'detailBrands'])->name('admin_brand_detail');
@@ -223,6 +228,8 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/setting/getNotifications', [Admin_NotificationController::class, 'getNotifications']);
         Route::get('/setting/notification/createNotifications', [Admin_NotificationController::class, 'createNotifications']);
         Route::post('/setting/storeNotifications', [Admin_NotificationController::class, 'storeNotifications']);
+        Route::get('/setting/notification/{id}/detail', [Admin_NotificationController::class, 'detailNotifications']);
+        Route::get('/setting/notification/get_detailNotifications/{id}', [Admin_NotificationController::class, 'get_detailNotifications']);
         Route::post('/setting/deleteNotifications', [Admin_NotificationController::class, 'deleteNotifications']);
 
         //Order

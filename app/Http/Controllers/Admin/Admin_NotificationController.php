@@ -102,6 +102,41 @@ class Admin_NotificationController extends Controller
         }
     }
 
+    public function detailNotifications($id): View
+    {
+        return view('master.settings.notifications.detail_notifications', [
+            'id' => $id
+        ]);
+    }
+
+    public function get_detailNotifications($id)
+    {
+        // $appId = env('ONESIGNAL_APP_ID');
+        // $apiKey = env('ONESIGNAL_REST_API_KEY');
+        $appId = '0cab2099-1b06-428c-8aee-d7ee20e11592';
+        $apiKey = 'NTY0YzIwZjItOGViMC00M2ViLWIwM2QtZGZhNmQ4ZWMyMjYy';
+
+        try {
+            $client = new Client();
+            $response = $client->request('GET', "https://api.onesignal.com/notifications/{$id}", [
+                'headers' => [
+                    'accept' => 'application/json',
+                    'Authorization' => 'Basic ' . $apiKey,
+                ],
+                'query' => [
+                    'app_id' => $appId,
+                ],
+            ]);
+
+            return response()->json(json_decode($response->getBody()), $response->getStatusCode());
+        } catch (ClientException $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'response' => json_decode($e->getResponse()->getBody()->getContents()),
+            ], $e->getCode());
+        }
+    }
+
     public function deleteNotifications(Request $request)
     {
         $notificationIds = $request->notification_ids;
