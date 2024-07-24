@@ -25,22 +25,56 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
-                <div class="card-body py-4">
-                    <div class="table-responsive">
-                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableRequestPoint">
-                            <thead>
-                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="min-w-100px text-dark">Info Brand</th>
-                                    <th class="min-w-100px text-dark">Invoice</th>
-                                    <th class="min-w-50px text-dark">Point</th>
-                                    <th class="min-w-50px text-dark">Jumlah</th>
-                                    <th class="min-w-50px text-dark">Bukti</th>
-                                    <th class="text-dark">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-600 fw-semibold"></tbody>
-                        </table>
+            <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6">
+                <li class="nav-item">
+                    <a class="nav-link active text-dark fw-bold" data-bs-toggle="tab" href="#requestPending">Request Pending</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" data-bs-toggle="tab" href="#logRequest">Log Request</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="requestPending" role="tabpanel">
+                    <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
+                        <div class="card-body py-4">
+                            <div class="table-responsive">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableRequestPoint">
+                                    <thead>
+                                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                            <th class="min-w-100px text-dark">Info Brand</th>
+                                            <th class="min-w-100px text-dark">Invoice</th>
+                                            <th class="min-w-50px text-dark">Point</th>
+                                            <th class="min-w-50px text-dark">Jumlah</th>
+                                            <th class="min-w-50px text-dark">Bukti</th>
+                                            <th class="text-dark">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-gray-600 fw-semibold"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="logRequest" role="tabpanel">
+                    <div class="card" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
+                        <div class="card-body py-4">
+                            <div class="table-responsive">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="tableLogRequest">
+                                    <thead>
+                                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                            <th class="min-w-100px text-dark">Info Brand</th>
+                                            <th class="min-w-100px text-dark">Invoice</th>
+                                            <th class="min-w-50px text-dark">Point</th>
+                                            <th class="min-w-50px text-dark">Jumlah</th>
+                                            <th class="min-w-50px text-dark">Bukti</th>
+                                            <th class="min-w-50px text-dark">Status</th>
+                                            <th class="text-dark">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-gray-600 fw-semibold"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,6 +161,7 @@
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
+        // Datatable Pending
         $(document).ready(function() {
             $('#tableRequestPoint').DataTable({
                 processing: true,
@@ -171,6 +206,68 @@
                                         <button type="button" class="btn btn-light-success my-1 me-2 btn-sm" onclick="approveRequest(${row.id})">Approve</button>
                                         <button type="button" class="btn btn-light-primary my-1 me-2 btn-sm" onclick="detailRequest(${row.id})">Detail</button>
                                         <button type="button" class="btn btn-light-danger my-1 me-2 btn-sm" onclick="rejectRequest(${row.id})">Reject</button>
+                                    </div>`;
+                        }
+                    }
+                ],
+            });
+        });
+
+        // Datatable Log
+        $(document).ready(function() {
+            $('#tableLogRequest').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: "/admin/getDataRequestLog",
+                    dataType: "JSON",
+                },
+                language: {
+                    processing: "Loading..."
+                },
+                columns: [
+                    {
+                        data: 'brand_name',
+                        render: function(data, type, row) {
+                            return `<div class="d-flex align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="text-gray-800 mb-1">${row.brand_name}</span>
+                                            <span>${row.brand_code}</span>
+                                        </div>
+                                    </div>`;
+                        }
+                    },
+                    { data: 'invoice_no' },
+                    { data: 'point_request' },
+                    {
+                        data: 'jumlah_pembayaran',
+                        render: function(data, type, row) {
+                            return formatRupiah(data);
+                        },
+                    },
+                    {
+                        data: "Bukti Pembayaran",
+                        render: function(data, type, row) {
+                            return '<a href="https://apps.tokoseru.com/' + row.path_bukti_pembayaran + '" target="_blank" class="btn btn-primary fw-bold my-1 me-2 btn-sm hover-scale">Lihat</a>';
+                        },
+                    },
+                    {
+                        data: "Status",
+                        render: function(data, type, row) {
+                            var status = '';
+                            if (row.status == 1) {
+                                status = '<span class="badge badge-success badge">Approved</span>';
+                            } else {
+                                status = '<span class="badge badge-danger badge">Rejected</span>';
+                            }
+                            return status;
+                        }
+                    },
+                    {
+                        data: 'atur',
+                        render: function(data, type, row) {
+                            return `<div class="align-items-center d-flex">
+                                        <button type="button" class="btn btn-light-primary my-1 me-2 btn-sm" onclick="detailRequest(${row.id})">Detail</button>
                                     </div>`;
                         }
                     }

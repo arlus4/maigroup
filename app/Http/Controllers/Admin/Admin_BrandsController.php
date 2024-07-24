@@ -64,6 +64,37 @@ class Admin_BrandsController extends Controller
         return response()->json($datas);
     }
 
+    public function getDataRequestLog()
+    {
+        $data = DB::table('konfirmasi_pembayaran')
+        ->select(
+            'konfirmasi_pembayaran.id',
+            'konfirmasi_pembayaran.invoice_no',
+            'konfirmasi_pembayaran.point_request',
+            'konfirmasi_pembayaran.jumlah_pembayaran',
+            'konfirmasi_pembayaran.path_bukti_pembayaran',
+            'konfirmasi_pembayaran.status',
+            'brands.brand_code',
+            'brands.brand_name',
+            'brands.no_hp',
+            'ref_bank.nama_bank',
+            'ref_bank.nomor_rekening',
+            'users_login.name',
+        )
+        ->join('brands','konfirmasi_pembayaran.brand_code', 'brands.brand_code')
+        ->leftJoin('ref_bank', 'konfirmasi_pembayaran.id_bank_tokoseru', 'ref_bank.id')
+        ->leftJoin('users_login', 'konfirmasi_pembayaran.user_request', 'users_login.id')
+        ->whereNot('konfirmasi_pembayaran.status', 0)
+        ->orderBy('konfirmasi_pembayaran.created_at', 'asc')
+        ->get();
+
+        $datas = [
+            'data' => $data
+        ];
+    
+        return response()->json($datas);
+    }
+
     public function detailRequestPoint($id)
     {
         $data = DB::table('konfirmasi_pembayaran')
@@ -85,7 +116,6 @@ class Admin_BrandsController extends Controller
         ->leftJoin('ref_bank', 'konfirmasi_pembayaran.id_bank_tokoseru', 'ref_bank.id')
         ->leftJoin('users_login', 'konfirmasi_pembayaran.user_request', 'users_login.id')
         ->where('konfirmasi_pembayaran.id', $id)
-        ->where('konfirmasi_pembayaran.status', 0)
         ->orderBy('konfirmasi_pembayaran.created_at', 'asc')
         ->first();
 
@@ -242,10 +272,14 @@ class Admin_BrandsController extends Controller
                 'brands_registers.brand_image_path',
                 'brands_registers.created_at',
                 'brand_categories.brand_category_name',
-                'users_registers.name',
-                'users_registers.email'
+                DB::raw('COALESCE(users_registers.name, users_login.name) as name'),
+                DB::raw('COALESCE(users_registers.email, users_login.email) as email')
             )
-            ->leftJoin('users_registers', 'brands_registers.user_id', 'users_registers.id')
+            ->leftJoin('users_registers', 'brands_registers.user_id', '=', 'users_registers.id')
+            ->leftJoin('users_login', function($join) {
+                $join->on('brands_registers.user_id', '=', 'users_login.id');
+                $join->whereNull('users_registers.id');
+            })
             ->leftJoin('brand_categories', 'brands_registers.brand_category_code', 'brand_categories.brand_category_code')
             ->where('brands_registers.is_regis', 0)
             ->orderBy('brands_registers.created_at', 'asc')
@@ -384,10 +418,14 @@ class Admin_BrandsController extends Controller
                 'brands_registers.brand_image_path',
                 'brands_registers.created_at',
                 'brand_categories.brand_category_name',
-                'users_registers.name',
-                'users_registers.email'
+                DB::raw('COALESCE(users_registers.name, users_login.name) as name'),
+                DB::raw('COALESCE(users_registers.email, users_login.email) as email')
             )
-            ->leftJoin('users_registers', 'brands_registers.user_id', 'users_registers.id')
+            ->leftJoin('users_registers', 'brands_registers.user_id', '=', 'users_registers.id')
+            ->leftJoin('users_login', function($join) {
+                $join->on('brands_registers.user_id', '=', 'users_login.id');
+                $join->whereNull('users_registers.id');
+            })
             ->leftJoin('brand_categories', 'brands_registers.brand_category_code', 'brand_categories.brand_category_code')
             ->where('brands_registers.is_regis', 2)
             ->orderBy('brands_registers.created_at', 'asc')

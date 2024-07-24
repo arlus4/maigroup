@@ -110,6 +110,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         // Manajemen Brand
         Route::get('/request_point_brands', [Admin_BrandsController::class, 'index_requestPoint'])->name('admin_request_point');
         Route::get('/getDataRequestPoint', [Admin_BrandsController::class, 'getDataRequestPoint']);
+        Route::get('/getDataRequestLog', [Admin_BrandsController::class, 'getDataRequestLog']);
         Route::get('/detailRequestPoint/{id}', [Admin_BrandsController::class, 'detailRequestPoint']);
         Route::post('/approveRequestPoint', [Admin_BrandsController::class, 'approveRequestPoint']);
         Route::post('/rejectRequestPoint', [Admin_BrandsController::class, 'rejectRequestPoint']);
