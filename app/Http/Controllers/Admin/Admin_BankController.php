@@ -112,8 +112,6 @@ class Admin_BankController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback(); // Rollback the transaction in case of an exception
-
-            Log::error($th); // Log the exception for debugging
     
             return response()->json([
                 'status' => 'error',

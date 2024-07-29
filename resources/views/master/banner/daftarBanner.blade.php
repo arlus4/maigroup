@@ -138,8 +138,7 @@
                             <form action="" method="POST" id="deleteBannerForm">
                                 @csrf
                                 <div class="row g-9 mb-8">
-                                    <!--begin::Col-->
-                                    <input type="hidden" name="banner_id" id="banner_id">
+                                    <input type="text" name="banner_id" id="bannerId" placeholder="Id banner">
                                     <div class="col-md-12 fv-row" >
                                         <span style="font-size: 15px">
                                             Apakah Anda yakin untuk menghapus Banner Promo ini?
@@ -153,8 +152,8 @@
                                     </button>
                                 </div>
                             </form>
-                        </div> 
-                    </div> 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

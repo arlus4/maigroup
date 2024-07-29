@@ -29,6 +29,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
 use App\Http\Controllers\Admin\Admin_NotificationController;
 use App\Http\Controllers\Admin\Admin_PegawaiController;
+use App\Http\Controllers\Admin\Admin_Point_PriceController;
 use App\Http\Controllers\Admin\Admin_Product_CategoryController;
 
 Route::get('/', [HomeController::class, 'home']);
@@ -186,7 +187,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::post('/update_banner/{banner}', [Admin_BannerController::class, 'update'])->name('admin_update_banner');
         Route::post('/destroy_banner/{banner}', [Admin_BannerController::class, 'destroy'])->name('admin_destroy_banner');
 
-        //Setting-FaQ
+        //Setting-FaQ-Categories
         Route::get('/setting/faq/categories', [Admin_FaQController::class, 'faq_categories'])->name('admin_faq_categories');
         Route::get('/setting/faq/categories/get_data_faq_category', [Admin_FaQController::class, 'get_data_faq_category']);
         Route::get('/catFaQSlug', [Admin_FaQController::class, 'catFaQSlug']);
@@ -217,6 +218,12 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/setting/faq/user/faq_user_pegawai_edit', [Admin_FaQController::class, 'faq_user_pegawai_edit'])->name('admin_faq_user_pegawai_edit');
         Route::post('/setting/faq/user/faq_user_pegawai_update', [Admin_FaQController::class, 'faq_user_pegawai_update'])->name('admin_faq_user_pegawai_update');
         Route::post('/setting/faq/user/faq_user_pegawai_delete', [Admin_FaQController::class, 'faq_user_pegawai_delete'])->name('admin_faq_user_pegawai_delete');
+        //Setting-Point Price
+        Route::get('/setting/point_price', [Admin_Point_PriceController::class, 'index'])->name('admin_point_price');
+        Route::post('/setting/store_point_price', [Admin_Point_PriceController::class, 'store']);
+        Route::get('/setting/detail_point_price/{point_Price}', [Admin_Point_PriceController::class, 'show']);
+        Route::post('/setting/update_point_price', [Admin_Point_PriceController::class, 'update']);
+        Route::post('/setting/delete_point_price', [Admin_Point_PriceController::class, 'destroy']);
         //Setting-Bank
         Route::get('/setting/bank', [Admin_BankController::class, 'index'])->name('admin_bank');
         Route::post('/storeUpdate_bank', [Admin_BankController::class, 'storeOrUpdate'])->name('admin_store_update_bank');
