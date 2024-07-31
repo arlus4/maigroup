@@ -340,38 +340,47 @@
         }
 
         function rejectRequest(id) {
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: "Anda Ingin Menolak Request ini ?",
-                icon: 'error',
-                cancelButtonText: "Batal",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: `Ya, saya yakin!`
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/rejectRequestPoint',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            id : id
-                        },
-                        success: function(response) {
-                            if (response.status === 'success') {
-                                toastr.success(response.message);
-                                $('#tableRequestPoint').DataTable().ajax.reload();
-                            } else {
-                                toastr.error(response.message);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            toastr.error("Terjadi kesalahan. Silakan coba lagi.");
-                        }
-                    })
+        Swal.fire({
+            title: 'Konfirmasi Penolakan',
+            html: `
+                <p>Anda ingin menolak request ini?</p>
+                <textarea id="rejectReason" class="swal2-textarea" placeholder="Masukkan Alasan Penolakan" required></textarea>
+            `,
+            icon: 'error',
+            showCancelButton: true,
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Ya, saya yakin!',
+            preConfirm: () => {
+                const rejectReason = Swal.getPopup().querySelector('#rejectReason').value;
+                if (!rejectReason) {
+                    Swal.showValidationMessage('Alasan Penolakan Tidak Boleh Kosong');
                 }
-            })
-        }
+                return { rejectReason: rejectReason };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/rejectRequestPoint',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id,
+                        reason: result.value.rejectReason
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            toastr.success(response.message);
+                            $('#tableRequestPoint').DataTable().ajax.reload();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                });
+            }
+        });
+    }
     </script>
 @endsection

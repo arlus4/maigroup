@@ -115,6 +115,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/detailRequestPoint/{id}', [Admin_BrandsController::class, 'detailRequestPoint']);
         Route::post('/approveRequestPoint', [Admin_BrandsController::class, 'approveRequestPoint']);
         Route::post('/rejectRequestPoint', [Admin_BrandsController::class, 'rejectRequestPoint']);
+        
         Route::get('/brand-active', [Admin_BrandsController::class, 'index_brandActive'])->name('admin_brand_active');
         Route::get('/getDatabrandActive', [Admin_BrandsController::class, 'getDatabrandActive']);
         Route::get('/detail-user-brand/{brand}', [Admin_BrandsController::class, 'detailBrands'])->name('admin_brand_detail');

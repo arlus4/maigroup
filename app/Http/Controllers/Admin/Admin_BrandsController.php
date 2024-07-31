@@ -177,9 +177,15 @@ class Admin_BrandsController extends Controller
 
             $reject = Konfirmasi_Pembayaran::find($request->id);
 
-            Point_Deposit_Request::where('invoice_no', $reject->invoice_no)->update(['status' => 4]);
+            Point_Deposit_Request::where('invoice_no', $reject->invoice_no)->update([
+                'reason' => $request->reason,
+                'status' => 4
+            ]);
 
-            $reject->update(['status' => 2]);
+            $reject->update([
+                'reason' => $request->reason,
+                'status' => 2
+            ]);
 
             DB::commit();
 
