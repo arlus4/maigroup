@@ -102,15 +102,15 @@ use Jenssegers\Agent\Agent;
                                     <!--end::Position-->
                                     <!--begin::Info-->
                                     <!--begin::Info heading-->
-                                    <div class="fw-bold mb-3">Lorem, ipsum.
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Lorem ipsum dolor sit amet consectetur, adipisicing elit."></i>
+                                    <div class="fw-bold mb-3">{{ $getData->permissions }}
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="{{ $getData->description_permissions }}"></i>
                                     </div>
                                     <!--end::Info heading-->
                                     <div class="d-flex flex-wrap flex-center">
                                         <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="text-center w-75px">{{ count($getBrands) }}</span>
+                                                <span class="text-center w-75px">{{ $countBrands }}</span>
                                             </div>
                                             <div class="fw-semibold text-muted">Brands</div>
                                         </div>
@@ -118,7 +118,7 @@ use Jenssegers\Agent\Agent;
                                         <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px">{{ count($getOutlets) }}</span>
+                                                <span class="w-50px">{{ $countOutlets }}</span>
                                             </div>
                                             <div class="fw-semibold text-muted">Outlets</div>
                                         </div>
@@ -126,9 +126,9 @@ use Jenssegers\Agent\Agent;
                                         <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px">188</span>
+                                                <span class="w-50px">{{ $countEmployee }}</span>
                                             </div>
-                                            <div class="fw-semibold text-muted">dolor</div>
+                                            <div class="fw-semibold text-muted">Pegawai</div>
                                         </div>
                                         <!--end::Stats-->
                                     </div>
@@ -215,7 +215,7 @@ use Jenssegers\Agent\Agent;
                                     <div class="card-header mt-6">
                                         <div class="card-title flex-column">
                                             <h2 class="mb-1">Brands User</h2>
-                                            <div class="fs-6 fw-semibold text-muted">Total {{ count($getBrands) }} Brands</div>
+                                            <div class="fs-6 fw-semibold text-muted">Total {{ $countBrands }} Brands</div>
                                         </div>
                                         <div class="card-toolbar">
                                             <a href="/admin/create_New_Brands/{{ $username }}" class="btn btn-light-primary btn-sm">
@@ -276,7 +276,7 @@ use Jenssegers\Agent\Agent;
                                     <div class="card-header mt-6">
                                         <div class="card-title flex-column">
                                             <h2 class="mb-1">Outlets User</h2>
-                                            <div class="fs-6 fw-semibold text-muted">Total {{ count($getOutlets) }} Outlets</div>
+                                            <div class="fs-6 fw-semibold text-muted">Total {{ $countOutlets }} Outlets</div>
                                         </div>
                                         <div class="card-toolbar">
                                             <a href="/admin/create_New_Outlets/{{ $username }}" class="btn btn-light-primary btn-sm">
@@ -331,6 +331,54 @@ use Jenssegers\Agent\Agent;
                                     </div>
                                 </div>
                                 <!--end::Outlet-->
+
+                                <!--begin::Pegawai-->
+                                <div class="card card-flush mb-6 mb-xl-9">
+                                    <div class="card-header mt-6">
+                                        <div class="card-title flex-column">
+                                            <h2 class="mb-1">Pegawai User</h2>
+                                            <div class="fs-6 fw-semibold text-muted">Total {{ $countEmployee }} Pegawai</div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        @foreach ($getEmployee as $employee)
+                                            <div class="d-flex align-items-center position-relative mb-7">
+                                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
+                                                <div class="fw-semibold ms-5">
+                                                    <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">{{ $employee->name }}</a>
+                                                    <div class="fs-7 text-muted">{{ $employee->no_hp }}</div>
+                                                </div>
+                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                    <span class="svg-icon svg-icon-3">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor" />
+                                                            <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
+                                                </button>
+                                                <div class="dropdown">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <li>
+                                                            <a href="javascript:;" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                <i style="color:#181C32;" class="fas fa-eye me-2"></i>
+                                                                Detail
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <!--end::Pegawai-->
                             </div>
                             <!--end:::Overview-->
 

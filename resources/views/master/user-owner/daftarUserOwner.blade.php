@@ -33,6 +33,7 @@
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-100px text-dark">Info Owner</th>
                                     <th class="min-w-100px text-dark">Nomor HP</th>
+                                    <th class="min-w-100px text-dark">Pelanggan</th>
                                     <th class="min-w-100px text-dark">Aktif</th>
                                     <th class="text-dark"></th>
                                 </tr>
@@ -81,6 +82,7 @@
                         }
                     },
                     { data: 'no_hp' },
+                    { data: 'permissions' },
                     {
                         data: 'status',
                         render: function(data, type, row) {

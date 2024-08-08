@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\Admin_NotificationController;
 use App\Http\Controllers\Admin\Admin_PegawaiController;
 use App\Http\Controllers\Admin\Admin_Point_PriceController;
 use App\Http\Controllers\Admin\Admin_Product_CategoryController;
+use App\Http\Controllers\Admin\Admin_SubscriberController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -54,7 +55,7 @@ Route::get('/get_data_outlet/{brand_code}', [UtilitasController::class, 'get_dat
 Route::get('/validate_bannerCode', [UtilitasController::class, 'validate_bannerCode']);
 
 // Bagian Middleware & Prefix Admin
-Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
+Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], function () {
 
     // Master Data
     Route::prefix('admin')->name('admin.')->group(function() {
@@ -219,6 +220,10 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified']], function () {
         Route::get('/setting/faq/user/faq_user_pegawai_edit', [Admin_FaQController::class, 'faq_user_pegawai_edit'])->name('admin_faq_user_pegawai_edit');
         Route::post('/setting/faq/user/faq_user_pegawai_update', [Admin_FaQController::class, 'faq_user_pegawai_update'])->name('admin_faq_user_pegawai_update');
         Route::post('/setting/faq/user/faq_user_pegawai_delete', [Admin_FaQController::class, 'faq_user_pegawai_delete'])->name('admin_faq_user_pegawai_delete');
+        //Setting-Subscribe
+        Route::get('/setting/subscribe', [Admin_SubscriberController::class, 'index'])->name('admin_subscribe');
+        Route::get('/setting/subscriber_detail/{id}', [Admin_SubscriberController::class, 'subscriber_detail']);
+        Route::post('/setting/update_subscribe/{id}', [Admin_SubscriberController::class, 'subscriber_update']);
         //Setting-Point Price
         Route::get('/setting/point_price', [Admin_Point_PriceController::class, 'index'])->name('admin_point_price');
         Route::post('/setting/store_point_price', [Admin_Point_PriceController::class, 'store']);

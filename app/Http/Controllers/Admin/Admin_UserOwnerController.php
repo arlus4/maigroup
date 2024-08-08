@@ -28,6 +28,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Http\JsonResponse;
 
 class Admin_UserOwnerController extends Controller
 {
@@ -41,10 +42,28 @@ class Admin_UserOwnerController extends Controller
         return view('master.user-owner.daftarUserOwner');
     }
 
-    public function getDataUserOwner()
+    public function getDataUserOwner(): JsonResponse
     {
-        $data = DB::select("SELECT idUserLogin, name, username, email, no_hp, is_active, avatar, path_avatar
-                    FROM [maigroup].[dbo].[web.user_owner_list] ()");
+        $data = DB::table('users_login')
+        ->select(
+            'users_login.id as idUserLogin',
+            'users_login.users_type',
+            'users_login.name',
+            'users_login.username',
+            'users_login.email',
+            'users_login.no_hp',
+            'users_login.is_active',
+            'users_details.id as idUserDetail',
+            'users_details.avatar',
+            'users_details.path_avatar',
+            DB::raw('UPPER(permissions.name) as permissions'),
+        )
+        ->leftJoin('users_details', 'users_login.id', 'users_details.user_id')
+        ->leftJoin('model_has_permissions', 'users_login.id', 'model_has_permissions.model_id')
+        ->leftJoin('permissions', 'model_has_permissions.permission_id', 'permissions.id')
+        ->where('users_login.users_type', 2)
+        ->where('users_login.is_active', 1)
+        ->get();
 
         $datas = [
             'data' => $data
@@ -63,7 +82,7 @@ class Admin_UserOwnerController extends Controller
         return view('master.user-owner.user-pending.daftarUserPending');
     }
 
-    public function getDataPending()
+    public function getDataPending(): JsonResponse
     {
         $users = Users_Register::select(
             'id',
@@ -99,7 +118,7 @@ class Admin_UserOwnerController extends Controller
         ]);
     }
 
-    public function approve_UserPending(Request $request)
+    public function approve_UserPending(Request $request): JsonResponse
     {
         $user_register  = Users_Register::find($request->id);
         $brand_register = Brands_Register::where('user_id', $request->id)->first();
@@ -196,12 +215,12 @@ class Admin_UserOwnerController extends Controller
         ]);
     }
 
-    public function getDataDetailUserPending(Request $request)
+    public function getDataDetailUserPending(Request $request): JsonResponse
     {
         return response()->json(Users_Register::find($request->id));
     }
 
-    public function reject_UserPending(Request $request)
+    public function reject_UserPending(Request $request): JsonResponse
     {
         try {
             DB::beginTransaction(); // Begin Transaction
@@ -228,7 +247,12 @@ class Admin_UserOwnerController extends Controller
         ]);
     }
 
-    public function index_userReject()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_userReject(): View
     {
         return view('master.user-owner.user-pending.daftarUserReject');
     }
@@ -408,17 +432,67 @@ class Admin_UserOwnerController extends Controller
 
     public function show($username)
     {
-        $getDatas = DB::select("SELECT
-                                    idUserLogin, username, name, no_hp, email, avatar, path_avatar, nomor_ktp,
-                                    tanggal_lahir, jenis_kelamin, alamat_detail, nama_propinsi,
-                                    nama_kotakab, nama_kecamatan, nama_kelurahan, kode_pos
-                                FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')"
-                             );
-        $getData = $getDatas[0];
+        $getData = DB::table('users_login')
+        ->select([
+            DB::raw('MAX(users_login.id) AS idUserLogin'),
+            'users_login.username',
+            DB::raw('MAX(users_login.name) AS name'),
+            DB::raw('MAX(users_login.no_hp) AS no_hp'),
+            DB::raw('MAX(users_login.email) AS email'),
+            DB::raw('MAX(users_details.id) AS idUserDetail'),
+            DB::raw('MAX(users_details.avatar) AS avatar'),
+            DB::raw('CASE
+                        WHEN MAX(CAST(users_details.path_avatar AS VARCHAR(MAX))) IS NULL
+                        THEN \'Gambar Ditemukan\'
+                        ELSE MAX(CAST(users_details.path_avatar AS VARCHAR(MAX)))
+                    END AS path_avatar'),
+            DB::raw('MAX(users_details.nomor_ktp) AS nomor_ktp'),
+            DB::raw('MAX(users_details.tanggal_lahir) AS tanggal_lahir'),
+            DB::raw('MAX(users_details.jenis_kelamin) AS jenis_kelamin'),
+            DB::raw('MAX(users_details.kode_pos) AS kode_pos'),
+            DB::raw('MAX(ref_propinsi.kode_propinsi) AS kode_propinsi'),
+            DB::raw('MAX(ref_propinsi.nama_propinsi) AS nama_propinsi'),
+            DB::raw('MAX(ref_kotakab.kode_kotakab) AS kode_kotakab'),
+            DB::raw('MAX(ref_kotakab.nama_kotakab) AS nama_kotakab'),
+            DB::raw('MAX(ref_kecamatan.kode_kecamatan) AS kode_kecamatan'),
+            DB::raw('MAX(ref_kecamatan.nama_kecamatan) AS nama_kecamatan'),
+            DB::raw('MAX(ref_kelurahan.kode_kelurahan) AS kode_kelurahan'),
+            DB::raw('MAX(ref_kelurahan.nama_kelurahan) AS nama_kelurahan'),
+            DB::raw('CASE
+                        WHEN MAX(CAST(users_details.alamat_detail AS VARCHAR(MAX))) IS NULL
+                        THEN \'Alamat Tidak Ditemukan\'
+                        ELSE MAX(CAST(users_details.alamat_detail AS VARCHAR(MAX)))
+                    END AS alamat_detail'),
+            DB::raw('MAX(UPPER(permissions.name)) as permissions'),
+            DB::raw('MAX(permissions.description) as description_permissions')
+        ])
+        ->leftJoin('users_details', 'users_login.id', '=', 'users_details.user_id')
+        ->leftJoin('model_has_permissions', 'users_login.id', 'model_has_permissions.model_id')
+        ->leftJoin('permissions', 'model_has_permissions.permission_id', 'permissions.id')
+        ->leftJoin('ref_propinsi', 'users_details.provinsi', '=', 'ref_propinsi.kode_propinsi')
+        ->leftJoin('ref_kotakab', 'users_details.kota_kabupaten', '=', 'ref_kotakab.kode_kotakab')
+        ->leftJoin('ref_kecamatan', 'users_details.kecamatan', '=', 'ref_kecamatan.kode_kecamatan')
+        ->leftJoin('ref_kelurahan', 'users_details.kelurahan', '=', 'ref_kelurahan.kode_kelurahan')
+        ->where('users_login.users_type', '2')
+        ->where('users_login.username', $username)
+        ->groupBy('users_login.username')
+        ->first();
         
-        $getBrands = Brand::select('brand_name', 'brand_code', 'slug')->where('user_id', $getData->idUserLogin)->get();
+        $getBrands = Brand::select('brand_name', 'brand_code', 'slug')->where('user_id', $getData->idUserLogin)->paginate(5);
+        $countBrands = Brand::where('user_id', $getData->idUserLogin)->count();
 
-        $getOutlets = Outlet::where('user_id', $getData->idUserLogin)->get();
+        $getOutlets = Outlet::where('user_id', $getData->idUserLogin)->paginate(5);
+        $countOutlets = Outlet::where('user_id', $getData->idUserLogin)->count();
+
+        $getEmployee = DB::table('pegawai')
+        ->select('pegawai.name', 'pegawai.username', 'pegawai.no_hp', 'pegawai.email')
+        ->leftJoin('outlets', 'pegawai.outlet_code', 'outlets.outlet_code')
+        ->where('outlets.user_id', $getData->idUserLogin)
+        ->paginate(5);
+        $countEmployee = DB::table('pegawai')
+        ->leftJoin('outlets', 'pegawai.outlet_code', 'outlets.outlet_code')
+        ->where('outlets.user_id', $getData->idUserLogin)
+        ->count();
 
         $getSessions = Users_Session::where('user_id', $getData->idUserLogin)->get();
         // Format the last_activity timestamp
@@ -430,8 +504,12 @@ class Admin_UserOwnerController extends Controller
             'username' => $username,
             'getData' => $getData,
             'getBrands' => $getBrands,
+            'countBrands' => $countBrands,
             'getOutlets' => $getOutlets,
-            'sessions' => $getSessions,
+            'countOutlets' => $countOutlets,
+            'getEmployee' => $getEmployee,
+            'countEmployee' => $countEmployee,
+            'sessions' => $getSessions
         ]);
     }
 
