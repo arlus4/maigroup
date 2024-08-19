@@ -277,7 +277,44 @@
             })
         })
     });
-</script>
 
+    function deleteCat(id) {
+        Swal.fire({
+            title: 'Confirmation',
+            text: "Are You Sure ?",
+            icon: 'warning',
+            cancelButtonText: "Cancel",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Yes, I'm Sure!`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/setting/config/delete_config',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id : id
+                    },
+                    success: function(response) {
+                        // toastr[response.status](response.message);
+                        // // $('#tableConfiguration').DataTable().ajax.reload();
+                        // $('#tableConfiguration').load(' #tableConfiguration');
+                        if (response.status === 'success') {
+                            toastr.success(response.message);
+                            $('#tableConfiguration').DataTable().ajax.reload();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                })
+            }
+        })
+    }
+</script>
 
 @endsection

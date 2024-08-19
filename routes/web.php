@@ -252,6 +252,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::post('/setting/config/store_config', [Admin_ConfigController::class, 'store']);
         Route::get('/setting/config/edit_config', [Admin_ConfigController::class, 'edit']);
         Route::post('/setting/config/update_config', [Admin_ConfigController::class, 'update']);
+        Route::post('/setting/config/delete_config', [Admin_ConfigController::class, 'destroy']);
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');

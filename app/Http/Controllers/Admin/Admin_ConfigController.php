@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Admin_ConfigController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(): View
     {
         return view('master.settings.config.index');
@@ -33,6 +38,12 @@ class Admin_ConfigController extends Controller
         return redirect()->route('login')->with('error', 'Silahkan Login Terlebih Dahulu');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request): RedirectResponse
     {
         try {
@@ -66,11 +77,24 @@ class Admin_ConfigController extends Controller
         }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Ref_Config  $config
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Request $request): JsonResponse
     {
         return response()->json(Ref_Config::find($request->id));
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Ref_Config  $config
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request)
     {
         try {
@@ -98,6 +122,35 @@ class Admin_ConfigController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Configuration Has Been Updated'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went Wrong: ' . $th->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Ref_Config  $config
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+
+            Ref_Config::find($request->id)->delete();
+
+            DB::commit(); // Commit the transaction
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Configuration Has Been Deleted'
             ]);
         } catch (\Throwable $th) {
             DB::rollback(); // Rollback the transaction in case of an exception
