@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_UserPenjualController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
+use App\Http\Controllers\Admin\Admin_ConfigController;
 use App\Http\Controllers\Admin\Admin_NotificationController;
 use App\Http\Controllers\Admin\Admin_PegawaiController;
 use App\Http\Controllers\Admin\Admin_Point_PriceController;
@@ -245,6 +246,12 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::get('/setting/notification/{id}/detail', [Admin_NotificationController::class, 'detailNotifications']);
         Route::get('/setting/notification/get_detailNotifications/{id}', [Admin_NotificationController::class, 'get_detailNotifications']);
         Route::post('/setting/deleteNotifications', [Admin_NotificationController::class, 'deleteNotifications']);
+        //Setting-Configuration
+        Route::get('/setting/config', [Admin_ConfigController::class, 'index'])->name('admin_config');
+        Route::get('/setting/config/get_dataConfig', [Admin_ConfigController::class, 'get_dataConfig']);
+        Route::post('/setting/config/store_config', [Admin_ConfigController::class, 'store']);
+        Route::get('/setting/config/edit_config', [Admin_ConfigController::class, 'edit']);
+        Route::post('/setting/config/update_config', [Admin_ConfigController::class, 'update']);
 
         //Order
         // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
