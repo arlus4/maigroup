@@ -9,7 +9,7 @@ class Resep extends Model
 {
     use HasFactory;
 
-    protected $table = 'resep';
+    protected $table = 'product_resep';
 
     /**
      * The attributes that aren't mass assignable.
