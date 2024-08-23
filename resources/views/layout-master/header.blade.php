@@ -454,7 +454,7 @@
                                     </div>
                                     <!--end:Menu item-->
                                     <!--begin:Menu item-->
-                                    {{-- <div class="menu-item">
+                                    <div class="menu-item">
                                         <!--begin:Menu link-->
                                         <a class="menu-link {{ Request::is('admin/setting/notification*') ? 'active' : '' }}" href="{{ route('admin.admin_notification_index') }}">
                                             <span class="menu-bullet">
@@ -475,7 +475,7 @@
                                             <span class="menu-title">Segment</span>
                                         </a>
                                         <!--end:Menu link-->
-                                    </div> --}}
+                                    </div>
                                     <!--end:Menu item-->
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
