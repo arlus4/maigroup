@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Contracts\View\View;
 
 class Admin_Product_CategoryController extends Controller
 {
@@ -20,7 +21,7 @@ class Admin_Product_CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $brand_category = Brand_Category::get();
         return view('master.user-owner.outlet.categoryProduct', [

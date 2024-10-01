@@ -119,7 +119,7 @@
                         data: 'atur',
                         render: function(data, type, row) {
                             return `<div class="align-items-center d-flex">
-                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = '/admin/detail-pegawai/${row.id}'">Detail</button>
+                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = '/admin/outlets/detail-pegawai/${row.id}'">Detail</button>
                                 </div>`;
                         }
                     }

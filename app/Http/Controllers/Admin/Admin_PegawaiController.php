@@ -8,6 +8,8 @@ use App\Models\Pegawai_Detail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Models\Invoice_Master_Pembeli;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
@@ -21,10 +23,10 @@ class Admin_PegawaiController extends Controller
      */
     public function index(): View
     {
-        return view('master.user-owner.outlet.pegawai.daftarPegawai');
+        return view('master.outlets.pegawai.daftarPegawai');
     }
 
-    public function getDataListPegawai()
+    public function getDataListPegawai(): JsonResponse
     {
         $data = DB::table('pegawai')
             ->select(
@@ -67,13 +69,16 @@ class Admin_PegawaiController extends Controller
     {
         $pegawai = Pegawai::findOrFail($id);
         $detail = Pegawai_Detail::where('pegawai_id', $id)->first();
-        return view('master.user-owner.outlet.pegawai.detailPegawai', [
+        $penjualan = DB::table('invoice_master_pembeli')->where('pegawai_id', $pegawai->id)->sum('invoice_master_pembeli.amount');
+
+        return view('master.outlets.pegawai.detailPegawai', [
             'pegawai' => $pegawai,
-            'detail' => $detail
+            'detail' => $detail,
+            'penjualan' => $penjualan
         ]);
     }
 
-    public function getDataDetailProfilePegawai($id)
+    public function getDataDetailProfilePegawai($id): JsonResponse
     {
         $pegawai = DB::table('pegawai')
             ->select(
@@ -108,6 +113,27 @@ class Admin_PegawaiController extends Controller
 
         $datas = [
             'data' => $pegawai
+        ];
+
+        return response()->json($datas);
+    }
+
+    public function getDataTransactionPegawai(Pegawai $pegawai): JsonResponse
+    {
+        $transaksi = DB::table('invoice_master_pembeli')
+        ->select(
+            'users_pelanggan.name as pembeli',
+            'invoice_master_pembeli.date_created',
+            'invoice_master_pembeli.invoice_no',
+            'invoice_master_pembeli.qty',
+            'invoice_master_pembeli.amount',
+        )
+        ->leftJoin('users_pelanggan', 'users_pelanggan.id', 'invoice_master_pembeli.pembeli_id')
+        ->where('invoice_master_pembeli.pegawai_id', $pegawai->id)
+        ->get();
+
+        $datas = [
+            'data' => $transaksi
         ];
 
         return response()->json($datas);

@@ -57,7 +57,7 @@
                 processing: true,
                 serverSide: false,
                 ajax: {
-                    url: "/admin/get_data_user_pending",
+                    url: "/admin/get_data_user_reject",
                     dataType: "JSON",
                 },
                 language: {
@@ -92,7 +92,7 @@
                         data: 'is_regis',
                         render: function(data, type, row) {
                             return `<div class="align-items-center d-flex">
-                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = 'detail-user-pending/${row.id}'">Detail</button>
+                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = 'detail-user-reject/${row.id}'">Detail</button>
                                 </div>`;
                         }
                     }

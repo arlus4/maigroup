@@ -27,7 +27,7 @@ use Jenssegers\Agent\Agent;
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">User Management</li>
+                        <li class="breadcrumb-item text-muted">Manajemen Owner</li>
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item">
@@ -35,7 +35,15 @@ use Jenssegers\Agent\Agent;
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Users</li>
+                        <li class="breadcrumb-item text-muted">List Owner Active</li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">Detail Owner Active</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -194,6 +202,11 @@ use Jenssegers\Agent\Agent;
                             <!--end:::Tab item-->
                             <!--begin:::Tab item-->
                             <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_new_brands_tab">New Brands</a>
+                            </li>
+                            <!--end:::Tab item-->
+                            <!--begin:::Tab item-->
+                            <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_profile_tab">Profile</a>
                             </li>
                             <!--end:::Tab item-->
@@ -214,20 +227,12 @@ use Jenssegers\Agent\Agent;
                                 <div class="card card-flush mb-6 mb-xl-9">
                                     <div class="card-header mt-6">
                                         <div class="card-title flex-column">
-                                            <h2 class="mb-1">Brands User</h2>
+                                            <h2 class="mb-1">Registered Brands User</h2>
                                             <div class="fs-6 fw-semibold text-muted">Total {{ $countBrands }} Brands</div>
                                         </div>
                                         <div class="card-toolbar">
-                                            <a href="/admin/create_New_Brands/{{ $username }}" class="btn btn-light-primary btn-sm">
-                                                <span class="svg-icon svg-icon-3">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 13.5L12.5 13V10C12.5 9.4 12.6 9.5 12 9.5C11.4 9.5 11.5 9.4 11.5 10L11 13L8 13.5C7.4 13.5 7 13.4 7 14C7 14.6 7.4 14.5 8 14.5H11V18C11 18.6 11.4 19 12 19C12.6 19 12.5 18.6 12.5 18V14.5L16 14C16.6 14 17 14.6 17 14C17 13.4 16.6 13.5 16 13.5Z" fill="currentColor" />
-                                                        <rect x="11" y="19" width="10" height="2" rx="1" transform="rotate(-90 11 19)" fill="currentColor" />
-                                                        <rect x="7" y="13" width="10" height="2" rx="1" fill="currentColor" />
-                                                        <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                Add New Brand
+                                            <a href="#" class="btn btn-light-primary btn-sm">
+                                                See All Brands
                                             </a>
                                         </div>
                                     </div>
@@ -239,6 +244,11 @@ use Jenssegers\Agent\Agent;
                                                     <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">{{ $brand->brand_name }}</a>
                                                     <div class="fs-7 text-muted">{{ $brand->brand_code }}</div>
                                                 </div>
+                                                @if ($brand->is_active == 1)
+                                                    <span class="badge badge-light-success w-50px h-30px ms-auto">Active</span>
+                                                @else
+                                                    <span class="badge badge-light-danger w-70px h-30px ms-auto">Not Active</span>
+                                                @endif
                                                 <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                     <span class="svg-icon svg-icon-3">
@@ -252,13 +262,13 @@ use Jenssegers\Agent\Agent;
                                                 <div class="dropdown">
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <li>
-                                                            <a href="/admin/detail-user-brand/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                            <a href="/admin/brands/detail-user-brand/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                                 <i style="color:#181C32;" class="fas fa-eye me-2"></i>
                                                                 Detail
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/admin/edit_New_Brands/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                            <a href="/admin/brands/edit-user-brand/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                                 <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
                                                                 Edit
                                                             </a>
@@ -381,6 +391,90 @@ use Jenssegers\Agent\Agent;
                                 <!--end::Pegawai-->
                             </div>
                             <!--end:::Overview-->
+
+                            <!--begin:::New Brand-->
+                            <div class="tab-pane fade" id="kt_user_view_new_brands_tab" role="tabpanel">
+                                <!--begin::New Brand-->
+                                <div class="card card-flush mb-6 mb-xl-9">
+                                    <div class="card-header mt-6">
+                                        <div class="card-title flex-column">
+                                            <h2 class="mb-1">New Brands User</h2>
+                                            <div class="fs-6 fw-semibold text-muted">Total {{ $countBrands }} Brands</div>
+                                        </div>
+                                        <div class="card-toolbar">
+                                            <a href="/admin/create_New_Brands/{{ $username }}" class="btn btn-light-primary btn-sm">
+                                                <span class="svg-icon svg-icon-3">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 13.5L12.5 13V10C12.5 9.4 12.6 9.5 12 9.5C11.4 9.5 11.5 9.4 11.5 10L11 13L8 13.5C7.4 13.5 7 13.4 7 14C7 14.6 7.4 14.5 8 14.5H11V18C11 18.6 11.4 19 12 19C12.6 19 12.5 18.6 12.5 18V14.5L16 14C16.6 14 17 14.6 17 14C17 13.4 16.6 13.5 16 13.5Z" fill="currentColor" />
+                                                        <rect x="11" y="19" width="10" height="2" rx="1" transform="rotate(-90 11 19)" fill="currentColor" />
+                                                        <rect x="7" y="13" width="10" height="2" rx="1" fill="currentColor" />
+                                                        <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                Add New Brand
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        @foreach ($getBrandsRegister as $brand)
+                                            <div class="d-flex align-items-center position-relative mb-7">
+                                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
+                                                <div class="fw-semibold ms-5">
+                                                    <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">{{ $brand->brand_name }}</a>
+                                                    <div class="fs-7 text-muted">{{ $brand->brand_code }}</div>
+                                                </div>
+                                                @if ($brand->is_regis == 0)
+                                                    <span class="badge badge-light-warning w-60px h-30px ms-auto">Pending</span>
+                                                @elseif ($brand->is_regis == 1)
+                                                    <span class="badge badge-light-success w-70px h-30px ms-auto">Active</span>
+                                                @elseif ($brand->is_regis == 2)
+                                                    <span class="badge badge-light-danger w-70px h-30px ms-auto">Rejected</span>
+                                                @endif
+                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                    <span class="svg-icon svg-icon-3">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor" />
+                                                            <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
+                                                </button>
+                                                <div class="dropdown">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <li>
+                                                            <button onclick="approveBrand({{ $brand->id }})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                <i style="color:#181C32;" class="fas fa-circle-check me-2"></i>
+                                                                Approve Brand
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/admin/brands/detail-user-brand/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                <i style="color:#181C32;" class="fas fa-eye me-2"></i>
+                                                                Detail Brand
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/admin/brands/edit-user-brand/{{ $brand->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
+                                                                Edit Brand
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <button onclick="rejectBrand({{ $brand->id }})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                                <i style="color:#181C32;" class="fas fa-circle-xmark me-2"></i>
+                                                                Reject Brand
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <!--end::New Brand-->
+                            </div>
+                            <!--end:::New Brand-->
 
                             <!--begin:::Profile-->
                             <div class="tab-pane fade" id="kt_user_view_profile_tab" role="tabpanel">
@@ -843,6 +937,38 @@ use Jenssegers\Agent\Agent;
                 </div>
                 <!--end::Modal - Update password-->
 
+                <!--begin::Modal - Approve Brand -->
+                <div class="modal fade" id="modal_approve">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modal-title-approve"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="#" id="form-approve">
+                                @csrf
+                                <input type="hidden" name="id" class="form-control id" id="id" readonly>
+                                <div class="form-group mb-3">
+                                    <label style="color: #31353B!important;font-weight: 600;">Brand Code</label>
+                                    <input type="text" class="form-control brand_code form-control-solid" id="brand_code" readonly>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label style="color: #31353B!important;font-weight: 600;">Brand Name</label>
+                                    <input type="text" class="form-control brand_name form-control-solid" id="brand_name" readonly>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="close-button" class="css-ca2jq0s" style="width: 90px;" data-bs-dismiss="modal">
+                                    Batalkan
+                                </button>
+                                <button type="submit" id="approve" class="css-kl2kd9a">Approve</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal - Approve Brand -->
+
                 <!--begin::Modals-->
                 <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_auth_app" tabindex="-1" aria-hidden="true">
@@ -1078,6 +1204,89 @@ use Jenssegers\Agent\Agent;
             }
         })
     }
+</script>
+
+<script>
+        // Action Approve
+        $(document).ready(function() {
+            $('#form-approve').submit(function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $('#modal_approve').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "/admin/approve-brand-pending",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status === 'success') {
+                            toastr.success(response.message);
+                            $('#tableBrandOwner').DataTable().ajax.reload();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                    }
+                })
+            })
+        });
+
+        function approveBrand(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/get_data_detail_brand_pending',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#modal_approve').modal('show');
+                    $('#modal-title-approve').text('Approve Data User');
+                    $('#id').val(data.id);
+                    $('#brand_code').val(data.brand_code);
+                    $('#brand_name').val(data.brand_name);
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+        }
+
+        function rejectBrand(id) {
+            console.log(id);
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: "Anda Ingin Reject Data Brands ini ?",
+                icon: 'warning',
+                cancelButtonText: "Batal",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Ya, saya yakin!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/reject-brand-pending',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id : id
+                        },
+                        success: function(response) {
+                            toastr[response.status](response.message);
+                            $('#tableBrandOwner').DataTable().ajax.reload();
+                            // $('#tableBrandOwner').load(' #tableBrandOwner');
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Terjadi kesalahan. Silakan coba lagi.");
+                        }
+                    })
+                }
+            })
+        }
 </script>
 
 @endsection

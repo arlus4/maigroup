@@ -9,7 +9,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Edit Brand {{ $brand->brand_name }} Owner {{ $user->name }}</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Edit Brand Aktif {{ $brand->brand_name }}</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -24,7 +24,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Management Owner</li>
+                        <li class="breadcrumb-item text-muted">Management Brands</li>
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item">
@@ -32,7 +32,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Daftar Owner</li>
+                        <li class="breadcrumb-item text-muted">Daftar Brands Aktif</li>
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item">
@@ -40,7 +40,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Edit Brand {{ $brand->brand_name }} Owner {{ $user->name }}</li>
+                        <li class="breadcrumb-item text-muted">Edit Brand {{ $brand->brand_name }}</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -49,7 +49,7 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <!--begin::Primary button-->
-                    <a href="/admin/detail-user-owner/{{ $user->username }}" class="btn fw-bold btn-primary">Kembali</a>
+                    <a href="/admin/owner/detail-user-owner/{{ $user->username }}" class="btn fw-bold btn-primary">Kembali</a>
                     <!--end::Primary button-->
                 </div>
                 <!--end::Actions-->
@@ -211,7 +211,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <a href="/admin/detail-user-owner/{{ $user->username }}" class="css-ca2jq0s">Batalkan</a>
+                            <a href="/admin/owner/detail-user-owner/{{ $user->username }}" class="css-ca2jq0s">Batalkan</a>
                             <button type="submit" class="css-kl2kd9a">Update</button>
                         </div>
                     </div>

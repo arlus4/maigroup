@@ -9,7 +9,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detail Brand {{ $brand->brand_name }} Owner {{ $user->name }}</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detail Brand {{ $brand->brand_name }}</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -24,7 +24,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Management Owner</li>
+                        <li class="breadcrumb-item text-muted">Management Brands</li>
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item">
@@ -32,7 +32,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Daftar Owner</li>
+                        <li class="breadcrumb-item text-muted">Daftar Brands Active</li>
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item">
@@ -40,7 +40,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Detail Brand {{ $brand->brand_name }} Owner {{ $user->name }}</li>
+                        <li class="breadcrumb-item text-muted">Detail Brand {{ $brand->brand_name }}</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -49,7 +49,7 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <!--begin::Primary button-->
-                    <a href="/admin/detail-user-owner/{{ $user->username }}" class="btn fw-bold btn-primary">Kembali</a>
+                    <a href="/admin/owner/detail-user-owner/{{ $user->username }}" class="btn fw-bold btn-primary">Kembali</a>
                     <!--end::Primary button-->
                 </div>
                 <!--end::Actions-->
@@ -57,125 +57,6 @@
             <!--end::Toolbar container-->
         </div>
         <!--end::Toolbar-->
-        {{-- <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
-                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
-                            <div class="d-flex flex-column gap-7 gap-lg-10">
-                                <!-- start:Informasi Brand -->
-                                <div class="card card-flush py-4" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px 0px;">
-                                    <div class="card-header">
-                                        <div class="card-title">
-                                            <h2 style="font-size: 18px;">Informasi Brand {{ $brand->brand_name }}</h2>
-                                        </div>
-                                        <div class="card-toolbar">
-                                            <a href="/admin/edit_New_Brands/{{ $brand->slug }}" class="btn fw-bold btn-warning">Edit Brand</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <div class="row fv-row">
-                                            <h2 style="font-size: 1rem;">Foto / Logo Brand</h2>
-                                            <div class="col-md-6">
-                                                @if ($brand->brand_image != NULL)
-                                                    <style>
-                                                        .image-input-placeholder {
-                                                            background-image: url('../../../{{ $brand->brand_image_path }}');
-                                                        } [data-theme="dark"]
-                                                        .image-input-placeholder {
-                                                            background-image: url('../../../assets/master/media/svg/files/blank-image-dark.svg');
-                                                        }
-                                                    </style>
-                                                @else
-                                                    <style>
-                                                        .image-input-placeholder {
-                                                            background-image: url('../../../assets/master/media/svg/files/blank-image.svg');
-                                                        } [data-theme="dark"]
-                                                        .image-input-placeholder {
-                                                            background-image: url('../../../assets/master/media/svg/files/blank-image-dark.svg');
-                                                        }
-                                                    </style>
-                                                @endif
-                                                <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
-                                                    <div class="image-input-wrapper w-150px h-150px"></div>
-                                                </div>
-                                                <div class="text-muted fs-7" style="color: #31353B!important;">Aktif & Verification</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-10 fv-row">
-                                                    <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Kategori Brand</label>
-                                                    <div class="input-group">
-                                                        <input type="text" name="brand_name" class="form-control mb-2" id="brand_name" placeholder="Masukan Nama Brand" value="{{ $categories->brand_category_name }}" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-10 fv-row">
-                                                            <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Nama Brand</label>
-                                                            <input type="text" name="brand_name" class="form-control mb-2" id="brand_name" placeholder="Masukan Nama Brand" value="{{ $brand->brand_name }}" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-10 fv-row">
-                                                            <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Slug</label>
-                                                            <input type="text" name="slug" class="form-control mb-2" id="slug" style="background-color: #e2e2e2;cursor: not-allowed;" value="{{ $brand->slug }}" disabled>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-10 fv-row">
-                                                    <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">No HP Brand</label>
-                                                    <input type="text" name="no_hp_brand" class="form-control mb-2" id="no_hp_brand" value="{{ $brand->no_hp }}" disabled/>
-                                                </div>
-                                                <div class="mb-10 fv-row">
-                                                    <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Link Facebook Brand</label>
-                                                    <input type="text" name="facebook_brand" class="form-control mb-2" id="facebook_brand" value="{{ $brand->facebook }}" disabled/>
-                                                </div>
-                                                <div class="mb-10 fv-row">
-                                                    <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Link Youtube Brand</label>
-                                                    <input type="text" name="youtube_brand" class="form-control mb-2" id="youtube_brand" value="{{ $brand->youtube }}" disabled/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-10 fv-row">
-                                                    <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Whatsapp Brand</label>
-                                                    <input type="text" name="whatsapp_brand" class="form-control mb-2" id="whatsapp_brand" value="{{ $brand->whatsapp }}" disabled/>
-                                                </div>
-                                                <div class="mb-10 fv-row">
-                                                    <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Link Instagram Brand</label>
-                                                    <input type="text" name="instagram_brand" class="form-control mb-2" id="instagram_brand" value="{{ $brand->instagram }}" disabled/>
-                                                </div>
-                                                <div class="mb-10 fv-row">
-                                                    <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Link Tiktok Brand</label>
-                                                    <input type="text" name="tiktok_brand" class="form-control mb-2" id="tiktok_brand" value="{{ $brand->tiktok }}" disabled/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="mb-10 fv-row">
-                                                <label class="form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Link Website Brand</label>
-                                                <input type="text" name="website_brand" class="form-control mb-2" id="website_brand" value="{{ $brand->website }}" disabled/>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="required form-label" style="color:#31353B!important;font-size: 1rem;font-weight: 700">Brand Description</label>
-                                            <textarea name="brand_description" class="form-control mb-2" rows="4" disabled>{{ $brand->brand_description }}</textarea>
-                                            <div class="text-muted fs-7" style="color: #31353B!important;">Pastikan Deskripsi Brand memuat Penjelasan Detail yang Jelas.</div>
-                                        </div> <br>
-                                    </div>
-                                </div>
-                                <!-- end:Informasi Brand -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-xxl">
@@ -201,7 +82,7 @@
                                     <div class="mb-9">
                                         <div class="badge badge-lg badge-light-primary d-inline">{{ $categories->brand_category_name }}</div>
                                     </div>
-                                    <div class="fw-bold mb-3">Lorem, ipsum.
+                                    <div class="fw-bold mb-3">{{ $brand->brand_code }}
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Lorem ipsum dolor sit amet consectetur, adipisicing elit."></i>
                                     </div>
                                 </div>
@@ -216,7 +97,7 @@
                                         </span>
                                     </div>
                                     <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit Brands">
-                                        <a href="/admin/edit_New_Brands/{{ $brand->slug }}" class="btn btn-light-warning">Edit</a>
+                                        <a href="/admin/brands/edit-user-brand/{{ $brand->slug }}" class="btn btn-light-warning">Edit</a>
                                     </span>
                                 </div>
                                 <!--end::Details toggle-->
@@ -224,6 +105,8 @@
                                 <!--begin::Details User-->
                                 <div id="kt_user_view_detail_users" class="collapse show">
                                     <div class="pb-5 fs-6">
+                                        <div class="fw-bold mt-5">Owner</div>
+                                        <div class="text-gray-600">{{ $user->name }}</div>
                                         <div class="fw-bold mt-5">Nomor HP</div>
                                         <div class="text-gray-600">{{ $brand->no_hp }}</div>
                                         <div class="fw-bold mt-5">Deskripsi</div>
@@ -245,19 +128,14 @@
                             <!--begin:::Overview-->
                             <div class="tab-pane fade show active" id="kt_user_view_overview_tab" role="tabpanel">
                                 <div class="row row-cols-1 row-cols-md-2 mb-6 mb-xl-9">
+                                    <!-- begin::Total Pendapatan -->
                                     <div class="col">
-                                        <!--begin::Card-->
                                         <div class="card pt-4 h-md-100 mb-6 mb-md-0">
-                                            <!--begin::Card header-->
                                             <div class="card-header border-0">
-                                                <!--begin::Card title-->
                                                 <div class="card-title">
-                                                    <h2 class="fw-bold">Reward Points</h2>
+                                                    <h2 class="fw-bold">Total Pendapatan</h2>
                                                 </div>
-                                                <!--end::Card title-->
                                             </div>
-                                            <!--end::Card header-->
-                                            <!--begin::Card body-->
                                             <div class="card-body pt-0">
                                                 <div class="fw-bold fs-2">
                                                     <div class="d-flex">
@@ -268,16 +146,14 @@
                                                             </svg>
                                                         </span>
                                                         <!--end::Svg Icon-->
-                                                        <div class="ms-2">4,571 
-                                                        <span class="text-muted fs-4 fw-semibold">Points earned</span></div>
+                                                        <div class="ms-2">@rupiah($pendapatan)</div>
                                                     </div>
-                                                    <div class="fs-7 fw-normal text-muted">Earn reward points with every purchase.</div>
+                                                    <div class="fs-7 fw-normal text-muted">Lorem ipsum dolor sit amet.</div>
                                                 </div>
                                             </div>
-                                            <!--end::Card body-->
                                         </div>
-                                        <!--end::Card-->
                                     </div>
+                                    <!-- end::Total Pendapatan -->
                                     <div class="col">
                                         <!--begin::Reward Tier-->
                                         <a href="#" class="card bg-info hoverable h-md-100">
@@ -304,21 +180,8 @@
                                     <div class="card card-flush mb-6 mb-xl-9">
                                         <div class="card-header mt-6">
                                             <div class="card-title flex-column">
-                                                <h2 class="mb-1">Outlets User</h2>
+                                                <h2 class="mb-1">Outlets Brands</h2>
                                                 <div class="fs-6 fw-semibold text-muted">Total {{ count($outlets) }} Outlets</div>
-                                            </div>
-                                            <div class="card-toolbar">
-                                                <a href="#" class="btn btn-light-primary btn-sm">
-                                                    <span class="svg-icon svg-icon-3">
-                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 13.5L12.5 13V10C12.5 9.4 12.6 9.5 12 9.5C11.4 9.5 11.5 9.4 11.5 10L11 13L8 13.5C7.4 13.5 7 13.4 7 14C7 14.6 7.4 14.5 8 14.5H11V18C11 18.6 11.4 19 12 19C12.6 19 12.5 18.6 12.5 18V14.5L16 14C16.6 14 17 14.6 17 14C17 13.4 16.6 13.5 16 13.5Z" fill="currentColor" />
-                                                            <rect x="11" y="19" width="10" height="2" rx="1" transform="rotate(-90 11 19)" fill="currentColor" />
-                                                            <rect x="7" y="13" width="10" height="2" rx="1" fill="currentColor" />
-                                                            <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
-                                                        </svg>
-                                                    </span>
-                                                    Add New Outlet
-                                                </a>
                                             </div>
                                         </div>
                                         <div class="card-body d-flex flex-column">

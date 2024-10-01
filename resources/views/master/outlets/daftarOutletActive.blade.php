@@ -1,5 +1,4 @@
 @extends('layout-master/app')
-
 @section('content')
 
 <div class="d-flex flex-column flex-column-fluid">

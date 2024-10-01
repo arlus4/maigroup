@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Modal Approve User -->
+            <!-- Modal Approve Brand -->
             <div class="modal fade" id="modal_approve">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -131,11 +131,37 @@
                     {
                         data: 'is_regis',
                         render: function(data, type, row) {
-                            return `<div class="align-items-center d-flex">
-                                    <button type="button" class="btn btn-primary me-4" onclick="window.location.href = '/admin/detail-brand-pending/${row.slug}'">Detail</button>
-                                    <button type="button" class="btn btn-success me-4" onclick="approveBrand(${row.id})">Approve</button>
-                                    <button type="button" class="btn btn-danger" onclick="rejectBrand(${row.id})">Reject</button>
-                                </div>`;
+                            return `<div class="dropdown">
+                                        <button class="css-ca2jq0s dropdown-toggle" style="width: 90px;" type="button" id="dropdownMenuButton${row.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Atur
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
+                                            <li style="color: #70e000">
+                                                <button onclick="approveBrand(${row.id})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#70e000;" class="fas fa-circle-check me-2"></i>
+                                                    Approve Brand
+                                                </button>
+                                            </li>
+                                            <li style="color: #0077b6">
+                                                <button onclick="window.location.href = '/admin/brands/detail-brand-pending/${row.slug}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#0077b6;" class="fas fa-eye me-2"></i>
+                                                    Detail Brand
+                                                </button>
+                                            </li>
+                                            <li style="color: #ffd60a">
+                                                <button onclick="window.location.href = 'edit-brand-pending/${row.slug}'" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#ffd60a;" class="fas fa-pencil me-2"></i>
+                                                    Edit Brand
+                                                </button>
+                                            </li>
+                                            <li style="color: #d00000">
+                                                <button onclick="rejectBrand(${row.id})" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                    <i style="color:#d00000;" class="fas fa-circle-xmark me-2"></i>
+                                                    Reject Brand
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>`;
                         }
                     }
                 ]

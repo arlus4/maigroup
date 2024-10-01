@@ -10,7 +10,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detail Brand {{ $brand->brand_name }} Owner {{ $user->name }}</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detail Brand {{ $brand->brand_name }}</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -41,7 +41,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Detail Brand {{ $brand->brand_name }} Owner {{ $user->name }}</li>
+                        <li class="breadcrumb-item text-muted">Detail Brand {{ $brand->brand_name }}</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -50,7 +50,7 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <!--begin::Primary button-->
-                    <a href="/admin/brand-pending" class="btn fw-bold btn-primary">Kembali</a>
+                    <a href="/admin/brands/brand-pending" class="btn fw-bold btn-primary">Kembali</a>
                     <!--end::Primary button-->
                 </div>
                 <!--end::Actions-->

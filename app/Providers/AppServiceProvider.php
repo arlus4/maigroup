@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             if (Auth::check()) { // Cek apakah pengguna telah masuk
                 $user = Auth::user()->id;
-                $global_users = Users_Detail::select('name', 'avatar', 'path_avatar', 'nomor_telfon', 'outlet_id', 'is_active')
+                $global_users = Users_Detail::select('name', 'avatar', 'path_avatar', 'nomor_telfon', 'register_id', 'is_active')
                                 ->leftjoin('users_login', 'users_details.user_id', '=', 'users_login.id')
                                 ->where('users_details.user_id', $user)
                                 ->first();

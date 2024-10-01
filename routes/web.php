@@ -8,31 +8,38 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UtilitasController;
 use App\Http\Controllers\Owner\OutletsController;
 use App\Http\Controllers\Owner\RestockController;
+
 use App\Http\Controllers\Admin\Admin_FaQController;
 use App\Http\Controllers\Owner\DashboardController;
 use App\Http\Controllers\Owner\MenuOrderController;
 use App\Http\Controllers\Admin\Admin_BankController;
-
 use App\Http\Controllers\Owner\ClaimBonusController;
 use App\Http\Controllers\Admin\Admin_OrderController;
-use App\Http\Controllers\Owner\AkunSettingController;
+use App\Http\Controllers\owner\AkunSettingController;
 use App\Http\Controllers\Admin\Admin_BannerController;
 use App\Http\Controllers\Admin\Admin_BrandsController;
+use App\Http\Controllers\Admin\Admin_ConfigController;
 use App\Http\Controllers\Admin\Admin_OutletController;
 use App\Http\Controllers\Admin\Admin_ReportController;
 use App\Http\Controllers\Admin\Admin_ArtikelController;
+use App\Http\Controllers\Admin\Admin_PegawaiController;
 use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Owner\ReportInvoiceController;
 use App\Http\Controllers\Admin\Admin_UserOwnerController;
-use App\Http\Controllers\Admin\Admin_UserPenjualController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Admin_Brands_CategoryController;
-use App\Http\Controllers\Admin\Admin_ConfigController;
-use App\Http\Controllers\Admin\Admin_NotificationController;
-use App\Http\Controllers\Admin\Admin_PegawaiController;
-use App\Http\Controllers\Admin\Admin_Point_PriceController;
-use App\Http\Controllers\Admin\Admin_Product_CategoryController;
 use App\Http\Controllers\Admin\Admin_SubscriberController;
+use App\Http\Controllers\Admin\Admin_Point_PriceController;
+use App\Http\Controllers\Admin\Admin_NotificationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Admin\Admin_Product_CategoryController;
+use App\Http\Controllers\Admin\Admin_Manage_Owner\Admin_Active_OwnerController;
+use App\Http\Controllers\Admin\Admin_Manage_Owner\Admin_Reject_OwnerController;
+use App\Http\Controllers\Admin\Admin_Manage_Owner\Admin_Tambah_OwnerController;
+use App\Http\Controllers\Admin\Admin_Manage_Owner\Admin_Pending_OwnerController;
+use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_ActiveController;
+use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_RejectController;
+use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Request_PointController;
+use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_PendingController;
+use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_CategoryController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -76,31 +83,39 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         // Route::post('/delete_product', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
         // Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);
 
-        //User Owner
-        Route::get('/user-owner', [Admin_UserOwnerController::class, 'index'])->name('admin_user_owner');
-        Route::get('/tambah-user-owner', [Admin_UserOwnerController::class, 'create'])->name('admin_tambah_user_owner');
-        Route::get('/manaj-brands/{username}', [Admin_UserOwnerController::class, 'showManageBrands'])->name('admin_brands_user_owner');
-        Route::get('/edit-user-owner/{username}', [Admin_UserOwnerController::class, 'edit'])->name('admin_edit_user_owner');
-        Route::get('/detail-user-owner/{username}', [Admin_UserOwnerController::class, 'show'])->name('admin_detail_user_owner');
-        Route::post('/update-nohp-user-owner', [Admin_UserOwnerController::class, 'updatenoHPOwner']);
-        Route::post('/update-email-user-owner', [Admin_UserOwnerController::class, 'updateEmailOwner']);
-        Route::post('/update-password-user-owner', [Admin_UserOwnerController::class, 'updatePasswordOwner']);
-        Route::post('/sign-out-users', [Admin_UserOwnerController::class, 'deleteSessionOwner']);
-        Route::post('/store-user-owner', [Admin_UserOwnerController::class, 'store'])->name('admin_store_user_owner');
-        Route::post('/update-user-owner', [Admin_UserOwnerController::class, 'update'])->name('admin_update_user_owner');
-        Route::post('/update-toggle/{user}', [Admin_UserOwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
-        Route::get('/user-pending', [Admin_UserOwnerController::class, 'index_userPending'])->name('admin_user_pending');
-        Route::get('/detail-user-pending/{id}', [Admin_UserOwnerController::class, 'detail_userPending'])->name('admin_detail_user_pending');
-        Route::post('/approve-user-pending', [Admin_UserOwnerController::class, 'approve_UserPending'])->name('admin_approve_user_pending');
-        Route::post('/reject-user-pending', [Admin_UserOwnerController::class, 'reject_UserPending'])->name('admin_reject_user_pending');
-        Route::get('/user-reject', [Admin_UserOwnerController::class, 'index_userReject'])->name('admin_user_reject');
+        // Manajemen Owner
+        // Manajemen Owner - Owner Add
+        Route::get('/owner/tambah-user-owner', [Admin_Tambah_OwnerController::class, 'create'])->name('admin_tambah_user_owner');
+        Route::post('/store-user-owner', [Admin_Tambah_OwnerController::class, 'store'])->name('admin_store_user_owner');
+        // Manajemen Owner - Owner Active
+        // Manajemen Owner - Owner Active - Home
+        Route::get('/owner/user-owner', [Admin_Active_OwnerController::class, 'index'])->name('admin_user_owner');
+        Route::get('/get_data_user_owner', [Admin_Active_OwnerController::class, 'getDataUserOwner']);
+        Route::post('/update-toggle/{user}', [Admin_Active_OwnerController::class, 'updateNotifications'])->name('admin_update_notif_user_owner');
+        // Manajemen Owner - Owner Active - Detail
+        Route::get('/owner/detail-user-owner/{username}', [Admin_Active_OwnerController::class, 'show'])->name('admin_detail_user_owner');
+        Route::post('/update-nohp-user-owner', [Admin_Active_OwnerController::class, 'updatenoHPOwner']);
+        Route::post('/update-email-user-owner', [Admin_Active_OwnerController::class, 'updateEmailOwner']);
+        Route::post('/update-password-user-owner', [Admin_Active_OwnerController::class, 'updatePasswordOwner']);
+        Route::post('/sign-out-users', [Admin_Active_OwnerController::class, 'deleteSessionOwner']);
+        // Manajemen Owner - Owner Active - Edit
+        Route::get('/owner/edit-user-owner/{username}', [Admin_Active_OwnerController::class, 'edit'])->name('admin_edit_user_owner');
+        Route::post('/update-user-owner', [Admin_Active_OwnerController::class, 'update'])->name('admin_update_user_owner');
+        // Manajemen Owner - Owner Pending
+        Route::get('/owner/user-pending', [Admin_Pending_OwnerController::class, 'index_userPending'])->name('admin_user_pending');
+        Route::get('/get_data_user_pending', [Admin_Pending_OwnerController::class, 'getDataPending']);
+        Route::get('/get_data_detail_user_pending', [Admin_Pending_OwnerController::class, 'getDataDetailUserPending']);
+        Route::post('/approve-user-pending', [Admin_Pending_OwnerController::class, 'approve_UserPending'])->name('admin_approve_user_pending');
+        Route::post('/reject-user-pending', [Admin_Pending_OwnerController::class, 'reject_UserPending'])->name('admin_reject_user_pending');
+        Route::get('/owner/detail-user-pending/{id}', [Admin_Pending_OwnerController::class, 'detail_userPending'])->name('admin_detail_user_pending');
+        // Manajemen Owner - Owner Reject
+        Route::get('/owner/user-reject', [Admin_Reject_OwnerController::class, 'index_userReject'])->name('admin_user_reject');
+        Route::get('/get_data_user_reject', [Admin_Reject_OwnerController::class, 'getDataReject']);
+        Route::get('/owner/detail-user-reject/{id}', [Admin_Reject_OwnerController::class, 'detail_userReject'])->name('admin_detail_user_reject');
 
         // utilitas
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
         Route::get('/brandSlug', [Admin_UserOwnerController::class, 'brandSlug']);
-        Route::get('/get_data_user_owner', [Admin_UserOwnerController::class, 'getDataUserOwner']);
-        Route::get('/get_data_user_pending', [Admin_UserOwnerController::class, 'getDataPending']);
-        Route::get('/get_data_detail_user_pending', [Admin_UserOwnerController::class, 'getDataDetailUserPending']);
         Route::get('/get_data_brand_owner/{username}', [Admin_UserOwnerController::class, 'getDataBrandOwner']);
         Route::get('/validateNoHp', [Admin_UserOwnerController::class, 'validateNoHp']);
         Route::get('/validate_Edit_NoHp', [Admin_UserOwnerController::class, 'validate_Edit_NoHp']);
@@ -109,53 +124,78 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
         Route::get('/validate_Edit_Email', [Admin_UserOwnerController::class, 'validate_Edit_Email']);
         Route::get('/validateEmailPegawai', [Admin_PegawaiController::class, 'validateEmailPegawai']);
-        
-        // Manajemen Brand
-        Route::get('/request_point_brands', [Admin_BrandsController::class, 'index_requestPoint'])->name('admin_request_point');
-        Route::get('/getDataRequestPoint', [Admin_BrandsController::class, 'getDataRequestPoint']);
-        Route::get('/getDataRequestLog', [Admin_BrandsController::class, 'getDataRequestLog']);
-        Route::get('/detailRequestPoint/{id}', [Admin_BrandsController::class, 'detailRequestPoint']);
-        Route::post('/approveRequestPoint', [Admin_BrandsController::class, 'approveRequestPoint']);
-        Route::post('/rejectRequestPoint', [Admin_BrandsController::class, 'rejectRequestPoint']);
-        
-        Route::get('/brand-active', [Admin_BrandsController::class, 'index_brandActive'])->name('admin_brand_active');
-        Route::get('/getDatabrandActive', [Admin_BrandsController::class, 'getDatabrandActive']);
-        Route::get('/detail-user-brand/{brand}', [Admin_BrandsController::class, 'detailBrands'])->name('admin_brand_detail');
-        Route::get('/brand-pending', [Admin_BrandsController::class, 'index_brandPending'])->name('admin_brand_pending');
-        Route::get('/get_data_detail_brand_pending', [Admin_BrandsController::class, 'getDataDetailBrandPending']);
-        Route::get('/getDatabrandPending', [Admin_BrandsController::class, 'getDatabrandPending']);
-        Route::get('/detail-brand-pending/{brand_regis}', [Admin_BrandsController::class, 'detail_BrandPending'])->name('admin_detail_brand_detail');
-        Route::post('/approve-brand-pending', [Admin_BrandsController::class, 'approve_BrandPending'])->name('admin_approve_brand_pending');
-        Route::post('/reject-brand-pending', [Admin_BrandsController::class, 'reject_BrandPending'])->name('admin_reject_brand_pending');
-        Route::get('/brand-reject', [Admin_BrandsController::class, 'index_brandReject'])->name('admin_brand_reject');
-        Route::get('/getDatabrandReject', [Admin_BrandsController::class, 'getDatabrandReject']);
-
-        // Brand Owner
-        Route::get('/create_New_Brands/{username}', [Admin_BrandsController::class, 'create_New_Brands'])->name('admin_create_new_brands');
-        Route::post('/store_New_Brands', [Admin_BrandsController::class, 'store_New_Brands'])->name('admin_store_new_brands');
-        Route::get('/edit_New_Brands/{brand}', [Admin_BrandsController::class, 'edit_New_Brands'])->name('admin_edit_new_brands');
-        Route::post('/update_New_Brands/{brand}', [Admin_BrandsController::class, 'update_New_Brands'])->name('admin_update_new_brands');
         Route::get('/validateNoHp_brand', [Admin_UserOwnerController::class, 'validateNoHp_brand']);
         Route::get('/validate_Edit_NoHp_brand', [Admin_UserOwnerController::class, 'validate_Edit_NoHp_brand']);
-
-        // Brand Category
-        Route::get('/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');
+        
+        // Manajemen Brand
+        // Manajemen Brand - Request Point
+        Route::get('/brands/request_point_brands', [Admin_Request_PointController::class, 'index_requestPoint'])->name('admin_request_point');
+        Route::get('/getDataRequestPoint', [Admin_Request_PointController::class, 'getDataRequestPoint']);
+        Route::get('/getDataRequestLog', [Admin_Request_PointController::class, 'getDataRequestLog']);
+        Route::get('/detailRequestPoint/{id}', [Admin_Request_PointController::class, 'detailRequestPoint']);
+        Route::post('/approveRequestPoint', [Admin_Request_PointController::class, 'approveRequestPoint']);
+        Route::post('/rejectRequestPoint', [Admin_Request_PointController::class, 'rejectRequestPoint']);
+        // Manajemen Brand - Brand Category
+        Route::get('/brands/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');
         Route::get('/get_data_brandCategory', [Admin_Brands_CategoryController::class, 'get_data_brandCategory']);
         Route::get('/catBrandSlug', [Admin_Brands_CategoryController::class, 'catBrandSlug']);
         Route::post('/add_brandCategory', [Admin_Brands_CategoryController::class, 'store'])->name('admin_store_brand_category');
         Route::get('/edit_brandCategory', [Admin_Brands_CategoryController::class, 'edit'])->name('admin_edit_brandCategory');
         Route::post('/update_brandCategory', [Admin_Brands_CategoryController::class, 'update'])->name('admin_update_brand_category');
         Route::post('/delete_brandCategory', [Admin_Brands_CategoryController::class, 'destroy'])->name('admin_delete_brand_category');
+        // Manajemen Brand - Brand Active
+        Route::get('/brands/brand-active', [Admin_Brands_ActiveController::class, 'index_brandActive'])->name('admin_brand_active');
+        Route::get('/getDatabrandActive', [Admin_Brands_ActiveController::class, 'getDatabrandActive']);
+        Route::get('/brands/detail-user-brand/{brand}', [Admin_Brands_ActiveController::class, 'detailBrands'])->name('admin_brand_detail');
+        Route::get('/brands/edit-user-brand/{brand}', [Admin_Brands_ActiveController::class, 'editBrands'])->name('admin_brand_edit');
+        // Manajemen Brand - Brand Pending
+        Route::get('/brands/brand-pending', [Admin_Brands_PendingController::class, 'index_brandPending'])->name('admin_brand_pending');
+        Route::get('/get_data_detail_brand_pending', [Admin_Brands_PendingController::class, 'getDataDetailBrandPending']);
+        Route::get('/brands/detail-brand-pending/{brand_regis}', [Admin_Brands_PendingController::class, 'detail_BrandPending'])->name('admin_detail_brand_pending');
+        Route::get('/getDatabrandPending', [Admin_Brands_PendingController::class, 'getDatabrandPending']);
+        Route::post('/approve-brand-pending', [Admin_Brands_PendingController::class, 'approve_BrandPending'])->name('admin_approve_brand_pending');
+        Route::post('/reject-brand-pending', [Admin_Brands_PendingController::class, 'reject_BrandPending'])->name('admin_reject_brand_pending');
+        // Manajemen Brand - Brand Reject
+        Route::get('/brands/brand-reject', [Admin_Brands_RejectController::class, 'index_brandReject'])->name('admin_brand_reject');
+        Route::get('/getDatabrandReject', [Admin_Brands_RejectController::class, 'getDatabrandReject']);
+        Route::get('/brands/detail-brand-reject/{brand_regis}', [Admin_Brands_RejectController::class, 'detail_BrandReject'])->name('admin_detail_brand_reject');
+
+        // Brand Owner
+        Route::get('/create_New_Brands/{username}', [Admin_BrandsController::class, 'create_New_Brands'])->name('admin_create_new_brands');
+        Route::post('/store_New_Brands', [Admin_BrandsController::class, 'store_New_Brands'])->name('admin_store_new_brands');
+        Route::get('/edit_New_Brands/{brand}', [Admin_BrandsController::class, 'edit_New_Brands'])->name('admin_edit_new_brands');
+        Route::post('/update_New_Brands/{brand}', [Admin_BrandsController::class, 'update_New_Brands'])->name('admin_update_new_brands');
+
 
         // Manajemen Outlet
-        Route::get('/outlet-active', [Admin_OutletController::class, 'index_outletActive'])->name('admin_outlet_active');
+        // Manajemen Outlet - Category Product
+        Route::get('/outlets/category-product', [Admin_Product_CategoryController::class, 'index'])->name('admin_category_product');
+        Route::get('/catProductSlug', [Admin_Product_CategoryController::class, 'catProductSlug']);
+        Route::get('/getDataProductCategory', [Admin_Product_CategoryController::class, 'getDataProductCategory']);
+        Route::post('/add_productCategory', [Admin_Product_CategoryController::class, 'store'])->name('admin_store_category_product');
+        Route::get('/edit_productCategory', [Admin_Product_CategoryController::class, 'edit'])->name('admin_edit_category_product');
+        Route::post('/update_productCategory', [Admin_Product_CategoryController::class, 'update'])->name('admin_update_category_product');
+        Route::post('/delete_productCategory', [Admin_Product_CategoryController::class, 'destroy'])->name('admin_delete_category_product');
+        // Manajemen Outlet
+        // Manajemen Outlet - Outlet Active
+        Route::get('/outlets/outlet-active', [Admin_OutletController::class, 'index_outletActive'])->name('admin_outlet_active');
         Route::get('/getDataoutletActive', [Admin_OutletController::class, 'getDataoutletActive']);
-        Route::get('/detail-outlet/{outlet:slug}', [Admin_OutletController::class, 'detail_Outlet'])->name('admin_outlet_detail');
+        Route::get('/outlets/detail-outlet/{outlet:slug}', [Admin_OutletController::class, 'detail_Outlet'])->name('admin_outlet_detail');
+        Route::get('/getDetailTransaksi/{invoice}', [Admin_OutletController::class, 'getDetailTransaksi']);
+        Route::get('/print-invoice/{invoice}', [Admin_OutletController::class, 'printInvoice']);
+        Route::get('/outlets/detail-outlet/{outlet:slug}/invoice', [Admin_OutletController::class, 'invoice_Outlet'])->name('admin_outlet_invoice');
+        Route::get('/getDataDetailOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataDetailOutlet']);
         Route::get('/getDataPegawaiOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataPegawaiOutlet']);
         Route::get('/getDataProductOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataProductOutlet']);
-        Route::get('/daftar-pegawai', [Admin_PegawaiController::class, 'index'])->name('admin_pegawai_outlet');
+        Route::get('/getDataPenjualanOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataPenjualanOutlet']);
+        Route::get('/getDataPengeluaranOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataPengeluaranOutlet']);
+        Route::get('/getDetailPengeluaran/{invoice}', [Admin_OutletController::class, 'getDetailPengeluaran']);
+        Route::post('/update-status-outlet', [Admin_OutletController::class, 'updateStatusOutlet']);
+        // Manajemen Outlet - Pegawai Outlet
+        Route::get('/outlets/daftar-pegawai', [Admin_PegawaiController::class, 'index'])->name('admin_pegawai_outlet');
         Route::get('/getDataListPegawai', [Admin_PegawaiController::class, 'getDataListPegawai']);
-        Route::get('/detail-pegawai/{id}', [Admin_PegawaiController::class, 'show']);
+        Route::get('/getDataTransactionPegawai/{pegawai}', [Admin_PegawaiController::class, 'getDataTransactionPegawai']);
+        Route::get('/outlets/detail-pegawai/{id}', [Admin_PegawaiController::class, 'show'])->name('admin_pegawai_detail');
         Route::get('/get_data_detail_profile_pegawai/{id}', [Admin_PegawaiController::class, 'getDataDetailProfilePegawai']);
         Route::post('/update-email-user-pegawai', [Admin_PegawaiController::class, 'updateEmailPegawai']);
         Route::post('/update-password-user-pegawai', [Admin_PegawaiController::class, 'updatePasswordPegawai']);
@@ -171,15 +211,6 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         // Route::get('/getDataoutletReject', [Admin_OutletController::class, 'getDataoutletReject']);
         // Jangan Dihapus!!!
 
-        // Category Product
-        Route::get('/category-product', [Admin_Product_CategoryController::class, 'index'])->name('admin_category_product');
-        Route::get('/catProductSlug', [Admin_Product_CategoryController::class, 'catProductSlug']);
-        Route::get('/getDataProductCategory', [Admin_Product_CategoryController::class, 'getDataProductCategory']);
-        Route::post('/add_productCategory', [Admin_Product_CategoryController::class, 'store'])->name('admin_store_category_product');
-        Route::get('/edit_productCategory', [Admin_Product_CategoryController::class, 'edit'])->name('admin_edit_category_product');
-        Route::post('/update_productCategory', [Admin_Product_CategoryController::class, 'update'])->name('admin_update_category_product');
-        Route::post('/delete_productCategory', [Admin_Product_CategoryController::class, 'destroy'])->name('admin_delete_category_product');
-        
         
         //Banner
         Route::get('/banner', [Admin_BannerController::class, 'index'])->name('admin_banner');

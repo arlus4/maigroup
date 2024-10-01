@@ -49,7 +49,7 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <!--begin::Primary button-->
-                    <a href="/admin/detail-user-owner/{{ $user->username }}" class="btn fw-bold btn-primary">Kembali</a>
+                    <a href="/admin/owner/detail-user-owner/{{ $user->username }}" class="btn fw-bold btn-primary">Kembali</a>
                     <!--end::Primary button-->
                 </div>
                 <!--end::Actions-->
