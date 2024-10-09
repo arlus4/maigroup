@@ -7,6 +7,7 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Outlet;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Admin_UserOwnerController extends Controller
@@ -22,6 +23,13 @@ class Admin_UserOwnerController extends Controller
         ];
 
         return response()->json($datas);
+    }
+
+    public function outletSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Outlet::class, 'slug', $request->outlet_name);
+
+        return response()->json(['slug' => $slug]);
     }
     
     public function brandSlug(Request $request)
@@ -180,5 +188,33 @@ class Admin_UserOwnerController extends Controller
         }
         
         return response()->json(['used' => $used]);
+    }
+
+    public function validate_Edit_NoHp_outlet(Request $request)
+    {
+        $noHp = $request->no_hp;
+        $outletCode = $request->outlet_code;
+        
+        // Mengecek apakah nomor HP sudah digunakan
+        $outlet = Outlet::where('no_hp', $noHp)->first();
+    
+        // Inisialisasi $isUsed sebagai false
+        $isUsed = false;
+    
+        // Jika outlet ditemukan
+        if ($outlet) {
+            // Jika outlet_code diberikan dan tidak sama dengan outlet yang ditemukan, atau jika outlet_code tidak diberikan sama sekali
+            if ($outletCode !== null) {
+                if ($outlet->outlet_code != $outletCode) {
+                    // Artinya ada nomor HP yang sama terdaftar di bawah outlet yang berbeda
+                    $isUsed = true;
+                }
+            } else {
+                // Jika tidak ada outlet_code yang diberikan dan nomor HP ditemukan, anggap nomor HP tersebut sudah digunakan
+                $isUsed = false;
+            }
+        }
+        
+        return response()->json(['isUsed' => $isUsed]);
     }
 }

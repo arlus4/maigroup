@@ -96,7 +96,7 @@
                                                     @if ($brand->brand_image != NULL)
                                                         <style>
                                                             .image-input-placeholder {
-                                                                background-image: url('../../../{{ $brand->brand_image_path }}');
+                                                                background-image: url('https://apps.tokoseru.com/{{ $brand->brand_image_path }}');
                                                             } [data-theme="dark"]
                                                             .image-input-placeholder {
                                                                 background-image: url('../../../assets/master/media/svg/files/blank-image-dark.svg');

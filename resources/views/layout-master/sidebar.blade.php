@@ -179,7 +179,7 @@
                     </div>
                     <!-- Outlet Active -->
                     <div class="menu-item">
-                        <a class="menu-link {{ Request::routeIs('admin.admin_outlet_active') || Request::routeIs('admin.admin_outlet_detail') ? 'active' : '' }}" href="{{ route('admin.admin_outlet_active') }}">
+                        <a class="menu-link {{ Request::routeIs('admin.admin_outlet_active') || Request::routeIs('admin.admin_outlet_detail') || Request::routeIs('admin.admin_outlet_edit') ? 'active' : '' }}" href="{{ route('admin.admin_outlet_active') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>

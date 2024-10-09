@@ -116,6 +116,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         // utilitas
         Route::get('/userSlug', [Admin_UserOwnerController::class, 'userSlug']);
         Route::get('/brandSlug', [Admin_UserOwnerController::class, 'brandSlug']);
+        Route::get('/outletSlug', [Admin_UserOwnerController::class, 'outletSlug']);
         Route::get('/get_data_brand_owner/{username}', [Admin_UserOwnerController::class, 'getDataBrandOwner']);
         Route::get('/validateNoHp', [Admin_UserOwnerController::class, 'validateNoHp']);
         Route::get('/validate_Edit_NoHp', [Admin_UserOwnerController::class, 'validate_Edit_NoHp']);
@@ -126,6 +127,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::get('/validateEmailPegawai', [Admin_PegawaiController::class, 'validateEmailPegawai']);
         Route::get('/validateNoHp_brand', [Admin_UserOwnerController::class, 'validateNoHp_brand']);
         Route::get('/validate_Edit_NoHp_brand', [Admin_UserOwnerController::class, 'validate_Edit_NoHp_brand']);
+        Route::get('/validate_Edit_NoHp_outlet', [Admin_UserOwnerController::class, 'validate_Edit_NoHp_outlet']);
         
         // Manajemen Brand
         // Manajemen Brand - Request Point
@@ -166,7 +168,6 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::get('/edit_New_Brands/{brand}', [Admin_BrandsController::class, 'edit_New_Brands'])->name('admin_edit_new_brands');
         Route::post('/update_New_Brands/{brand}', [Admin_BrandsController::class, 'update_New_Brands'])->name('admin_update_new_brands');
 
-
         // Manajemen Outlet
         // Manajemen Outlet - Category Product
         Route::get('/outlets/category-product', [Admin_Product_CategoryController::class, 'index'])->name('admin_category_product');
@@ -191,6 +192,8 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::get('/getDataPengeluaranOutlet/{outlet:slug}', [Admin_OutletController::class, 'getDataPengeluaranOutlet']);
         Route::get('/getDetailPengeluaran/{invoice}', [Admin_OutletController::class, 'getDetailPengeluaran']);
         Route::post('/update-status-outlet', [Admin_OutletController::class, 'updateStatusOutlet']);
+        Route::get('/outlets/edit-outlet/{outlet:slug}', [Admin_OutletController::class, 'edit_Outlet'])->name('admin_outlet_edit');
+        Route::post('/outlets/update-outlet', [Admin_OutletController::class, 'update_Outlet'])->name('admin_outlet_update');
         // Manajemen Outlet - Pegawai Outlet
         Route::get('/outlets/daftar-pegawai', [Admin_PegawaiController::class, 'index'])->name('admin_pegawai_outlet');
         Route::get('/getDataListPegawai', [Admin_PegawaiController::class, 'getDataListPegawai']);

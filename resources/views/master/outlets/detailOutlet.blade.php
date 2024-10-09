@@ -79,8 +79,8 @@
                             <!--begin: Pic-->
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    @if ($outlet->avatar != NULL)
-                                        <img src="{{ asset($outlet->path_avatar) }}" alt="image" />
+                                    @if ($outlet->image_name != NULL)
+                                        <img src="https://apps.tokoseru.com/{{ $outlet->path }}" alt="{{ $outlet->image_name }}" />
                                         @if ($outlet->is_active == 1)
                                             <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                                         @endif
@@ -406,114 +406,6 @@
                             <!--end::Overview - Transaksi-->
                         </div> <br> <br>
                         <!--end::Pegawai & Transaksi-->
-
-                        <!--begin::Detail Outlet & Social Media -->
-                        <div class="row g-6 g-xl-9">
-                            <div class="col-lg-8">
-                                <div class="card mb-6 mb-xl-9">
-                                    <div class="card-header mt-6">
-                                        <div class="card-title flex-column">
-                                            <h3 class="fw-bold mb-1">Outlet Detail</h3>
-                                        </div>
-                                        <div class="card-toolbar">
-                                            <a href="javascript:;" data-bs-toggle="tab" data-kt-countup-tabs="true" class="btn btn-bg-light btn-active-color-warning btn-sm" id="view-setting">Edit</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body d-flex flex-column mb-9 p-9 pt-3">
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Kelurahan</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Kelurahan"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Kecamatan</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Kecamatan"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Kabupaten</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Kabupaten"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Provinsi</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Provinsi"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Kode Pos</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Kode_Pos"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Alamat</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Alamat"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Maps</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Gmaps"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="card card-flush h-lg-100">
-                                    <div class="card-header mt-6">
-                                        <div class="card-title flex-column">
-                                            <h3 class="fw-bold mb-1">Social Media</h3>
-                                        </div>
-                                    </div>
-                                    <div class="card-body d-flex flex-column mb-9 p-9 pt-3">
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Website</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Website"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Whatsapp</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Whatsapp"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Facebook</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Facebook"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Instagram</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Instagram"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Tiktok</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Tiktok"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label class="col-lg-4 fw-semibold text-muted">Youtube</label>
-                                            <div class="col-lg-8">
-                                                <span class="fw-bold fs-6 text-gray-800" id="Youtube"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Detail Outlet & Social Media -->
                     </div>
                     <!--end::Overview-->
                     
@@ -719,6 +611,113 @@
 
                     <!--begin::Setting-->
                     <div class="tab-pane fade" id="kt_user_view_setting_tab" role="tabpanel">
+                        <!--begin::Detail Outlet & Social Media -->
+                        <div class="row g-6 g-xl-9">
+                            <div class="col-lg-8">
+                                <div class="card mb-6 mb-xl-9">
+                                    <div class="card-header mt-6">
+                                        <div class="card-title flex-column">
+                                            <h3 class="fw-bold mb-1">Outlet Detail</h3>
+                                        </div>
+                                        <div class="card-toolbar">
+                                            <a href="{{ route('admin.admin_outlet_edit', $outlet->slug) }}" class="btn btn-bg-light btn-active-color-warning btn-sm">Edit</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body d-flex flex-column mb-9 p-9 pt-3">
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Kelurahan</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Kelurahan"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Kecamatan</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Kecamatan"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Kabupaten</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Kabupaten"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Provinsi</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Provinsi"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Kode Pos</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Kode_Pos"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Alamat</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Alamat"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Maps</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Gmaps"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card card-flush h-lg-100">
+                                    <div class="card-header mt-6">
+                                        <div class="card-title flex-column">
+                                            <h3 class="fw-bold mb-1">Social Media</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body d-flex flex-column mb-9 p-9 pt-3">
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Website</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Website"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Whatsapp</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Whatsapp"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Facebook</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Facebook"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Instagram</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Instagram"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Tiktok</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Tiktok"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-7">
+                                            <label class="col-lg-4 fw-semibold text-muted">Youtube</label>
+                                            <div class="col-lg-8">
+                                                <span class="fw-bold fs-6 text-gray-800" id="Youtube"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Detail Outlet & Social Media -->
                         @if ($outlet->is_active == 1)
                             <!--begin::Deactivate Outlet-->
                             <div class="card">
@@ -899,12 +898,6 @@
             var penjualanTabLink = document.querySelector('a[href="#kt_user_view_penjualan_tab"]');
             var penjualanTab = new bootstrap.Tab(penjualanTabLink);
             penjualanTab.show();
-        });
-
-        document.getElementById('view-setting').addEventListener('click', function() {
-            var settingTabLink = document.querySelector('a[href="#kt_user_view_setting_tab"]');
-            var settingTab = new bootstrap.Tab(settingTabLink);
-            settingTab.show();
         });
     </script>
 

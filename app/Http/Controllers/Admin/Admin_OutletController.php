@@ -7,7 +7,14 @@ use App\Models\User;
 use App\Models\Brand;
 use App\Models\Outlet;
 use App\Models\Pegawai;
+use Illuminate\Support\Str;
+use App\Models\ref_KotaKab;
+use App\Models\ref_KodePos;
+use App\Models\Ref_Provinsi;
+use App\Models\ref_Kelurahan;
+use App\Models\ref_Kecamatan;
 use Illuminate\Http\Request;
+use App\Models\Outlet_Detail;
 use App\Models\Users_Register;
 use App\Models\Brands_Register;
 use App\Models\Outlet_Register;
@@ -15,6 +22,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Invoice_Master_Pembeli;
 
@@ -401,12 +409,114 @@ class Admin_OutletController extends Controller
         return redirect()->back()->with('success', 'Status berhasil diperbaharui');
     }
 
+    public function edit_Outlet(Outlet $outlet): View
+    {
+        $detail = Outlet_Detail::where('outlet_code', $outlet->outlet_code)->first();
+        // Retrieve data from the 'Ref_Provinsi' table to populate the province dropdown
+        $getProvinsi  = Ref_Provinsi::select('kode_propinsi','nama_propinsi')->get();
+        // Retrieve data from the 'ref_KotaKab' table based on the selected province to populate the city/district dropdown
+        $getKotaKab   = ref_KotaKab::select('kode_kotakab','nama_kotakab')->where('kode_propinsi', $detail->provinsi)->get();
+        // Retrieve data from the 'ref_Kecamatan' table based on the selected city/district to populate the sub-district dropdown
+        $getKecamatan = ref_Kecamatan::select('kode_kecamatan','nama_kecamatan')->where('kode_kotakab', $detail->kota_kabupaten)->get();
+        // Retrieve data from the 'ref_Kelurahan' table based on the selected sub-district to populate the village dropdown
+        $getKelurahan = ref_Kelurahan::select('kode_kelurahan','nama_kelurahan')->where('kode_kecamatan', $detail->kecamatan)->get();
+        // Retrieve data from the 'ref_KodePos' table based on the selected village to populate the postal code dropdown
+        $getKodePos   = ref_KodePos::select('kodepos',)->where('kode_kelurahan', $detail->kelurahan)->get();
+        return view('master.outlets.editOutlet',[
+            'outlet' => $outlet,
+            'detail' => $detail,
+            'getProvinsi' => $getProvinsi,
+            'getKotaKab' => $getKotaKab,
+            'getKecamatan' => $getKecamatan,
+            'getKelurahan' => $getKelurahan,
+            'getKodePos' => $getKodePos
+        ]);
+    }
+
+    public function update_Outlet(Request $request): RedirectResponse
+    {
+        try {
+            DB::beginTransaction(); // Begin Transaction
+            $validasi = Outlet::where('outlet_code', $request->outlet_code)->first();
+            if (!$validasi) {
+                return redirect()->back()->with('error', 'Outlet Tidak Ditemukan');
+            }
+
+            $request->validate([
+                'outlet_name' => 'required',
+                'slug' => 'required|unique:outlets,slug,' . $validasi->id, // Menggunakan id sebagai pengecualian
+                'no_hp_outlet' => 'required|unique:outlets,no_hp,' . $validasi->id, // Menggunakan id sebagai pengecualian
+            ]);
+
+            if ($request->hasFile('logo_outlet')) {
+                $request->validate([
+                    'logo_outlet' => 'required|mimes:jpeg,png,jpg,gif',
+                ], [
+                    'logo_outlet.mimes' => 'The file format must be JPG, JPEG, or PNG.', // Error message
+                ]);
+
+                // Store the uploaded image in storage/app/storage/logo_outlet directory
+                $imageOutletName = Str::random(10) . '_' . $request->logo_outlet->getClientOriginalName();
+
+                // Simpan gambar sementara di direktori apps.tokoseru.com
+                $request->logo_outlet->storeAs('outlet/avatar', $imageOutletName, 'public');
+
+                // Tentukan path untuk upload ke apps.tokoseru.com
+                $destinationPath = '/var/www/html/apps.tokoseru.com/storage/app/public/outlet/avatar/' . $imageOutletName;
+
+                // Pindahkan file dari order.tokoseru.com ke apps.tokoseru.com
+                File::move(public_path('storage/outlet/avatar/' . $imageOutletName), $destinationPath);
+
+                // Pastikan file berhasil dipindahkan
+                if (File::exists($destinationPath)) {
+                    $imageOutletPath = 'storage/outlet/avatar/' . $imageOutletName;
+                } else {
+                    $imageOutletName = $validasi->image_name;
+                    $imageOutletPath = $validasi->path;
+                }
+            } else {
+                $imageOutletName = $validasi->image_name;
+                $imageOutletPath = $validasi->path;
+            }
+
+            $validasi->update([
+                'outlet_name' => $request->outlet_name,
+                'slug' => $request->slug,
+                'no_hp' => $request->no_hp_outlet,
+                'image_name' => $imageOutletName,
+                'path' => $imageOutletPath,
+                'website' => $request->website_outlet,
+                'whatsapp' => $request->whatsapp_outlet,
+                'facebook' => $request->facebook_outlet,
+                'instagram' => $request->instagram_outlet,
+                'tiktok' => $request->tiktok_outlet,
+                'youtube' => $request->youtube_outlet,
+                'updated_at' => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+
+            Outlet_Detail::updateOrCreate([
+                'outlet_code' => $request->outlet_code,
+            ],[
+                'kelurahan' => $request->kelurahan,
+                'kecamatan' => $request->kecamatan,
+                'provinsi' => $request->provinsi,
+                'kode_pos' => $request->kode_pos,
+                'alamat_detail' => $request->alamat_detail,
+                'kota_kabupaten' => $request->kotkab,
+                'link_google_maps' => $request->link_google_maps,
+                'updated_at' => Carbon::now()->timezone('Asia/Jakarta')
+            ]);
+            
+            DB::commit(); // Commit the transaction
+        } catch (\Throwable $th) {
+            DB::rollback(); // Rollback the transaction in case of an exception
+    
+            return redirect()->back()->with('error', 'An error occurred: ' . $th->getMessage());
+        }
+        return redirect()->route('admin.admin_outlet_active')->with('success', 'Successfully updated Outlet');
+    }
+
     // JANGAN DIHAPUS!!!
-    // /**
-    //  * Display a listing of the resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
     // public function index_outletPending(): View
     // {
     //     return view('master.user-owner.outlet.daftarOutletPending');
