@@ -358,13 +358,37 @@ class Admin_Active_OwnerController extends Controller
     public function edit($username): View
     {
         // Retrieve data from the 'web.user_owner_detail' stored procedure using the provided username
-        $getDatas = DB::select("SELECT
-                                    idUserLogin, name, username, no_hp, email, avatar, path_avatar, nomor_ktp,
-                                    tanggal_lahir, jenis_kelamin, alamat_detail, nama_propinsi, kode_propinsi,
-                                    nama_kotakab, kode_kotakab, nama_kecamatan, kode_kecamatan, nama_kelurahan,
-                                    kode_kelurahan, kode_pos
-                                FROM [maigroup].[dbo].[web.user_owner_detail] ('" . $username . "')");
-        $getData = $getDatas[0]; // Get the first row of the result set
+        $getData = DB::table('users_login')
+        ->select(
+            'users_login.id as idUserLogin',
+            'users_login.username',
+            'users_login.name',
+            'users_login.no_hp',
+            'users_login.email',
+            'users_details.id as idUserDetail',
+            'users_details.avatar',
+            'users_details.path_avatar',
+            'users_details.nomor_ktp',
+            'users_details.tanggal_lahir',
+            'users_details.jenis_kelamin',
+            'users_details.kode_pos',
+            'users_details.alamat_detail',
+            'ref_propinsi.kode_propinsi',
+            'ref_propinsi.nama_propinsi',
+            'ref_kotakab.kode_kotakab',
+            'ref_kotakab.nama_kotakab',
+            'ref_kecamatan.kode_kecamatan',
+            'ref_kecamatan.nama_kecamatan',
+            'ref_kelurahan.kode_kelurahan',
+            'ref_kelurahan.nama_kelurahan',
+        )
+        ->leftJoin('users_details', 'users_details.user_id', 'users_login.id')
+        ->leftJoin('ref_propinsi', 'ref_propinsi.kode_propinsi', 'users_details.provinsi')
+        ->leftJoin('ref_kotakab', 'ref_kotakab.kode_kotakab', 'users_details.kota_kabupaten')
+        ->leftJoin('ref_kecamatan', 'ref_kecamatan.kode_kecamatan', 'users_details.kecamatan')
+        ->leftJoin('ref_kelurahan', 'ref_kelurahan.kode_kelurahan', 'users_details.kelurahan')
+        ->where('username', $username)
+        ->first();
     
         // Retrieve data from the 'Ref_Project' table to populate the category dropdown
         $getKategori  = Ref_Project::select('id','project_name','slug')->get();

@@ -77,11 +77,11 @@
 									            <h2 style="font-size: 1rem;">Avatar / Foto Profil</h2>
                                                 <div class="col-md-6">
 								                    <style>
-                                                        .image-input-placeholder { 
-                                                            background-image: url('../../../{{ $getData->path_avatar }}');
+                                                        .image-input-placeholder {
+                                                            background-image: url('https://apps.tokoseru.com/{{ $getData->path_avatar }}');
                                                         } [data-theme="dark"]
                                                         .image-input-placeholder {
-                                                            background-image: url('../../../{{ $getData->path_avatar }}');
+                                                            background-image: url('https://apps.tokoseru.com/{{ $getData->path_avatar }}');
                                                         }
                                                     </style>
                                                     <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
