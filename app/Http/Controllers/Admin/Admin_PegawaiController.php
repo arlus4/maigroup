@@ -8,11 +8,9 @@ use App\Models\Pegawai_Detail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Models\Invoice_Master_Pembeli;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\ValidationException;
 
 class Admin_PegawaiController extends Controller
 {
@@ -137,40 +135,6 @@ class Admin_PegawaiController extends Controller
         ];
 
         return response()->json($datas);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pegawai  $pegawai
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pegawai $pegawai)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pegawai  $pegawai
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pegawai $pegawai)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pegawai  $pegawai
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pegawai $pegawai)
-    {
-        //
     }
 
     public function validateEmailPegawai(Request $request)

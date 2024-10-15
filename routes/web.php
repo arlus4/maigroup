@@ -40,6 +40,7 @@ use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_RejectController
 use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Request_PointController;
 use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_PendingController;
 use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_CategoryController;
+use App\Http\Controllers\Admin\Admin_PembeliController;
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::get('/', [AuthenticatedSessionController::class, 'create']);
@@ -83,6 +84,17 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         // Route::post('/delete_product', [Admin_ProductController::class, 'destroy'])->name('admin_delete_product');
         // Route::get('/produkSlug', [Admin_ProductController::class, 'produkSlug']);
 
+        // Manajemen Pembeli
+        Route::get('/pembeli/user-pembeli', [Admin_PembeliController::class, 'index'])->name('admin_user_pembeli');
+        Route::get('/get_dataPembeli', [Admin_PembeliController::class, 'get_dataPembeli']);
+        Route::post('/update-toggle-pembeli/{user}', [Admin_PembeliController::class, 'updateNotifications'])->name('admin_update_notif_user_pembeli');
+        Route::get('/pembeli/detail-user-pembeli/{id}', [Admin_PembeliController::class, 'show'])->name('admin_detail_user_pembeli');
+        Route::get('/getDataTransactionPembeli/{id}', [Admin_PembeliController::class, 'getDataTransactionPembeli']);
+        Route::post('/update-no_hp-user-pembeli', [Admin_PembeliController::class, 'updateNoHPPembeli']);
+        Route::post('/update-email-user-pembeli', [Admin_PembeliController::class, 'updateEmailPembeli']);
+        Route::post('/update-username-user-pembeli', [Admin_PembeliController::class, 'updateUsernamePembeli']);
+        Route::post('/update-password-user-pembeli', [Admin_PembeliController::class, 'updatePasswordPembeli']);
+        Route::post('/update-status-user-pembeli', [Admin_PembeliController::class, 'updateStatusPembeli']);
         // Manajemen Owner
         // Manajemen Owner - Owner Add
         Route::get('/owner/tambah-user-owner', [Admin_Tambah_OwnerController::class, 'create'])->name('admin_tambah_user_owner');
@@ -125,6 +137,9 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::get('/validateEmail', [Admin_UserOwnerController::class, 'validateEmail']);
         Route::get('/validate_Edit_Email', [Admin_UserOwnerController::class, 'validate_Edit_Email']);
         Route::get('/validateEmailPegawai', [Admin_PegawaiController::class, 'validateEmailPegawai']);
+        Route::get('/validateEmailPembeli', [Admin_PembeliController::class, 'validateEmailPembeli']);
+        Route::get('/validateUsernamePembeli', [Admin_PembeliController::class, 'validateUsernamePembeli']);
+        Route::get('/validateNoHPPembeli', [Admin_PembeliController::class, 'validateNoHPPembeli']);
         Route::get('/validateNoHp_brand', [Admin_UserOwnerController::class, 'validateNoHp_brand']);
         Route::get('/validate_Edit_NoHp_brand', [Admin_UserOwnerController::class, 'validate_Edit_NoHp_brand']);
         Route::get('/validate_Edit_NoHp_outlet', [Admin_UserOwnerController::class, 'validate_Edit_NoHp_outlet']);
