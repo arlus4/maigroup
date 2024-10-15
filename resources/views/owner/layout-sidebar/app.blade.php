@@ -14,7 +14,7 @@
 		<meta property="og:site_name" content="Dashboard Admin| Toko Seru" />
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 		<link rel="canonical" href="index.html" />
-		<link rel="shortcut icon" href="{{ asset('assets/images/ic_maitea.png') }}" />
+		<link rel="shortcut icon" href="{{ asset('assets/images/logo_ts.png') }}" />
 		<link href="{{ asset('assets/master/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/master/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />

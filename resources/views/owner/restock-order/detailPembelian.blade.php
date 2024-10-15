@@ -18,7 +18,7 @@
                             <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">INVOICE</h4>
                             <div class="text-sm-end">
                                 <a href="javascript:;" class="d-block mw-150px ms-sm-auto">
-                                    <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="h-80px" />
+                                    <img alt="Logo" src="{{ asset('assets/images/logo_ts.png') }}" class="h-80px" />
                                 </a>
                                 <div class="text-sm-end fw-semibold fs-4 text-muted mt-7">
                                     <div>Alamat MaiGroup</div>

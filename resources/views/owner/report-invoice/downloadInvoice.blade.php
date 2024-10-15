@@ -3,7 +3,7 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 <head>
 		<title>Dashboard Owner | Toko Seru</title>
-		<link rel="shortcut icon" href="{{ asset('assets/images/ic_maitea.png') }}" />
+		<link rel="shortcut icon" href="{{ asset('assets/images/logo_ts.png') }}" />
 		<link rel="stylesheet" href="fonts.googleapis.com/css7b91.css?family=Inter:300,400,500,600,700" />
 		<link href="{{ asset('assets/master/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/master/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -42,7 +42,7 @@
                                                     <div class="text-sm-end">
                                                         <!--begin::Logo-->
                                                         <a href="javascript:;" class="d-block mw-150px ms-sm-auto">
-                                                            <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="h-80px" />
+                                                            <img alt="Logo" src="{{ asset('assets/images/logo_ts.png') }}" class="h-80px" />
                                                         </a>
                                                         <!--end::Logo-->
                                                         <!--begin::Text-->

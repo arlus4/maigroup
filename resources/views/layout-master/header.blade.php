@@ -14,7 +14,7 @@
                 </div>
                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                     <a href="javascript:;" class="d-lg-none">
-                        <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="h-30px" />
+                        <img alt="Logo" src="{{ asset('assets/images/logo_ts.png') }}" class="h-30px" />
                     </a>
                 </div>
                 <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
@@ -73,7 +73,7 @@
                 <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
                     <a href="javascript:;">
                         <img alt="Logo" src="{{ asset('assets/images/logo_maitea.png') }}" class="app-sidebar-logo-default" style="height: 55px;" />
-                        <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="app-sidebar-logo-minimize" style="height: 38px;"/>
+                        <img alt="Logo" src="{{ asset('assets/images/logo_ts.png') }}" class="app-sidebar-logo-minimize" style="height: 38px;"/>
                     </a>
                     <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
                         <span class="svg-icon svg-icon-2 rotate-180">

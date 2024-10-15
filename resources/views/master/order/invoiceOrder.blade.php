@@ -50,7 +50,7 @@
                             <div class="text-sm-end">
                                 <!--begin::Logo-->
                                 <a href="javascript:;" class="d-block mw-150px ms-sm-auto">
-                                    <img alt="Logo" src="{{ asset('assets/images/ic_maitea.png') }}" class="h-80px" />
+                                    <img alt="Logo" src="{{ asset('assets/images/logo_ts.png') }}" class="h-80px" />
                                 </a>
                                 <!--end::Logo-->
                                 <!--begin::Text-->

@@ -12,7 +12,7 @@
 		<meta property="og:type" content="content" />
 		<meta property="og:title" content="Dashboard Owner| Toko Seru" />
 		<meta property="og:site_name" content="Dashboard Owner| Toko Seru" />
-		<link rel="shortcut icon" href="{{ asset('assets/images/ic_maitea.png') }}" />
+		<link rel="shortcut icon" href="{{ asset('assets/images/logo_ts.png') }}" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 		<link href="{{ asset('assets/owner/css/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/owner/css/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
