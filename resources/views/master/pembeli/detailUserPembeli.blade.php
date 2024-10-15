@@ -604,6 +604,25 @@
                 <!--end::Setting-->
             </div>
             <!--end::details View-->
+
+            <!-- Modal Detail Transaksi -->
+            <div class="modal fade" id="detailTransaksiModal" tabindex="-1" aria-labelledby="detailTransaksiModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered mw-1000px">
+                    <div class="modal-content rounded">
+                        <div class="modal-header" style="border-bottom: 2px solid #dee2e6;">
+                            <h3 id="detailTransaksiModalLabel" class="modal-title" style="color: #212121; font-weight: 700; line-height: 26px; font-size: 1.42857rem;">Detail Invoice Transaksi</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body pb-1">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-success" id="printInvoiceButton">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 		<!--end::Content container-->
     </div>
@@ -678,6 +697,113 @@
             ],
         });
     });
+</script>
+
+<!-- Detail Transaksi -->
+<script>
+    function detailTransaksi(invoice_no) {
+        $.ajax({
+            type: 'GET',
+            url: `/admin/getDetailTransaksi/${invoice_no}`,
+            beforeSend: function() {
+                Swal.fire({
+                    html: `Loading...`,
+                    showConfirmButton: false,
+                });
+            },
+            success: function(data) {
+                Swal.close();
+                if (data.invoice) {
+                    const invoice = data.invoice;
+                    const details = data.detail;
+                    let pembeliName = invoice.nama_pembeli ? invoice.nama_pembeli : 'Pembeli Belum Terdaftar';
+                    let modalContent = `
+                        <div class="pb-10">
+                            <div>
+                                <h1 class="fw-bold text-gray-800 mb-8 fs-1">Invoice #${invoice.invoice_no}</h1>
+                                <div class="row g-5 mb-12">
+                                    <div class="col-sm-4">
+                                        <div class="fw-semibold fs-7 text-gray-600 mb-1">Tanggal Pembelian</div>
+                                        <div class="fw-bold fs-6 text-gray-800">${formatTanggal(invoice.date_created)}</div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="fw-semibold fs-7 text-gray-600 mb-1">Kasir</div>
+                                        <div class="fw-bold fs-6 text-gray-800">${invoice.nama_pegawai}</div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="fw-semibold fs-7 text-gray-600 mb-1">Pembeli</div>
+                                        <div class="fw-bold fs-6 text-gray-800">${pembeliName}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive border-bottom mb-9">
+                            <table class="table mb-3">
+                                <thead>
+                                    <tr class="border-bottom fs-6 fw-bold text-muted">
+                                        <th class="min-w-175px pb-2">Product</th>
+                                        <th class="min-w-80px text-end pb-2">Kategori</th>
+                                        <th class="min-w-70px text-end pb-2">Jumlah</th>
+                                        <th class="min-w-80px text-end pb-2">Harga Satuan</th>
+                                        <th class="min-w-100px text-end pb-2">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+                    details.forEach(item => {
+                        modalContent += `
+                            <tr class="fw-bold text-gray-700 fs-5 text-end">
+                                <td class="text-start">${item.product_name}</td>
+                                <td>${item.category_name}</td>
+                                <td>${item.qty}</td>
+                                <td>${formatRupiah(item.price)}</td>
+                                <td>${formatRupiah(item.amount)}</td>
+                            </tr>`;
+                    });
+
+                    modalContent += `
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="mw-300px">
+                                <div class="d-flex flex-stack mb-3">
+                                    <div class="fw-semibold pe-10 text-gray-600 fs-7">Total Pembayaran:</div>
+                                    <div class="text-end fw-bold fs-6 text-gray-800">${formatRupiah(invoice.amount)}</div>
+                                </div>
+                            </div>
+                        </div>`;
+
+                    $('#detailTransaksiModal').find('.modal-body').html(modalContent);
+                    $('#detailTransaksiModal').modal('show');
+                } else {
+                    toastr.error('Invoice data not found');
+                }
+            },
+            error: function(data) {
+                toastr.error('Error fetching data.');
+            }
+        });
+
+        $(document).on('click', '#printInvoiceButton', function() {
+            window.open(`/admin/print-invoice/${invoice_no}`, '_blank');
+        });
+    }
+
+    // Utilitas Format Mata Uang
+    function formatRupiah(angka) {
+        var reverse = angka.toString().split('').reverse().join(''),
+            ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+        return 'Rp. ' + ribuan;
+    }
+
+    // Utilitas Format Tanggal
+    function formatTanggal(tanggal) {
+        var date = new Date(tanggal);
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('id-ID', options);
+    }
 </script>
 
 <!-- Update Phone Number -->
@@ -869,41 +995,6 @@
     });
 </script>
 
-{{-- <!-- Update Password -->
-<script>
-    $(document).ready(function() {
-        // Show the password edit form when the button is clicked
-        $('#kt_password_button').on('click', function() {
-            $('#kt_password').hide();
-            $('#kt_password_edit').removeClass('d-none').show();
-            $('#kt_password_button').hide();
-        });
-
-        // Hide the password edit form and show the password details when the cancel button is clicked
-        $('#cancel_button_password').on('click', function() {
-            $('#kt_password_edit').hide();
-            $('#kt_password').show();
-            $('#kt_password_button').show();
-        });
-
-        // Validate password before submitting
-        $('#kt_signin_change_password').on('submit', function(e) {
-            e.preventDefault();
-            var newPassword = $('#newpassword').val();
-            var confirmPassword = $('#confirmpassword').val();
-            var passwordError = $('#passwordError');
-
-            if (newPassword.length >= 8 && /[!@#$%^&*(),.?":{}|<>]/g.test(newPassword) && newPassword === confirmPassword) {
-            // if (newPassword.length >= 8 && /[!@#$%^&*(),.?":{}|<>]/g.test(newPassword) && newPassword === confirmPassword) {
-                passwordError.addClass('d-none').hide();
-                // Submit the form
-                this.submit();
-            } else {
-                passwordError.removeClass('d-none').show();
-            }
-        });
-    });
-</script> --}}
 <!-- Update Password -->
 <script>
     $(document).ready(function() {
@@ -961,7 +1052,6 @@
         });
     });
 </script>
-
 
 <!-- Deactive Account -->
 <script>
