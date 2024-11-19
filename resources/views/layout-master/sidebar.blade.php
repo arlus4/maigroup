@@ -1,6 +1,7 @@
 <div class="app-sidebar-menu overflow-hidden flex-column-fluid">
     <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
         <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+            <hr style="height: 5px;background-color: #fff;border-radius: 5px;">
             <!--begin:Dashboard-->
             <div class="menu-item">
                 <a class="menu-link {{ Request::routeIs('admin.dashboard-admin') ? 'active' : '' }}" href="{{ route('admin.dashboard-admin') }}">
@@ -18,7 +19,7 @@
                 </a>
             </div>
             <!--end:Dashboard-->
-            <hr style="height: 8px;background-color: #fff;border-radius: 5px;">
+
             <!--begin:Manajemen Pembeli-->
             <div class="menu-item">
                 <a class="menu-link {{ Request::is('admin/pembeli*') ? 'active' : '' }}" href="{{ route('admin.admin_user_pembeli') }}">
@@ -114,14 +115,14 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion">
                     <!-- Request Point -->
-                    <div class="menu-item">
+                    {{-- <div class="menu-item">
                         <a class="menu-link {{ Request::routeIs('admin.admin_request_point') ? 'active' : '' }}" href="{{ route('admin.admin_request_point') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Request Point</span>
                         </a>
-                    </div>
+                    </div> --}}
                     <!-- Brand Category -->
                     <div class="menu-item">
                         <a class="menu-link {{ Request::routeIs('admin.admin_brand_category') ? 'active' : '' }}" href="{{ route('admin.admin_brand_category') }}">
@@ -198,7 +199,7 @@
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Daftar Outlet Aktif</span>
+                            <span class="menu-title">Daftar Outlet</span>
                         </a>
                     </div>
                     <!-- Outlet Pegawai -->
@@ -271,21 +272,6 @@
                     </div>
                 </div>
             </div> --}}
-    
-            {{-- <div class="menu-item">
-                <a class="menu-link {{ Request::routeIs('admin.admin_report_invoice') ? 'active' : '' }}" href="{{ route('admin.admin_report_invoice') }}">
-                    <span class="menu-icon">
-                        <span class="svg-icon svg-icon-2">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path opacity="0.3" d="M18 22C19.7 22 21 20.7 21 19C21 18.5 20.9 18.1 20.7 17.7L15.3 6.30005C15.1 5.90005 15 5.5 15 5C15 3.3 16.3 2 18 2H6C4.3 2 3 3.3 3 5C3 5.5 3.1 5.90005 3.3 6.30005L8.7 17.7C8.9 18.1 9 18.5 9 19C9 20.7 7.7 22 6 22H18Z" fill="currentColor"/>
-                                <path d="M18 2C19.7 2 21 3.3 21 5H9C9 3.3 7.7 2 6 2H18Z" fill="currentColor"/>
-                                <path d="M9 19C9 20.7 7.7 22 6 22C4.3 22 3 20.7 3 19H9Z" fill="currentColor"/>
-                            </svg>
-                        </span>
-                    </span>
-                    <span class="menu-title">Report Invoice</span>
-                </a>
-            </div> --}}
 
             <!--begin:Artikel-->
             <div class="menu-item">
@@ -323,7 +309,7 @@
                 <!--end:Menu link-->
                 <!--begin:Menu sub-->
                 <div class="menu-sub menu-sub-accordion">
-                    <!--begin:Menu item-->
+                    {{-- <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
                         <a class="menu-link {{ Request::is('admin/setting/point_price*') ? 'active' : '' }}" href="{{ route('admin.admin_point_price') }}">
@@ -334,7 +320,7 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
-                    <!--end:Menu item-->
+                    <!--end:Menu item--> --}}
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
@@ -398,7 +384,7 @@
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
-                    <!--begin:Menu item-->
+                    {{-- <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
                         <a class="menu-link {{ Request::is('admin/setting/notification*') ? 'active' : '' }}" href="{{ route('admin.admin_notification_index') }}">
@@ -421,7 +407,7 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
-                    <!--end:Menu item-->
+                    <!--end:Menu item--> --}}
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
@@ -450,6 +436,7 @@
                 <!--end:Menu sub-->
             </div>
             <!--end:Setting-->
+            <hr style="height: 5px;background-color: #fff;border-radius: 5px;">
         </div>
     </div>
 </div>

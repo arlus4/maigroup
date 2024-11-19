@@ -171,7 +171,7 @@ class Admin_Active_OwnerController extends Controller
 
         // Retrieve employees associated with the user owner
         $getEmployee = DB::table('pegawai')
-            ->select('pegawai.name', 'pegawai.username', 'pegawai.no_hp', 'pegawai.email')
+            ->select('pegawai.id', 'pegawai.name', 'pegawai.username', 'pegawai.no_hp', 'pegawai.email')
             ->leftJoin('outlets', 'pegawai.outlet_code', 'outlets.outlet_code')
             ->where('outlets.user_id', $getData->idUserLogin)
         ->paginate(5);

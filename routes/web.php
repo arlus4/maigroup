@@ -20,7 +20,6 @@ use App\Http\Controllers\Admin\Admin_BannerController;
 use App\Http\Controllers\Admin\Admin_BrandsController;
 use App\Http\Controllers\Admin\Admin_ConfigController;
 use App\Http\Controllers\Admin\Admin_OutletController;
-use App\Http\Controllers\Admin\Admin_ReportController;
 use App\Http\Controllers\Admin\Admin_ArtikelController;
 use App\Http\Controllers\Admin\Admin_PegawaiController;
 use App\Http\Controllers\Admin\Admin_ProductController;
@@ -29,7 +28,6 @@ use App\Http\Controllers\Admin\Admin_UserOwnerController;
 use App\Http\Controllers\Admin\Admin_SubscriberController;
 use App\Http\Controllers\Admin\Admin_Point_PriceController;
 use App\Http\Controllers\Admin\Admin_NotificationController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Admin_Product_CategoryController;
 use App\Http\Controllers\Admin\Admin_Manage_Owner\Admin_Active_OwnerController;
 use App\Http\Controllers\Admin\Admin_Manage_Owner\Admin_Reject_OwnerController;
@@ -43,7 +41,6 @@ use App\Http\Controllers\Admin\Admin_Manage_Brands\Admin_Brands_CategoryControll
 use App\Http\Controllers\Admin\Admin_PembeliController;
 
 Route::get('/', [HomeController::class, 'home']);
-// Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -146,12 +143,12 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         
         // Manajemen Brand
         // Manajemen Brand - Request Point
-        Route::get('/brands/request_point_brands', [Admin_Request_PointController::class, 'index_requestPoint'])->name('admin_request_point');
-        Route::get('/getDataRequestPoint', [Admin_Request_PointController::class, 'getDataRequestPoint']);
-        Route::get('/getDataRequestLog', [Admin_Request_PointController::class, 'getDataRequestLog']);
-        Route::get('/detailRequestPoint/{id}', [Admin_Request_PointController::class, 'detailRequestPoint']);
-        Route::post('/approveRequestPoint', [Admin_Request_PointController::class, 'approveRequestPoint']);
-        Route::post('/rejectRequestPoint', [Admin_Request_PointController::class, 'rejectRequestPoint']);
+        // Route::get('/brands/request_point_brands', [Admin_Request_PointController::class, 'index_requestPoint'])->name('admin_request_point');
+        // Route::get('/getDataRequestPoint', [Admin_Request_PointController::class, 'getDataRequestPoint']);
+        // Route::get('/getDataRequestLog', [Admin_Request_PointController::class, 'getDataRequestLog']);
+        // Route::get('/detailRequestPoint/{id}', [Admin_Request_PointController::class, 'detailRequestPoint']);
+        // Route::post('/approveRequestPoint', [Admin_Request_PointController::class, 'approveRequestPoint']);
+        // Route::post('/rejectRequestPoint', [Admin_Request_PointController::class, 'rejectRequestPoint']);
         // Manajemen Brand - Brand Category
         Route::get('/brands/brandCategory', [Admin_Brands_CategoryController::class, 'index'])->name('admin_brand_category');
         Route::get('/get_data_brandCategory', [Admin_Brands_CategoryController::class, 'get_data_brandCategory']);
@@ -302,35 +299,7 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::get('/setting/config/edit_config', [Admin_ConfigController::class, 'edit']);
         Route::post('/setting/config/update_config', [Admin_ConfigController::class, 'update']);
         Route::post('/setting/config/delete_config', [Admin_ConfigController::class, 'destroy']);
-
-        //Order
-        // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
-        // Route::get('/order/new_order', [Admin_OrderController::class, 'new_order'])->name('admin_new_order');
-        Route::get('/order', [Admin_OrderController::class, 'new_order'])->name('admin_order');
-        Route::get('/order/waiting_payment_order', [Admin_OrderController::class, 'waiting_payment_order'])->name('admin_waiting_payment_order');
-        Route::get('/order/payment_received_order', [Admin_OrderController::class, 'payment_received_order'])->name('admin_payment_received_order');
-        Route::post('/store_payment_received_order/{invoice}', [Admin_OrderController::class, 'store_payment_received_order'])->name('admin_store_payment_received_order');
-        Route::get('/order/approve_order', [Admin_OrderController::class, 'approve_order'])->name('admin_approve_order');
-        Route::post('/store_approve_order/{invoice}', [Admin_OrderController::class, 'store_approve_order'])->name('admin_store_approve_order');
-        Route::get('/order/deliver_order', [Admin_OrderController::class, 'deliver_order'])->name('admin_deliver_order');
-        Route::get('/order/rejected_order', [Admin_OrderController::class, 'rejected_order'])->name('admin_rejected_order');
-        Route::post('/store_ongkir', [Admin_OrderController::class, 'storeOngkir']);
-        Route::post('/update_harga_paket/{invoice}', [Admin_OrderController::class, 'update_harga_paket']);
-        Route::get('/order-detail/{invoice}', [Admin_OrderController::class, 'orderDetail'])->name('admin_order_detail');
-        Route::get('/tambah-order', [Admin_OrderController::class, 'create'])->name('admin_tambah_order');
-        Route::post('/store-order', [Admin_OrderController::class, 'store'])->name('admin_store_order');
-        Route::get('/get-harga-order/{id}', [Admin_OrderController::class, 'getHargaOrder'])->name('admin_get_harga_order');
-        Route::get('/download-invoice/{invoice}', [Admin_OrderController::class, 'downloadInvoice'])->name('admin.download.invoice');
         
-        // Data Order
-        Route::get('/data_order/{invoice}', [Admin_OrderController::class, 'get_data_order_ongkir'])->name('admin_get_data_order');
-        Route::get('/order/get_data_new_order', [Admin_OrderController::class, 'get_data_new_order']);
-        Route::get('/order/get_data_waiting_payment', [Admin_OrderController::class, 'get_data_waiting_payment']);
-        Route::get('/order/get_data_payment_received', [Admin_OrderController::class, 'get_data_payment_received']);
-        Route::get('/order/get_data_approve', [Admin_OrderController::class, 'get_data_approve']);
-        Route::get('/order/get_data_deliver', [Admin_OrderController::class, 'get_data_deliver']);
-        Route::get('/order/get_data_rejected', [Admin_OrderController::class, 'get_data_rejected']);
-
         //News Artikel
         Route::get('/artikel', [Admin_ArtikelController::class, 'index'])->name('admin_artikel');
         Route::get('/artikel/create_artikel', [Admin_ArtikelController::class, 'create'])->name('admin_create_artikel');
@@ -340,10 +309,34 @@ Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], fu
         Route::post('/artikel/update_artikel/{artikel}', [Admin_ArtikelController::class, 'update'])->name('admin_update_artikel');
         Route::post('/artikel/destroy_artikel/{artikel}', [Admin_ArtikelController::class, 'destroy'])->name('admin_destroy_artikel');
         Route::post('/artikel/destroy_image_artikel/{artikel_image}', [Admin_ArtikelController::class, 'destroy_image'])->name('admin_destroy_image_artikel');
-
-        // Report
-        Route::get('/report_invoice', [Admin_ReportController::class, 'report_inovice'])->name('admin_report_invoice');
-        Route::get('/get_data_report_invoice', [Admin_ReportController::class, 'get_data_report_invoice']);
+        //Order
+        
+        // Route::get('/order', [Admin_OrderController::class, 'index'])->name('admin_order');
+        // Route::get('/order/new_order', [Admin_OrderController::class, 'new_order'])->name('admin_new_order');
+        // Route::get('/order', [Admin_OrderController::class, 'new_order'])->name('admin_order');
+        // Route::get('/order/waiting_payment_order', [Admin_OrderController::class, 'waiting_payment_order'])->name('admin_waiting_payment_order');
+        // Route::get('/order/payment_received_order', [Admin_OrderController::class, 'payment_received_order'])->name('admin_payment_received_order');
+        // Route::post('/store_payment_received_order/{invoice}', [Admin_OrderController::class, 'store_payment_received_order'])->name('admin_store_payment_received_order');
+        // Route::get('/order/approve_order', [Admin_OrderController::class, 'approve_order'])->name('admin_approve_order');
+        // Route::post('/store_approve_order/{invoice}', [Admin_OrderController::class, 'store_approve_order'])->name('admin_store_approve_order');
+        // Route::get('/order/deliver_order', [Admin_OrderController::class, 'deliver_order'])->name('admin_deliver_order');
+        // Route::get('/order/rejected_order', [Admin_OrderController::class, 'rejected_order'])->name('admin_rejected_order');
+        // Route::post('/store_ongkir', [Admin_OrderController::class, 'storeOngkir']);
+        // Route::post('/update_harga_paket/{invoice}', [Admin_OrderController::class, 'update_harga_paket']);
+        // Route::get('/order-detail/{invoice}', [Admin_OrderController::class, 'orderDetail'])->name('admin_order_detail');
+        // Route::get('/tambah-order', [Admin_OrderController::class, 'create'])->name('admin_tambah_order');
+        // Route::post('/store-order', [Admin_OrderController::class, 'store'])->name('admin_store_order');
+        // Route::get('/get-harga-order/{id}', [Admin_OrderController::class, 'getHargaOrder'])->name('admin_get_harga_order');
+        // Route::get('/download-invoice/{invoice}', [Admin_OrderController::class, 'downloadInvoice'])->name('admin.download.invoice');
+        
+        // Data Order
+        // Route::get('/data_order/{invoice}', [Admin_OrderController::class, 'get_data_order_ongkir'])->name('admin_get_data_order');
+        // Route::get('/order/get_data_new_order', [Admin_OrderController::class, 'get_data_new_order']);
+        // Route::get('/order/get_data_waiting_payment', [Admin_OrderController::class, 'get_data_waiting_payment']);
+        // Route::get('/order/get_data_payment_received', [Admin_OrderController::class, 'get_data_payment_received']);
+        // Route::get('/order/get_data_approve', [Admin_OrderController::class, 'get_data_approve']);
+        // Route::get('/order/get_data_deliver', [Admin_OrderController::class, 'get_data_deliver']);
+        // Route::get('/order/get_data_rejected', [Admin_OrderController::class, 'get_data_rejected']);
     });
 });
 

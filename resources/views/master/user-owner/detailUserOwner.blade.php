@@ -241,7 +241,7 @@ use Jenssegers\Agent\Agent;
                                             <div class="d-flex align-items-center position-relative mb-7">
                                                 <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
                                                 <div class="fw-semibold ms-5">
-                                                    <a href="#" class="fs-5 fw-bold text-dark text-hover-primary">{{ $brand->brand_name }}</a>
+                                                    <a href="/admin/brands/detail-user-brand/{{ $brand->slug }}" class="fs-5 fw-bold text-dark text-hover-primary">{{ $brand->brand_name }}</a>
                                                     <div class="fs-7 text-muted">{{ $brand->brand_code }}</div>
                                                 </div>
                                                 @if ($brand->is_active == 1)
@@ -323,13 +323,13 @@ use Jenssegers\Agent\Agent;
                                                 <div class="dropdown">
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <li>
-                                                            <a href="/admin/detail-outlet/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                            <a href="/admin/outlets/detail-outlet/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                                 <i style="color:#181C32;" class="fas fa-eye me-2"></i>
                                                                 Detail
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/admin/edit_New_Outlets/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                            <a href="/admin/outlets/edit_New_Outlets/{{ $outlet->slug }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                                 <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
                                                                 Edit
                                                             </a>
@@ -371,17 +371,17 @@ use Jenssegers\Agent\Agent;
                                                 <div class="dropdown">
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <li>
-                                                            <a href="javascript:;" class="dropdown-item p-2 ps-5" style="cursor: pointer">
+                                                            <a href="/admin/outlets/detail-pegawai/{{ $employee->id }}" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                                 <i style="color:#181C32;" class="fas fa-eye me-2"></i>
                                                                 Detail
                                                             </a>
                                                         </li>
-                                                        <li>
+                                                        {{-- <li>
                                                             <a href="javascript:;" class="dropdown-item p-2 ps-5" style="cursor: pointer">
                                                                 <i style="color:#181C32;" class="fas fa-pencil me-2"></i>
                                                                 Edit
                                                             </a>
-                                                        </li>
+                                                        </li> --}}
                                                     </ul>
                                                 </div>
                                             </div>
