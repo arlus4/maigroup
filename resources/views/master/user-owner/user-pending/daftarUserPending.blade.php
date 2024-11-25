@@ -75,6 +75,9 @@
                             <div class="form-group mb-3">
                                 <label style="color: #31353B!important;font-weight: 600;">Password</label>
                                 <input type="password" name="password" class="form-control password" id="password" placeholder="Input Password" required>
+                                <span class="input-group-text" id="toggle-password">
+                                    <i class="fas fa-eye" id="password-icon"></i>
+                                </span>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -147,6 +150,20 @@
 
         // Action Approve
         $(document).ready(function() {
+            // Toggle password visibility
+            $('#toggle-password').on('click', function() {
+                let passwordField = $('#password');
+                let passwordIcon = $('#password-icon');
+                if (passwordField.attr('type') === 'password') {
+                    passwordField.attr('type', 'text');
+                    passwordIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    passwordField.attr('type', 'password');
+                    passwordIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
+
+            // Handle username validation
             var handleSearchUsername = _.debounce(function() {
                 var userId             = $('#id').val();
                 var userName           = $('#username').val();
@@ -225,6 +242,13 @@
                     $('#email').val(data.email);
                     $('#no_hp').val(data.no_hp);
                     $('#approve').text('Approve');
+
+                    // Generate username berdasarkan "name"
+                    if (data.name) {
+                        let nameValue = data.name.toLowerCase().replace(/\s+/g, ''); // Hilangkan spasi
+                        let randomNumber = Math.floor(Math.random() * 1000); // Angka acak
+                        $('#username').val(nameValue + randomNumber); // Set username
+                    }
                 },
                 error: function (xhr, status, error) {
                     toastr.error("Terjadi kesalahan. Silakan coba lagi.");
