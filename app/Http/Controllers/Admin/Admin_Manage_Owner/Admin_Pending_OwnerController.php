@@ -15,10 +15,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class Admin_Pending_OwnerController extends Controller
 {
-        /**
+    /**
      * Display the index page for pending user owners.
      *
      * @return View
@@ -163,6 +164,11 @@ class Admin_Pending_OwnerController extends Controller
             $brand_register->update([
                 'is_regis' => 1
             ]);
+
+            // Kirim Pesan Notifikasi Approve ke Email Owner
+            Mail::raw('Account Anda Berhasil di Verifikasi Oleh Admin', function ($message) use ($user_register) {
+                $message->to($user_register->email)->subject('Verification Successful');
+            });
 
             DB::commit(); // Commit the transaction
         } catch (\Exception $e) {
