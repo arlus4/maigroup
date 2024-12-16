@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\Admin_BrandsController;
 use App\Http\Controllers\Admin\Admin_ConfigController;
 use App\Http\Controllers\Admin\Admin_OutletController;
 use App\Http\Controllers\Admin\Admin_ArtikelController;
+use App\Http\Controllers\Admin\Admin_DashboardController;
 use App\Http\Controllers\Admin\Admin_PegawaiController;
 use App\Http\Controllers\Admin\Admin_ProductController;
 use App\Http\Controllers\Owner\ReportInvoiceController;
@@ -62,13 +63,14 @@ Route::get('/validate_bannerCode', [UtilitasController::class, 'validate_bannerC
 
 // Bagian Middleware & Prefix Admin
 Route::group(['middleware' => ['admin:4', 'auth', 'verified', 'role:admin']], function () {
-
     // Master Data
     Route::prefix('admin')->name('admin.')->group(function() {
 
-        Route::get('/dashboard', function () {
-            return view('master.dashboard');
-        })->name('dashboard-admin');
+        // Route::get('/dashboard', function () {
+        //     return view('master.dashboard');
+        // })->name('dashboard-admin');
+
+        Route::get('/dashboard', [Admin_DashboardController::class, 'index'])->name('dashboard-admin');
 
         //Kategori Produk
 
